@@ -8,7 +8,7 @@
 
 ## Scope note
 
-Bell's customization-protocol was a "new user setup wizard" for the Nathaniel framework — designed for arbitrary users to rebrand the assistant (change name, pronouns, address, cultural voice, etc.) before first use. That framing doesn't apply to Hypatia:
+Bell's customization-protocol was a "new user setup wizard" for the Nathaniel framework, designed for arbitrary users to rebrand the assistant (change name, pronouns, address, cultural voice, etc.) before first use. That framing doesn't apply to Hypatia:
 
 - Hypatia is FOR the Scholar (AJ) specifically, not for general users.
 - The persona is locked at the kernel level (Q-24 2026-05-11: name "Hypatia", pronouns she/her, address term "Scholar", Greco-Roman Alexandrian register).
