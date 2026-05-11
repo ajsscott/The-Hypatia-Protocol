@@ -24,7 +24,7 @@ The save command does not auto-fire at session end. Persistence is the Scholar's
 3. **Memory snapshot** (`hypatia-kb/Memory/memory.json` → `last_session_snapshot`): session ID, memory_version, counts of patterns/knowledge/reasoning/active_projects, timestamp.
 4. **Inbox capture flush**: any `inbox/preferences/*.md` files written this session are committed to the repo (still NOT promoted to the Memory/Intelligence stores; see § What does NOT get saved).
 5. **Vectorstore sync** (if `hypatia-kb/vectorstore/config.json` exists): rebuilds embeddings against the current intelligence stores. Runs once after all other writes. Logs counts. Failures warn but do not block.
-6. **Git commit**: invokes the Git Hardening Protocol (`.clinerules/09-security.md`), scans for sensitive patterns, commits with message `Session save: {session_id}` if clean. If flagged: stop, surface to Scholar, do not commit.
+6. **Git commit**: invokes the Git Hardening Protocol (`.roo/rules-hypatia/09-security.md`), scans for sensitive patterns, commits with message `Session save: {session_id}` if clean. If flagged: stop, surface to Scholar, do not commit.
 
 ---
 
@@ -90,7 +90,7 @@ Do NOT confirm complete until all six items are marked.
 
 **Step 5: Vectorstore sync (conditional).** If `hypatia-kb/vectorstore/config.json` exists, run `uv run python hypatia-kb/vectorstore/kb_sync.py`. Log result (added/updated/removed/unchanged counts). On failure: warn, do not block save. On missing vectorstore: skip silently.
 
-**Step 6: Git commit.** Invoke the Git Hardening Protocol from `.clinerules/09-security.md`:
+**Step 6: Git commit.** Invoke the Git Hardening Protocol from `.roo/rules-hypatia/09-security.md`:
 1. Run `git add --dry-run.`. Scan for sensitive patterns.
 2. If clean, run `git add -A` (note: prefer staging specific files for non-save work, but save is the one operation that intentionally captures everything).
 3. If any flagged, STOP. Surface to the Scholar. Do not commit until resolved.
@@ -202,6 +202,6 @@ The intelligence stores hold curated knowledge; the session logs hold the *narra
 ## Cross-references
 
 - **Memory protocol (CRUD operations, pruning rules)**: `hypatia-kb/memory-protocol.md`
-- **Git Hardening Protocol invoked by step 6**: `.clinerules/09-security.md`
-- **Session gates that govern when save fires**: `.clinerules/04-session-gates.md`
+- **Git Hardening Protocol invoked by step 6**: `.roo/rules-hypatia/09-security.md`
+- **Session gates that govern when save fires**: `.roo/rules-hypatia/04-session-gates.md`
 - **Vectorstore sync script**: `hypatia-kb/vectorstore/kb_sync.py`

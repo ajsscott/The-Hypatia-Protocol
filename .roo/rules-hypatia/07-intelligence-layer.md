@@ -46,7 +46,7 @@ The retrieval pattern that keeps query cost constant as the stores grow.
 1. **Read the lightweight `*-index.json` first.** Each index carries entry summaries, tags, categories, and the ID list. It is bounded in size (capped during pruning).
 2. **Scan the index for signal matches.** Use tag/category/summary fields to identify candidate entries.
 3. **Fetch full entries by ID** from the corresponding `*.json` file. Only the matched entries, not the whole store.
-4. **Apply confidence + relevance tables** (see `.clinerules/06-cognitive.md § Applying patterns/knowledge/reasoning`) to decide what surfaces and how.
+4. **Apply confidence + relevance tables** (see `.roo/rules-hypatia/06-cognitive.md § Applying patterns/knowledge/reasoning`) to decide what surfaces and how.
 
 ### Why
 
@@ -58,9 +58,9 @@ This is the load-bearing pattern that makes "the graph compounds" sustainable.
 
 ### When CSR fires
 
-- Every IMG-triggered query (see `.clinerules/04-session-gates.md § IMG`).
+- Every IMG-triggered query (see `.roo/rules-hypatia/04-session-gates.md § IMG`).
 - Every Troubleshooting Gate query.
-- Every Intelligence Checkpoint re-query (see `.clinerules/06-cognitive.md § Intelligence Checkpoints`).
+- Every Intelligence Checkpoint re-query (see `.roo/rules-hypatia/06-cognitive.md § Intelligence Checkpoints`).
 - Every Hypatia inference about the system's own state, history, or decisions.
 
 ### Ship-empty caveat
@@ -116,7 +116,7 @@ The map ships with `_meta` documentation preserved but `synonyms: {}` empty.
 
 `hypatia-kb/Intelligence/cross-references.json` carries explicit relationships between entries (knowledge → reasoning, pattern → knowledge, etc.).
 
-When CSR surfaces a knowledge entry during INTERROGATE-phase analysis (see `.clinerules/11-decision-routes.md § Route F`), check cross-references for derived reasoning entries that depend on it. Surface those alongside.
+When CSR surfaces a knowledge entry during INTERROGATE-phase analysis (see `.roo/rules-hypatia/11-decision-routes.md § Route F`), check cross-references for derived reasoning entries that depend on it. Surface those alongside.
 
 Ships empty. Populates as usage accumulates entries with explicit relationships.
 
@@ -152,9 +152,9 @@ For everything else (new pattern observed, new piece of knowledge, new reasoning
 
 ## Cross-references
 
-- **CSR usage in session boot (IMG)**: `.clinerules/04-session-gates.md § Institutional Memory Gate`
-- **Confidence × context-match application tables**: `.clinerules/06-cognitive.md § Applying patterns/knowledge/reasoning`
-- **Intelligence Checkpoints (re-query triggers)**: `.clinerules/06-cognitive.md § Intelligence Checkpoints`
-- **Save command (the only path that writes to stores)**: `.clinerules/08-save-command.md`
+- **CSR usage in session boot (IMG)**: `.roo/rules-hypatia/04-session-gates.md § Institutional Memory Gate`
+- **Confidence × context-match application tables**: `.roo/rules-hypatia/06-cognitive.md § Applying patterns/knowledge/reasoning`
+- **Intelligence Checkpoints (re-query triggers)**: `.roo/rules-hypatia/06-cognitive.md § Intelligence Checkpoints`
+- **Save command (the only path that writes to stores)**: `.roo/rules-hypatia/08-save-command.md`
 - **Inbox capture pipeline (, the *primary* write path for new content)**: `inbox/SCHEMA.md`
 - **RRF implementation**: `hypatia-kb/vectorstore/kb_query.py`

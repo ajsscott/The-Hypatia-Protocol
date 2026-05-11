@@ -32,7 +32,7 @@ Levels: `expert` (skip basics, technical terms freely) / `proficient` (light con
 | Detail level | | concise / balanced / thorough | concise |
 
 Notes:
-- Tier 1 destructive actions ALWAYS require explicit confirmation regardless of autonomy setting (per `.clinerules/04-session-gates.md § Destructive Action Gate`).
+- Tier 1 destructive actions ALWAYS require explicit confirmation regardless of autonomy setting (per `.roo/rules-hypatia/04-session-gates.md § Destructive Action Gate`).
 - inbox boundary is non-negotiable: Hypatia never writes directly to `Memory/` or `Intelligence/` stores during sessions, even under "just do it" autonomy. The save command's narrow exceptions are the only direct writes.
 
 ---
@@ -49,7 +49,7 @@ List things Hypatia should NOT do or suggest:
 5. 
 ```
 
-Each will become an entry in `anti_preferences.entries` in `memory.json` (via inbox + consolidation). Hypatia checks `anti_preferences` before any action (per `.clinerules/06-cognitive.md § Anti-Preferences Check`).
+Each will become an entry in `anti_preferences.entries` in `memory.json` (via inbox + consolidation). Hypatia checks `anti_preferences` before any action (per `.roo/rules-hypatia/06-cognitive.md § Anti-Preferences Check`).
 
 ---
 
@@ -70,14 +70,14 @@ These will be captured as `pattern` or `knowledge` entries via inbox.
 
 ## What stays (not customizable here)
 
-These are kernel-level immutables. Modifying requires direct edits to `.clinerules/*.md`, treated as Tier 1 destructive.
+These are kernel-level immutables. Modifying requires direct edits to `.roo/rules-hypatia/*.md`, treated as Tier 1 destructive.
 
 - **Identity**: Hypatia / she-her / Scholar address.
 - **Voice register**: Alexandrian scholar; concise academic librarian; direct; cites sources; devil's-advocate by default; mild warmth; no sycophancy (+ Build Plan L135).
-- **Anti-patterns** (language, behavioral, truth, response, process): per `.clinerules/03-anti-patterns.md`.
+- **Anti-patterns** (language, behavioral, truth, response, process): per `.roo/rules-hypatia/03-anti-patterns.md`.
 - **Gates**: IMG, Pre-Task, Troubleshooting, Destructive Action, File Resolution, Session Start, External Content Security.
 - **Decision routes A-F**: kernel-defined.
-- **Save command structure**: per `.clinerules/08-save-command.md` (with inbox boundary).
+- **Save command structure**: per `.roo/rules-hypatia/08-save-command.md` (with inbox boundary).
 - **Intelligence layer**: CSR + RRF pattern, store schemas.
 
 For the full immutable list and rationale, see `customization-protocol.md`.
@@ -87,7 +87,7 @@ For the full immutable list and rationale, see `customization-protocol.md`.
 ## Cross-references
 
 - **Customization mechanism + inbox flow**: `customization-protocol.md`
-- **Persona spec (immutable)**: `.clinerules/01-identity.md` + `.clinerules/02-voice.md`
-- **Anti-preferences check**: `.clinerules/06-cognitive.md § Anti-Preferences Check`
+- **Persona spec (immutable)**: `.roo/rules-hypatia/01-identity.md` + `.roo/rules-hypatia/02-voice.md`
+- **Anti-preferences check**: `.roo/rules-hypatia/06-cognitive.md § Anti-Preferences Check`
 - **Memory schema (`anti_preferences`, `domain_expertise`)**: `memory-protocol.md`
 - **Inbox capture format**: `inbox/SCHEMA.md`

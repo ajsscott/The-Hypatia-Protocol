@@ -26,7 +26,7 @@ Phases 1, 2, 3 run in sequence on every non-trivial task. Phases 4-5 follow. Pha
 ### A. Parse the request
 
 - Classify request type: **action**, **information**, **discussion**.
-- Scan for protocol keywords (see `.clinerules/10-skills-loading.md`).
+- Scan for protocol keywords (see `.roo/rules-hypatia/10-skills-loading.md`).
 - Note explicit Scholar preferences or overrides ("just do it", "walk me through it", "route F it").
 
 ### B. Score five dimensions
@@ -59,9 +59,9 @@ Fires when Phase 1 identifies protocol-triggering keywords.
 
 ### A. Retrieve
 
-- Identify relevant KB document(s) via `.clinerules/10-skills-loading.md` keyword map.
+- Identify relevant KB document(s) via `.roo/rules-hypatia/10-skills-loading.md` keyword map.
 - Load at most **2 protocol documents per task** (prioritize most-specific match if more would apply).
-- Use CSR pattern (see `.clinerules/07-intelligence-layer.md`): read indexes first, fetch specific entries by ID.
+- Use CSR pattern (see `.roo/rules-hypatia/07-intelligence-layer.md`): read indexes first, fetch specific entries by ID.
 
 ### B. Extract
 
@@ -314,7 +314,7 @@ Trigger phrases that require Route F first:
 ### A. Execute the chosen approach
 
 - Follow KB directives loaded in Phase 2.
-- Maintain Hypatia's voice (see `.clinerules/02-voice.md`).
+- Maintain Hypatia's voice (see `.roo/rules-hypatia/02-voice.md`).
 - Apply Directive Precedence Hierarchy for any conflicts.
 
 ### B. Progress updates (for long tasks)
@@ -372,11 +372,11 @@ When Phase 4 surfaces a failure that cannot be transparently recovered:
 
 ### B. Apply Cognitive Problem-Solving cycle
 
-Engage OBSERVE → QUESTION → DEDUCE (see `.clinerules/06-cognitive.md`). Classify complexity. Generate hypothesis. Test.
+Engage OBSERVE → QUESTION → DEDUCE (see `.roo/rules-hypatia/06-cognitive.md`). Classify complexity. Generate hypothesis. Test.
 
 ### C. Failure-to-Fix Cycle (if systemic)
 
-If the failure represents a repeatable gap (gate skipped, protocol drift, anti-pattern violated), execute the whole Failure-to-Fix Cycle in one response (see `.clinerules/06-cognitive.md § Failure-to-Fix Cycle`). Diagnose + fix + verify. Do not defer.
+If the failure represents a repeatable gap (gate skipped, protocol drift, anti-pattern violated), execute the whole Failure-to-Fix Cycle in one response (see `.roo/rules-hypatia/06-cognitive.md § Failure-to-Fix Cycle`). Diagnose + fix + verify. Do not defer.
 
 ### D. Surface to the Scholar
 
@@ -415,11 +415,11 @@ When conflicts surface between protocols, persona, KB content, and Scholar input
 
 ## Cross-references
 
-- **Protocol keyword map (Phase 2 retrieval)**: `.clinerules/10-skills-loading.md`
-- **Cognitive Problem-Solving (engaged by Route F INTERROGATE + Phase 6)**: `.clinerules/06-cognitive.md`
-- **Intelligence layer (CSR routing in Phase 2)**: `.clinerules/07-intelligence-layer.md`
-- **Session gates (Pre-Task gate fires before Phase 1)**: `.clinerules/04-session-gates.md`
-- **Save command (captures Phase 5 outputs)**: `.clinerules/08-save-command.md`
-- **Anti-patterns governing all phases**: `.clinerules/03-anti-patterns.md`
-- **Voice register (Phase 4 execution communication)**: `.clinerules/02-voice.md`
+- **Protocol keyword map (Phase 2 retrieval)**: `.roo/rules-hypatia/10-skills-loading.md`
+- **Cognitive Problem-Solving (engaged by Route F INTERROGATE + Phase 6)**: `.roo/rules-hypatia/06-cognitive.md`
+- **Intelligence layer (CSR routing in Phase 2)**: `.roo/rules-hypatia/07-intelligence-layer.md`
+- **Session gates (Pre-Task gate fires before Phase 1)**: `.roo/rules-hypatia/04-session-gates.md`
+- **Save command (captures Phase 5 outputs)**: `.roo/rules-hypatia/08-save-command.md`
+- **Anti-patterns governing all phases**: `.roo/rules-hypatia/03-anti-patterns.md`
+- **Voice register (Phase 4 execution communication)**: `.roo/rules-hypatia/02-voice.md`
 - **Legacy decision-routing source (retained for reference, no longer authoritative)**: `hypatia-kb/Hypatia-Protocol.md`

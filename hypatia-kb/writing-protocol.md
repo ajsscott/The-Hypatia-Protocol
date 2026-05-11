@@ -8,10 +8,10 @@
 
 ## Integration
 
-**Decision Engine** (`.clinerules/11-decision-routes.md`):
+**Decision Engine** (`.roo/rules-hypatia/11-decision-routes.md`):
 - Triggered during Phase 2 (KB Consultation) when writing keywords surface.
 - Applies to all written output: Trees, synthesis notes, planning documents, drafts, summaries.
-- Voice register from `.clinerules/02-voice.md` always governs Hypatia's own register; this protocol governs the *content the Scholar produces or asks Hypatia to draft*.
+- Voice register from `.roo/rules-hypatia/02-voice.md` always governs Hypatia's own register; this protocol governs the *content the Scholar produces or asks Hypatia to draft*.
 
 **Related protocols**:
 - `summarization-protocol.md` for prose distillation.
@@ -26,7 +26,7 @@
 ## Core principles
 
 1. **Clarity is kindness.** Readers (the Scholar; future-Hypatia; the next-session reader) should not need to re-read a sentence to understand it.
-2. **Cite sources for non-trivial claims.** Hypothesis without citation is gossip (from `.clinerules/02-voice.md`).
+2. **Cite sources for non-trivial claims.** Hypothesis without citation is gossip (from `.roo/rules-hypatia/02-voice.md`).
 3. **Show evidence, not just claim.** A claim about retrieval performance needs a number. A claim about a vault pattern needs a Tree reference.
 4. **Respect reader time.** Every word earns its place. Brevity over completeness.
 5. **Outcome-driven.** Every document has a purpose: a Tree atom (concept), a synthesis (aggregation), a decision (capture), a session log (continuity).
@@ -46,7 +46,7 @@
 
 | Context | Perspective | Why |
 |---|---|---|
-| Hypatia speaking to the Scholar | First-person Hypatia (`I`) | The voice register from `.clinerules/02-voice.md`. |
+| Hypatia speaking to the Scholar | First-person Hypatia (`I`) | The voice register from `.roo/rules-hypatia/02-voice.md`. |
 | Tree atoms (zettelkasten) | Third-person, no narrator | Trees are graph handles; prose is minimal. |
 | Synthesis / aggregator Trees | Third-person, occasional prose | Aggregator notes carry rich prose; older Trees in `Trees/` model this. |
 | Session logs | First-person session-narrator | The Scholar reads later as continuity reference. |
@@ -160,7 +160,7 @@ Use it. "A, B, and C", not "A, B and C".
 
 ### Punctuation
 
-Em-dashes are FORBIDDEN. Use commas, colons, or split sentences. See `.clinerules/03-anti-patterns.md § Prohibited punctuation` for the full list.
+Em-dashes are FORBIDDEN. Use commas, colons, or split sentences. See `.roo/rules-hypatia/03-anti-patterns.md § Prohibited punctuation` for the full list.
 
 Excessive exclamation points are forbidden. One per document maximum.
 
@@ -349,8 +349,8 @@ Before delivering or filing:
 |---|---|
 | Active voice | `## Basic writing standards § Voice` |
 | Perspective context-dependent | `## Basic writing standards § Voice` |
-| Cite sources | `.clinerules/02-voice.md` |
-| No em-dashes | `.clinerules/03-anti-patterns.md § Prohibited punctuation` |
+| Cite sources | `.roo/rules-hypatia/02-voice.md` |
+| No em-dashes | `.roo/rules-hypatia/03-anti-patterns.md § Prohibited punctuation` |
 | No hedge words without uncertainty | `## Hedging` |
 | Numbers: 1-9 spelled, 10+ digits | `## Formatting standards § Numbers` |
 | Dates: ISO 8601 | `## Formatting standards § Numbers` |
@@ -361,11 +361,11 @@ Before delivering or filing:
 
 ## Cross-references
 
-- **Voice register (Hypatia's own writing)**: `.clinerules/02-voice.md`
-- **Anti-patterns (writing-adjacent rules)**: `.clinerules/03-anti-patterns.md`
+- **Voice register (Hypatia's own writing)**: `.roo/rules-hypatia/02-voice.md`
+- **Anti-patterns (writing-adjacent rules)**: `.roo/rules-hypatia/03-anti-patterns.md`
 - **Tree schemas (atomic + aggregator)**: `hypatia-kb/protocols/librarian-note-schemas.md`
 - **Writing rules for vault editing**: `hypatia-kb/protocols/librarian-writing-rules.md`
-- **Session log format**: `.clinerules/08-save-command.md`
+- **Session log format**: `.roo/rules-hypatia/08-save-command.md`
 - **Inbox capture format**: `inbox/SCHEMA.md`
 - **Research synthesis writing**: `research-protocol.md`
 - **Summarization writing**: `summarization-protocol.md`

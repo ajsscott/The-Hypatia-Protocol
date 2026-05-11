@@ -8,7 +8,7 @@
 
 ## Integration
 
-**Decision Engine integration** (`.clinerules/11-decision-routes.md`):
+**Decision Engine integration** (`.roo/rules-hypatia/11-decision-routes.md`):
 - Triggered during Phase 2 (KB Consultation) when research keywords surface.
 - Default route: B (Execute with Context) for standard research tasks.
 - Route D (Present Options) when research scope is ambiguous or multiple framings are viable.
@@ -21,7 +21,7 @@
 - `hypatia-kb/protocols/librarian-note-schemas.md`: canonical Tree schema for filing research outputs.
 - `hypatia-kb/protocols/librarian-role.md § Three operations`: the ingest workflow that turns research into Trees.
 
-**Voice integration**: all outputs filtered through `.clinerules/02-voice.md`. Cite sources reflexively. Hypothesis without citation is gossip.
+**Voice integration**: all outputs filtered through `.roo/rules-hypatia/02-voice.md`. Cite sources reflexively. Hypothesis without citation is gossip.
 
 ---
 
@@ -75,7 +75,7 @@ Out of scope: [What NOT to research]
 3. **Authoritative external sources**: peer-reviewed publications, recognized standards bodies, official APIs.
 4. **Expert commentary**: recognized authorities, well-established research blogs.
 5. **Community sources**: forums, Stack Overflow, less-vetted blogs. Verify claims against (1)–(3).
-6. **LLM-generated content**: use for synthesis prompts and exploration only. Per + `.clinerules/09-security.md`, LLM output is external content and subject to the same trust tier as web clippings. Verify any specific claim against a primary source before filing.
+6. **LLM-generated content**: use for synthesis prompts and exploration only. Per + `.roo/rules-hypatia/09-security.md`, LLM output is external content and subject to the same trust tier as web clippings. Verify any specific claim against a primary source before filing.
 
 **Source evaluation criteria**:
 
@@ -159,7 +159,7 @@ When a finding involves a chain of citations (paper A cites paper B which cites 
 - State what is known vs unknown.
 - Identify assumptions made.
 - Note where additional research would help.
-- Never present uncertain findings as definitive (see `.clinerules/03-anti-patterns.md § Truth & confidence`).
+- Never present uncertain findings as definitive (see `.roo/rules-hypatia/03-anti-patterns.md § Truth & confidence`).
 
 ### Phase 5: Output delivery
 
@@ -262,7 +262,7 @@ Date: [YYYY-MM-DD]
 - Ignoring contradictory evidence.
 - Over-researching when a quick answer suffices.
 - Under-researching when the decision is significant.
-- Filing LLM-generated synthesis as a Tree without verifying claims against primary sources (+ `.clinerules/09-security.md`).
+- Filing LLM-generated synthesis as a Tree without verifying claims against primary sources (+ `.roo/rules-hypatia/09-security.md`).
 
 ### Output
 
@@ -292,9 +292,9 @@ Before delivering research:
 
 ## Cross-references
 
-- **Decision routing (Phase 2 KB Consultation triggers this protocol)**: `.clinerules/11-decision-routes.md`
-- **Cognitive stance (research engages OBSERVE → QUESTION → DEDUCE for ambiguous topics)**: `.clinerules/06-cognitive.md`
-- **External-content security (LLM-generated sources treated as untrusted)**: `.clinerules/09-security.md`
+- **Decision routing (Phase 2 KB Consultation triggers this protocol)**: `.roo/rules-hypatia/11-decision-routes.md`
+- **Cognitive stance (research engages OBSERVE → QUESTION → DEDUCE for ambiguous topics)**: `.roo/rules-hypatia/06-cognitive.md`
+- **External-content security (LLM-generated sources treated as untrusted)**: `.roo/rules-hypatia/09-security.md`
 - **Note schemas (Tree drafting, citation embeds, naming conventions)**: `hypatia-kb/protocols/librarian-note-schemas.md`
 - **Librarian role (ingest workflow that turns research into Trees)**: `hypatia-kb/protocols/librarian-role.md`
 - **Inbox capture format (Tree candidates surfaced during research)**: `inbox/SCHEMA.md`

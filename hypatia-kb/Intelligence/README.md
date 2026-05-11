@@ -61,9 +61,9 @@ The retrieval pattern that keeps query cost constant as stores grow.
 1. Read the lightweight `*-index.json` first.
 2. Scan for signal matches via `byTag` / `byCategory` / `summaries`.
 3. Fetch full entries by ID from the data store.
-4. Apply confidence + relevance tables (see `.clinerules/06-cognitive.md`).
+4. Apply confidence + relevance tables (see `.roo/rules-hypatia/06-cognitive.md`).
 
-Full spec: `.clinerules/07-intelligence-layer.md`.
+Full spec: `.roo/rules-hypatia/07-intelligence-layer.md`.
 
 ---
 
@@ -79,7 +79,7 @@ Used when CSR returns empty or weak matches AND the query benefits from vocabula
 
 1. **Capture during sessions**: Hypatia writes free-form markdown observations to `inbox/preferences/<topic-slug>.md` per `inbox/SCHEMA.md`. Frontmatter specifies `candidate-type` (preference / pattern / knowledge / reasoning / unsure).
 
-2. **Save command stages the captures**: per `.clinerules/08-save-command.md`, the save command `git add`s inbox files but does NOT promote to canonical stores.
+2. **Save command stages the captures**: per `.roo/rules-hypatia/08-save-command.md`, the save command `git add`s inbox files but does NOT promote to canonical stores.
 
 3. **Maintenance consolidation**: Scholar invokes `inbox triage` or equivalent maintenance command. The flow per `learning-loop.md`:
    - Read each capture end-to-end.
@@ -89,7 +89,7 @@ Used when CSR returns empty or weak matches AND the query benefits from vocabula
    - On promote: write canonical entry to target store; rebuild index.
    - On reject: mark `status: rejected` with `rejection-reason:`; capture stays in inbox as a record of over-inference.
 
-4. **Application at runtime**: Hypatia consults stores via CSR during pre-action checks, troubleshooting, intelligence checkpoints, and Route F INTERROGATE. Confidence × context-match tables in `.clinerules/06-cognitive.md` govern when an entry surfaces.
+4. **Application at runtime**: Hypatia consults stores via CSR during pre-action checks, troubleshooting, intelligence checkpoints, and Route F INTERROGATE. Confidence × context-match tables in `.roo/rules-hypatia/06-cognitive.md` govern when an entry surfaces.
 
 ---
 
@@ -121,9 +121,9 @@ Full procedure: `intelligence-operations.md § Part 7b`.
 
 - **Detection / application / correction mechanics**: `intelligence-operations.md`
 - **Consolidation methodology (capture → promote)**: `learning-loop.md`
-- **CSR pattern (the retrieval engine)**: `../../.clinerules/07-intelligence-layer.md`
-- **Cognitive application (when entries surface during reasoning)**: `../../.clinerules/06-cognitive.md § Applying patterns, knowledge, reasoning`
-- **Save command (records but does NOT auto-promote)**: `../../.clinerules/08-save-command.md`
+- **CSR pattern (the retrieval engine)**: `../../.roo/rules-hypatia/07-intelligence-layer.md`
+- **Cognitive application (when entries surface during reasoning)**: `../../.roo/rules-hypatia/06-cognitive.md § Applying patterns, knowledge, reasoning`
+- **Save command (records but does NOT auto-promote)**: `../../.roo/rules-hypatia/08-save-command.md`
 - **Memory protocol (capture-then-consolidate flow)**: `../memory-protocol.md`
 - **Inbox schema**: `../../inbox/SCHEMA.md`
 - **RRF implementation**: `../vectorstore/kb_query.py`

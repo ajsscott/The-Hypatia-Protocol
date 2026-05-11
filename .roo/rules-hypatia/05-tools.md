@@ -1,8 +1,8 @@
 # 05: Tools
 
-The tool inventory available to Hypatia when running in Roo Code (same tool-use protocol as Cline;). This file replaces Bell's `tool-inventory.md`, which enumerated Kiro tool names that do not apply.
+The tool inventory available to Hypatia when running in Roo Code. This file replaces Bell's `tool-inventory.md`, which enumerated Kiro tool names that do not apply.
 
-Tool names are spelled in `snake_case` per the Cline/Roo protocol. When a workflow needs a different tool than the obvious one, this file lists when to prefer which.
+Tool names are spelled in `snake_case` per the Roo Code protocol. When a workflow needs a different tool than the obvious one, this file lists when to prefer which.
 
 ---
 
@@ -28,27 +28,41 @@ Write entire file content, creating the file if it doesn't exist or overwriting 
 
 Do NOT use when:
 
-- Editing a portion of an existing file. Use `replace_in_file` instead.
+- Editing a portion of an existing file. Use `edit_file` instead.
 - Moving or copying files. Use `execute_command` + `mv` / `cp`.
 
-### `replace_in_file`
+### `edit_file`
 
-Surgical edit using one or more `SEARCH` / `REPLACE` blocks. Use when:
+Surgical edit using `SEARCH` / `REPLACE` blocks. The canonical edit-in-place tool in Roo Code (supersedes the deprecated `replace_in_file` and `search_and_replace` aliases). Use when:
 
 - Editing a section of an existing file.
 - The exact text to replace is small and unambiguous.
 
 Do NOT use when:
 
-- The file is large JSON (>400 lines). `replace_in_file` fails silently on large JSON. Use `execute_command` + `python` or `jq` instead.
+- The file is large JSON (>400 lines). `edit_file` can fail silently on large JSON. Use `execute_command` + `python` or `jq` instead.
 - The change is wholesale rewrite. Use `write_to_file`.
+- The change spans many non-contiguous edits AND a unified diff is more concise. Use `apply_diff` instead.
+
+### `apply_diff`
+
+Apply a unified diff to a file. Use when:
+
+- Multiple non-contiguous edits to the same file, where `SEARCH` / `REPLACE` blocks would be repetitive.
+- The change is naturally expressible as a diff (e.g., generated from `git diff`).
+- The Scholar provides a patch to apply.
+
+Do NOT use when:
+
+- A single edit with clear surrounding context is needed. Use `edit_file`.
+- The change is a wholesale rewrite. Use `write_to_file`.
 
 ### `list_files`
 
 List the contents of a directory. Use when:
 
 - Discovering what's in a directory at runtime.
-- Pre-flight check before a `write_to_file` or `replace_in_file` operation.
+- Pre-flight check before a `write_to_file` or `edit_file` operation.
 
 ### `search_files`
 
@@ -126,8 +140,8 @@ The MCP server registry for Hypatia is configured per-machine. Common servers: v
 |---|---|---|---|
 | Read a small markdown file | `read_file` | `execute_command cat` | Native tool is faster; preserves line numbering. |
 | Read a section of a large file | `execute_command` + `sed -n` | `read_file` whole | Avoids truncation; explicit line bounds. |
-| Edit a paragraph | `replace_in_file` | `write_to_file` | Surgical; preserves the rest of the file. |
-| Edit a 500-line JSON entry | `execute_command` + `python` | `replace_in_file` | `replace_in_file` fails silently on large JSON. |
+| Edit a paragraph | `edit_file` | `write_to_file` | Surgical; preserves the rest of the file. |
+| Edit a 500-line JSON entry | `execute_command` + `python` | `edit_file` | `edit_file` fails silently on large JSON. |
 | Move / copy / rename files | `execute_command` + `mv` / `cp` / `git mv` | `write_to_file` + delete | Shell preserves metadata, atomic, faster. |
 | Find all uses of `[[BaseName]]` | `search_files` regex | `read_file` on every Tree | Designed for this; scales. |
 | Verify git state | `execute_command` + `git status` / `log` | n/a | No native git tool. |
@@ -150,6 +164,6 @@ When a request requires one of these, surface the limit and propose the manual s
 
 ## Cross-references
 
-- **When to load which protocol**: `.clinerules/10-skills-loading.md`
-- **Session boot gates that govern tool use**: `.clinerules/04-session-gates.md` (pending)
+- **When to load which protocol**: `.roo/rules-hypatia/10-skills-loading.md`
+- **Session boot gates that govern tool use**: `.roo/rules-hypatia/04-session-gates.md` (pending)
 - **The vault-side tools the Scholar uses (Obsidian plugins, YOLO transition)**: `hypatia-kb/protocols/librarian-tooling.md`

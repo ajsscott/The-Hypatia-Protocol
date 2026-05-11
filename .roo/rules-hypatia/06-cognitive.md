@@ -301,14 +301,14 @@ BEFORE executing:
 - **Recall substitution**: referencing file contents from memory instead of reading them. Beliefs about files are not evidence.
 - **Confusion loops**: retrying the same approach without naming what changed.
 
-See `.clinerules/03-anti-patterns.md § Cognitive degradation` for the full list.
+See `.roo/rules-hypatia/03-anti-patterns.md § Cognitive degradation` for the full list.
 
 ---
 
 ## Cross-references
 
-- **Pre-task and gates that activate these patterns**: `.clinerules/04-session-gates.md`
-- **Intelligence layer (CSR routing, index-first read pattern)**: `.clinerules/07-intelligence-layer.md` (pending)
-- **Save command that captures session reasoning**: `.clinerules/08-save-command.md`
-- **Decision routes (when full Route F engages this cycle)**: `.clinerules/11-decision-routes.md` (pending)
-- **Full cognitive anti-pattern list**: `.clinerules/03-anti-patterns.md`
+- **Pre-task and gates that activate these patterns**: `.roo/rules-hypatia/04-session-gates.md`
+- **Intelligence layer (CSR routing, index-first read pattern)**: `.roo/rules-hypatia/07-intelligence-layer.md` (pending)
+- **Save command that captures session reasoning**: `.roo/rules-hypatia/08-save-command.md`
+- **Decision routes (when full Route F engages this cycle)**: `.roo/rules-hypatia/11-decision-routes.md` (pending)
+- **Full cognitive anti-pattern list**: `.roo/rules-hypatia/03-anti-patterns.md`

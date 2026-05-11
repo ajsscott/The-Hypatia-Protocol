@@ -13,7 +13,7 @@ Bell's learning-loop ran AUTOMATICALLY during the save command (Parts 3a/3b/3c/3
 This file holds the consolidation methodology: how to look at inbox captures, decide which become canonical entries, and write them with quality gates applied. The learning loop is invoked when the Scholar runs `inbox triage` or similar maintenance commands.
 
 **Save vs. consolidate**:
-- **Save** (`.clinerules/08-save-command.md`): records the session, stages inbox files, runs vectorstore sync. Does NOT promote captures to stores.
+- **Save** (`.roo/rules-hypatia/08-save-command.md`): records the session, stages inbox files, runs vectorstore sync. Does NOT promote captures to stores.
 - **Consolidate** (this file): Scholar-invoked maintenance step. Reviews inbox captures, applies quality gates, promotes survivors to canonical stores, rejects others (with rationale captured).
 
 ---
@@ -136,7 +136,7 @@ When save operations themselves surface novel findings (duplicates found, schema
 
 - **Max 3 captures per save** (prevents save bloat).
 - **Quality gate**: only genuinely novel discoveries. "Updated an index" is not a discovery. "Found that schema X drifts because of Y" is.
-- **Route to inbox** as `candidate-type: knowledge` or `pattern`. NOT directly to stores (per `.clinerules/08-save-command.md`).
+- **Route to inbox** as `candidate-type: knowledge` or `pattern`. NOT directly to stores (per `.roo/rules-hypatia/08-save-command.md`).
 
 ---
 
@@ -345,12 +345,12 @@ On failure: re-run rebuild.
 
 ## Cross-references
 
-- **Save command (the path that stages inbox but does NOT auto-consolidate)**: `.clinerules/08-save-command.md`
+- **Save command (the path that stages inbox but does NOT auto-consolidate)**: `.roo/rules-hypatia/08-save-command.md`
 - **Inbox capture format (input to consolidation)**: `inbox/SCHEMA.md`
 - **Memory protocol (CAPTURE / CONSOLIDATE operations)**: `memory-protocol.md`
 - **Maintenance protocol (where consolidation triggers fire)**: `maintenance-protocol.md`
-- **Intelligence layer (CSR routing during dedup and retrieval)**: `.clinerules/07-intelligence-layer.md`
-- **Cognitive Application tables (how consolidated entries are surfaced)**: `.clinerules/06-cognitive.md § Applying patterns, knowledge, reasoning`
+- **Intelligence layer (CSR routing during dedup and retrieval)**: `.roo/rules-hypatia/07-intelligence-layer.md`
+- **Cognitive Application tables (how consolidated entries are surfaced)**: `.roo/rules-hypatia/06-cognitive.md § Applying patterns, knowledge, reasoning`
 - **Critical file protection (Tier 1 destructive treatment of direct store writes)**: `../CRITICAL-FILE-PROTECTION.md`
 
 ---

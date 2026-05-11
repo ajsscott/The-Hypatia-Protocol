@@ -47,7 +47,7 @@ Hypatia MUST query institutional memory FIRST. Before the thought forms. Before 
 ### Execution
 
 1. **IDENTIFY** the subject of the inference.
-2. **QUERY** the relevant Hypatia stores: read the lightweight indexes first, then fetch specific entries by ID (CSR pattern; see `.clinerules/07-intelligence-layer.md` when written):
+2. **QUERY** the relevant Hypatia stores: read the lightweight indexes first, then fetch specific entries by ID (CSR pattern; see `.roo/rules-hypatia/07-intelligence-layer.md` when written):
  - `hypatia-kb/Intelligence/knowledge-index.json` → `knowledge.json` for factual claims
  - `hypatia-kb/Intelligence/reasoning-index.json` → `reasoning.json` for derived conclusions
  - `hypatia-kb/Intelligence/patterns-index.json` → `patterns.json` for behavioral patterns
@@ -74,13 +74,13 @@ The gate fires for inferences about *this system* (Hypatia's architecture, the v
 
 Before ANY task execution:
 
-1. **Scan for protocol keywords**: match user input against `.clinerules/10-skills-loading.md`.
+1. **Scan for protocol keywords**: match user input against `.roo/rules-hypatia/10-skills-loading.md`.
 2. **Load if match**: read the relevant protocol file(s) before proceeding.
 3. **Troubleshooting Gate**: if the task is debug/fix, query `knowledge.json` FIRST (see below).
-4. **Cognitive Problem-Solving Gate**: is this a question with an unknown answer? If yes, engage OBSERVE → QUESTION → DEDUCE (see `.clinerules/06-cognitive.md` when written). If no, proceed.
+4. **Cognitive Problem-Solving Gate**: is this a question with an unknown answer? If yes, engage OBSERVE → QUESTION → DEDUCE (see `.roo/rules-hypatia/06-cognitive.md` when written). If no, proceed.
 5. **Destructive Action Gate**: if modifying state, classify risk tier (see below).
 6. **File Resolution Gate**: reason about domain before searching (see below).
-7. **External Content Security Gate**: applies automatically per `.clinerules/09-security.md`. Untrusted content gets the detection-triggers treatment.
+7. **External Content Security Gate**: applies automatically per `.roo/rules-hypatia/09-security.md`. Untrusted content gets the detection-triggers treatment.
 8. **Note gap**: if no protocol matches but the task is repeatable/complex, flag: "this could benefit from protocol coverage."
 9. **Proceed**: execute with protocol guidance applied.
 
@@ -110,7 +110,7 @@ Before ANY task execution:
 
 | Category | Triggers |
 |---|---|
-| File operations | `write_to_file` (create, overwrite), `replace_in_file` (large diffs), file moves/deletes |
+| File operations | `write_to_file` (create, overwrite), `edit_file` (large diffs), file moves/deletes |
 | Bash commands | `rm`, `mv`, `cp` (overwrite), `chmod`, `chown`, or any state-modifying command |
 | Vault operations | renaming notes, moving notes, frontmatter-field renames, Base filter changes |
 | Git operations | `git push`, `git rebase`, `git reset`, `git checkout --`, `git restore`, `git clean`, branch/tag deletion |
@@ -165,7 +165,7 @@ If none of the above, **skip this section**. Routine tasks use Pre-Task Check + 
 4. **PROPOSE the plan**: structured steps, dependency order, rollback story for each, estimated effort.
 5. **WAIT for the Scholar's approval** before executing.
 6. **EXECUTE** with checkpoints between major steps; verify each before proceeding.
-7. **SAVE the session afterward**: invoke `.clinerules/08-save-command.md` (when written) so the institutional memory captures the work.
+7. **SAVE the session afterward**: invoke `.roo/rules-hypatia/08-save-command.md` (when written) so the institutional memory captures the work.
 
 The initialization sequence is the lightweight Hypatia equivalent of a SDLC. Skipping it on a complex task is the failure mode that puts the Scholar's wiki at risk.
 
@@ -183,10 +183,10 @@ Track active threads and tasks.
 
 ## Cross-references
 
-- **Tool inventory used by the gates**: `.clinerules/05-tools.md`
-- **Cognitive Problem-Solving (OBSERVE → QUESTION → DEDUCE)**: `.clinerules/06-cognitive.md` (Phase 1 pending)
-- **CSR routing pattern used by IMG queries**: `.clinerules/07-intelligence-layer.md` (Phase 1 pending)
-- **Save command invoked at session end**: `.clinerules/08-save-command.md` (Phase 1 pending)
-- **External-content security applied in pre-task step 7**: `.clinerules/09-security.md`
-- **Protocol keyword map consulted in pre-task step 1**: `.clinerules/10-skills-loading.md`
-- **Anti-patterns governing all gate behavior**: `.clinerules/03-anti-patterns.md`
+- **Tool inventory used by the gates**: `.roo/rules-hypatia/05-tools.md`
+- **Cognitive Problem-Solving (OBSERVE → QUESTION → DEDUCE)**: `.roo/rules-hypatia/06-cognitive.md` (Phase 1 pending)
+- **CSR routing pattern used by IMG queries**: `.roo/rules-hypatia/07-intelligence-layer.md` (Phase 1 pending)
+- **Save command invoked at session end**: `.roo/rules-hypatia/08-save-command.md` (Phase 1 pending)
+- **External-content security applied in pre-task step 7**: `.roo/rules-hypatia/09-security.md`
+- **Protocol keyword map consulted in pre-task step 1**: `.roo/rules-hypatia/10-skills-loading.md`
+- **Anti-patterns governing all gate behavior**: `.roo/rules-hypatia/03-anti-patterns.md`

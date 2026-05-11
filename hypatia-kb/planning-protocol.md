@@ -8,7 +8,7 @@
 
 ## Integration
 
-**Decision Engine integration** (`.clinerules/11-decision-routes.md`):
+**Decision Engine integration** (`.roo/rules-hypatia/11-decision-routes.md`):
 - Triggered during Phase 2 (KB Consultation) when planning keywords surface.
 - Default route: D (Present Options) for scope decisions with viable alternatives.
 - Route B (Execute with Context) for straightforward breakdowns.
@@ -35,7 +35,7 @@
 - `writing-protocol.md`: documenting plans formally.
 - `problem-solving-protocol.md`: when planning surfaces an unresolved problem that needs decomposition.
 
-**Voice integration**: outputs filtered through `.clinerules/02-voice.md`. State estimates with confidence. Distinguish "estimated" from "validated". Cite when a plan derives from a Tree or Seed.
+**Voice integration**: outputs filtered through `.roo/rules-hypatia/02-voice.md`. State estimates with confidence. Distinguish "estimated" from "validated". Cite when a plan derives from a Tree or Seed.
 
 ---
 
@@ -433,13 +433,13 @@ Before delivering a plan:
 
 ## Cross-references
 
-- **Decision Engine + Route F (analysis-heavy planning)**: `.clinerules/11-decision-routes.md`
-- **Cognitive stance (planning engages CSP + OBSERVE→QUESTION→DEDUCE for unknowns)**: `.clinerules/06-cognitive.md`
+- **Decision Engine + Route F (analysis-heavy planning)**: `.roo/rules-hypatia/11-decision-routes.md`
+- **Cognitive stance (planning engages CSP + OBSERVE→QUESTION→DEDUCE for unknowns)**: `.roo/rules-hypatia/06-cognitive.md`
 - **Research feeding into planning**: `research-protocol.md`
 - **Writing the plan into a formal document**: `writing-protocol.md`
 - **Mountain/Slope/Trail/Step hierarchy (vault PM filing)**: `hypatia-kb/protocols/librarian-note-schemas.md § Mountains PM hierarchy`
 - **Inbox capture for plan-surfaced decisions**: `inbox/SCHEMA.md`
-- **Save command (plan checkpoints)**: `.clinerules/08-save-command.md`
+- **Save command (plan checkpoints)**: `.roo/rules-hypatia/08-save-command.md`
 
 ---
 

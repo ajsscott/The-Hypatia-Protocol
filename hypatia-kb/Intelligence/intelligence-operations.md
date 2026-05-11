@@ -18,9 +18,9 @@ This file covers:
 It does NOT cover (see other files):
 
 - **Consolidation methodology** (capture → quality gates → promote): `learning-loop.md`.
-- **CSR retrieval pattern**: `.clinerules/07-intelligence-layer.md`.
-- **Cognitive integration** (when intelligence fires during reasoning): `.clinerules/06-cognitive.md § Applying patterns, knowledge, reasoning`.
-- **Save command flow** (records but doesn't auto-promote): `.clinerules/08-save-command.md`.
+- **CSR retrieval pattern**: `.roo/rules-hypatia/07-intelligence-layer.md`.
+- **Cognitive integration** (when intelligence fires during reasoning): `.roo/rules-hypatia/06-cognitive.md § Applying patterns, knowledge, reasoning`.
+- **Save command flow** (records but doesn't auto-promote): `.roo/rules-hypatia/08-save-command.md`.
 
 ---
 
@@ -29,7 +29,7 @@ It does NOT cover (see other files):
 ### Content specificity
 
 **Good** (specific, actionable):
-- "Use jq for complex JSON transforms instead of replace_in_file"
+- "Use jq for complex JSON transforms instead of edit_file"
 - "Scholar prefers atomic Trees over composite ones"
 - "Obsidian-linter overwrites multi-line YAML if Topics: and topics: coexist"
 
@@ -117,7 +117,7 @@ These are starter categories. Add domain-specific categories as they emerge duri
 
 ### Applying patterns at runtime
 
-See `.clinerules/06-cognitive.md § Applying patterns`. Summary:
+See `.roo/rules-hypatia/06-cognitive.md § Applying patterns`. Summary:
 
 | Confidence | Context match | Action |
 |---|---|---|
@@ -145,7 +145,7 @@ Capture to `inbox/preferences/*.md` when:
 - Scholar states a fact about how a system works ("The linter runs lint-on-save across all open files, not just the active one").
 - A primary source confirms a claim Hypatia previously held with uncertainty.
 - Debugging surfaces a non-obvious cause-effect relationship ("Multi-line YAML duplicate keys cause obsidian-linter to corrupt frontmatter").
-- Tool behavior contradicts documentation ("`replace_in_file` fails silently on JSON files > 400 lines").
+- Tool behavior contradicts documentation ("`edit_file` fails silently on JSON files > 400 lines").
 
 ### When NOT to capture knowledge
 
@@ -155,7 +155,7 @@ Capture to `inbox/preferences/*.md` when:
 
 ### Applying knowledge at runtime
 
-See `.clinerules/06-cognitive.md § Applying knowledge`. Summary:
+See `.roo/rules-hypatia/06-cognitive.md § Applying knowledge`. Summary:
 
 | Confidence | Relevance | Action |
 |---|---|---|
@@ -190,7 +190,7 @@ If a reuse signal can't be written for an entry, the entry isn't ready for reaso
 
 ### Applying reasoning at runtime
 
-See `.clinerules/06-cognitive.md § Applying reasoning`. Intent-aware matching:
+See `.roo/rules-hypatia/06-cognitive.md § Applying reasoning`. Intent-aware matching:
 
 | Match type | Signal | Action |
 |---|---|---|
@@ -217,7 +217,7 @@ Cross-references between intelligence and memory entries live in `cross-referenc
 
 ## Part 6: Voice integration
 
-Intelligence output passes through Hypatia's voice register (`.clinerules/02-voice.md`).
+Intelligence output passes through Hypatia's voice register (`.roo/rules-hypatia/02-voice.md`).
 
 - Pattern application: brief, declarative. "Based on a prior pattern, [X]." not "Hmm, I noticed you've done this before, maybe we should..."
 - Knowledge surface: cite the entry's source. "Per [source], X is true." Not "I remember reading that X."
@@ -289,13 +289,13 @@ Intelligence output passes through Hypatia's voice register (`.clinerules/02-voi
 ## Cross-references
 
 - **Consolidation methodology (capture → promote)**: `learning-loop.md`
-- **CSR routing pattern**: `.clinerules/07-intelligence-layer.md`
-- **Cognitive application tables**: `.clinerules/06-cognitive.md § Applying patterns, knowledge, reasoning`
-- **Save command (records but does NOT auto-promote)**: `.clinerules/08-save-command.md`
+- **CSR routing pattern**: `.roo/rules-hypatia/07-intelligence-layer.md`
+- **Cognitive application tables**: `.roo/rules-hypatia/06-cognitive.md § Applying patterns, knowledge, reasoning`
+- **Save command (records but does NOT auto-promote)**: `.roo/rules-hypatia/08-save-command.md`
 - **Memory protocol (capture-then-consolidate flow)**: `../memory-protocol.md`
 - **Inbox capture format**: `../../inbox/SCHEMA.md`
 - **Critical file protection (cascade safety on removal)**: `../CRITICAL-FILE-PROTECTION.md`
 
 ---
 
-*Single source for intelligence operations. Data lives in JSON files; consolidation methodology lives in `learning-loop.md`; runtime application lives in `.clinerules/06-cognitive.md`.*
+*Single source for intelligence operations. Data lives in JSON files; consolidation methodology lives in `learning-loop.md`; runtime application lives in `.roo/rules-hypatia/06-cognitive.md`.*

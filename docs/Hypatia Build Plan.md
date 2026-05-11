@@ -100,7 +100,7 @@ Goal: functional Hypatia in Cline, usable daily for manual-ingest + vault-librar
 - Directory skeleton:
   ```
   Hypatia/
-  ├── .clinerules/                     # Cline system-prompt rules (split from Nathaniel.md)
+  ├── .roo/rules-hypatia/                     # Cline system-prompt rules (split from Nathaniel.md)
   ├── .vscode/settings.json            # Cline permissions mirroring .claude/settings.json pattern
   ├── hypatia-kb/                      # Hypatia's knowledge base (renamed from hypatia-kb)
   │   ├── Intelligence/                # patterns, knowledge, reasoning, cross-refs, synonym-map
@@ -118,9 +118,9 @@ Goal: functional Hypatia in Cline, usable daily for manual-ingest + vault-librar
 - Initial commit: `chore: initial scaffold`.
 
 **Day 3-4: Kernel decomposition**
-- Split Nathaniel.md (2,576 lines) into numbered `.clinerules/*.md` files. Target layout:
+- Split Nathaniel.md (2,576 lines) into numbered `.roo/rules-hypatia/*.md` files. Target layout:
   ```
-  .clinerules/
+  .roo/rules-hypatia/
   ├── 01-identity.md              # ~60 lines — Hypatia name, super-objective, role, irreducible self
   ├── 02-voice.md                 # ~80 lines — concise academic librarian register (REWRITE from Bell's AAVE section)
   ├── 03-anti-patterns.md         # ~280 lines — from Nathaniel.md 638-921 (language, behavioral, truth, response, process)
@@ -138,12 +138,12 @@ Goal: functional Hypatia in Cline, usable daily for manual-ingest + vault-librar
 
 **Day 5: Cline configuration**
 - `.vscode/settings.json` with Cline auto-approval settings mirroring the TabulaJacqueliana `.claude/settings.json` permission philosophy: read-only git + grep + glob allowed; Edit/Write ASK per operation; destructive ops DENIED.
-- Test: install Cline, open Hypatia repo in VSCode, verify `.clinerules/` loads, verify persona responds in correct voice, verify Hypatia can read + edit files in the repo.
+- Test: install Cline, open Hypatia repo in VSCode, verify `.roo/rules-hypatia/` loads, verify persona responds in correct voice, verify Hypatia can read + edit files in the repo.
 
 **Deliverables end of Week 1:**
 - Hypatia repo committable with persona boot-ready
 - AJ can open VSCode, invoke Cline, Hypatia introduces herself as expected
-- Commit: `chore: establish Hypatia kernel in .clinerules/`
+- Commit: `chore: establish Hypatia kernel in .roo/rules-hypatia/`
 
 ### Week 2 — Intelligence stores + protocol files
 
@@ -179,7 +179,7 @@ Goal: functional Hypatia in Cline, usable daily for manual-ingest + vault-librar
   - `assistant-problem-solve.md` (adapted from problem-solving-protocol)
   - `assistant-ingest.md` (NEW — no Bell analog — the zettelkasten-specific Seed-creation workflow)
 
-- **Normalize trigger keywords** — every protocol file has `**Keywords**:` line at top; ALSO has an entry in `.clinerules/10-skills-loading.md` keyword map. Write a `scripts/check-keyword-drift.py` linter that fails CI if the two diverge. Bell didn't do this; it's the drift landmine Hypatia avoids.
+- **Normalize trigger keywords** — every protocol file has `**Keywords**:` line at top; ALSO has an entry in `.roo/rules-hypatia/10-skills-loading.md` keyword map. Write a `scripts/check-keyword-drift.py` linter that fails CI if the two diverge. Bell didn't do this; it's the drift landmine Hypatia avoids.
 
 - **Strip Kiro-specific references** from every protocol during port. Grep for `.kiro/`, `Kiro IDE`, `kiro-cli`, `Sir`, `Nate`, WSL references, etc.
 
@@ -196,7 +196,7 @@ Goal: functional Hypatia in Cline, usable daily for manual-ingest + vault-librar
 **Day 11-12: Decision routes**
 - `hypatia-kb/protocols/decision-routes.md` — port Hypatia-Protocol.md Routes A-F verbatim with Hypatia-specific examples.
 - **Apply the 4 fixes** I flagged earlier vs my TabulaJacqueliana port: restore Route E "just do it" override language; restore Route B expertise-detection in skip-explanation; tighten Route F verification-rule language (don't punt back to user); drop the CoV reference pointer that no longer exists.
-- This is the ONE protocol always-loaded-by-default (not keyword-triggered) — goes in `.clinerules/` not `hypatia-kb/protocols/`. Add as `.clinerules/11-decision-routes.md`.
+- This is the ONE protocol always-loaded-by-default (not keyword-triggered) — goes in `.roo/rules-hypatia/` not `hypatia-kb/protocols/`. Add as `.roo/rules-hypatia/11-decision-routes.md`.
 
 **Deliverables end of Week 2:**
 - All 13 protocols drafted
@@ -329,7 +329,7 @@ Goal: advanced retrieval across intelligence stores. Bell's vectorstore ported n
 
 ```
 Hypatia/
-├── .clinerules/
+├── .roo/rules-hypatia/
 │   ├── 01-identity.md                    Hypatia: name, super-objective, role
 │   ├── 02-voice.md                       concise academic librarian register
 │   ├── 03-anti-patterns.md               from Nathaniel.md 638-921, adapted
@@ -414,12 +414,12 @@ Hypatia/
 
 | Bell's file | Disposition | Effort |
 |---|---|---|
-| `.steering-files/steering/Nathaniel.md` (2,576 lines) | **Decompose** into `.clinerules/01-11.md`. Rewrite voice section. Strip Kiro/Bell. | 2-3 days |
+| `.steering-files/steering/Nathaniel.md` (2,576 lines) | **Decompose** into `.roo/rules-hypatia/01-11.md`. Rewrite voice section. Strip Kiro/Bell. | 2-3 days |
 | `.steering-files/steering/tool-inventory.md` (119) | Adapt: replace Kiro tool names with Cline's; update the guidance per Cline's behavior. | 2 hours |
 | `.steering-files/agents/analyst/*` (4 files, 729 lines) | **Defer to Phase 2+**. Keep pattern (4-file manifest+prompt+consciousness+specialization). When we need the "researcher" skill to have its own context, port these as a Cline custom mode. | Phase 2 |
 | `.steering-files/settings/mcp.json` | Adapt: 3 MCP servers (time, secure-fetch, hypatia-vectorstore). Servers #2-3 pointing at Hypatia paths. | 30 min |
 | `.steering-files/settings.json` (Kiro trustedCommands) | Replace with `.vscode/settings.json` using Cline's config schema. | 1 hour |
-| `hypatia-kb/Hypatia-Protocol.md` (2,070 lines, Decision Routes A-F) | **Put into `.clinerules/11-decision-routes.md`**. Apply 4 flagged fixes. | 4 hours |
+| `hypatia-kb/Hypatia-Protocol.md` (2,070 lines, Decision Routes A-F) | **Put into `.roo/rules-hypatia/11-decision-routes.md`**. Apply 4 flagged fixes. | 4 hours |
 | `hypatia-kb/*-protocol.md` (13 files, ~7,000 LOC) | **Port all 13** → remap to 4-skill-cluster naming. Strip Kiro. Inject zettelkasten content. | 4-6 days |
 | `hypatia-kb/Intelligence/*.json` + `-index.json` | Keep empty scaffold with schemas; let Hypatia's usage populate. | 1 day (schema validation setup) |
 | `hypatia-kb/Memory/*.json` | Seed with Hypatia identity + 5-7 preferences. | 2 hours |
@@ -494,7 +494,7 @@ Lockfile via `uv lock`; committed.
 
 ### What works cross-machine (committed to git, portable)
 
-- All `.clinerules/` files (markdown)
+- All `.roo/rules-hypatia/` files (markdown)
 - All `hypatia-kb/protocols/*.md`
 - All `hypatia-kb/Intelligence/*.json` + `-index.json` (JSON, deterministic)
 - All `hypatia-kb/Memory/*.json`
@@ -518,7 +518,7 @@ Lockfile via `uv lock`; committed.
 2. Opens Hypatia repo folder in VSCode.
 3. First-run detection: `scripts/setup.sh` checks for `hypatia.config.yaml`. If absent, prompts for vault path. Writes config.
 4. `setup.sh` creates venv if absent, installs deps.
-5. VSCode + Cline picks up `.clinerules/` automatically.
+5. VSCode + Cline picks up `.roo/rules-hypatia/` automatically.
 6. Hypatia introduces herself; session starts.
 7. On Phase 3: first `hypatia_search` tool call triggers fastembed download if cache absent.
 
@@ -540,8 +540,8 @@ Budget: 1-2 weeks to add Windows-native support. Defer unless needed.
 
 **HIGH risk**
 
-1. **Trigger-keyword drift** between `.clinerules/10-skills-loading.md` and each `protocols/*.md` file's `**Keywords**:` line. Bell has this bug; Hypatia solves via `scripts/check-keyword-drift.py` pre-commit.
-2. **`consciousness.md` drift pattern** (Bell): sub-agent files can get stale against kernel. Hypatia mitigation: if we add sub-agent pattern in Phase 2+, enforce "consciousness is auto-extracted from .clinerules/ at build time, never hand-edited."
+1. **Trigger-keyword drift** between `.roo/rules-hypatia/10-skills-loading.md` and each `protocols/*.md` file's `**Keywords**:` line. Bell has this bug; Hypatia solves via `scripts/check-keyword-drift.py` pre-commit.
+2. **`consciousness.md` drift pattern** (Bell): sub-agent files can get stale against kernel. Hypatia mitigation: if we add sub-agent pattern in Phase 2+, enforce "consciousness is auto-extracted from .roo/rules-hypatia/ at build time, never hand-edited."
 3. **Voice rewrite risk** — Bell's voice sections are irreducibly his (southern urban AAVE, "bet," "deadass"). Swapping to "concise academic librarian" is a from-scratch write; hard to get right on first pass. Iterate based on usage.
 4. **fcntl = POSIX only** — users who switch to Windows mid-session lose save-session functionality without WSL. Document prominently. Phase 2+ decision: port to `portalocker` or leave as-is.
 
@@ -555,7 +555,7 @@ Budget: 1-2 weeks to add Windows-native support. Defer unless needed.
 **LOW risk**
 
 9. **MCP tool name collision** — if Hypatia's vectorstore registers `hypatia_search`, and user also has other MCP servers with similar names, Cline may show ambiguous tool choices. Namespace prefix handles.
-10. **Cline extension API changes** — Cline is under active development; `.clinerules/` schema may change. Pin Cline version in README's minimum-version recommendation.
+10. **Cline extension API changes** — Cline is under active development; `.roo/rules-hypatia/` schema may change. Pin Cline version in README's minimum-version recommendation.
 11. **obsidian-git + Hypatia commits** — Hypatia in the vault will create git commits; obsidian-git auto-backup every 15 min will also commit. Potential race / noise. Mitigation: same as TabulaJacqueliana today; not a new problem.
 
 ---
@@ -583,6 +583,6 @@ Budget: 1-2 weeks to add Windows-native support. Defer unless needed.
 
 1. AJ reviews this plan; flags any changes to decisions, scope, or ordering.
 2. On approval: create the new repo (AJ decides location), run `git init`, commit scaffold.
-3. Day 1 of Phase 1 begins: decompose Nathaniel.md → `.clinerules/01-11.md`.
+3. Day 1 of Phase 1 begins: decompose Nathaniel.md → `.roo/rules-hypatia/01-11.md`.
 
 **Estimated total calendar time, Phase 1 only:** 2-3 weeks with ~40-60 hours of focused work, assuming 10-20 hours/week available.

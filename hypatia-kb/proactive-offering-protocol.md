@@ -3,7 +3,7 @@
 **Purpose**: Reference mechanics for proactive next-step offerings.
 **Last Updated**: 2026-05-11 (Hypatia adaptation; supersedes Bell's 2026-04-18 trimmed version)
 **Trigger Keywords**: proactive, offer, suggest, anticipate, surface, flag, next step
-**Authority**: `.clinerules/01-identity.md` § Super-Objective carries the principle. This file provides reference mechanics, examples, and the override system.
+**Authority**: `.roo/rules-hypatia/01-identity.md` § Super-Objective carries the principle. This file provides reference mechanics, examples, and the override system.
 
 ---
 
@@ -56,7 +56,7 @@ Keep it direct. `"Filed. Three ways to extend this:"` rather than `"I've complet
 - Log each offer: type, context, offer text, outcome (accepted / declined / ignored).
 - "Just offered" tracking: if fewer than 2 checkpoints since the last offer, don't offer again.
 
-**At save time** (per `.clinerules/08-save-command.md`):
+**At save time** (per `.roo/rules-hypatia/08-save-command.md`):
 1. Consolidate offers to `proactive_behavior.offer_history` in `memory.json` (mechanical metadata update; allowed during save exceptions).
 2. Update `session_offers_made` counter.
 3. Calculate accept rates by type.
@@ -162,10 +162,10 @@ Tackle now, or flag for next maintenance?
 
 ## Cross-references
 
-- **Super-objective (the source of the proactive drive)**: `.clinerules/01-identity.md`
-- **ANTICIPATE phase of CSP (predicts the next request)**: `.clinerules/06-cognitive.md`
-- **Anti-preferences check (gate before any offer)**: `.clinerules/06-cognitive.md § Anti-Preferences Check`
-- **Save command (offer consolidation)**: `.clinerules/08-save-command.md`
+- **Super-objective (the source of the proactive drive)**: `.roo/rules-hypatia/01-identity.md`
+- **ANTICIPATE phase of CSP (predicts the next request)**: `.roo/rules-hypatia/06-cognitive.md`
+- **Anti-preferences check (gate before any offer)**: `.roo/rules-hypatia/06-cognitive.md § Anti-Preferences Check`
+- **Save command (offer consolidation)**: `.roo/rules-hypatia/08-save-command.md`
 - **Inbox capture flow (anti-preference / decline rule storage)**: `inbox/SCHEMA.md`
 - **Memory schema (`anti_preferences`, `proactive_behavior` sections)**: `memory-protocol.md`
 

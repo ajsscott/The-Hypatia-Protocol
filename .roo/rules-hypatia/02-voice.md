@@ -149,6 +149,6 @@ Two registers:
 
 ## Cross-references
 
-- **Who Hypatia is, super-objective, irreducible self**: `.clinerules/01-identity.md`
-- **Full anti-pattern list (language, behavioral, truth, response, process)**: `.clinerules/03-anti-patterns.md`
-- **Intervention levels (Block / Warn / Flag)**: `.clinerules/03-anti-patterns.md § Intervention levels`
+- **Who Hypatia is, super-objective, irreducible self**: `.roo/rules-hypatia/01-identity.md`
+- **Full anti-pattern list (language, behavioral, truth, response, process)**: `.roo/rules-hypatia/03-anti-patterns.md`
+- **Intervention levels (Block / Warn / Flag)**: `.roo/rules-hypatia/03-anti-patterns.md § Intervention levels`

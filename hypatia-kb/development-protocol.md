@@ -75,7 +75,7 @@ This protocol covers universal dev practices that apply to that work. Cross-refe
 - `pathlib.Path` over `os.path` string manipulation.
 - Context managers for file / resource handling: `with open(path) as f:`.
 
-**Forbidden** (per `.clinerules/03-anti-patterns.md § Code & technical work`):
+**Forbidden** (per `.roo/rules-hypatia/03-anti-patterns.md § Code & technical work`):
 - Bare `except:` or `except Exception:` without re-raise or structured log.
 - Mutable default arguments (`def f(items=[])` is a bug).
 - `print` where a logger belongs.
@@ -204,7 +204,7 @@ Don't explain WHAT the code does. Well-named identifiers do that. Don't referenc
 
 ## Security in development
 
-See `.clinerules/09-security.md` for the authoritative governance + `security-protocol.md` for specific patterns.
+See `.roo/rules-hypatia/09-security.md` for the authoritative governance + `security-protocol.md` for specific patterns.
 
 In-line dev-specific rules:
 
@@ -232,13 +232,13 @@ In-line dev-specific rules:
 - `main` (or `master`) is the integration branch.
 - Feature branches off `main`.
 - Vault: `work-safe` branch excludes personal content (`Seedlings/`, `Forests/`).
-- No force-push to shared branches (kernel rule per `.clinerules/09-security.md`).
+- No force-push to shared branches (kernel rule per `.roo/rules-hypatia/09-security.md`).
 
 ### Pre-commit gates
 
 - `scripts/pre-commit-kb-validate.sh` validates JSON stores before commit.
 - `.gitattributes` filter chain sanitizes Memory + Intelligence content on commit.
-- Tests run on save command's git commit step (per `.clinerules/08-save-command.md`).
+- Tests run on save command's git commit step (per `.roo/rules-hypatia/08-save-command.md`).
 
 ---
 
@@ -268,7 +268,7 @@ When delivering code:
 
 ## Anti-Patterns
 
-See `.clinerules/03-anti-patterns.md § Code & technical work` for the canonical list. In summary:
+See `.roo/rules-hypatia/03-anti-patterns.md § Code & technical work` for the canonical list. In summary:
 
 - Placeholder code that doesn't actually work.
 - TODO comments without context.
@@ -285,10 +285,10 @@ See `.clinerules/03-anti-patterns.md § Code & technical work` for the canonical
 
 ## Cross-references
 
-- **Anti-patterns (canonical)**: `.clinerules/03-anti-patterns.md § Code & technical work`
-- **Tool inventory (Roo tools, when to use which)**: `.clinerules/05-tools.md`
-- **Save command (commits during dev work)**: `.clinerules/08-save-command.md`
-- **Security gates (credentials, sensitive paths)**: `.clinerules/09-security.md` + `security-protocol.md`
+- **Anti-patterns (canonical)**: `.roo/rules-hypatia/03-anti-patterns.md § Code & technical work`
+- **Tool inventory (Roo tools, when to use which)**: `.roo/rules-hypatia/05-tools.md`
+- **Save command (commits during dev work)**: `.roo/rules-hypatia/08-save-command.md`
+- **Security gates (credentials, sensitive paths)**: `.roo/rules-hypatia/09-security.md` + `security-protocol.md`
 - **Critical file protection**: `CRITICAL-FILE-PROTECTION.md`
 - **Problem-solving (debug methodology)**: `problem-solving-protocol.md`
 - **Planning (project decomposition)**: `planning-protocol.md`

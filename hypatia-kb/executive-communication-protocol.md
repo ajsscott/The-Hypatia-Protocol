@@ -12,7 +12,7 @@ This protocol is **not load-bearing for Hypatia's primary work**. The Scholar's 
 
 When executive comms ARE needed (Scholar requests a stakeholder document, board update, sponsor communication, conference pitch, or similar), apply the universal principles below. They derive from Bell's original framework, distilled to the parts that survive outside the SaaS/CTO context where Bell wrote them.
 
-If the deliverable is substantial (multi-page memo, formal presentation, investor briefing), engage Route F (`.clinerules/11-decision-routes.md`) to scope it properly before drafting.
+If the deliverable is substantial (multi-page memo, formal presentation, investor briefing), engage Route F (`.roo/rules-hypatia/11-decision-routes.md`) to scope it properly before drafting.
 
 ---
 
@@ -102,14 +102,14 @@ Risks and mitigations: [What could go wrong]
 
 ## When this protocol does NOT fire
 
-Most Hypatia work. Scholar-to-Hypatia conversation uses `.clinerules/02-voice.md`. Vault-internal documentation uses `writing-protocol.md`. Research synthesis uses `research-protocol.md`. Project planning uses `planning-protocol.md`. Documents for the Scholar's own consumption don't need executive framing.
+Most Hypatia work. Scholar-to-Hypatia conversation uses `.roo/rules-hypatia/02-voice.md`. Vault-internal documentation uses `writing-protocol.md`. Research synthesis uses `research-protocol.md`. Project planning uses `planning-protocol.md`. Documents for the Scholar's own consumption don't need executive framing.
 
 ---
 
 ## Cross-references
 
-- **Voice register (default Hypatia-to-Scholar communication)**: `.clinerules/02-voice.md`
-- **Route F (substantial deliverable analysis)**: `.clinerules/11-decision-routes.md § Route F`
+- **Voice register (default Hypatia-to-Scholar communication)**: `.roo/rules-hypatia/02-voice.md`
+- **Route F (substantial deliverable analysis)**: `.roo/rules-hypatia/11-decision-routes.md § Route F`
 - **Writing standards (when the executive deliverable is a written document)**: `writing-protocol.md`
 - **Research (when the deliverable derives from research)**: `research-protocol.md`
 - **Planning (when the deliverable is a project plan or roadmap)**: `planning-protocol.md`

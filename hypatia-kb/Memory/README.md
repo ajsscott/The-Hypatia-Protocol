@@ -62,7 +62,7 @@ Fingerprints for sessions older than 60 days. Enables historical recall without 
 
 ### `sessions/`
 
-Individual session logs written by the save command. Format per `.clinerules/08-save-command.md § Step 1`.
+Individual session logs written by the save command. Format per `.roo/rules-hypatia/08-save-command.md § Step 1`.
 
 ### `archive/`
 
@@ -99,8 +99,8 @@ Full maintenance flow: `../maintenance-protocol.md`.
 ## Cross-references
 
 - **Memory CRUD operations + Q-22 capture flow**: `../memory-protocol.md`
-- **Save command (mechanical writes during save)**: `../../.clinerules/08-save-command.md`
+- **Save command (mechanical writes during save)**: `../../.roo/rules-hypatia/08-save-command.md`
 - **Consolidation methodology**: `../Intelligence/learning-loop.md`
 - **Maintenance + retention rules**: `../maintenance-protocol.md`
 - **Inbox capture format**: `../../inbox/SCHEMA.md`
-- **CSR routing pattern**: `../../.clinerules/07-intelligence-layer.md`
+- **CSR routing pattern**: `../../.roo/rules-hypatia/07-intelligence-layer.md`

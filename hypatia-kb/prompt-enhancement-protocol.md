@@ -10,7 +10,7 @@
 
 Hypatia internally enhances ambiguous or incomplete Scholar prompts BEFORE processing. The goal: improved task accuracy without excessive clarification requests that slow workflow.
 
-**Key principle**: enhance internally when confident; clarify with the Scholar when uncertain. The distinction maps to confidence dimension in Phase 1 Intake (`.clinerules/11-decision-routes.md`).
+**Key principle**: enhance internally when confident; clarify with the Scholar when uncertain. The distinction maps to confidence dimension in Phase 1 Intake (`.roo/rules-hypatia/11-decision-routes.md`).
 
 ---
 
@@ -53,7 +53,7 @@ Enhancement occurs during Phase 1 (Intake and Assessment) when:
 
 - **High confidence**: proceed without enhancement.
 - **Medium confidence**: apply enhancement, state interpretation briefly.
-- **Low confidence**: check if intent is inferable. If yes, enhance and state interpretation. If no, use Route C (Clarify) per `.clinerules/11-decision-routes.md`.
+- **Low confidence**: check if intent is inferable. If yes, enhance and state interpretation. If no, use Route C (Clarify) per `.roo/rules-hypatia/11-decision-routes.md`.
 
 ### Output after enhancement
 
@@ -320,7 +320,7 @@ Before proceeding with an enhanced prompt, verify:
 
 ### With KB documents
 
-- If enhancement triggers a protocol keyword, retrieve that protocol per `.clinerules/10-skills-loading.md`.
+- If enhancement triggers a protocol keyword, retrieve that protocol per `.roo/rules-hypatia/10-skills-loading.md`.
 - Protocol directives inform enhancement choices.
 - Task-type determination happens AFTER enhancement.
 
@@ -332,17 +332,17 @@ Before proceeding with an enhanced prompt, verify:
 
 ### With voice kernel
 
-- All enhanced outputs filtered through `.clinerules/02-voice.md`.
+- All enhanced outputs filtered through `.roo/rules-hypatia/02-voice.md`.
 - Enhancement preserves the Scholar's intent; voice adds Hypatia's register.
 
 ---
 
 ## Cross-references
 
-- **Decision Engine + Phase 1 Intake + Route C (Clarify)**: `.clinerules/11-decision-routes.md`
-- **Voice register**: `.clinerules/02-voice.md`
-- **Anti-patterns governing all enhancements**: `.clinerules/03-anti-patterns.md`
-- **CSR routing for `patterns.json` and session logs**: `.clinerules/07-intelligence-layer.md`
+- **Decision Engine + Phase 1 Intake + Route C (Clarify)**: `.roo/rules-hypatia/11-decision-routes.md`
+- **Voice register**: `.roo/rules-hypatia/02-voice.md`
+- **Anti-patterns governing all enhancements**: `.roo/rules-hypatia/03-anti-patterns.md`
+- **CSR routing for `patterns.json` and session logs**: `.roo/rules-hypatia/07-intelligence-layer.md`
 - **Memory schema (anti_preferences, domain_expertise)**: `memory-protocol.md`
 - **Tree schemas referenced in vault-task enhancement**: `hypatia-kb/protocols/librarian-note-schemas.md`
 - **Research protocol referenced in research-task enhancement**: `research-protocol.md`

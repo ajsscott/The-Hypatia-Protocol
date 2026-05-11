@@ -23,7 +23,7 @@ this file contradicts the plan, this file is correct.
 | 7 | `validate-schemas.py` 312 LOC | **163 LOC** | LOW | Less work than planned; still port verbatim. |
 | 8 | ~40 `fs_read` occurrences | **35 total Kiro tool refs: 8 fs_read + 11 fs_write + 16 execute_bash** (0 fs_append/fs_edit/fs_list/fs_delete/search_file_content) | LOW | Plan's grep-pass holds; count is accurate at aggregate level. |
 | 9 | `save-session.py` hardcodes `nate@pocket-hq.local` | **Not in `save-session.py`; it's in `scripts/setup.sh:463` (WSL branch) and `:484` (native branch)** | MED | Fix both in setup.sh during Phase 1 Week 3; make config-driven. |
-| 10 | CSR + RRF both exist as Python to port | **CSR is BEHAVIORAL (kernel + index JSON), not Python. Only RRF is Python.** See §CSR clarification below. | HIGH | Phase 3 Python port is RRF only; CSR lives in Phase 1 `.clinerules/07-intelligence-layer.md`. Q4 deferred — AJ to verify. |
+| 10 | CSR + RRF both exist as Python to port | **CSR is BEHAVIORAL (kernel + index JSON), not Python. Only RRF is Python.** See §CSR clarification below. | HIGH | Phase 3 Python port is RRF only; CSR lives in Phase 1 `.roo/rules-hypatia/07-intelligence-layer.md`. Q4 deferred — AJ to verify. |
 | 11 | `knowledge.json` 447 / `memory.json` 24 / `patterns.json` 211 / `reasoning.json` 126 entries | ✓ all confirmed | — | No action |
 | 12 | Bell-personal refs ~"a few per store" / synonym-map ~5 | **689 Nate/Kiro/Nathaniel refs total across 4 JSON stores (438 in knowledge.json alone)** | HIGH | Per Q6 decision 2026-04-22: ship empty stores. No `reseed.py` review pass. |
 | 13 | Sub-agent 4-file pattern, 729 L | 4 files / 709 L (55/51/425/178) | — | No action |
@@ -66,7 +66,7 @@ RRF (the fusion algorithm) from CSR (the routing pattern). Good.
   INFO, not error (system degrades gracefully to CSR-only)"
 
 **Implication:** CSR is kernel behavior + JSON scaffolding, not code. The
-Hypatia implementation lives in `.clinerules/07-intelligence-layer.md`
+Hypatia implementation lives in `.roo/rules-hypatia/07-intelligence-layer.md`
 (instructing the LLM to consult `*-index.json` before loading `*.json`) and
 in the empty-but-schema-valid index files we ship in Phase 1 Day 6-7.
 
@@ -262,7 +262,7 @@ this is the full pre-Phase-2 timeline.
 
 ## Files this addendum does NOT change
 
-- Build Plan § Phase 1 architecture decomposition (`.clinerules/01-11.md`
+- Build Plan § Phase 1 architecture decomposition (`.roo/rules-hypatia/01-11.md`
   layout — still correct)
 - Build Plan § "Terminology reset" (RRF / CSR / IMG / CSP definitions — all
   correct except for the CSR-is-Python implication elsewhere in plan)

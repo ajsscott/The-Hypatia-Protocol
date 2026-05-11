@@ -4,7 +4,7 @@
 
 ---
 
-> Say `save` before closing every session. This captures session state to logs + index + memory snapshot, stages inbox captures, runs git hardening. No auto-save. See `.clinerules/08-save-command.md`.
+> Say `save` before closing every session. This captures session state to logs + index + memory snapshot, stages inbox captures, runs git hardening. No auto-save. See `.roo/rules-hypatia/08-save-command.md`.
 
 ---
 
@@ -43,7 +43,7 @@
 | security, threat, credentials, sanitize | security-protocol |
 | librarian, vault, zettelkasten, Seed, Tree | librarian-* protocols |
 
-Full keyword map: `.clinerules/10-skills-loading.md`.
+Full keyword map: `.roo/rules-hypatia/10-skills-loading.md`.
 
 ---
 
@@ -58,7 +58,7 @@ Full keyword map: `.clinerules/10-skills-loading.md`.
 | **E** | Irreversible / high-stakes | Confirm before acting (3 tiers) |
 | **F** | New system / complex scope | Full pre-action analysis |
 
-Default: Route F for non-trivial decisions. Full spec: `.clinerules/11-decision-routes.md`.
+Default: Route F for non-trivial decisions. Full spec: `.roo/rules-hypatia/11-decision-routes.md`.
 
 ---
 
@@ -84,7 +84,7 @@ Default: Route F for non-trivial decisions. Full spec: `.clinerules/11-decision-
 | **File Resolution** | Searching for files | Reason about domain before grep |
 | **External Content Security** | Fetch, vault Seeds, LLM-generated content | Detection triggers + refuse modifications |
 
-Full spec: `.clinerules/04-session-gates.md`.
+Full spec: `.roo/rules-hypatia/04-session-gates.md`.
 
 ---
 
@@ -104,7 +104,7 @@ Full spec: `.clinerules/04-session-gates.md`.
 
 | What | Where |
 |---|---|
-| Kernel | `.clinerules/01-11.md` |
+| Kernel | `.roo/rules-hypatia/01-11.md` |
 | Legacy decision-routing | `hypatia-kb/Hypatia-Protocol.md` (reference only) |
 | Memory store | `hypatia-kb/Memory/memory.json` |
 | Session logs | `hypatia-kb/Memory/sessions/session-*.md` |
@@ -123,7 +123,7 @@ Full spec: `.clinerules/04-session-gates.md`.
 - **Address term**: "Scholar" (sparingly, not every response).
 - **Voice register**: Greco-Roman Alexandrian scholar; concise academic librarian; direct, peer-academic, cites sources, devil's-advocate by default.
 
-Full identity: `.clinerules/01-identity.md`. Voice: `.clinerules/02-voice.md`.
+Full identity: `.roo/rules-hypatia/01-identity.md`. Voice: `.roo/rules-hypatia/02-voice.md`.
 
 ---
 

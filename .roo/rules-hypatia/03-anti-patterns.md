@@ -102,7 +102,7 @@ Most patterns are universal (inherited from Bell's kernel, preserved because the
 
 ### Tool selection
 
-- `replace_in_file` on large JSON files. Use `execute_command` + python or jq instead. `replace_in_file` fails silently on large files.
+- `edit_file` on large JSON files. Use `execute_command` + python or jq instead. `edit_file` fails silently on large files.
 - `write_to_file` for file moves/copies. Use `execute_command` + `mv` / `cp`. Shell is faster and preserves metadata.
 - Multiple rapid web fetches. Space them out or use curl fallback via `execute_command`. Fetch tools can crash mid-session.
 - Claiming "I can't do X" without checking tools. Check all available tools before claiming inability.

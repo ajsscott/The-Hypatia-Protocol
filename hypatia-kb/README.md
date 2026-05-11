@@ -8,8 +8,8 @@
 
 | Layer | Location | What it does |
 |---|---|---|
-| **Kernel** | `.clinerules/` (11 files) | Identity, voice, anti-patterns, gates, tools, cognitive layer, intelligence layer, save command, security, skills-loading, decision routes |
-| **Legacy decision-routing reference** | `Hypatia-Protocol.md` | Bell's original Routes A-F (superseded by `.clinerules/11-decision-routes.md`; retained for archaeology) |
+| **Kernel** | `.roo/rules-hypatia/` (11 files) | Identity, voice, anti-patterns, gates, tools, cognitive layer, intelligence layer, save command, security, skills-loading, decision routes |
+| **Legacy decision-routing reference** | `Hypatia-Protocol.md` | Bell's original Routes A-F (superseded by `.roo/rules-hypatia/11-decision-routes.md`; retained for archaeology) |
 | **Protocols** | `*.md` (13 files in this directory) | Domain-specific behavior (memory, maintenance, research, writing, etc.); keyword-triggered lazy-load |
 | **Librarian protocols** | `protocols/librarian-*.md` (5 files + README) | Vault-specific librarian behavior migrated from TabulaJacqueliana CLAUDE.md (Phase 0) |
 | **Intelligence** | `Intelligence/` | Three learning layers: patterns, knowledge, reasoning (ship empty; grow via inbox consolidation) |
@@ -29,7 +29,7 @@ Three stores that compound over time:
 | **Knowledge** | `Intelligence/knowledge.json` | Factual claims: facts, solutions, tool behavior |
 | **Reasoning** | `Intelligence/reasoning.json` | Derived conclusions: analogies, cross-store synthesis |
 
-Each store has a lightweight index (`*-index.json`) for Context Signal Routing (CSR). Full entries loaded on-demand, not eagerly. See `.clinerules/07-intelligence-layer.md` for the CSR pattern.
+Each store has a lightweight index (`*-index.json`) for Context Signal Routing (CSR). Full entries loaded on-demand, not eagerly. See `.roo/rules-hypatia/07-intelligence-layer.md` for the CSR pattern.
 
 Cross-references (`Intelligence/cross-references.json`) link entries across stores. Retrieving a pattern can surface the reasoning that explains it.
 
@@ -54,7 +54,7 @@ See `memory-protocol.md` for CRUD operations and capture-then-consolidate flow.
 
 ## Protocols (this directory)
 
-13 domain protocols + 5 librarian protocols, keyword-triggered via `.clinerules/10-skills-loading.md`:
+13 domain protocols + 5 librarian protocols, keyword-triggered via `.roo/rules-hypatia/10-skills-loading.md`:
 
 ### Domain protocols
 
@@ -92,7 +92,7 @@ See `memory-protocol.md` for CRUD operations and capture-then-consolidate flow.
 
 | Command | What happens |
 |---|---|
-| `save` | Atomic save: session log + index update + last_session_snapshot + inbox flush + vectorstore sync + git commit (per `.clinerules/08-save-command.md`) |
+| `save` | Atomic save: session log + index update + last_session_snapshot + inbox flush + vectorstore sync + git commit (per `.roo/rules-hypatia/08-save-command.md`) |
 | `detailed save` | Same as save with full accounting per step |
 | `health check` | Non-destructive ecosystem audit (per `maintenance-protocol.md`) |
 | `full maintenance` | Health check + cleanup with confirmation |
@@ -121,7 +121,7 @@ The context window is the scarcest resource. Habits that keep usage lean:
 Two paths (per `customization-protocol.md`):
 
 1. Runtime commands: `"less proactive"`, `"I'm expert in X"`, `"don't suggest Y"`. Captures flow through inbox.
-2. Direct edits to `.clinerules/*` for kernel-level changes (requires Scholar confirmation; Tier 1 destructive per `.clinerules/04-session-gates.md`).
+2. Direct edits to `.roo/rules-hypatia/*` for kernel-level changes (requires Scholar confirmation; Tier 1 destructive per `.roo/rules-hypatia/04-session-gates.md`).
 
 **Locked at the kernel level** (immutable via runtime commands):
 - Name: Hypatia
@@ -141,7 +141,7 @@ Two paths (per `customization-protocol.md`):
 ## Adding new protocols
 
 1. Create `[domain]-protocol.md` in this directory or `protocols/` (subdir for librarian-style).
-2. Add trigger keywords to `.clinerules/10-skills-loading.md`.
+2. Add trigger keywords to `.roo/rules-hypatia/10-skills-loading.md`.
 3. Pre-commit gate (`scripts/check-keyword-drift.py`, Phase 1) validates alignment.
 
 ---
@@ -175,9 +175,9 @@ Schema documented in each file's `_schema` field (where present) or in `memory-p
 
 ## Cross-references
 
-- **Kernel (always-loaded)**: `.clinerules/`
-- **Save command**: `.clinerules/08-save-command.md`
-- **Protocol keyword map (single source of truth for triggers)**: `.clinerules/10-skills-loading.md`
+- **Kernel (always-loaded)**: `.roo/rules-hypatia/`
+- **Save command**: `.roo/rules-hypatia/08-save-command.md`
+- **Protocol keyword map (single source of truth for triggers)**: `.roo/rules-hypatia/10-skills-loading.md`
 - **Inbox capture flow**: `inbox/SCHEMA.md`
 - **Build plan**: `docs/Hypatia Build Plan.md` + `docs/hypatia-build-plan-addendum.md`
 

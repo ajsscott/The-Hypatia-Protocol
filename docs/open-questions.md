@@ -109,7 +109,7 @@ independently before accepting the "CSR is behavioral" framing.
 - `hypatia-kb/maintenance-protocol.md:90` — "degrades gracefully to CSR-only"
 
 **Placeholder assumption (until AJ confirms):** CSR is behavioral. Phase
-3 Python port is RRF + MCP only. `.clinerules/07-intelligence-layer.md`
+3 Python port is RRF + MCP only. `.roo/rules-hypatia/07-intelligence-layer.md`
 (Phase 1) carries the CSR kernel instructions. Phase 1 Day 6-7 ships
 empty-but-schema-valid `*-index.json` scaffolds.
 
@@ -377,7 +377,7 @@ Phase 1 Week 1 Day 5 prerequisite.
 Asked: 2026-04-22 during kernel decomposition planning.
 
 **Context:** Bell's 2,576-line monolithic kernel is always loaded in Kiro.
-Cline's `.clinerules/` behavior with 10+ files: do they all load?
+Cline's `.roo/rules-hypatia/` behavior with 10+ files: do they all load?
 Concatenated in order? Any size cap? Unknown without testing.
 
 **Needs:** Empirical test with Cline installed. Phase 1 Week 1 Day 5
@@ -591,7 +591,7 @@ the original Build Plan (that YOLO would continue) is now overridden.
 
 Asked: 2026-05-11  Status: ANSWERED  Decided by: AJ Strauman-Scott
 
-**Context:** During Phase 1 voice rewrite (consciousness.md + .clinerules/
+**Context:** During Phase 1 voice rewrite (consciousness.md + .roo/rules-hypatia/
 01-identity + 02-voice), AJ provided three persona directives that needed
 durable recording beyond commit messages. Build Plan § Voice (L135) had
 already specified "concise academic librarian: direct, peer-register, cites
@@ -616,7 +616,7 @@ sycophancy" but left address term, pronouns, and cultural register open.
 **Implications:**
 
 - consciousness.md rewritten in this register (commit 9ecf738).
-- .clinerules/01-identity.md and 02-voice.md encode the directives as
+- .roo/rules-hypatia/01-identity.md and 02-voice.md encode the directives as
   canonical persona spec (commit 0db8ec6).
 - The em-dash anti-pattern (Bell's, inherited verbatim) became enforceable
   against Hypatia's own files; 75 em-dashes scrubbed across the kernel

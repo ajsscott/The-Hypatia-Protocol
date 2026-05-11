@@ -24,8 +24,8 @@ This split is (2026-05-11). It preserves review-before-canon: Hypatia's inferenc
 
 **Related systems**:
 - Intelligence stores: `hypatia-kb/Intelligence/` (patterns, knowledge, reasoning, cross-references, synonym-map)
-- Save command: `.clinerules/08-save-command.md`
-- Intelligence layer (CSR routing): `.clinerules/07-intelligence-layer.md`
+- Save command: `.roo/rules-hypatia/08-save-command.md`
+- Intelligence layer (CSR routing): `.roo/rules-hypatia/07-intelligence-layer.md`
 
 ---
 
@@ -321,10 +321,10 @@ Optional fields: `key_decisions`, `files_modified`, `memories_recalled`, `inbox_
 | "Actually it's.", "I was wrong about.", "Correction:." | CAPTURE correction |
 
 ### Session end (save)
-- See `.clinerules/08-save-command.md`. Save records the session, flushes inbox captures (stages them in git), updates `last_session_snapshot`. Save does NOT auto-consolidate captures into `memory.json`.
+- See `.roo/rules-hypatia/08-save-command.md`. Save records the session, flushes inbox captures (stages them in git), updates `last_session_snapshot`. Save does NOT auto-consolidate captures into `memory.json`.
 
 ### Snapshot update (part of save)
-Already specified in `.clinerules/08-save-command.md § Step 3`. The save command updates `last_session_snapshot` with current counts. This enables session-diff on next start.
+Already specified in `.roo/rules-hypatia/08-save-command.md § Step 3`. The save command updates `last_session_snapshot` with current counts. This enables session-diff on next start.
 
 ---
 
@@ -392,7 +392,7 @@ Pruning prevents unbounded growth while preserving valuable context. Content is 
 
 ### PRUNE-CHECK
 
-**When**: save command step 7 (per `.clinerules/08-save-command.md`).
+**When**: save command step 7 (per `.roo/rules-hypatia/08-save-command.md`).
 
 **How**:
 1. Count items in each data store.
@@ -459,9 +459,9 @@ Pruning prevents unbounded growth while preserving valuable context. Content is 
 
 ## Cross-references
 
-- **Save command (where memory updates happen mechanically)**: `.clinerules/08-save-command.md`
-- **Intelligence layer (CSR routing)**: `.clinerules/07-intelligence-layer.md`
-- **Session gates (IMG fires before memory-touching inferences)**: `.clinerules/04-session-gates.md`
+- **Save command (where memory updates happen mechanically)**: `.roo/rules-hypatia/08-save-command.md`
+- **Intelligence layer (CSR routing)**: `.roo/rules-hypatia/07-intelligence-layer.md`
+- **Session gates (IMG fires before memory-touching inferences)**: `.roo/rules-hypatia/04-session-gates.md`
 - **Inbox capture schema (entry point)**: `inbox/SCHEMA.md`
 - **Vault maintenance (broader ecosystem cleanup)**: `maintenance-protocol.md`
 - **Learning loop (consolidation algorithm for intelligence stores)**: `Intelligence/learning-loop.md`

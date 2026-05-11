@@ -3,13 +3,13 @@
 **Purpose**: Deep structured problem-solving methodology for Complex and Novel problems.
 **Last Updated**: 2026-05-11 (Hypatia adaptation)
 **Trigger Keywords**: diagnose, root cause, decompose, trace, systematic, analyze problem, debug, troubleshoot, investigate
-**Dependency**: kernel Cognitive Problem-Solving stance (`.clinerules/06-cognitive.md`, always active)
+**Dependency**: kernel Cognitive Problem-Solving stance (`.roo/rules-hypatia/06-cognitive.md`, always active)
 
 ---
 
 ## When this protocol fires
 
-Extends `.clinerules/06-cognitive.md`'s OBSERVE → QUESTION → DEDUCE cycle with:
+Extends `.roo/rules-hypatia/06-cognitive.md`'s OBSERVE → QUESTION → DEDUCE cycle with:
 
 - Structured decomposition frameworks (5 Whys, Fault Tree, Condition Mapping, Option Matrix).
 - Evidence classification rigor.
@@ -78,7 +78,7 @@ If the sentence cannot be written, the problem is not yet understood. Return to 
 
 ### Option Matrix
 
-For design/strategy problems (not debugging), use Route D framework from `.clinerules/11-decision-routes.md § Route D`.
+For design/strategy problems (not debugging), use Route D framework from `.roo/rules-hypatia/11-decision-routes.md § Route D`.
 
 **Phase 2 output**: a root cause candidate (5 Whys), a ranked list of investigation targets (Fault Tree), a differentiating variable (Condition Mapping), or a set of evaluated options (Option Matrix).
 
@@ -101,7 +101,7 @@ For design/strategy problems (not debugging), use Route D framework from `.cline
 2. For each: what evidence supports it? What evidence contradicts it?
 3. Rank by: evidence strength, simplicity (Occam's razor), reversibility of the fix.
 4. Test the strongest hypothesis first.
-5. **Before testing**: state `"I expect [action] to [result] because [reasoning]."` (kernel hypothesis-first rule, see `.clinerules/06-cognitive.md`).
+5. **Before testing**: state `"I expect [action] to [result] because [reasoning]."` (kernel hypothesis-first rule, see `.roo/rules-hypatia/06-cognitive.md`).
 6. If the test fails, don't force-fit. State what specifically failed and why. Move to the next hypothesis.
 
 ### Deductive elimination
@@ -149,7 +149,7 @@ After solving, evaluate:
 4. Is this problem likely to recur? → candidate for Troubleshooting Gate entry (via inbox).
 5. Did DEDUCE produce a reusable conclusion from combining facts + context? → candidate for `reasoning.json` (via inbox).
 
-** flow**: every capture goes to `inbox/preferences/*.md` as a free-form markdown observation. The Scholar promotes during maintenance consolidation. Save command stages the inbox files; it does NOT auto-promote (per `.clinerules/08-save-command.md`).
+** flow**: every capture goes to `inbox/preferences/*.md` as a free-form markdown observation. The Scholar promotes during maintenance consolidation. Save command stages the inbox files; it does NOT auto-promote (per `.roo/rules-hypatia/08-save-command.md`).
 
 ---
 
@@ -239,11 +239,11 @@ After solving, evaluate:
 
 ## Cross-references
 
-- **Kernel cognitive stance (always-on)**: `.clinerules/06-cognitive.md`
-- **Complexity Gate classification**: `.clinerules/06-cognitive.md § Complexity Gate`
-- **Hypothesis-first stance**: `.clinerules/06-cognitive.md § Hypothesis-first`
-- **Failure-to-Fix Cycle (systemic failures)**: `.clinerules/06-cognitive.md § Failure-to-Fix Cycle`
-- **Save command (capture flush)**: `.clinerules/08-save-command.md`
+- **Kernel cognitive stance (always-on)**: `.roo/rules-hypatia/06-cognitive.md`
+- **Complexity Gate classification**: `.roo/rules-hypatia/06-cognitive.md § Complexity Gate`
+- **Hypothesis-first stance**: `.roo/rules-hypatia/06-cognitive.md § Hypothesis-first`
+- **Failure-to-Fix Cycle (systemic failures)**: `.roo/rules-hypatia/06-cognitive.md § Failure-to-Fix Cycle`
+- **Save command (capture flush)**: `.roo/rules-hypatia/08-save-command.md`
 - **Inbox capture format**: `inbox/SCHEMA.md`
-- **Decision routes (Option Matrix → Route D)**: `.clinerules/11-decision-routes.md`
+- **Decision routes (Option Matrix → Route D)**: `.roo/rules-hypatia/11-decision-routes.md`
 - **Domain anti-patterns (sed on multi-line YAML, etc.)**: `hypatia-kb/protocols/librarian-writing-rules.md § Lessons learned`

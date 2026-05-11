@@ -15,7 +15,7 @@ Cross-cutting maintenance that no single protocol owns: integrity verification, 
 - `memory-protocol.md` owns memory CRUD operations and pruning rules (retention thresholds, PRUNE-CHECK/EXECUTE).
 - `Intelligence/learning-loop.md` owns pattern/knowledge consolidation and index sync validation.
 - `CRITICAL-FILE-PROTECTION.md` owns safety rails for destructive operations.
-- `.clinerules/04-session-gates.md § Destructive Action Gate` governs every modify-state step.
+- `.roo/rules-hypatia/04-session-gates.md § Destructive Action Gate` governs every modify-state step.
 - This protocol orchestrates across all of them and adds integrity/growth coverage.
 
 **Principle**: this protocol does not duplicate rules defined elsewhere. It references them. If a retention threshold lives in `memory-protocol.md`, this protocol calls it, not redefines it.
@@ -196,7 +196,7 @@ CLEANUP NEEDED: [YES|NO]
 **When**: After HEALTH-CHECK reports issues, with Scholar confirmation.
 **Safety**: All operations follow `CRITICAL-FILE-PROTECTION.md`. Read before write. Confirm before delete.
 
-**Destructive Action Gate**: every step modifies state. Before each step, execute the Destructive Action Gate from `.clinerules/04-session-gates.md`: identify what's changing, classify risk tier, verify current state (read the file), confirm before executing Tier 1-2 actions.
+**Destructive Action Gate**: every step modifies state. Before each step, execute the Destructive Action Gate from `.roo/rules-hypatia/04-session-gates.md`: identify what's changing, classify risk tier, verify current state (read the file), confirm before executing Tier 1-2 actions.
 
 ### Execution order
 
@@ -364,7 +364,7 @@ Save command Part 7 runs PRUNE-CHECK per `memory-protocol.md`. This covers reten
 
 ### Monthly proactive (first session of month)
 
-Wired in `.clinerules/04-session-gates.md` (Session Start Gate):
+Wired in `.roo/rules-hypatia/04-session-gates.md` (Session Start Gate):
 
 - **Trigger**: session start + date is 1st-3rd of month.
 - **Action**: offer `"Monthly maintenance due. Run health check, Scholar?"`
@@ -430,15 +430,15 @@ This is a behavioral guideline, not an automated trigger. Relies on pattern reco
 | `CRITICAL-FILE-PROTECTION.md` | Safety rails for destructive operations |
 | `Intelligence/learning-loop.md` | Consolidation status checks, index rebuild (Step 9 Sync Validation Gate) |
 | `Intelligence/intelligence-operations.md` | Knowledge quality gates, pattern application rules |
-| `.clinerules/04-session-gates.md` | Destructive Action Gate procedure |
-| `.clinerules/09-security.md` | Defense-in-depth rules, git sanitization |
+| `.roo/rules-hypatia/04-session-gates.md` | Destructive Action Gate procedure |
+| `.roo/rules-hypatia/09-security.md` | Defense-in-depth rules, git sanitization |
 | `inbox/SCHEMA.md` | Inbox capture format |
 
 ### Documents that reference this protocol
 
 | File | Section |
 |---|---|
-| `.clinerules/10-skills-loading.md` | Protocol keyword map |
+| `.roo/rules-hypatia/10-skills-loading.md` | Protocol keyword map |
 | `memory-protocol.md` | Pruning Operations (cross-reference) |
 | `hypatia-kb/protocols/librarian-writing-rules.md § Active initiatives` | Vault maintenance Slope reference |
 

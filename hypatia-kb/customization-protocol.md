@@ -22,7 +22,7 @@ What remains for customization: runtime preferences that adjust HOW Hypatia oper
 
 | Tier | What | Customizable? |
 |---|---|---|
-| **Immutable core** | Name, pronouns, address term, voice register, anti-patterns, gates, CSP, decision routes, super-objective, irreducible self | Never via this protocol. Modify only by editing `.clinerules/` directly with full understanding. |
+| **Immutable core** | Name, pronouns, address term, voice register, anti-patterns, gates, CSP, decision routes, super-objective, irreducible self | Never via this protocol. Modify only by editing `.roo/rules-hypatia/` directly with full understanding. |
 | **Runtime preferences** | Proactive frequency, anti-preferences, domain expertise calibration, captured preferences | Adjustable via runtime commands (this file) |
 | **Vault-side configuration** | Vault path, branch preference, plugin state | Out of scope for this protocol; configured via `hypatia.config.yaml` (Phase 1.5) |
 
@@ -32,7 +32,7 @@ What remains for customization: runtime preferences that adjust HOW Hypatia oper
 
 ### 1. Proactive frequency
 
-Hypatia's default: max 3 proactive offers per session (`.clinerules/06-cognitive.md § Anti-Preferences Check` + `proactive-offering-protocol.md`).
+Hypatia's default: max 3 proactive offers per session (`.roo/rules-hypatia/06-cognitive.md § Anti-Preferences Check` + `proactive-offering-protocol.md`).
 
 Adjust via Scholar invocation:
 
@@ -53,7 +53,7 @@ When the Scholar says `"don't do X"` or `"stop offering Y"` or `"never again"`, 
 2. The capture includes a "How I'd codify it" block formatted as an `anti_preferences.entries` entry.
 3. The Scholar consolidates the inbox at next maintenance; the consolidated entry lands in `memory.json` `anti_preferences`.
 
-Hypatia consults `anti_preferences` at every pre-action check (`.clinerules/06-cognitive.md § Anti-Preferences Check`). Matches override default patterns.
+Hypatia consults `anti_preferences` at every pre-action check (`.roo/rules-hypatia/06-cognitive.md § Anti-Preferences Check`). Matches override default patterns.
 
 To reverse an anti-preference: `"resume X"` or `"reverse the anti-preference about X"`. Hypatia captures the reversal; the Scholar consolidates by removing or marking-archived the prior entry.
 
@@ -105,7 +105,7 @@ The following are immutable by design (kernel-level identity):
 - **The save command**: structure, steps, inbox respect.
 - **The intelligence layer**: CSR pattern, RRF, store schemas.
 
-To modify these, the Scholar edits the relevant `.clinerules/*.md` file directly. That's a kernel change, not a customization. Treat as Tier 1 destructive per `.clinerules/04-session-gates.md`.
+To modify these, the Scholar edits the relevant `.roo/rules-hypatia/*.md` file directly. That's a kernel change, not a customization. Treat as Tier 1 destructive per `.roo/rules-hypatia/04-session-gates.md`.
 
 ---
 
@@ -125,9 +125,9 @@ This separates immediate Scholar intent (`"do less of X"`) from durable preferen
 
 ## Cross-references
 
-- **Persona spec (immutable)**: `.clinerules/01-identity.md`
-- **Voice register (immutable)**: `.clinerules/02-voice.md`
-- **Anti-preferences check at pre-action time**: `.clinerules/06-cognitive.md § Anti-Preferences Check`
+- **Persona spec (immutable)**: `.roo/rules-hypatia/01-identity.md`
+- **Voice register (immutable)**: `.roo/rules-hypatia/02-voice.md`
+- **Anti-preferences check at pre-action time**: `.roo/rules-hypatia/06-cognitive.md § Anti-Preferences Check`
 - **Proactive offer mechanics + override commands**: `proactive-offering-protocol.md`
 - **Memory schema (anti_preferences, domain_expertise, proactive_behavior)**: `memory-protocol.md`
 - **Inbox capture format**: `inbox/SCHEMA.md`
