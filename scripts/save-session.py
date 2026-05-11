@@ -1,9 +1,23 @@
 #!/usr/bin/env python3
 """
-Save Session Script - Atomic JSON operations for the Nathaniel Protocol.
+Save Session Script - Atomic JSON operations for the Hypatia Protocol.
 
-Handles all JSON store and index mutations during save. Nate writes an ops file,
-this script executes all mechanical operations atomically.
+Handles JSON store and index mutations during save (and during Scholar-invoked
+maintenance consolidation). The save command writes an ops file; this script
+executes the mechanical operations atomically.
+
+The script runs in two modes:
+
+  SAVE MODE (routine, every-session): ops file contains session_index_entry
+    and memory_updates.snapshot ONLY. New entries to Memory/Intelligence
+    stores are FORBIDDEN per the inbox boundary: captures during sessions
+    go to inbox/preferences/, the Scholar consolidates manually. Save flushes
+    the inbox (git add) but does not promote.
+
+  CONSOLIDATE MODE (Scholar-invoked during maintenance): ops file MAY contain
+    new_patterns, new_knowledge, new_reasoning, and active_project_updates
+    representing the Scholar's curated promotion of inbox captures. The
+    script validates and writes them per Quality Gates.
 
 Usage: python3 scripts/save-session.py _save_ops_{session_id}.json
        python3 scripts/save-session.py --dry-run _save_ops_{session_id}.json
@@ -18,8 +32,8 @@ OPS FILE SCHEMA:
     session_index_entry: {id, date, tags, summary, outcome, outcome_note}
     OR flat: session_tags, session_summary, outcome, outcome_note
 
-  New entries (pick one format):
-    new_patterns: [...]          # Flat format (preferred)
+  Consolidation-mode entries (OMIT in save-mode per inbox boundary):
+    new_patterns: [...]          # Flat format
     new_knowledge: [...]
     new_reasoning: [...]
     OR new_entries: {patterns: [...], knowledge: [...], reasoning: [...]}
@@ -32,13 +46,14 @@ OPS FILE SCHEMA:
       version_bump: str,
       capture_taxonomy_increments: {category: count, ...}
     }
-    active_project_updates: [{name, ...}]
-    new_commitments: [{...}]
+    active_project_updates: [{name, ...}]   # Consolidation-mode only
+    new_commitments: [{...}]                # Consolidation-mode only
     resolved_commitments: [str]
     snapshot: {}                 # If present, auto-generates snapshot from store counts
 
   Options:
     vectorstore_sync: bool       # Default true
+    inbox_flush: bool            # Default true; stages inbox/preferences/ via git add
 
   WRONG FORMAT (will warn):
     patterns: {new: [...]}       # Use new_patterns instead
@@ -709,6 +724,42 @@ def prune_check(kb):
             print(f"  ✓ {store}: {len(data.get('entries', []))} entries (no cap)")
 
 
+def inbox_flush(kb):
+    """Stage inbox/preferences/ files for git commit.
+
+    Per Q-22 inbox boundary: save command stages captures but does NOT promote
+    to Memory/Intelligence stores. Scholar consolidates manually during
+    maintenance. This function only runs `git add` on the inbox subtree;
+    the actual commit is the responsibility of the calling save flow.
+    """
+    repo_root = kb.parent
+    inbox_dir = repo_root / "inbox" / "preferences"
+    if not inbox_dir.exists():
+        print("  - Inbox directory not found")
+        return True
+    if DRY_RUN:
+        print("  [DRY-RUN] Would stage inbox/preferences/ via git add")
+        return True
+    try:
+        result = subprocess.run(
+            ["git", "add", "inbox/preferences/"],
+            cwd=str(repo_root), capture_output=True, text=True, timeout=10
+        )
+        if result.returncode == 0:
+            staged = subprocess.run(
+                ["git", "diff", "--cached", "--name-only", "inbox/preferences/"],
+                cwd=str(repo_root), capture_output=True, text=True, timeout=10
+            )
+            files = [f for f in staged.stdout.strip().split('\n') if f]
+            print(f"  ✓ Staged {len(files)} inbox capture(s) for commit")
+            return True
+        print(f"  WARN: git add inbox/ failed: {result.stderr.strip()}", file=sys.stderr)
+        return False
+    except (subprocess.TimeoutExpired, FileNotFoundError) as e:
+        print(f"  WARN: inbox flush failed: {e}", file=sys.stderr)
+        return False
+
+
 def vectorstore_sync(kb):
     config = kb / "vectorstore" / "config.json"
     if not config.exists():
@@ -840,6 +891,12 @@ def main():
     print("Prune Check")
     prune_check(kb)
     print()
+
+    # Inbox flush (Q-22): stage captures for commit; do NOT promote
+    if ops.get("inbox_flush", True):
+        print("Inbox Flush")
+        inbox_flush(kb)
+        print()
 
     if ops.get("vectorstore_sync", True):
         print("Vectorstore")
