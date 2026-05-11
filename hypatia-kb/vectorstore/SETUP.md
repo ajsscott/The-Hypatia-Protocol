@@ -8,7 +8,7 @@ The vectorstore requires `fastembed`, `numpy`, and `mcp` which cannot be install
 
 ## Solution
 
-A vectorstore-local virtual environment (`Nate's-kb/vectorstore/.venv`) created by `setup.sh`:
+A vectorstore-local virtual environment (`hypatia-kb/vectorstore/.venv`) created by `setup.sh`:
 - Works on all systems (PEP 668 enforced or not)
 - No portability issues (venv created fresh per machine)
 - Scripts run from vectorstore dir with local imports
@@ -22,7 +22,7 @@ A vectorstore-local virtual environment (`Nate's-kb/vectorstore/.venv`) created 
 ## Manual Setup (if not using setup.sh)
 
 ```bash
-cd Nate's-kb/vectorstore
+cd hypatia-kb/vectorstore
 
 # With uv (preferred)
 uv venv .venv --relocatable
@@ -40,7 +40,7 @@ pip install fastembed numpy mcp
 Vectorstore scripts run from the vectorstore directory:
 
 ```bash
-cd Nate's-kb/vectorstore
+cd hypatia-kb/vectorstore
 .venv/bin/python3 kb_query.py "search term"
 .venv/bin/python3 kb_sync.py
 ```
@@ -52,7 +52,7 @@ The MCP server uses a wrapper script (`run-server.sh`) that handles paths with s
 | Issue | Solution |
 |-------|----------|
 | `.venv` doesn't exist | Run `./scripts/setup.sh` or manual setup above |
-| `fastembed` not found | `cd Nate's-kb/vectorstore && source .venv/bin/activate && uv pip install fastembed numpy mcp` |
+| `fastembed` not found | `cd hypatia-kb/vectorstore && source .venv/bin/activate && uv pip install fastembed numpy mcp` |
 | MCP server fails to load | Ensure `run-server.sh` is executable (`chmod +x`) |
 | Permission denied | Check `.venv/bin/python3` is executable |
 | Different Python version | Delete `.venv`, re-run setup |

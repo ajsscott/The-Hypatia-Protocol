@@ -5,7 +5,7 @@
 **Last Updated**: April 17, 2026
 
 <p align="center">
-<img src="Nate's-kb/Nathaniel-Protocol.webp" alt="Nathaniel - Cognitive Consigliere" width="600">
+<img src="hypatia-kb/Nathaniel-Protocol.webp" alt="Nathaniel - Cognitive Consigliere" width="600">
 </p>
 
 ---
@@ -233,7 +233,7 @@ The Nathaniel Protocol employs 28 context engineering techniques across four tie
 | Negative Context Engineering | Anti-patterns as first-class citizens | `Nathaniel.md` Anti-Patterns |
 | Persona Layering | Consistent voice over task-specific protocols | `Nathaniel.md` + protocols |
 | Eager Context Loading | Eliminate cold-start gaps | Session Start Gate |
-| Decision Routing | Task-appropriate execution paths | Routes A-F in `Nate-Protocol.md` |
+| Decision Routing | Task-appropriate execution paths | Routes A-F in `Hypatia-Protocol.md` |
 | Proactive Behavior Framework | Anticipatory actions with guardrails | `proactive-offering-protocol.md` |
 | Platform Integration | Persona + platform as unified system | `Nathaniel.md` Platform Integration |
 | Reasoning Capture | Derived conclusions as reusable intelligence | `Intelligence/reasoning.json` |

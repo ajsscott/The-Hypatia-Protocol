@@ -38,7 +38,7 @@ There is no skill marketplace, no plugin registry, no package manager for extens
 - `scripts/harden-repo.sh` (pre-push scan, on-demand, ~30 lines)
 
 **Vectorstore (optional, on-demand):**
-- `Nate's-kb/vectorstore/kb_server.py`, `kb_query.py`, `kb_sync.py`, `kb_vectorize.py`, `concat.py` (local file I/O only, with tests)
+- `hypatia-kb/vectorstore/kb_server.py`, `kb_query.py`, `kb_sync.py`, `kb_vectorize.py`, `concat.py` (local file I/O only, with tests)
 
 **Maintenance utilities (manual, on-demand):**
 - `scripts/full-maintenance.sh`, `kiro-maintenance.sh`, `python-maintenance.sh`, `wsl-maintenance.sh`, `wsl-compact.ps1` (system cleanup, no network calls)

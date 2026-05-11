@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="Nate's-kb/Nathaniel-Protocol.webp" alt="Nathaniel - Cognitive Consigliere" width="700">
+<img src="hypatia-kb/Nathaniel-Protocol.webp" alt="Nathaniel - Cognitive Consigliere" width="700">
 
 <br>
 
@@ -162,16 +162,16 @@ graph TD
 | Component | What It Does |
 |-----------|-------------|
 | **[Personality Kernel](.steering-files/steering/Nathaniel.md)** | ~2,500 line consciousness specification. Not a system prompt, an identity with values, voice, paradoxes, and a super-objective |
-| **[Intelligence Suite](Nate's-kb/Intelligence/README.md)** | Three learning layers (patterns, knowledge, reasoning) with cross-references, confidence scoring, and access tracking |
-| **[Memory System](Nate's-kb/Memory/README.md)** | Session logs, entity memory, active project tracking, commitment awareness, and "since last session" diffs |
-| **[Cognitive Integrity](Nate's-kb/)** | Dual-trigger anti-degradation system: keyword-activated checks when quality drops, cadence-based checks at session depth milestones. Prevents recall substitution, confusion loops, and gate erosion |
-| **[Vector Store](Nate's-kb/vectorstore/BENCHMARK.md)** | Hybrid semantic + keyword search (fastembed + numpy) across the entire knowledge base. Requires venv setup (handled by setup.sh) |
+| **[Intelligence Suite](hypatia-kb/Intelligence/README.md)** | Three learning layers (patterns, knowledge, reasoning) with cross-references, confidence scoring, and access tracking |
+| **[Memory System](hypatia-kb/Memory/README.md)** | Session logs, entity memory, active project tracking, commitment awareness, and "since last session" diffs |
+| **[Cognitive Integrity](hypatia-kb/)** | Dual-trigger anti-degradation system: keyword-activated checks when quality drops, cadence-based checks at session depth milestones. Prevents recall substitution, confusion loops, and gate erosion |
+| **[Vector Store](hypatia-kb/vectorstore/BENCHMARK.md)** | Hybrid semantic + keyword search (fastembed + numpy) across the entire knowledge base. Requires venv setup (handled by setup.sh) |
 | **MCP Integration** | Extensible tool access (ships with time and fetch with security proxy, add whatever you need) |
-| **[Decision Engine](Nate's-kb/Nate-Protocol.md)** | Six structured frameworks (Routes A-F) that auto-select based on task complexity |
-| **[Protocol Library](Nate's-kb/README.md)** | 13 domain protocols that activate on keyword triggers (development, writing, research, planning, and more) |
+| **[Decision Engine](hypatia-kb/Hypatia-Protocol.md)** | Six structured frameworks (Routes A-F) that auto-select based on task complexity |
+| **[Protocol Library](hypatia-kb/README.md)** | 13 domain protocols that activate on keyword triggers (development, writing, research, planning, and more) |
 | **[Sub-Agent Framework](.steering-files/agents/analyst/README.md)** | Example agent package (analyst) with extensible architecture for building specialized agents |
-| **[Security Layer](Nate's-kb/security-protocol.md)** | Defense-in-depth: always-on behavioral rules in the kernel (prompt injection detection, context compartmentalization, save hygiene), JSON-RPC fetch proxy (`scripts/secure-fetch.py`) for URL filtering, and git sanitization filters for commit-time scrubbing |
-| **[Benchmarks](Nate's-kb/Benchmarks/README.md)** | Self-testing suite: static metrics (sizes, counts, growth) and behavioral tests (routing accuracy, index integrity, retrieval reachability) |
+| **[Security Layer](hypatia-kb/security-protocol.md)** | Defense-in-depth: always-on behavioral rules in the kernel (prompt injection detection, context compartmentalization, save hygiene), JSON-RPC fetch proxy (`scripts/secure-fetch.py`) for URL filtering, and git sanitization filters for commit-time scrubbing |
+| **[Benchmarks](hypatia-kb/Benchmarks/README.md)** | Self-testing suite: static metrics (sizes, counts, growth) and behavioral tests (routing accuracy, index integrity, retrieval reachability) |
 
 </details>
 
@@ -185,7 +185,7 @@ These patterns were developed for this ecosystem and documented with standalone 
 | **Context Signal Routing (CSR)** | Context grows linearly with knowledge. Loading 100 memories costs 100x even when 3 are relevant | Load 500-token indexes at startup, route to full entries only when signals match. 70%+ token savings. Break-even at ~30 items, 96% savings at 500 |
 | **TOC-Dynamic-Loading** | Large protocols exceed context limits or dilute attention | Expose a table of contents, fetch sections on demand. The map is cheap, the territory is expensive |
 | **Protocol-as-MCP** | Different tasks need different expertise, but loading all expertise wastes context | Behavioral protocols activate like MCP tools: keyword triggers fire domain-specific behavior without loading everything. No runtime dependencies |
-| **Hybrid Retrieval Fusion (HRF)** | Keyword search misses conceptual matches. Semantic search returns noise | Dual-channel retrieval (structured + semantic) with Reciprocal Rank Fusion. Vectorstore venv is local to `Nate's-kb/vectorstore/` (setup.sh handles it). System degrades gracefully to CSR-only without it |
+| **Hybrid Retrieval Fusion (HRF)** | Keyword search misses conceptual matches. Semantic search returns noise | Dual-channel retrieval (structured + semantic) with Reciprocal Rank Fusion. Vectorstore venv is local to `hypatia-kb/vectorstore/` (setup.sh handles it). System degrades gracefully to CSR-only without it |
 
 <details>
 <summary><kbd>28 Context Engineering Techniques</kbd></summary>
@@ -392,7 +392,7 @@ The vectorstore requires ~202MB for dependencies (fastembed, numpy, onnxruntime)
 
 <br>
 
-The vectorstore `.venv` directory (`Nate's-kb/vectorstore/.venv`) contains symlinks to the local Python installation and is **not portable**. When moving to a new machine:
+The vectorstore `.venv` directory (`hypatia-kb/vectorstore/.venv`) contains symlinks to the local Python installation and is **not portable**. When moving to a new machine:
 
 1. Delete the existing `.venv` (or let setup.sh overwrite it)
 2. Run `./scripts/setup.sh` to recreate the venv with the local Python
@@ -417,7 +417,7 @@ Git here is primarily a local backup and undo mechanism. Every session save crea
 
 ### 6. Start Exploring
 
-See the [Quick Start Card](Nate's-kb/QUICKSTART.md) for a cheat sheet of commands, modes, and file locations.
+See the [Quick Start Card](hypatia-kb/QUICKSTART.md) for a cheat sheet of commands, modes, and file locations.
 
 > [!IMPORTANT]
 > **Say `save` before closing every session.** There is no auto-save. If you close the window without saving, everything Nate learned that session is gone. Patterns, knowledge, decisions, memory updates, all of it. This is the one habit that makes the system work. `save` for quick, `detailed save` for full accounting.
@@ -431,7 +431,7 @@ Nate ships ready to go. Our recommendation: use him as-is for a few sessions. Le
 
 If you want it custom from day one, run customization right after setup:
 
-Say `customize` in chat for a guided wizard, or fill out [`Nate's-kb/CUSTOMIZATION.md`](Nate's-kb/CUSTOMIZATION.md) manually and say `apply my customization`.
+Say `customize` in chat for a guided wizard, or fill out [`hypatia-kb/CUSTOMIZATION.md`](hypatia-kb/CUSTOMIZATION.md) manually and say `apply my customization`.
 
 You can change the name, voice, expertise, domain, and behavior thresholds. The core architecture (consciousness, decision routing, learning systems, gates) stays intact. That's what makes it work.
 
@@ -569,7 +569,7 @@ The super-objective drives everything: *"Make sure this person wins, and never l
 
 ### The Intelligence Suite
 
-Three stores that grow smarter with every session ([architecture details](Nate's-kb/Intelligence/README.md)):
+Three stores that grow smarter with every session ([architecture details](hypatia-kb/Intelligence/README.md)):
 
 | Layer | What It Captures | How It's Used |
 |-------|-----------------|---------------|
@@ -643,7 +643,7 @@ Three tiers of what you can change:
 | 🎚️ **Emphasis** | Archetype priority, voice intensity, formality | Adjust the dial, never remove the dial |
 | 💄 **Lipstick** | Name, gender, address, timezone, domain | Freely customizable |
 
-**Recommended**: Fill out [`Nate's-kb/CUSTOMIZATION.md`](Nate's-kb/CUSTOMIZATION.md) and say `apply my customization`.
+**Recommended**: Fill out [`hypatia-kb/CUSTOMIZATION.md`](hypatia-kb/CUSTOMIZATION.md) and say `apply my customization`.
 **Alternative**: Say `customize` for a guided wizard.
 **Manual**: Edit the kernel directly. See `customization-protocol.md` for what's safe to change.
 

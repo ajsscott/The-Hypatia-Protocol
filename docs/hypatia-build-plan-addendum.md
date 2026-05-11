@@ -15,7 +15,7 @@ this file contradicts the plan, this file is correct.
 | # | Plan claim | Ground truth | Severity | Action |
 |---|---|---|---|---|
 | 1 | `Nathaniel.md` 2,576 L | ✓ 2,576 | — | No action |
-| 2 | `Nate-Protocol.md` 2,070 L | ✓ 2,070 | — | No action |
+| 2 | `Hypatia-Protocol.md` 2,070 L | ✓ 2,070 | — | No action |
 | 3 | 13 protocols totaling ~7,000 L | ✓ 13 files, 7,150 L | — | No action |
 | 4 | `save-session.py` 883 LOC | ✓ 883 | — | No action |
 | 5 | Vectorstore ~1,200 LOC | ✓ 1,186 across 6 modules | — | No action |
@@ -45,24 +45,24 @@ RRF (the fusion algorithm) from CSR (the routing pattern). Good.
 ("Port targets from Bell's `vectorstore/`"). That's wrong. CSR is not in
 `vectorstore/`. Relevant file:line pointers for AJ's review:
 
-- `Nate's-kb/Intelligence/README.md:119-127` — "CSR Pattern. All data stores
+- `hypatia-kb/Intelligence/README.md:119-127` — "CSR Pattern. All data stores
   use Context Signal Routing."
-- `Nate's-kb/Intelligence/README.md:177` — "All `.json` files use the CSR
+- `hypatia-kb/Intelligence/README.md:177` — "All `.json` files use the CSR
   (Context Signal Routing) pattern."
-- `Nate's-kb/Intelligence/intelligence-operations.md:197-198` — "If signal
+- `hypatia-kb/Intelligence/intelligence-operations.md:197-198` — "If signal
   matches, fetch the specific entry by ID (CSR pattern). ... CSR-only is
   the fallback when vectorstore is unavailable."
-- `Nate's-kb/memory-protocol.md:22-24` — "Index Operations (CSR Pattern).
+- `hypatia-kb/memory-protocol.md:22-24` — "Index Operations (CSR Pattern).
   The memory system uses Context Signal Routing for efficient retrieval.
   Load the lightweight index first, then selectively retrieve relevant
   memories."
-- `Nate's-kb/Nate-Protocol.md:1184` — "PART 2: UPDATE SESSION INDEX (CSR
+- `hypatia-kb/Hypatia-Protocol.md:1184` — "PART 2: UPDATE SESSION INDEX (CSR
   Pattern)"
-- `Nate's-kb/Nate-Protocol.md:2000` — "Task Execution: CSR retrieves
+- `hypatia-kb/Hypatia-Protocol.md:2000` — "Task Execution: CSR retrieves
   relevant patterns/knowledge on-demand"
 - `scripts/save-session.py:704` — comment "Intelligence stores grow
   indefinitely — CSR indexes keep query cost constant."
-- `Nate's-kb/maintenance-protocol.md:90` — "If vectorstore missing: note as
+- `hypatia-kb/maintenance-protocol.md:90` — "If vectorstore missing: note as
   INFO, not error (system degrades gracefully to CSR-only)"
 
 **Implication:** CSR is kernel behavior + JSON scaffolding, not code. The
@@ -89,6 +89,10 @@ Each decision updates or clarifies a Build Plan entry.
 
 ### Q2 — Substrate
 **Decision:** Cline (plan decision #1 stands).
+**Superseded 2026-05-11 by Q-21 (Roo Code).** Same tool-use protocol so the
+port plan is unaffected; full Cline→Roo sweep deferred to Phase 1 start. See
+`open-questions.md` Q-21 for rationale (better Ollama integration). Q-02
+remains in the log as the historical answer.
 **Reason (new):** Cline's multi-provider support is load-bearing. AJ's
 Claude subscription may lapse; she plans to fall back to local Ollama
 models. Claude Code is Anthropic-only; Cline supports Anthropic + OpenAI +
@@ -272,3 +276,5 @@ this is the full pre-Phase-2 timeline.
 
 - **2026-04-22** — initial addendum written after codebase-analysis and
   Q1-Q12 session. All 19 delta matrix items verified.
+- **2026-05-11** — Q-21 supersedes Q-02 (Roo Code over Cline). Note added
+  inline to Q2 entry; full Cline→Roo terminology sweep deferred to Phase 1.

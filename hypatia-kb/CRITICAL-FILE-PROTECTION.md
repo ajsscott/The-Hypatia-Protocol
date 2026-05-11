@@ -34,7 +34,7 @@
 ### Core System Files (CRITICAL)
 ```
 /.kiro/steering/Nathaniel.md       - Core personality, cognitive stance, and identity
-/Nate-Protocol.md                  - Operational framework and decision engine
+/Hypatia-Protocol.md                  - Operational framework and decision engine
 ```
 
 ### Vectorstore Source Files (IMPORTANT - logic is git-tracked, artifacts are rebuildable)
@@ -70,7 +70,7 @@ BEFORE touching ANY file in these directories:
 - /Memory/
 - /Intelligence/
 - /.kiro/steering/
-- /Nate's-kb/ (root level protocols)
+- /hypatia-kb/ (root level protocols)
 
 ASK YOURSELF:
 1. What is this file's purpose?

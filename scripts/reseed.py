@@ -19,16 +19,16 @@ from collections import defaultdict
 
 
 def find_kb_root():
-    """Walk up from script location to find Nate's-kb."""
+    """Walk up from script location to find hypatia-kb."""
     p = Path(__file__).resolve().parent.parent
-    kb = p / "Nate's-kb"
+    kb = p / "hypatia-kb"
     if kb.exists():
         return kb
     # Try cwd
-    kb = Path.cwd() / "Nate's-kb"
+    kb = Path.cwd() / "hypatia-kb"
     if kb.exists():
         return kb
-    print("ERROR: Cannot find Nate's-kb directory")
+    print("ERROR: Cannot find hypatia-kb directory")
     sys.exit(2)
 
 

@@ -64,7 +64,7 @@ Archive/        → Completed or historical materials
 docs/           → Reference documentation
 ```
 
-The `Nate's-kb/` directory (the intelligence system) sits alongside these as a peer, not above them. Your workspace and your AI's brain live at the same level because they're part of the same system.
+The `hypatia-kb/` directory (the intelligence system) sits alongside these as a peer, not above them. Your workspace and your AI's brain live at the same level because they're part of the same system.
 
 **Customization examples**: Freelancer? Maybe `Clients/` instead of `Business/`. Student? Maybe `Courses/` instead of `Projects/`. Researcher? Add `Research/`. The principle is what matters, not the specific names.
 
@@ -78,7 +78,7 @@ The `Nate's-kb/` directory (the intelligence system) sits alongside these as a p
 
 ## The Connection to Nate
 
-The intelligence system (`Nate's-kb/`) is designed to operate inside a Pocket HQ. When Nate's memory references "that project we worked on last week," the project files are right here in the same repo. When session logs capture decisions, the artifacts those decisions produced are siblings in the file tree.
+The intelligence system (`hypatia-kb/`) is designed to operate inside a Pocket HQ. When Nate's memory references "that project we worked on last week," the project files are right here in the same repo. When session logs capture decisions, the artifacts those decisions produced are siblings in the file tree.
 
 This is what "the workspace IS the prompt" means. The structure isn't decoration. It's functional context.
 

@@ -17,7 +17,7 @@ from fastembed import TextEmbedding
 
 from concat import concatenate_entry, content_hash, iter_store
 
-# Paths relative to Nate's-kb/
+# Paths relative to hypatia-kb/
 KB_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VS_DIR = os.path.dirname(os.path.abspath(__file__))
 

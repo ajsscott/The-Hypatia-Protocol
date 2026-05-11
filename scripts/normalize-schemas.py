@@ -13,7 +13,7 @@ import copy
 from collections import defaultdict
 
 DRY_RUN = "--dry-run" in sys.argv
-KB_DIR = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Nate's-kb", "Intelligence")
+KB_DIR = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "hypatia-kb", "Intelligence")
 SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # --- Shared helpers ---

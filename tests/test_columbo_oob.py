@@ -20,7 +20,7 @@ maint = import_module("maintenance")
 class TestBase(unittest.TestCase):
     def setUp(self):
         self.tmpdir = tempfile.mkdtemp()
-        self.kb = Path(self.tmpdir) / "Nate's-kb"
+        self.kb = Path(self.tmpdir) / "hypatia-kb"
         (self.kb / "Intelligence").mkdir(parents=True)
         (self.kb / "Memory").mkdir(parents=True)
         (self.kb / "vectorstore").mkdir(parents=True)

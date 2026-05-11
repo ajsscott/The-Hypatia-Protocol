@@ -35,7 +35,7 @@
 
 ### With Other KB Documents
 - For ambiguous development requests: Consult prompt-enhancement-protocol.md patterns
-- For system/protocol questions: Consult Nate-Protocol.md
+- For system/protocol questions: Consult Hypatia-Protocol.md
 
 ### Personality Integration
 - All outputs filtered through Nathaniel.md personality kernel

@@ -262,8 +262,8 @@ Target: 2-5 entries per session maximum. Not all sessions produce reasoning.
 ## Step 8: Vectorstore Sync
 
 **When**: After prune check (step 7), before git commit (step 9). This is the last write-dependent step.
-**Condition**: Only if `Nate's-kb/vectorstore/config.json` exists.
-**Behavior**: Try `python3 Nate's-kb/vectorstore/kb_sync.py`, fall back to `python Nate's-kb/vectorstore/kb_sync.py`. Runs ONCE after ALL writes (intelligence 3a-3d + memory 5a + any pruning) to catch everything in a single pass. Log result (added/updated/removed/unchanged counts).
+**Condition**: Only if `hypatia-kb/vectorstore/config.json` exists.
+**Behavior**: Try `python3 hypatia-kb/vectorstore/kb_sync.py`, fall back to `python hypatia-kb/vectorstore/kb_sync.py`. Runs ONCE after ALL writes (intelligence 3a-3d + memory 5a + any pruning) to catch everything in a single pass. Log result (added/updated/removed/unchanged counts).
 **On failure**: Warn, never block save. Save completes without vectorstore sync.
 **On missing vectorstore**: Skip silently (vectorstore is optional).
 

@@ -46,10 +46,10 @@ complete: false
 ### Nate's architecture at a glance
 
 - **2,576-line monolithic kernel** at `.steering-files/steering/Nathaniel.md`. Always-loaded system prompt.
-- **13 protocol files** at `Nate's-kb/*-protocol.md`, total ~7,000 lines. Keyword-triggered lazy-load.
-- **1 decision engine** at `Nate's-kb/Nate-Protocol.md` (2,070 lines) containing Routes A-F.
-- **JSON intelligence stores** at `Nate's-kb/Intelligence/` and `Nate's-kb/Memory/` — 11 stores with ~900 entries total.
-- **Python backend** at `scripts/` + `Nate's-kb/vectorstore/` — ~6,600 LOC for save/validate/maintenance + retrieval (RRF + fastembed + CSR).
+- **13 protocol files** at `hypatia-kb/*-protocol.md`, total ~7,000 lines. Keyword-triggered lazy-load.
+- **1 decision engine** at `hypatia-kb/Hypatia-Protocol.md` (2,070 lines) containing Routes A-F.
+- **JSON intelligence stores** at `hypatia-kb/Intelligence/` and `hypatia-kb/Memory/` — 11 stores with ~900 entries total.
+- **Python backend** at `scripts/` + `hypatia-kb/vectorstore/` — ~6,600 LOC for save/validate/maintenance + retrieval (RRF + fastembed + CSR).
 - **Sub-agent framework** at `.steering-files/agents/analyst/` — 4-file pattern (manifest + prompt + consciousness + specialization).
 - **Pocket HQ scaffold** at root (`Projects/ Business/ Brand/ Life/ Archive/ docs/`) — mostly empty scaffolding.
 
@@ -95,14 +95,14 @@ Goal: functional Hypatia in Cline, usable daily for manual-ingest + vault-librar
 
 **Day 1-2: Repo initialization**
 - Create new repo (location: `/Users/ajsscott/GitHub/Hypatia/` or flash drive path TBD). **Not nested inside TabulaJacqueliana.**
-- `git init` + MIT LICENSE (AJ's copyright) + README stub + `.editorconfig` from Nate (verbatim) + `.gitignore` (Nate's version minus Kiro entries + `Nate's-kb/` renames).
+- `git init` + MIT LICENSE (AJ's copyright) + README stub + `.editorconfig` from Nate (verbatim) + `.gitignore` (Nate's version minus Kiro entries + `hypatia-kb/` renames).
 - `pyproject.toml` with pinned dependencies (see § Dependencies below). Use `uv` for dependency management.
 - Directory skeleton:
   ```
   Hypatia/
   ├── .clinerules/                     # Cline system-prompt rules (split from Nathaniel.md)
   ├── .vscode/settings.json            # Cline permissions mirroring .claude/settings.json pattern
-  ├── hypatia-kb/                      # Hypatia's knowledge base (renamed from Nate's-kb)
+  ├── hypatia-kb/                      # Hypatia's knowledge base (renamed from hypatia-kb)
   │   ├── Intelligence/                # patterns, knowledge, reasoning, cross-refs, synonym-map
   │   ├── Memory/                      # memory, session-index
   │   ├── protocols/                   # Protocol-as-MCP skill files (renamed from *-protocol.md root)
@@ -194,7 +194,7 @@ Goal: functional Hypatia in Cline, usable daily for manual-ingest + vault-librar
   - obsidian-linter + obsidian-git interaction
 
 **Day 11-12: Decision routes**
-- `hypatia-kb/protocols/decision-routes.md` — port Nate-Protocol.md Routes A-F verbatim with Hypatia-specific examples.
+- `hypatia-kb/protocols/decision-routes.md` — port Hypatia-Protocol.md Routes A-F verbatim with Hypatia-specific examples.
 - **Apply the 4 fixes** I flagged earlier vs my TabulaJacqueliana port: restore Route E "just do it" override language; restore Route B expertise-detection in skip-explanation; tighten Route F verification-rule language (don't punt back to user); drop the CoV reference pointer that no longer exists.
 - This is the ONE protocol always-loaded-by-default (not keyword-triggered) — goes in `.clinerules/` not `hypatia-kb/protocols/`. Add as `.clinerules/11-decision-routes.md`.
 
@@ -208,7 +208,7 @@ Goal: functional Hypatia in Cline, usable daily for manual-ingest + vault-librar
 
 **Day 13-15: save-session.py port**
 - Port Bell's `save-session.py` (883 LOC) to `scripts/save-session.py`. Core changes:
-  - Rename `Nate's-kb/` → `hypatia-kb/` (4 files affected)
+  - Rename `hypatia-kb/` → `hypatia-kb/` (4 files affected)
   - Strip Windows/WSL fallback paths (Phase 1 is Mac/Linux only; document as known limitation)
   - Replace hardcoded git identity `nate@pocket-hq.local` → read from `hypatia.config.yaml`
   - Strip Bell-personal PII blocklist from `reseed.py` (ship empty; user adds own if needed)
@@ -419,11 +419,11 @@ Hypatia/
 | `.steering-files/agents/analyst/*` (4 files, 729 lines) | **Defer to Phase 2+**. Keep pattern (4-file manifest+prompt+consciousness+specialization). When we need the "researcher" skill to have its own context, port these as a Cline custom mode. | Phase 2 |
 | `.steering-files/settings/mcp.json` | Adapt: 3 MCP servers (time, secure-fetch, hypatia-vectorstore). Servers #2-3 pointing at Hypatia paths. | 30 min |
 | `.steering-files/settings.json` (Kiro trustedCommands) | Replace with `.vscode/settings.json` using Cline's config schema. | 1 hour |
-| `Nate's-kb/Nate-Protocol.md` (2,070 lines, Decision Routes A-F) | **Put into `.clinerules/11-decision-routes.md`**. Apply 4 flagged fixes. | 4 hours |
-| `Nate's-kb/*-protocol.md` (13 files, ~7,000 LOC) | **Port all 13** → remap to 4-skill-cluster naming. Strip Kiro. Inject zettelkasten content. | 4-6 days |
-| `Nate's-kb/Intelligence/*.json` + `-index.json` | Keep empty scaffold with schemas; let Hypatia's usage populate. | 1 day (schema validation setup) |
-| `Nate's-kb/Memory/*.json` | Seed with Hypatia identity + 5-7 preferences. | 2 hours |
-| `Nate's-kb/vectorstore/*` (Python, ~1,200 LOC) | **Port in Phase 3**. 1:1 with path renames. | 3-4 days (Phase 3) |
+| `hypatia-kb/Hypatia-Protocol.md` (2,070 lines, Decision Routes A-F) | **Put into `.clinerules/11-decision-routes.md`**. Apply 4 flagged fixes. | 4 hours |
+| `hypatia-kb/*-protocol.md` (13 files, ~7,000 LOC) | **Port all 13** → remap to 4-skill-cluster naming. Strip Kiro. Inject zettelkasten content. | 4-6 days |
+| `hypatia-kb/Intelligence/*.json` + `-index.json` | Keep empty scaffold with schemas; let Hypatia's usage populate. | 1 day (schema validation setup) |
+| `hypatia-kb/Memory/*.json` | Seed with Hypatia identity + 5-7 preferences. | 2 hours |
+| `hypatia-kb/vectorstore/*` (Python, ~1,200 LOC) | **Port in Phase 3**. 1:1 with path renames. | 3-4 days (Phase 3) |
 | `scripts/save-session.py` (883 LOC) | **Port in Phase 1.** Rename paths, strip Windows/WSL, config-ify git identity. | 1-2 days |
 | `scripts/validate-schemas.py` + `pre-commit-kb-validate.sh` | Port verbatim with path rename. | 2 hours |
 | `scripts/secure-fetch.py` (83 LOC) | Port verbatim with log-path rename (`~/.kiro/security.log` → `~/.hypatia/security.log`). | 30 min |
@@ -437,10 +437,10 @@ Hypatia/
 | `docs/system-maintenance.md` | Port verbatim (generic ops doc). | — |
 | `docs/growth-spec-script-offload.md` | Discard (Bell's personal work). | — |
 | `FILE-STRUCTURE.md` | Regenerate for Hypatia structure. | 1 hour |
-| `QUICKSTART.md` + `CUSTOMIZATION.md` + `CRITICAL-FILE-PROTECTION.md` + `README.md` (inside Nate's-kb) | Rewrite per Hypatia architecture. | 1 day |
+| `QUICKSTART.md` + `CUSTOMIZATION.md` + `CRITICAL-FILE-PROTECTION.md` + `README.md` (inside hypatia-kb) | Rewrite per Hypatia architecture. | 1 day |
 | `lexicon.md` (Bell's AAVE voice markers) | **Discard entirely**. Hypatia's voice is different; lexicon is a from-scratch write. | — |
 | `tests/` (script tests, 1,843 LOC, 7 files) | Port verbatim with path renames. | 4-6 hours |
-| `Nate's-kb/vectorstore/tests/` (4 files, 415 LOC) | Port in Phase 3. | — |
+| `hypatia-kb/vectorstore/tests/` (4 files, 415 LOC) | Port in Phase 3. | — |
 | `.github/workflows/validate.yml` | Port with path renames; add script-tests step (gap in Bell's CI). | 1 hour |
 | `.github/ISSUE_TEMPLATE/*` | Skip unless going public. | — |
 | `LICENSE` (MIT, Bell copyright) | Replace with AJ-copyright MIT. | 5 min |

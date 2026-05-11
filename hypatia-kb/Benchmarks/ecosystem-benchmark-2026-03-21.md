@@ -199,7 +199,7 @@ Stores indexed: patterns, knowledge, reasoning, memory.
 | Component | Bytes | KB | Est. Tokens |
 |-----------|------:|---:|------------:|
 | Kernel (Nathaniel.md) | 115,253 | 112 | 28,813 |
-| Nate-Protocol.md | 100,662 | 98 | 25,165 |
+| Hypatia-Protocol.md | 100,662 | 98 | 25,165 |
 | 14 domain protocols | 243,114 | 237 | 60,778 |
 | All KB .md files (141 files) | 1,686,324 | 1,647 | 421,581 |
 | Intelligence stores (3 JSON) | 255,010 | 249 | 63,752 |
@@ -216,7 +216,7 @@ Stores indexed: patterns, knowledge, reasoning, memory.
 | Total files in KB | 223 |
 | Total ecosystem size | 7.5 MB |
 | Kernel lines | 2,344 |
-| Nate-Protocol lines | 1,907 |
+| Hypatia-Protocol lines | 1,907 |
 
 ---
 

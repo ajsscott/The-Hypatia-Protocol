@@ -134,5 +134,5 @@ See `Intelligence/intelligence-operations.md` for full CSR documentation.
 2. Run `python3 scripts/reseed.py --verify-only` to check integrity
 3. Run `python3 scripts/reseed.py` to rebuild all indexes from stores
 4. Run `python3 scripts/maintenance.py '{"mode": "check", "scope": "all"}'` for health check
-5. If stores corrupted: `git checkout HEAD~1 -- Nate's-kb/Intelligence/` to restore from last save
+5. If stores corrupted: `git checkout HEAD~1 -- hypatia-kb/Intelligence/` to restore from last save
 6. Ask user to confirm key preferences if patterns lost

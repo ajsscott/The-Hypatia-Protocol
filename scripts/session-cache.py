@@ -24,11 +24,11 @@ from pathlib import Path
 
 
 def find_kb_root():
-    for p in [Path(__file__).resolve().parent.parent / "Nate's-kb",
-              Path.cwd() / "Nate's-kb"]:
+    for p in [Path(__file__).resolve().parent.parent / "hypatia-kb",
+              Path.cwd() / "hypatia-kb"]:
         if p.exists():
             return p
-    print(json.dumps({"error": "Cannot find Nate's-kb directory"}))
+    print(json.dumps({"error": "Cannot find hypatia-kb directory"}))
     sys.exit(2)
 
 

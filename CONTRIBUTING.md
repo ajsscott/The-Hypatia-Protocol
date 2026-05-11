@@ -33,7 +33,7 @@ Thanks for your interest in contributing. Whether it's a bug fix, a new protocol
 
 The ecosystem is designed to be extensible. To add a domain protocol:
 
-1. Create `Nate's-kb/[domain]-protocol.md` following the structure of existing protocols
+1. Create `hypatia-kb/[domain]-protocol.md` following the structure of existing protocols
 2. Add trigger keywords to the Protocol Keyword Map in the kernel (`.steering-files/steering/Nathaniel.md`)
 3. Test that the protocol activates on the expected keywords
 
@@ -49,7 +49,7 @@ If you've discovered a reusable context engineering pattern:
 
 The template ships with a curated baseline of patterns, knowledge, and reasoning entries. If you find entries that are incorrect, outdated, or could be improved:
 
-1. Edit the relevant JSON file in `Nate's-kb/Intelligence/`
+1. Edit the relevant JSON file in `hypatia-kb/Intelligence/`
 2. Update the corresponding index file
 3. Validate JSON (`python -m json.tool < file.json`) before submitting
 4. Describe what changed and why in your PR

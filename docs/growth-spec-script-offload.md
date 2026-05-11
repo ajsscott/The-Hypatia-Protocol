@@ -231,8 +231,8 @@ All fields optional except `session_id` and `schema_version`. Omitted sections a
 | memory | memory-index.json | id, tags, type |
 | sessions | session-index.json | id, date, tags, summary, outcome, outcome_note |
 
-**Location**: `Nate's-kb/cache/session-cache.db` (derived artifact, never committed to git)
-**Sentinel**: `Nate's-kb/cache/.invalidated` (touched by inline writes, checked before queries)
+**Location**: `hypatia-kb/cache/session-cache.db` (derived artifact, never committed to git)
+**Sentinel**: `hypatia-kb/cache/.invalidated` (touched by inline writes, checked before queries)
 **Lifecycle**: Build on session start (reads from store JSON files, not indexes — indexes may be stale after inline writes) → query mid-session → invalidate on save → rebuild next query
 **Query interface** (how Nate interacts with the cache):
 

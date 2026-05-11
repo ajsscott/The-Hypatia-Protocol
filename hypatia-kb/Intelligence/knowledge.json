@@ -1518,7 +1518,7 @@
     {
       "id": "know-081",
       "category": "architecture",
-      "content": ".steering-files/ inside Nate's-kb is a portable mirror of .kiro/ (agents, settings, specs, steering). It exists so the Kiro config is version-controlled and survives re-setup. setup.sh copies .steering-files/ to .kiro/. Edit .steering-files/ for changes that survive re-setup. Edit .kiro/ for local overrides. Source: scripts/setup.sh",
+      "content": ".steering-files/ inside hypatia-kb is a portable mirror of .kiro/ (agents, settings, specs, steering). It exists so the Kiro config is version-controlled and survives re-setup. setup.sh copies .steering-files/ to .kiro/. Edit .steering-files/ for changes that survive re-setup. Edit .kiro/ for local overrides. Source: scripts/setup.sh",
       "confidence": 0.85,
       "tags": [
         "kiro",
@@ -2581,7 +2581,7 @@
     {
       "id": "know-137",
       "category": "architecture",
-      "content": "File structure overview: .kiro/ (IDE config, runtime), Nate's-kb/ (intelligence + protocols + memory), .steering-files/ (portable config source), scripts/ (setup/teardown/maintenance). Nate's-kb contains Memory/, Intelligence/, vectorstore/, and protocol .md files. Source: FILE-STRUCTURE.md",
+      "content": "File structure overview: .kiro/ (IDE config, runtime), hypatia-kb/ (intelligence + protocols + memory), .steering-files/ (portable config source), scripts/ (setup/teardown/maintenance). hypatia-kb contains Memory/, Intelligence/, vectorstore/, and protocol .md files. Source: FILE-STRUCTURE.md",
       "confidence": 0.9,
       "tags": [
         "ecosystem-kb",
@@ -2598,7 +2598,7 @@
     {
       "id": "know-138",
       "category": "architecture",
-      "content": "Vectorstore architecture: local hybrid search using fastembed embeddings + numpy cosine similarity + RRF fusion. Venv isolated to Nate's-kb/vectorstore/.venv. Optional: system degrades gracefully to CSR-only without it. ~202MB for deps. Source: Nate's-kb/vectorstore/BENCHMARK.md",
+      "content": "Vectorstore architecture: local hybrid search using fastembed embeddings + numpy cosine similarity + RRF fusion. Venv isolated to hypatia-kb/vectorstore/.venv. Optional: system degrades gracefully to CSR-only without it. ~202MB for deps. Source: hypatia-kb/vectorstore/BENCHMARK.md",
       "confidence": 0.9,
       "tags": [
         "ecosystem-kb",
@@ -2670,7 +2670,7 @@
     {
       "id": "know-142",
       "category": "architecture",
-      "content": "Decision routing: 6 routes. A (simple/direct), B (medium/execute), C (ambiguous/clarify), D (multiple paths/recommend), E (irreversible/confirm), F (complex/full analysis). Route F is default for non-trivial decisions. Source: Nate's-kb/QUICKSTART.md, Nate's-kb/Nate-Protocol.md",
+      "content": "Decision routing: 6 routes. A (simple/direct), B (medium/execute), C (ambiguous/clarify), D (multiple paths/recommend), E (irreversible/confirm), F (complex/full analysis). Route F is default for non-trivial decisions. Source: hypatia-kb/QUICKSTART.md, hypatia-kb/Hypatia-Protocol.md",
       "confidence": 0.9,
       "tags": [
         "ecosystem-kb",
@@ -2687,7 +2687,7 @@
     {
       "id": "know-143",
       "category": "architecture",
-      "content": "Protocol ecosystem: 13 protocol .md files loaded by keyword trigger from kernel. Modular: each standalone. Router is Pre-Task Protocol Check in kernel. To add new protocols: create .md file, add keyword map entry, set trigger confidence tiers. Source: Nate's-kb/ protocol files",
+      "content": "Protocol ecosystem: 13 protocol .md files loaded by keyword trigger from kernel. Modular: each standalone. Router is Pre-Task Protocol Check in kernel. To add new protocols: create .md file, add keyword map entry, set trigger confidence tiers. Source: hypatia-kb/ protocol files",
       "confidence": 0.9,
       "tags": [
         "ecosystem-kb",
@@ -2703,7 +2703,7 @@
     {
       "id": "know-144",
       "category": "architecture",
-      "content": "Index architecture: four CSR indexes loaded every session (memory-index, patterns-index, knowledge-index, reasoning-index) plus session-index (60-day rolling window). Lightweight fingerprints for routing, full entries fetched by ID on match. Source: Nate's-kb/Memory/, Nate's-kb/Intelligence/",
+      "content": "Index architecture: four CSR indexes loaded every session (memory-index, patterns-index, knowledge-index, reasoning-index) plus session-index (60-day rolling window). Lightweight fingerprints for routing, full entries fetched by ID on match. Source: hypatia-kb/Memory/, hypatia-kb/Intelligence/",
       "confidence": 0.9,
       "tags": [
         "ecosystem-kb",
@@ -4289,7 +4289,7 @@
     {
       "id": "know-231",
       "category": "process",
-      "content": "When deciding whether to update legacy references during a focused implementation, scope the change to what the spec covers. Nate-Protocol.md Part 5 references pattern_detections (legacy) but that is pre-existing debt, not taxonomy-related. Fixing it during taxonomy implementation would expand scope.",
+      "content": "When deciding whether to update legacy references during a focused implementation, scope the change to what the spec covers. Hypatia-Protocol.md Part 5 references pattern_detections (legacy) but that is pre-existing debt, not taxonomy-related. Fixing it during taxonomy implementation would expand scope.",
       "confidence": 0.75,
       "tags": [
         "implementation-scope",
@@ -4395,7 +4395,7 @@
     },
     {
       "category": "process",
-      "content": "The protocol ecosystem is modular: each protocol is a standalone .md file loaded by keyword trigger from the kernel. Protocols don't need to know about each other. The kernel's Pre-Task Protocol Check is the router. New protocols are added by: (1) creating the .md file, (2) adding a keyword map entry to the kernel, (3) adding trigger tiers to Nate-Protocol.md. The protocol only loads when its keywords match.",
+      "content": "The protocol ecosystem is modular: each protocol is a standalone .md file loaded by keyword trigger from the kernel. Protocols don't need to know about each other. The kernel's Pre-Task Protocol Check is the router. New protocols are added by: (1) creating the .md file, (2) adding a keyword map entry to the kernel, (3) adding trigger tiers to Hypatia-Protocol.md. The protocol only loads when its keywords match.",
       "confidence": 0.95,
       "tags": [
         "protocol",
@@ -4513,7 +4513,7 @@
     {
       "id": "know-244",
       "category": "process",
-      "content": "Session logs: each save creates Memory/session-YYYY-MM-DD-NNN.md with full session narrative. Session index tracks fingerprints (tags, summary, outcome). 60-day rolling window, older sessions archived. Cross-session reasoning synthesis runs every 3+ sessions. Source: Nate's-kb/Memory/",
+      "content": "Session logs: each save creates Memory/session-YYYY-MM-DD-NNN.md with full session narrative. Session index tracks fingerprints (tags, summary, outcome). 60-day rolling window, older sessions archived. Cross-session reasoning synthesis runs every 3+ sessions. Source: hypatia-kb/Memory/",
       "confidence": 0.9,
       "tags": [
         "ecosystem-kb",
@@ -4562,7 +4562,7 @@
     {
       "id": "know-247",
       "category": "reference",
-      "content": "What ships in template KB (at initial release): ~305 knowledge entries (universal facts, productivity patterns, ecosystem self-knowledge), ~160 patterns (behavioral baselines), ~30 reasoning entries (foundational connections), seed memories (system config). All instance-agnostic. Counts grow with each release. Source: Nate's-kb/Intelligence/",
+      "content": "What ships in template KB (at initial release): ~305 knowledge entries (universal facts, productivity patterns, ecosystem self-knowledge), ~160 patterns (behavioral baselines), ~30 reasoning entries (foundational connections), seed memories (system config). All instance-agnostic. Counts grow with each release. Source: hypatia-kb/Intelligence/",
       "confidence": 0.9,
       "tags": [
         "ecosystem-kb",
@@ -4852,7 +4852,7 @@
     {
       "id": "know-264",
       "category": "system",
-      "content": "Benchmark failures expected on fresh installs: (1) foundational tag breadth >30% is normal because seed data IS foundational. As user adds entries through sessions, the ratio naturally drops. (2) Never run benchmarks as a quality gate on a fresh install. Calibrated for mature instances with 10+ sessions of personal intelligence. Source: Nate's-kb/Benchmarks/README.md",
+      "content": "Benchmark failures expected on fresh installs: (1) foundational tag breadth >30% is normal because seed data IS foundational. As user adds entries through sessions, the ratio naturally drops. (2) Never run benchmarks as a quality gate on a fresh install. Calibrated for mature instances with 10+ sessions of personal intelligence. Source: hypatia-kb/Benchmarks/README.md",
       "tags": [
         "benchmark",
         "onboarding",
@@ -5207,7 +5207,7 @@
     {
       "id": "know-283",
       "category": "reference",
-      "content": "Domain root mapping for file resolution. Reason about domain before searching. Domain roots: Nate ecosystem (Nate's-kb/), Intelligence (Nate's-kb/Intelligence/), Memory (Nate's-kb/Memory/), Agents (.kiro/agents/), Patterns (Nate's-kb/patterns/), Vectorstore (Nate's-kb/vectorstore/), Benchmarks (Nate's-kb/Benchmarks/), Scripts (scripts/).",
+      "content": "Domain root mapping for file resolution. Reason about domain before searching. Domain roots: Nate ecosystem (hypatia-kb/), Intelligence (hypatia-kb/Intelligence/), Memory (hypatia-kb/Memory/), Agents (.kiro/agents/), Patterns (hypatia-kb/patterns/), Vectorstore (hypatia-kb/vectorstore/), Benchmarks (hypatia-kb/Benchmarks/), Scripts (scripts/).",
       "confidence": 0.95,
       "source": "Nate prime",
       "context": "Derived from repo structure analysis. Reasoning about domain before searching prevents search spirals.",
@@ -5908,7 +5908,7 @@
     {
       "id": "know-323",
       "category": "process",
-      "content": "Session management: session logs in Memory/session-*.md. Session index tracks fingerprints with 60-day rolling window. Older sessions archived to Memory/archive/. Cross-session learning via reasoning synthesis every 3+ sessions. Source: Nate's-kb/Memory/",
+      "content": "Session management: session logs in Memory/session-*.md. Session index tracks fingerprints with 60-day rolling window. Older sessions archived to Memory/archive/. Cross-session learning via reasoning synthesis every 3+ sessions. Source: hypatia-kb/Memory/",
       "confidence": 0.9,
       "tags": [
         "ecosystem-kb",
@@ -7132,7 +7132,7 @@
     {
       "id": "know-391",
       "category": "tool_quirk",
-      "content": "Vectorstore venv directory is named .venv (dot prefix), not venv. Activation: source .venv/bin/activate. Located at Nate's-kb/vectorstore/.venv/",
+      "content": "Vectorstore venv directory is named .venv (dot prefix), not venv. Activation: source .venv/bin/activate. Located at hypatia-kb/vectorstore/.venv/",
       "confidence": 0.95,
       "tags": [
         "vectorstore",
@@ -7206,7 +7206,7 @@
     {
       "id": "know-395",
       "category": "error_solution",
-      "content": "Apostrophes in directory names (Nate's-kb) break bash `for f in $VARIABLE` loops because word splitting occurs at the apostrophe. Pre-commit hook failed on first real commit with Invalid JSON false positive. Fix: use `echo \"$STAGED\" | while IFS= read -r f` to iterate lines, and pass paths via `sys.argv[1]` instead of string interpolation in Python one-liners. General rule: any bash script iterating over file paths containing special characters must use read-based loops, not for-in.",
+      "content": "Apostrophes in directory names (hypatia-kb) break bash `for f in $VARIABLE` loops because word splitting occurs at the apostrophe. Pre-commit hook failed on first real commit with Invalid JSON false positive. Fix: use `echo \"$STAGED\" | while IFS= read -r f` to iterate lines, and pass paths via `sys.argv[1]` instead of string interpolation in Python one-liners. General rule: any bash script iterating over file paths containing special characters must use read-based loops, not for-in.",
       "tags": [
         "bash",
         "pre-commit",
@@ -7293,7 +7293,7 @@
     {
       "id": "know-400",
       "category": "error_solution",
-      "content": "Vectorstore not working: check if Nate's-kb/vectorstore/.venv exists. If not, run setup.sh. If venv exists but was created on wrong platform (Windows venv in WSL), delete .venv and re-run setup.sh. System works without vectorstore using CSR-only retrieval, no degradation in core functionality. Source: Nate's-kb/vectorstore/SETUP.md",
+      "content": "Vectorstore not working: check if hypatia-kb/vectorstore/.venv exists. If not, run setup.sh. If venv exists but was created on wrong platform (Windows venv in WSL), delete .venv and re-run setup.sh. System works without vectorstore using CSR-only retrieval, no degradation in core functionality. Source: hypatia-kb/vectorstore/SETUP.md",
       "confidence": 0.9,
       "tags": [
         "ecosystem-kb",
@@ -7327,7 +7327,7 @@
     {
       "id": "know-402",
       "category": "error_solution",
-      "content": "KB corruption recovery: all KB files are JSON + markdown. Git history has every save as a commit. To recover: git log --oneline to find last good save, git checkout <hash> -- Nate's-kb/ to restore. For factory reset: re-clone template (loses all personal intelligence). Nuclear option: delete and re-clone. Source: README.md FAQ, know-282",
+      "content": "KB corruption recovery: all KB files are JSON + markdown. Git history has every save as a commit. To recover: git log --oneline to find last good save, git checkout <hash> -- hypatia-kb/ to restore. For factory reset: re-clone template (loses all personal intelligence). Nuclear option: delete and re-clone. Source: README.md FAQ, know-282",
       "confidence": 0.9,
       "tags": [
         "ecosystem-kb",
@@ -7970,7 +7970,7 @@
     {
       "id": "know-438",
       "category": "reference",
-      "content": "What survives teardown: everything in the protocol folder (Nate's-kb/, scripts/, .steering-files/, all project files). Teardown only removes system-level installs (Python, Git, WSL distro, pip packages). Your intelligence, memory, and project data are untouched. Source: scripts/teardown.ps1, README.md",
+      "content": "What survives teardown: everything in the protocol folder (hypatia-kb/, scripts/, .steering-files/, all project files). Teardown only removes system-level installs (Python, Git, WSL distro, pip packages). Your intelligence, memory, and project data are untouched. Source: scripts/teardown.ps1, README.md",
       "tags": [
         "teardown",
         "data-safety",

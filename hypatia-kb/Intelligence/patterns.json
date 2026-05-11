@@ -1963,7 +1963,7 @@
     {
       "id": "proc_162",
       "category": "process",
-      "content": "Protocol wiring audit: cross-reference every protocol file against kernel keyword map, Nate-Protocol.md, and other protocols to verify all are reachable via trigger keywords. Unwired protocols are invisible to the system regardless of content quality.",
+      "content": "Protocol wiring audit: cross-reference every protocol file against kernel keyword map, Hypatia-Protocol.md, and other protocols to verify all are reachable via trigger keywords. Unwired protocols are invisible to the system regardless of content quality.",
       "context": "Found 2 of 14 protocols missing from keyword map despite being complete and useful. Structural completeness without wiring is dead code.",
       "confidence": 0.9,
       "tags": [
@@ -3230,7 +3230,7 @@
     {
       "id": "approach_065",
       "category": "approach",
-      "content": "Full Deep Work re-run with a new protocol step catches what partial re-run misses. v1 GOLDEN spec had wrong Nate-Protocol.md integration point and missed 6 stale downstream files. v2 (full re-run with Ecosystem Trace) found all of them. The new step is structural, not ad hoc: grep for every file/concept the spec touches, check what references the thing being changed. reason-004 confirmed: ecosystem impact tables undercount by 40-50%.",
+      "content": "Full Deep Work re-run with a new protocol step catches what partial re-run misses. v1 GOLDEN spec had wrong Hypatia-Protocol.md integration point and missed 6 stale downstream files. v2 (full re-run with Ecosystem Trace) found all of them. The new step is structural, not ad hoc: grep for every file/concept the spec touches, check what references the thing being changed. reason-004 confirmed: ecosystem impact tables undercount by 40-50%.",
       "confidence": 0.95,
       "tags": [
         "deep-work",

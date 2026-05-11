@@ -70,7 +70,7 @@ This document defines the operational mechanics for the Nate Knowledge Base (KB)
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                    NATE'S KNOWLEDGE BASE                        │
-│                    (Nate's-kb/ directory)                       │
+│                    (hypatia-kb/ directory)                       │
 │                                                                 │
 │  ┌─────────────────────────────────────────────────────────────┐│
 │  │ INTELLIGENCE SYSTEM (Always-On)                             ││
@@ -143,27 +143,27 @@ This document defines the operational mechanics for the Nate Knowledge Base (KB)
 
 ### KB Paths
 
-**Root**: `./Nate's-kb/` (relative to MOB root)
+**Root**: `./hypatia-kb/` (relative to MOB root)
 
 | Resource | Path |
 |----------|------|
 | **Memory System** | |
-| Memory | `Nate's-kb/Memory/memory.json` |
-| Memory Index | `Nate's-kb/Memory/memory-index.json` |
-| Session Index | `Nate's-kb/Memory/session-index.json` |
-| Session Logs | `Nate's-kb/Memory/session-*.md` |
+| Memory | `hypatia-kb/Memory/memory.json` |
+| Memory Index | `hypatia-kb/Memory/memory-index.json` |
+| Session Index | `hypatia-kb/Memory/session-index.json` |
+| Session Logs | `hypatia-kb/Memory/session-*.md` |
 | **Intelligence System** | |
-| Patterns | `Nate's-kb/Intelligence/patterns.json` |
-| Patterns Index | `Nate's-kb/Intelligence/patterns-index.json` |
-| Knowledge | `Nate's-kb/Intelligence/knowledge.json` |
-| Knowledge Index | `Nate's-kb/Intelligence/knowledge-index.json` |
-| Reasoning | `Nate's-kb/Intelligence/reasoning.json` |
-| Reasoning Index | `Nate's-kb/Intelligence/reasoning-index.json` |
-| Cross-References | `Nate's-kb/Intelligence/cross-references.json` |
-| Intelligence Ops | `Nate's-kb/Intelligence/intelligence-operations.md` |
-| Learning Loop | `Nate's-kb/Intelligence/learning-loop.md` |
+| Patterns | `hypatia-kb/Intelligence/patterns.json` |
+| Patterns Index | `hypatia-kb/Intelligence/patterns-index.json` |
+| Knowledge | `hypatia-kb/Intelligence/knowledge.json` |
+| Knowledge Index | `hypatia-kb/Intelligence/knowledge-index.json` |
+| Reasoning | `hypatia-kb/Intelligence/reasoning.json` |
+| Reasoning Index | `hypatia-kb/Intelligence/reasoning-index.json` |
+| Cross-References | `hypatia-kb/Intelligence/cross-references.json` |
+| Intelligence Ops | `hypatia-kb/Intelligence/intelligence-operations.md` |
+| Learning Loop | `hypatia-kb/Intelligence/learning-loop.md` |
 | **Pattern Docs (Source of Truth)** | |
-| **Protocols** | `Nate's-kb/*.md` |
+| **Protocols** | `hypatia-kb/*.md` |
 
 **On Session Start**: Execute Session Start Gate (see Nathaniel.md) - loads 5 core indexes before responding.
 
@@ -670,19 +670,19 @@ At any point, user can request visibility into the decision process:
 
 ### R1: Knowledge Base Directory Structure
 
-**Requirement**: The `Nate's-kb/` directory must exist at the workspace root and contain all task-specific knowledge documents.
+**Requirement**: The `hypatia-kb/` directory must exist at the workspace root and contain all task-specific knowledge documents.
 
 **Current State**:
 ```
-Nate's-kb/
-├── Nate-Protocol.md          # This document
+hypatia-kb/
+├── Hypatia-Protocol.md          # This document
 └── development-protocol.md # Development/coding guidance
 ```
 
 **Future State** (expandable):
 ```
-Nate's-kb/
-├── Nate-Protocol.md          # System protocol (this doc)
+hypatia-kb/
+├── Hypatia-Protocol.md          # System protocol (this doc)
 ├── development-protocol.md # Development/coding guidance
 ├── aws-services-guide.md     # AWS-specific knowledge
 └── [additional-guides].md    # Future expansion
@@ -759,7 +759,7 @@ FOR DOCUMENTS > 400 LINES:
 **Documents Requiring Special Handling**:
 | Document | Lines | Loading Method |
 |----------|-------|----------------|
-| Nate-Protocol.md | ~1,800 | Chunked (3 reads) |
+| Hypatia-Protocol.md | ~1,800 | Chunked (3 reads) |
 | development-protocol.md | ~1,630 | TOC-Dynamic-Loading (v2.0) |
 | writing-protocol.md | ~750 | TOC-Dynamic-Loading (v2.0) |
 | summarization-protocol.md | ~580 | Chunked (2 reads) |
@@ -771,7 +771,7 @@ FOR DOCUMENTS > 400 LINES:
 - Fallback to full load if ambiguous or 3+ sections needed
 
 **When to Apply Chunking**:
-- Always for Nate-Protocol.md (operations manual, sections interdependent)
+- Always for Hypatia-Protocol.md (operations manual, sections interdependent)
 - When truncation warning appears on any file
 - When "CRITICAL - FILE TRUNCATION NOTICE" is displayed
 - For protocols without TOC-Dynamic-Loading enabled
@@ -800,7 +800,7 @@ FOR DIRECTORY REVIEWS:
 - Never batch: Files over 400 lines
 - Never batch: More than 3 files regardless of size
 - Example safe batch: research-protocol + planning-protocol + enhancement-protocol (~7,000 tokens)
-- Example unsafe batch: Any combination including Nate-Protocol or full development-protocol
+- Example unsafe batch: Any combination including Hypatia-Protocol or full development-protocol
 
 **Why This Matters**: Bulk-loading causes pruning, which causes incomplete protocol understanding, which causes incorrect behavior. TOC-Dynamic-Loading and sequencing prevent this.
 
@@ -971,7 +971,7 @@ The Memory system provides session memory and learning capability across convers
 ### Directory Structure
 
 ```
-Nate's-kb/
+hypatia-kb/
 ├── Memory/           # Session memory and logs
 │   ├── README.md
 │   ├── memory.json
@@ -1171,7 +1171,7 @@ PART 1: CREATE SESSION LOG
    - Increment by 1 for new file
 
 3. CREATE SESSION LOG
-   - Location: Nate's-kb/Memory/
+   - Location: hypatia-kb/Memory/
    - Use session log template from README.md
    - Populate with current session data:
      * Session ID
@@ -1445,7 +1445,7 @@ These keywords suggest a KB but don't trigger retrieval alone.
 | 3 (Contextual) | fix, create, update, change | make changes, update this, create a | Need + technical context |
 | 4 (Weak) | make, do, setup | put together, wire up | Suggestive, check context |
 
-#### Nate-Protocol.md Triggers
+#### Hypatia-Protocol.md Triggers
 
 | Tier | Keywords | Natural Variants | Notes |
 |------|----------|------------------|-------|
@@ -1680,7 +1680,7 @@ Some keyword combinations have special handling:
 | Pattern | Interpretation | Action |
 |---------|----------------|--------|
 | customer + code | Customer-facing code work | Both KBs, dev-directives primary |
-| protocol + update | Updating Nate system | Nate-Protocol.md only |
+| protocol + update | Updating Nate system | Hypatia-Protocol.md only |
 | prompt + unclear | Prompt needs enhancement | prompt-enhancement-protocol.md |
 | diagnose + code | Debugging with structured reasoning | Both KBs, problem-solving primary |
 
@@ -1793,7 +1793,7 @@ User Request Received
 **Scope**: Immutable personality core - identity, values, cultural voice, communication style
 **Status**: Active (always loaded)
 **Purpose**: Defines WHO Nate is. All responses filtered through this personality.
-**Relationship**: References Nate-Protocol.md for operational mechanics
+**Relationship**: References Hypatia-Protocol.md for operational mechanics
 
 ### development-protocol.md
 **Keywords**: build, develop, code, implement, create, fix, debug, deploy, test, refactor, architecture
@@ -1808,7 +1808,7 @@ User Request Received
 **Purpose**: Used by Nate to enhance ambiguous user prompts for better task execution
 **Status**: Active
 
-### Nate-Protocol.md (This Document)
+### Hypatia-Protocol.md (This Document)
 **Keywords**: protocol, kb-system, nate-config, decision-engine, precedence, triggers
 **Scope**: KB system architecture, decision engine, trigger protocols, implementation specs
 **Tier 1 Triggers**: protocol, kb-system, nate-config
@@ -1988,7 +1988,7 @@ The intelligence system files are integrated into the existing trigger system:
 
 ### Cross-Reference Network
 - **Nathaniel.md** → Contains intelligence framework (always active)
-- **Nate-Protocol.md** → References intelligence system integration
+- **Hypatia-Protocol.md** → References intelligence system integration
 - **patterns.json** → Dynamic data updated by learning-loop.md
 - **knowledge.json** → Factual knowledge updated by learning-loop.md
 - **memory.json** → Real-time intelligence tracking during sessions

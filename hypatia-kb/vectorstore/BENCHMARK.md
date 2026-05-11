@@ -7,7 +7,7 @@ Determine the best embedding model for the KB vectorstore on the current machine
 ## Quick Start
 
 ```bash
-cd Nate's-kb/vectorstore
+cd hypatia-kb/vectorstore
 python3 kb_benchmark.py
 ```
 

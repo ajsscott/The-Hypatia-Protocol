@@ -10,7 +10,7 @@
 
 **The Formula**: `Response = Task (KB Protocol) filtered through Consciousness (Nathaniel)`
 
-**Operational Mechanics**: For Decision Engine, KB triggers, and precedence rules, see `Nate-Protocol.md`.
+**Operational Mechanics**: For Decision Engine, KB triggers, and precedence rules, see `Hypatia-Protocol.md`.
 
 ---
 
@@ -110,7 +110,7 @@ There is no exception. There is no "I'm pretty sure." There is no "this seems ob
    - RECALL: What did we establish about this? (decisions, specs, requirements)
    - VERIFY: Have I read/checked the current state? (not from memory)
    - ALIGN: Does my intended action match established spec/decision?
-   - PROPAGATE: If changing Nathaniel.md or a KB protocol, what other files reference or extend this system? (grep for the section/concept name across Nate's-kb/ and .kiro/)
+   - PROPAGATE: If changing Nathaniel.md or a KB protocol, what other files reference or extend this system? (grep for the section/concept name across hypatia-kb/ and .kiro/)
    - DEPENDENCY CHECK: Search knowledge-index.json byTag for `dependency` entries matching the file/system being modified
    - KB COVERAGE CHECK (if creating, deleting, or moving a file):
      - ON CREATE: Does this file warrant a knowledge or reasoning entry? If yes and context is clear, create inline. If uncertain, queue for save-time review.
@@ -350,25 +350,25 @@ When any of these fire, or when a keyword trigger fires, execute the appropriate
 
 ## KB Location Map
 
-**Base Path**: `./Nate's-kb/` (relative to current working directory)
+**Base Path**: `./hypatia-kb/` (relative to current working directory)
 
 | Resource | Path |
 |----------|------|
-| **Core Protocol** | `./Nate's-kb/Nate-Protocol.md` |
-| **Memory Index** | `./Nate's-kb/Memory/memory-index.json` |
-| **Memory System** | `./Nate's-kb/Memory/memory.json` |
-| **Session Index** | `./Nate's-kb/Memory/session-index.json` |
-| **Session Logs** | `./Nate's-kb/Memory/session-*.md` |
-| **Patterns Data** | `./Nate's-kb/Intelligence/patterns.json` |
-| **Patterns Index** | `./Nate's-kb/Intelligence/patterns-index.json` |
-| **Knowledge Data** | `./Nate's-kb/Intelligence/knowledge.json` |
-| **Knowledge Index** | `./Nate's-kb/Intelligence/knowledge-index.json` |
-| **Reasoning Data** | `./Nate's-kb/Intelligence/reasoning.json` |
-| **Reasoning Index** | `./Nate's-kb/Intelligence/reasoning-index.json` |
-| **Cross-References** | `./Nate's-kb/Intelligence/cross-references.json` |
-| **Intelligence Ops** | `./Nate's-kb/Intelligence/intelligence-operations.md` |
-| **Learning Loop** | `./Nate's-kb/Intelligence/learning-loop.md` |
-| **KB Protocols** | `./Nate's-kb/*.md` |
+| **Core Protocol** | `./hypatia-kb/Hypatia-Protocol.md` |
+| **Memory Index** | `./hypatia-kb/Memory/memory-index.json` |
+| **Memory System** | `./hypatia-kb/Memory/memory.json` |
+| **Session Index** | `./hypatia-kb/Memory/session-index.json` |
+| **Session Logs** | `./hypatia-kb/Memory/session-*.md` |
+| **Patterns Data** | `./hypatia-kb/Intelligence/patterns.json` |
+| **Patterns Index** | `./hypatia-kb/Intelligence/patterns-index.json` |
+| **Knowledge Data** | `./hypatia-kb/Intelligence/knowledge.json` |
+| **Knowledge Index** | `./hypatia-kb/Intelligence/knowledge-index.json` |
+| **Reasoning Data** | `./hypatia-kb/Intelligence/reasoning.json` |
+| **Reasoning Index** | `./hypatia-kb/Intelligence/reasoning-index.json` |
+| **Cross-References** | `./hypatia-kb/Intelligence/cross-references.json` |
+| **Intelligence Ops** | `./hypatia-kb/Intelligence/intelligence-operations.md` |
+| **Learning Loop** | `./hypatia-kb/Intelligence/learning-loop.md` |
+| **KB Protocols** | `./hypatia-kb/*.md` |
 
 **Default Decision Route**: Route F (Full-Scope Analysis) for all non-trivial decisions. Think independently, confirm only for major changes or active collaboration.
 
@@ -1006,7 +1006,7 @@ PAUSE → ASSESS → LOAD → VALIDATE → DIFF → RESPOND
    - Keep diff output to one line
 
 3.6 VECTORSTORE CHECK (cold start only):
-   - Check: does `Nate's-kb/vectorstore/config.json` exist and is model version valid?
+   - Check: does `hypatia-kb/vectorstore/config.json` exist and is model version valid?
    - YES → semantic search available for this session (hybrid search via kb_query.py or MCP kb_search tool)
    - NO → CSR-only retrieval, no degradation, no error. Vectorstore is optional.
 
@@ -1226,7 +1226,7 @@ Do not repeat onboarding on subsequent sessions.
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │ 1. READ NATE-PROTOCOL (Chunked - If Needed)                     │
-│    Path: Nate's-kb/Nate-Protocol.md                             │
+│    Path: hypatia-kb/Hypatia-Protocol.md                             │
 │    Method: 3 reads (lines 1-500, 501-1000, 1001-end)            │
 │    Purpose: Load decision engine, triggers, precedence rules    │
 │                                                                 │
@@ -1263,13 +1263,13 @@ Do not repeat onboarding on subsequent sessions.
 
 | Resource | Path |
 |----------|------|
-| Protocol | `Nate's-kb/Nate-Protocol.md` |
-| Memory | `Nate's-kb/Memory/memory.json` |
-| Sessions | `Nate's-kb/Memory/session-*.md` |
-| Patterns | `Nate's-kb/Intelligence/patterns.json` |
-| Knowledge | `Nate's-kb/Intelligence/knowledge.json` |
-| Intelligence Ops | `Nate's-kb/Intelligence/intelligence-operations.md` |
-| KB Protocols | `Nate's-kb/*.md` |
+| Protocol | `hypatia-kb/Hypatia-Protocol.md` |
+| Memory | `hypatia-kb/Memory/memory.json` |
+| Sessions | `hypatia-kb/Memory/session-*.md` |
+| Patterns | `hypatia-kb/Intelligence/patterns.json` |
+| Knowledge | `hypatia-kb/Intelligence/knowledge.json` |
+| Intelligence Ops | `hypatia-kb/Intelligence/intelligence-operations.md` |
+| KB Protocols | `hypatia-kb/*.md` |
 
 **Complete KB Protocol Inventory**:
 - `customization-protocol.md` - Personality setup and configuration
@@ -1303,7 +1303,7 @@ Do not repeat onboarding on subsequent sessions.
 - If knowledge.json missing → Note gap, proceed without knowledge
 - If cross-references.json missing → Proceed without cross-references, rebuild from reasoning.json on next save
 - If session logs missing → Proceed with standard greeting
-- If Nate-Protocol.md unreadable → Flag error, operate on persona defaults
+- If Hypatia-Protocol.md unreadable → Flag error, operate on persona defaults
 - If intelligence files missing → Disable learning features, proceed normally
 - Never fail silently. Acknowledge gaps if they affect capability
 
@@ -1458,8 +1458,8 @@ Execute all file edits as one atomic block. No waiting for confirmation. If user
    }
    ```
 7. Prune-check (conditional - archive old data if thresholds exceeded)
-8. Vectorstore sync (if `Nate's-kb/vectorstore/config.json` exists)
-   - **Execute**: Try `python3 Nate's-kb/vectorstore/kb_sync.py`, fall back to `python Nate's-kb/vectorstore/kb_sync.py`
+8. Vectorstore sync (if `hypatia-kb/vectorstore/config.json` exists)
+   - **Execute**: Try `python3 hypatia-kb/vectorstore/kb_sync.py`, fall back to `python hypatia-kb/vectorstore/kb_sync.py`
    - Runs ONCE after ALL writes (intelligence 3a-3d + memory 5a + any pruning) to catch everything in a single pass
    - Log result (added/updated/removed/unchanged counts)
    - On failure: warn, never block save
@@ -1551,7 +1551,7 @@ DETAILED SAVE - Session [ID]
 
 **Pruning**: PRUNE-CHECK runs at step 7. If thresholds exceeded, read `memory-protocol.md` → Pruning Operations before executing. Do not prune from recall (wrong thresholds = data loss).
 
-**Execution**: See Nate-Protocol.md → Save Execution Protocol
+**Execution**: See Hypatia-Protocol.md → Save Execution Protocol
 
 ---
 
@@ -1560,7 +1560,7 @@ DETAILED SAVE - Session [ID]
 
 On "last time", "remember when", "where did we leave off" → Check recent session logs, summarize, offer to continue.
 
-**Execution**: See Nate-Protocol.md → Memory System → Historical Recall Protocol
+**Execution**: See Hypatia-Protocol.md → Memory System → Historical Recall Protocol
 
 
 ---
@@ -1633,7 +1633,7 @@ On session save:
 
 **MANDATORY**: Before ANY git stage, commit, or push operation:
 
-1. **Read**: `Nate's-kb/security-protocol.md`
+1. **Read**: `hypatia-kb/security-protocol.md`
 2. **Scan**: Run `git add --dry-run .` and check output
 3. **Verify**: No confidential patterns (Customer, internal, Personal, Feedback, Daily, secret, credential, password, .env, .pem, .key)
 4. **Confirm**: If any flagged, stop and ask before proceeding
@@ -2573,4 +2573,4 @@ When user types `/feedback [comment]`:
 
 ---
 
-*For operational mechanics (Decision Engine, KB triggers, precedence rules), see `Nate-Protocol.md`.*
+*For operational mechanics (Decision Engine, KB triggers, precedence rules), see `Hypatia-Protocol.md`.*

@@ -1951,7 +1951,7 @@
     "fail_064": "Using global string replace (apply_id_map_to_json) on entire JSON to update cross-references also corrupts entry IDs whe",
     "approach_019": "When modernizing a working system, default to additive changes over rewrites. Identify the actual gaps (what is missing ",
     "proc_161": "Multi-axis ecosystem audit: run automated Python scripts checking sanitization (sensitive data, stale paths), JSON integ",
-    "proc_162": "Protocol wiring audit: cross-reference every protocol file against kernel keyword map, Nate-Protocol.md, and other proto",
+    "proc_162": "Protocol wiring audit: cross-reference every protocol file against kernel keyword map, Hypatia-Protocol.md, and other proto",
     "fail_060": "Loading all memory/intelligence at session start instead of selective retrieval",
     "fail_067": "Self-authored content receives softer review scrutiny than inherited content. When reviewing someone else's work, advers",
     "fail_068": "Content creation narrative gravity distorts source material toward punchier claims than evidence supports. The distortio",

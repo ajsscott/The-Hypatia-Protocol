@@ -9,7 +9,7 @@
 | Layer | Location | What It Does |
 |-------|----------|-------------|
 | **Kernel** | `.steering-files/steering/Nathaniel.md` | Personality, gates, session protocols, external content security (always-loaded system prompt) |
-| **Decision Engine** | `Nate-Protocol.md` | Routes A-F, trigger maps, precedence rules |
+| **Decision Engine** | `Hypatia-Protocol.md` | Routes A-F, trigger maps, precedence rules |
 | **Protocols** | `*.md` (13 files) | Domain-specific behavior (development, writing, research, etc.) |
 | **Intelligence** | `Intelligence/` | Three learning layers: patterns, knowledge, reasoning |
 | **Memory** | `Memory/` | Session logs, entity memory, project tracking |

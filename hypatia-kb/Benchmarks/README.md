@@ -48,7 +48,7 @@ A fresh template clone starts with empty stores. These benchmarks show the targe
 
 ## Baseline Snapshot (Development Instance, Session 41)
 
-*These numbers reflect the development instance at a point in time. The template ships with a curated subset. Run `python3 Nate's-kb/Benchmarks/run-benchmark.py` to generate current metrics for your instance.*
+*These numbers reflect the development instance at a point in time. The template ships with a curated subset. Run `python3 hypatia-kb/Benchmarks/run-benchmark.py` to generate current metrics for your instance.*
 
 | Metric | Value |
 |--------|-------|

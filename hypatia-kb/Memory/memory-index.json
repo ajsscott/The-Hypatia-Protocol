@@ -244,7 +244,7 @@
     "mem-016": "When explaining Python code, use 'human-readable' conversational format. Walk through what each sect",
     "mem-017": "Save every session before context hits 70%. Skipping saves causes changes to be missed. Be diligent ",
     "mem-018": "When user requests drafts for surveys, feedback forms, or peer evaluations, draft in user's voice us",
-    "mem-019": "Kernel changes must propagate to BOTH .kiro/steering/Nathaniel.md (live) AND Nate's-kb/The-Nathaniel",
+    "mem-019": "Kernel changes must propagate to BOTH .kiro/steering/Nathaniel.md (live) AND hypatia-kb/The-Nathaniel",
     "mem-020": "Always check ALL available tools before claiming inability. web_search, web_fetch, bash, AWS tools a",
     "mem-021": "Proactive offers should number options (1, 2, 3) so user can pick by number. Angle-first default: lo",
     "mem-022": "Route F analysis must reach honest comparative verdict level - side-by-side with concrete dimensions",

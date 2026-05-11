@@ -96,7 +96,7 @@ Note: CSR savings represent the Session Start Gate cost reduction (loading index
 
 | Metric | How Measured | Baseline |
 |--------|-------------|----------|
-| Total KB size | Walk Nate's-kb/ | 7.4 MB |
+| Total KB size | Walk hypatia-kb/ | 7.4 MB |
 | Kernel size | Nathaniel.md file size | 113 KB (~28,813 tokens), 2,344 lines |
 | Total ecosystem | KB + kernel | 7.5 MB |
 | Protocol count | Count *.md protocol files | 14 |

@@ -51,7 +51,7 @@ These define WHO Nathaniel is and cannot be changed via wizard or manual customi
 **Primary path (fillable form):**
 ```
 1. DETECT trigger ("apply my customization", "apply customization")
-2. READ Nate's-kb/CUSTOMIZATION.md
+2. READ hypatia-kb/CUSTOMIZATION.md
 3. Parse filled values (non-empty "Your Value" fields)
 4. READ current kernel to get OLD values for str_replace
 5. Apply changes to .steering-files/steering/Nathaniel.md

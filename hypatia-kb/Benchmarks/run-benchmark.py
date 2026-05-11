@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Ecosystem Behavioral Benchmark Suite - April 2026
-Run from Nate's-kb/ directory.
+Run from hypatia-kb/ directory.
 Tests CSR routing, integrity, retrieval quality, and system health.
 """
 

@@ -35,7 +35,7 @@
 | `08-save-command.md` | The 10-step atomic save workflow (from save-command section of kernel + memory-protocol) | ~200 |
 | `09-security.md` | External Content Security gate (L168-187) + snippets from security-protocol.md | ~140 |
 | `10-skills-loading.md` | Protocol Keyword Map (L319-347) — SINGLE SOURCE OF TRUTH for keyword triggers, enforced by check-keyword-drift.py | ~100 |
-| `11-decision-routes.md` | From `Nate's-kb/Nate-Protocol.md` — see next table | ~600 |
+| `11-decision-routes.md` | From `hypatia-kb/Hypatia-Protocol.md` — see next table | ~600 |
 
 `11-decision-routes.md` is loaded always (per plan decision). Bell's
 2,070-line file compresses to ~600 lines after stripping Kiro examples.
@@ -70,7 +70,7 @@ construction.
 
 ---
 
-## Protocols — `Nate's-kb/*-protocol.md` → `hypatia-kb/protocols/`
+## Protocols — `hypatia-kb/*-protocol.md` → `hypatia-kb/protocols/`
 
 Plan's 4-cluster remapping confirmed. Per Q7 decision, Phase 0 adds `librarian-vault-conventions.md` from migrated vault CLAUDE.md.
 
@@ -105,11 +105,11 @@ Plan's 4-cluster remapping confirmed. Per Q7 decision, Phase 0 adds `librarian-v
 
 ---
 
-## Decision routes — `Nate's-kb/Nate-Protocol.md`
+## Decision routes — `hypatia-kb/Hypatia-Protocol.md`
 
 | Bell file | LOC | Disposition | Hypatia target | Effort |
 |---|---:|:---:|---|---:|
-| `Nate-Protocol.md` | 2,070 | **A** (compress) | `.clinerules/11-decision-routes.md` | 6-8 |
+| `Hypatia-Protocol.md` | 2,070 | **A** (compress) | `.clinerules/11-decision-routes.md` | 6-8 |
 
 **Caution:** Routes A-F are referenced by tag (`#route-a` etc.) in the
 Section Routing table (L24-29), NOT as level-3 headings like `### Route A:`.
@@ -123,7 +123,7 @@ tighten Route F verification-rule language, drop the CoV reference pointer.
 
 ---
 
-## Intelligence stores — `Nate's-kb/Intelligence/` → `hypatia-kb/Intelligence/`
+## Intelligence stores — `hypatia-kb/Intelligence/` → `hypatia-kb/Intelligence/`
 
 Per Q6 decision: ship empty. Carry schema, not content.
 
@@ -140,7 +140,7 @@ Per Q6 decision: ship empty. Carry schema, not content.
 
 ---
 
-## Memory stores — `Nate's-kb/Memory/` → `hypatia-kb/Memory/`
+## Memory stores — `hypatia-kb/Memory/` → `hypatia-kb/Memory/`
 
 | Bell file | Disposition | Hypatia action |
 |---|:---:|---|
@@ -154,7 +154,7 @@ Per Q6 decision: ship empty. Carry schema, not content.
 
 | Bell file | LOC | Disposition | Hypatia target | Effort | Notes |
 |---|---:|:---:|---|---:|---|
-| `save-session.py` | 883 | **A** | `scripts/save-session.py` | 10-14 | Rename `Nate's-kb/` → `hypatia-kb/` (4 paths). Strip Windows/WSL fallback. |
+| `save-session.py` | 883 | **A** | `scripts/save-session.py` | 10-14 | Rename `hypatia-kb/` → `hypatia-kb/` (4 paths). Strip Windows/WSL fallback. |
 | `validate-schemas.py` | 163 | **P** | `scripts/validate-schemas.py` | 1-2 | Pure schema validator; no content coupling. Path rename only. |
 | `cascade-correction.py` | 227 | **P** | `scripts/cascade-correction.py` | 2 | Path rename. |
 | `maintenance.py` | 223 | **P** | `scripts/maintenance.py` | 2 | Path rename. |
@@ -169,7 +169,7 @@ Per Q6 decision: ship empty. Carry schema, not content.
 
 ---
 
-## Vectorstore — `Nate's-kb/vectorstore/` → `hypatia-kb/vectorstore/` (Phase 3)
+## Vectorstore — `hypatia-kb/vectorstore/` → `hypatia-kb/vectorstore/` (Phase 3)
 
 | Bell file | LOC | Disposition | Effort | Notes |
 |---|---:|:---:|---:|---|
@@ -213,17 +213,17 @@ All discarded per Build Plan + Q9.
 
 ---
 
-## Tests — `tests/` + `Nate's-kb/vectorstore/tests/`
+## Tests — `tests/` + `hypatia-kb/vectorstore/tests/`
 
 Per Q5: critical-path only in Phase 1.
 
 | Bell file | LOC | Disposition | Hypatia target | Effort | Notes |
 |---|---:|:---:|---|---:|---|
 | (script-level tests) | **0 exist** | — | — | — | Plan claimed 1,843 LOC / 7 files; reality is zero. |
-| `Nate's-kb/vectorstore/tests/test_build.py` | 158 | **P** | `hypatia-kb/vectorstore/tests/test_build.py` | 1 | Path rename. |
-| `Nate's-kb/vectorstore/tests/test_query.py` | 153 | **P** | `test_query.py` | 1 | Path rename. |
-| `Nate's-kb/vectorstore/tests/test_sync.py` | 168 | **P** | `test_sync.py` | 1 | Path rename. |
-| `Nate's-kb/vectorstore/tests/test_concat.py` | 94 | **P** | `test_concat.py` | 0.5 | Path rename. |
+| `hypatia-kb/vectorstore/tests/test_build.py` | 158 | **P** | `hypatia-kb/vectorstore/tests/test_build.py` | 1 | Path rename. |
+| `hypatia-kb/vectorstore/tests/test_query.py` | 153 | **P** | `test_query.py` | 1 | Path rename. |
+| `hypatia-kb/vectorstore/tests/test_sync.py` | 168 | **P** | `test_sync.py` | 1 | Path rename. |
+| `hypatia-kb/vectorstore/tests/test_concat.py` | 94 | **P** | `test_concat.py` | 0.5 | Path rename. |
 | — | — | **NEW** | `tests/test_save_session.py` | 8-12 | ~300-400 LOC. Covers: ops validation, entry add, index rebuild, cross-reference update, cascade, file-lock behavior. |
 | — | — | **NEW** | `tests/test_schema_validation.py` | 4-6 | ~150-200 LOC. Covers the three store schemas + enum/length validation. |
 | — | — | **NEW** | `tests/test_keyword_drift.py` | 2-3 | ~80 LOC. Asserts `.clinerules/10-skills-loading.md` keyword map matches each protocol's `**Keywords**:` line. |
@@ -282,7 +282,7 @@ management lives in TabulaJacqueliana's Mountains/. Discard all.
 | Category | Hours |
 |---|---:|
 | Kernel decomposition (Nathaniel.md → .clinerules/01-11.md) | 16-20 |
-| Decision routes (Nate-Protocol.md → 11-decision-routes.md) | 6-8 |
+| Decision routes (Hypatia-Protocol.md → 11-decision-routes.md) | 6-8 |
 | Protocol ports (13 ported + 3 new) | 56-72 |
 | Python backend (11 scripts + 1 new) | 24-34 |
 | Tests (3 new + 4 ported) | 16-24 |

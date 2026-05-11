@@ -245,7 +245,7 @@ step 6 "Vectorstore (hybrid search)"
 if $SKIP_VECTORSTORE; then
     info "Skipped (--skip-vectorstore)"
 else
-    VECTORSTORE_DIR="$REPO_ROOT/Nate's-kb/vectorstore"
+    VECTORSTORE_DIR="$REPO_ROOT/hypatia-kb/vectorstore"
     VENV_PATH="$VECTORSTORE_DIR/.venv"
     WRAPPER_SCRIPT="$VECTORSTORE_DIR/run-server.sh"
 
@@ -362,7 +362,7 @@ else
     if [ -d "$VENV_PATH" ]; then
         if ! $DRY_RUN; then
             info "Installing vectorstore dependencies..."
-            # Use venv python directly — uv --python fails on paths with apostrophes (Nate's-kb)
+            # Use venv python directly — uv --python fails on paths with apostrophes (hypatia-kb)
             if [ -f "$VENV_PATH/bin/python3" ]; then
                 VPYTHON="$VENV_PATH/bin/python3"
             elif [ -f "$VENV_PATH/bin/python" ]; then
@@ -386,14 +386,14 @@ else
             fi
             
             # Build index if intelligence stores have content
-            PATTERNS_FILE="$REPO_ROOT/Nate's-kb/Intelligence/patterns.json"
+            PATTERNS_FILE="$REPO_ROOT/hypatia-kb/Intelligence/patterns.json"
             if [ -n "$VPYTHON" ] && "$VPYTHON" -c "
 import json, sys
 d=json.load(open(sys.argv[1], encoding='utf-8'))
 sys.exit(0 if d.get('entries') else 1)
 " "$PATTERNS_FILE" 2>/dev/null; then
                 info "Building vectorstore index..."
-                (cd "$VECTORSTORE_DIR" && "$VPYTHON" kb_vectorize.py) && pass "Vectorstore index built" || warn "Vectorstore build failed. Run manually: cd Nate's-kb/vectorstore && .venv/bin/python3 kb_vectorize.py"
+                (cd "$VECTORSTORE_DIR" && "$VPYTHON" kb_vectorize.py) && pass "Vectorstore index built" || warn "Vectorstore build failed. Run manually: cd hypatia-kb/vectorstore && .venv/bin/python3 kb_vectorize.py"
             else
                 if [ -z "$VPYTHON" ]; then
                     warn "venv python not found (vectorstore won't work until fixed)"

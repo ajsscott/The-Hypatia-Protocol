@@ -4,7 +4,7 @@
 
 cd "$(git rev-parse --show-toplevel)" || exit 1
 
-STAGED=$(git diff --cached --name-only | grep -E "Nate's-kb/(Intelligence|Memory)/.*\.json$")
+STAGED=$(git diff --cached --name-only | grep -E "hypatia-kb/(Intelligence|Memory)/.*\.json$")
 
 if [ -z "$STAGED" ]; then
     exit 0  # No intelligence files staged, skip

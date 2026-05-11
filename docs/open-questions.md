@@ -100,13 +100,13 @@ is markdown-and-index-JSON. AJ wants to verify Bell's CSR implementation
 independently before accepting the "CSR is behavioral" framing.
 
 **File:line pointers for AJ's review:**
-- `Nate's-kb/Intelligence/README.md:119-127` — CSR pattern overview
-- `Nate's-kb/Intelligence/README.md:177` — "All `.json` files use CSR"
-- `Nate's-kb/Intelligence/intelligence-operations.md:197-198` — fetch by ID
-- `Nate's-kb/memory-protocol.md:22-24` — CSR for memory retrieval
-- `Nate's-kb/Nate-Protocol.md:1184, 2000` — CSR integration points
+- `hypatia-kb/Intelligence/README.md:119-127` — CSR pattern overview
+- `hypatia-kb/Intelligence/README.md:177` — "All `.json` files use CSR"
+- `hypatia-kb/Intelligence/intelligence-operations.md:197-198` — fetch by ID
+- `hypatia-kb/memory-protocol.md:22-24` — CSR for memory retrieval
+- `hypatia-kb/Hypatia-Protocol.md:1184, 2000` — CSR integration points
 - `scripts/save-session.py:704` — CSR indexes comment
-- `Nate's-kb/maintenance-protocol.md:90` — "degrades gracefully to CSR-only"
+- `hypatia-kb/maintenance-protocol.md:90` — "degrades gracefully to CSR-only"
 
 **Placeholder assumption (until AJ confirms):** CSR is behavioral. Phase
 3 Python port is RRF + MCP only. `.clinerules/07-intelligence-layer.md`
@@ -333,7 +333,7 @@ documented in the Addendum's Q-07 decision notes).
 
 ## Still open — queued for future sessions
 
-### Q-13 | OPEN — Nate-Protocol.md Routes A-F: "apply the 4 fixes"
+### Q-13 | OPEN — Hypatia-Protocol.md Routes A-F: "apply the 4 fixes"
 
 Asked: Build Plan § Week 2 Day 11-12. Still open.
 
@@ -451,8 +451,98 @@ effort estimate (2-3 weeks / 40-60h) is stale vs. port-inventory's
 
 ---
 
+## Q-21 | ANSWERED — Substrate revisit: Cline vs. Roo Code
+
+Asked: 2026-05-11  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** Q-02 (2026-04-22) locked Cline as the runtime substrate for
+multi-provider support (Anthropic / OpenAI / Ollama). Three weeks later,
+revisit prompted by AJ's commitment to Ollama-primary deployment and the
+plan to put Hypatia on a USB stick. Roo Code (Cline fork) has been
+shipping faster on local-model ergonomics and uses the same tool-use
+protocol as Cline, so the Phase 1 port plan doesn't change.
+
+**Options considered:**
+1. Stay on Cline — original decision, slower Ollama velocity
+2. Switch to Roo Code — better Ollama, same tool names as Cline
+3. Build a custom Python+Ollama agent loop — full control, months of work
+4. Switch to Goose (Block) — Ollama-native, newer, less proven
+5. Stay on Claude Code with LiteLLM proxy — hacky, breaks LLM-agnostic
+   principle
+
+**Decision:** Option 2 (Roo Code).
+
+**Load-bearing rationale:**
+- Same tool-use protocol as Cline → Phase 0/1 port work unaffected.
+  `fs_read`/`fs_write` rewiring plan stands.
+- Strictly better Ollama integration than upstream Cline as of 2026-05.
+- Same LLM-agnostic principle from Q-02 preserved.
+
+**Implication:** Phase 1 port targets Roo Code conventions where they
+differ from Cline. Suspected scope: `.roorules` directory naming,
+provider config format. Verify before Phase 1 starts.
+
+**Supersedes:** Q-02 decision (Cline). Q-02 remains in the log as the
+historical answer; this entry is the active decision.
+
+---
+
+## Q-22 | ANSWERED — Memory capture flow during Claude-Code-port sessions
+
+Asked: 2026-05-11  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** While building Hypatia in Claude Code (sandboxed_claude
+template), Claude will observe AJ's preferences, decision patterns, and
+recurring concepts. The question: how do those observations flow into
+Hypatia's Memory/ and Intelligence/ JSON stores, given that (a) those
+stores have schemas (validate-schemas.py exists), (b) "Save Discipline"
+from POCKET-HQ.md mandates consolidation as the heartbeat, and (c) AJ
+wants review-before-canon.
+
+**Options considered:**
+1. Claude writes directly to Memory/*.json and Intelligence/*.json
+   during sessions
+2. Claude writes free-form markdown to an inbox; AJ consolidates into
+   JSON stores during Hypatia maintenance
+3. Claude writes to a structured pre-store (JSON) that mirrors final
+   schema; AJ promotes entries via a script
+4. Disable mid-session capture entirely; AJ writes preferences herself
+
+**Decision:** Option 2 (inbox pattern).
+
+**Mechanism:**
+- New dir: `<hypatia>/inbox/preferences/` (created with this decision)
+- Schema: `<hypatia>/inbox/SCHEMA.md` (defines frontmatter)
+- Claude writes captures here during sandboxed_claude sessions
+- AJ reviews + consolidates into Memory/Intelligence JSON during
+  scheduled Hypatia maintenance sessions
+- `validate-schemas.py` in CI prevents broken JSON from shipping
+- Sandbox enforces this via Dippy: writes outside inbox/ are denied
+
+**Rationale:**
+- Aligns with POCKET-HQ.md "Save Discipline" pattern — consolidation
+  is the heartbeat, not real-time accumulation.
+- Preserves Q-06 (empty JSON stores at ship) by not letting ad-hoc
+  Claude writes bypass curation.
+- AJ retains review-before-canon — wrong inferences caught before they
+  become Hypatia's beliefs.
+- Schema separation: markdown captures need no validation (free-form);
+  JSON stores have validation (Hypatia's contract).
+
+**Implications for sandboxed_claude template:**
+- `sandbox.sh` mounts Hypatia and Tabula repos :rw
+- `.claude/CLAUDE.md` carries a Memory Capture Protocol section
+- `.dippy/config` restricts writes to `inbox/` (Hypatia) and
+  `Seeds/from-claude/` (Tabula)
+
+**Supersedes:** None directly. Codifies an absence-of-spec from Phase 1.
+
+---
+
 ## Change log
 
 - **2026-04-22** — initial log with Q-01 through Q-12 answered + Q-13
   through Q-20 queued. Created during the codebase-analysis session that
   followed Build Plan drafting.
+- **2026-05-11** — Q-21 supersedes Q-02 (Roo Code over Cline). Q-22
+  adds the inbox memory-capture pattern.

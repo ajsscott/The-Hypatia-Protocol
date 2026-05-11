@@ -224,7 +224,7 @@ logs/
 
 ### Purpose
 
-Automatically sanitize customer names and account IDs in `Nate's-kb/Memory/` files during git commit. Local files remain intact with real customer names for operational use; pushed versions are sanitized.
+Automatically sanitize customer names and account IDs in `hypatia-kb/Memory/` files during git commit. Local files remain intact with real customer names for operational use; pushed versions are sanitized.
 
 ### How It Works
 
@@ -358,7 +358,7 @@ Before committing any code:
 | `/Intelligence/` | Learning database, patterns | 🔴 CRITICAL |
 | `/Memory/` | Session memory, logs | 🔴 CRITICAL |
 | `/.steering-files/steering/` | Core personality | 🔴 CRITICAL |
-| `/Nate's-kb/` root | Protocols | 🟡 IMPORTANT |
+| `/hypatia-kb/` root | Protocols | 🟡 IMPORTANT |
 
 ### Before Modifying Protected Files
 
@@ -510,4 +510,4 @@ This protocol is keyword-triggered (loads on "security", "git", "credentials"). 
 
 **Fetch proxy**: `scripts/secure-fetch.py` filters URLs at the JSON-RPC protocol level before they reach `mcp-server-fetch`. Blocks private IPs, metadata endpoints, URL shorteners, dangerous ports, and userinfo bypass attempts.
 
-**Full spec**: `Nate's-kb/Growth/defense-in-depth.md`
+**Full spec**: `hypatia-kb/Growth/defense-in-depth.md`

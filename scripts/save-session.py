@@ -83,10 +83,10 @@ DRY_RUN = False
 
 def find_kb_root():
     script_dir = Path(__file__).resolve().parent
-    kb_path = script_dir.parent / "Nate's-kb"
+    kb_path = script_dir.parent / "hypatia-kb"
     if kb_path.exists():
         return kb_path
-    print(f"ERROR: Nate's-kb not found at {kb_path}", file=sys.stderr)
+    print(f"ERROR: hypatia-kb not found at {kb_path}", file=sys.stderr)
     sys.exit(2)
 
 

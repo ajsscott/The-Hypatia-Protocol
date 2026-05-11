@@ -36,7 +36,7 @@ SAMPLE_INDEX = {
 @pytest.fixture
 def env(tmp_path):
     """Set up temp KB and patch module paths."""
-    kb = tmp_path / "Nate's-kb"
+    kb = tmp_path / "hypatia-kb"
     mem = kb / "Memory"
     mem.mkdir(parents=True)
     with open(mem / "session-index.json", "w") as f:

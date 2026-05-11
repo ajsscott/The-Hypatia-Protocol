@@ -298,9 +298,9 @@ Run after any data changes (integrity fixes, pruning, archival) to keep vectorst
 
 | Scenario | Command | Notes |
 |----------|---------|-------|
-| After maintenance | `cd Nate's-kb/vectorstore && .venv/bin/python3 kb_sync.py` | Incremental, fast |
-| Entry count drift after sync | `cd Nate's-kb/vectorstore && .venv/bin/python3 kb_vectorize.py` | Full rebuild |
-| Model changed | `cd Nate's-kb/vectorstore && .venv/bin/python3 kb_vectorize.py` | Full rebuild required |
+| After maintenance | `cd hypatia-kb/vectorstore && .venv/bin/python3 kb_sync.py` | Incremental, fast |
+| Entry count drift after sync | `cd hypatia-kb/vectorstore && .venv/bin/python3 kb_vectorize.py` | Full rebuild |
+| Model changed | `cd hypatia-kb/vectorstore && .venv/bin/python3 kb_vectorize.py` | Full rebuild required |
 
 **Cache cleanup** (if model was changed):
 ```bash

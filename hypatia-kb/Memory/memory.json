@@ -289,7 +289,7 @@
     "mem-019": {
       "id": "mem-019",
       "type": "decision",
-      "content": "Kernel changes must propagate to BOTH .kiro/steering/Nathaniel.md (live) AND Nate's-kb/The-Nathaniel-Protocol/Protocol/.kiro/steering/Nathaniel.md (template). Live kernel is primary, template is identical minus user-specific content. Always read template README before touching template.",
+      "content": "Kernel changes must propagate to BOTH .kiro/steering/Nathaniel.md (live) AND hypatia-kb/The-Nathaniel-Protocol/Protocol/.kiro/steering/Nathaniel.md (template). Live kernel is primary, template is identical minus user-specific content. Always read template README before touching template.",
       "context": "Established during Route F kernel review session 2026-03-08-002. Two-file sync requirement.",
       "created": "2026-03-08",
       "lastAccessed": "2026-03-08",

@@ -51,10 +51,10 @@ desktop.ini
 *.log
 
 # Vectorstore (generated, rebuildable)
-Nate's-kb/vectorstore/vectors.npy
-Nate's-kb/vectorstore/metadata.json
-Nate's-kb/vectorstore/config.json
+hypatia-kb/vectorstore/vectors.npy
+hypatia-kb/vectorstore/metadata.json
+hypatia-kb/vectorstore/config.json
 
 # Hypothesis test cache
-Nate's-kb/vectorstore/.hypothesis/
+hypatia-kb/vectorstore/.hypothesis/
 .pytest_cache/

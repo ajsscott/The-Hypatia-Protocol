@@ -21,7 +21,7 @@
     "kb-vectorstore": {
       "command": "bash",
       "args": [
-        "Nate's-kb/vectorstore/run-server.sh"
+        "hypatia-kb/vectorstore/run-server.sh"
       ],
       "disabled": false,
       "autoApprove": [

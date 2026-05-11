@@ -41,12 +41,12 @@ The-Nathaniel-Protocol/
 ├── docs/                           # Reference documentation
 │   └── system-maintenance.md       # System maintenance guide (4-phase)
 │
-├── Nate's-kb/                      # Core knowledge base system
+├── hypatia-kb/                      # Core knowledge base system
 │   ├── README.md                   # KB overview and navigation
 │   ├── QUICKSTART.md               # Quick start cheat sheet
 │   ├── CUSTOMIZATION.md            # Personality customization guide
 │   ├── CRITICAL-FILE-PROTECTION.md # Protection rules for intelligence files
-│   ├── Nate-Protocol.md            # Core decision engine (Routes A-F)
+│   ├── Hypatia-Protocol.md            # Core decision engine (Routes A-F)
 │   ├── Nathaniel-Protocol.webp     # Portrait hero image (README)
 │   ├── Nathaniel-Protocol-SC.webp  # Social preview card (upload via GitHub Settings > General > Social preview)
 │   ├── lexicon.md                  # Vocabulary and terminology reference
@@ -176,12 +176,12 @@ The-Nathaniel-Protocol/
 | Life | `Life/` | Personal planning (Pocket HQ scaffold, optional) |
 | Archive | `Archive/` | Completed/historical materials (Pocket HQ scaffold) |
 | Docs | `docs/` | Reference documentation (Pocket HQ scaffold) |
-| Knowledge Base | `Nate's-kb/` | All protocols, intelligence, memory |
-| Protocols | `Nate's-kb/*.md` | Behavioral and task protocols |
-| Intelligence | `Nate's-kb/Intelligence/` | Patterns, knowledge, reasoning stores |
-| Memory | `Nate's-kb/Memory/` | Session logs, entity memory |
-| Vectorstore | `Nate's-kb/vectorstore/` | Hybrid semantic search (.venv local to vectorstore/) |
-| Benchmarks | `Nate's-kb/Benchmarks/` | Performance and scale metrics |
+| Knowledge Base | `hypatia-kb/` | All protocols, intelligence, memory |
+| Protocols | `hypatia-kb/*.md` | Behavioral and task protocols |
+| Intelligence | `hypatia-kb/Intelligence/` | Patterns, knowledge, reasoning stores |
+| Memory | `hypatia-kb/Memory/` | Session logs, entity memory |
+| Vectorstore | `hypatia-kb/vectorstore/` | Hybrid semantic search (.venv local to vectorstore/) |
+| Benchmarks | `hypatia-kb/Benchmarks/` | Performance and scale metrics |
 | Kiro Config | `.steering-files/` | Portable Kiro CLI mirror |
 | Agents | `.steering-files/agents/` | Sub-agent packages |
 | Scripts | `scripts/` | Automation and maintenance |

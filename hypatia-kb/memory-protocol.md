@@ -10,10 +10,10 @@
 
 This protocol enables persistent memory without external dependencies. Uses JSON storage in Memory and behavioral triggers defined here.
 
-**Storage Location**: `Nate's-kb/Memory/memory.json`
+**Storage Location**: `hypatia-kb/Memory/memory.json`
 
 **Related Systems**:
-- **Intelligence System**: `Nate's-kb/Intelligence/` - patterns, knowledge, and reasoning
+- **Intelligence System**: `hypatia-kb/Intelligence/` - patterns, knowledge, and reasoning
 - For knowledge retrieval signals, see `Intelligence/intelligence-operations.md` Part 3
 - For reasoning retrieval signals, see `Intelligence/intelligence-operations.md` Part 3c
 
@@ -23,7 +23,7 @@ This protocol enables persistent memory without external dependencies. Uses JSON
 
 The memory system uses Context Signal Routing for efficient retrieval. Load the lightweight index first, then selectively retrieve relevant memories.
 
-**Index Location**: `Nate's-kb/Memory/memory-index.json`
+**Index Location**: `hypatia-kb/Memory/memory-index.json`
 
 ### Threshold Rule
 

@@ -101,13 +101,13 @@
 | What | Where |
 |------|-------|
 | Personality Kernel | `.kiro/steering/Nathaniel.md` |
-| Decision Engine | `Nate's-kb/Nate-Protocol.md` |
-| Memory | `Nate's-kb/Memory/memory.json` |
-| Session Logs | `Nate's-kb/Memory/session-*.md` |
-| Patterns | `Nate's-kb/Intelligence/patterns.json` |
-| Knowledge | `Nate's-kb/Intelligence/knowledge.json` |
-| Reasoning | `Nate's-kb/Intelligence/reasoning.json` |
-| Protocols | `Nate's-kb/*.md` |
+| Decision Engine | `hypatia-kb/Hypatia-Protocol.md` |
+| Memory | `hypatia-kb/Memory/memory.json` |
+| Session Logs | `hypatia-kb/Memory/session-*.md` |
+| Patterns | `hypatia-kb/Intelligence/patterns.json` |
+| Knowledge | `hypatia-kb/Intelligence/knowledge.json` |
+| Reasoning | `hypatia-kb/Intelligence/reasoning.json` |
+| Protocols | `hypatia-kb/*.md` |
 | Workspace Guide | `POCKET-HQ.md` |
 
 ---
