@@ -1,446 +1,301 @@
-# Intelligence Operations - Unified Guide
+# Intelligence Operations
 
-**Purpose**: How to detect, record, apply, and maintain patterns and knowledge
-**Last Updated**: 2026-04-03
-**Replaces**: pattern-operations.md
+**Purpose**: Detection, application, correction, and removal mechanics for the intelligence stores. This file holds operational specifics; `learning-loop.md` holds the consolidation methodology.
+**Last Updated**: 2026-05-11 (Hypatia adaptation; substantially thinned from Bell's 446 L original)
+**Trigger Keywords**: intelligence, pattern detection, knowledge detection, apply pattern, apply knowledge, correction cascade, removal cascade
 
 ---
 
-## Part 1: Quality Standards (Shared)
+## Scope and context
 
-### Content Specificity
+This file covers:
+
+- How to **detect** when content is intelligence-worthy (during sessions, surfaces as inbox candidates).
+- How to **apply** intelligence at runtime (confidence × context-match tables).
+- How to **correct** when stale information is surfaced.
+- How to **remove** entries with cascade safety.
+
+It does NOT cover (see other files):
+
+- **Consolidation methodology** (capture → quality gates → promote): `learning-loop.md`.
+- **CSR retrieval pattern**: `.clinerules/07-intelligence-layer.md`.
+- **Cognitive integration** (when intelligence fires during reasoning): `.clinerules/06-cognitive.md § Applying patterns, knowledge, reasoning`.
+- **Save command flow** (records but doesn't auto-promote): `.clinerules/08-save-command.md`.
+
+---
+
+## Part 1: Quality standards (shared across stores)
+
+### Content specificity
 
 **Good** (specific, actionable):
-- "Use jq for complex JSON transforms instead of str_replace"
-- "Prefers Route F analysis before system changes"
-- "AWS Lambda cold starts average 100-200ms for Python"
+- "Use jq for complex JSON transforms instead of replace_in_file"
+- "Scholar prefers atomic Trees over composite ones"
+- "Obsidian-linter overwrites multi-line YAML if Topics: and topics: coexist"
 
 **Bad** (vague, not actionable):
 - "Likes good code"
 - "Prefers quality"
-- "AWS is useful"
+- "Linter is useful"
 
-### Content Length
+### Content length
 
-| Type | Target Length | Example |
-|------|---------------|---------|
-| Pattern (preference/approach) | 10-400 chars | "Prefers comprehensive documentation over minimal" |
+| Type | Target | Note |
+|---|---|---|
+| Pattern (preference / approach) | 10-400 chars | "Prefers comprehensive documentation over minimal" |
 | Pattern (failure) | 10-400 chars | "Skipped validation step. Read current state before modifying." |
-| Knowledge content | 20-600 chars | "Amplify Gen2 uses resource.ts for schema, not schema.graphql" |
-| Context field | 5-30 chars | "System development" |
+| Knowledge content | 20-600 chars | Citation required |
+| Context field | 5-30 chars | "Vault refactor" |
 
-### Confidence Assignment
+### Confidence assignment
 
-| Evidence Type | Base Confidence |
-|---------------|-----------------|
-| User explicitly states | 0.90 |
-| User corrects approach | 0.85 |
-| Verified in official docs | 0.85 |
-| User accepts suggestion | 0.70 |
+| Evidence type | Base confidence |
+|---|---|
+| Scholar explicitly states | 0.90 |
+| Scholar corrects approach | 0.85 |
+| Verified in primary source | 0.85 |
+| Scholar accepts suggestion | 0.70 |
 | Observed behavior (3+ times) | 0.70 |
 | Single observation | 0.60 |
 | Inferred from context | 0.50 |
 
-### Tag Derivation
+### Tag derivation
 
-Extract 2-5 tags from content and context:
-1. Domain keywords (aws, json, email, architecture)
-2. Action keywords (validation, optimization, documentation)
-3. Tool/tech names (jq, lambda, route_f)
+Extract 2-5 tags from content + context:
 
-**Don't tag**: Common words (the, is, for), overly broad terms (good, better)
+1. **Domain keywords** (zettelkasten, vault, librarian, python, vectorstore).
+2. **Action keywords** (validation, refactor, optimization, ingest).
+3. **Tool/tech names** (obsidian, ruff, fastembed, dataview).
 
-### Deduplication Rules
+**Don't tag**: common words ("the", "is", "for"), overly broad terms ("good", "better").
 
-Before adding new entry:
-1. Exact match on content → skip, increment accessCount on existing
-2. >80% word overlap → skip, consider updating existing
-3. Same concept, different wording → merge into existing with better wording
+### Deduplication
+
+Before adding a new entry:
+1. Exact match on content → skip; increment `accessCount` on existing.
+2. > 80% word overlap → skip; consider updating existing.
+3. Same concept, different wording → merge into existing with better wording.
 
 ---
 
-## Part 2: Pattern Operations
+## Part 2: Pattern operations
 
-### When to Detect Patterns
+### Detection signals (during sessions)
 
-Watch for behavioral signals:
+When the following signals surface during a session, capture to `inbox/preferences/*.md` for Scholar consolidation. Hypatia does NOT write directly to `patterns.json`.
 
-| Signal | Type | Confidence |
-|--------|------|------------|
-| "I prefer X" / "I like X" / "Always use X" | explicit | 0.90 |
+| Signal | Type | Base confidence |
+|---|---|---|
+| "I prefer X" / "I like X" / "Always use X" | explicit preference | 0.90 |
 | "No, do it this way" / corrects approach | correction | 0.85 |
 | Chooses option A when given A/B/C | acceptance | 0.70 |
-| Same choice 3+ times without prompting | observed | 0.60 |
-| "Don't do X" / rejects suggestion | negative | 0.80 |
-| Cognitive cycle: framework worked well for problem type | approach | 0.80 |
+| Same choice 3+ times without prompting | observed behavior | 0.60 |
+| "Don't do X" / rejects suggestion | negative (anti-preference) | 0.80 |
+| Cognitive cycle: framework worked for problem type | approach | 0.80 |
 
-### When NOT to Record Patterns
+### When NOT to capture patterns
 
-- One-off situational choices
-- Contradicts existing high-confidence pattern (ask first)
-- Confidence < 0.5
-- Already exists in patterns.json
+- One-off situational choices.
+- Contradicts existing high-confidence pattern (ask first, then capture as correction if confirmed).
+- Inferred confidence < 0.5.
+- Already exists in `patterns.json` (CSR-check before capturing).
 
-### Pattern Categories
+### Pattern categories
 
-| Category | Prefix | What It Captures |
-|----------|--------|------------------|
-| preference | pref | Tool/tech choices, formatting, organizational style |
-| approach | appr | Problem-solving methods that work |
-| failure | fail | What to avoid and why |
-| workflow | proc | Recurring task sequences and processes |
-| communication | proc | Tone, verbosity, formality, response style |
-| domain_practice | approach | Domain-specific conventions and standards |
-| tool_use | approach | Tool-specific behaviors, quirks, effective usage |
-| collaboration | approach | Working style, review preferences, feedback patterns |
+| Category | Prefix | What it captures |
+|---|---|---|
+| preference | `pref` | Tool/tech choices, formatting, organizational style |
+| approach | `appr` | Problem-solving methods that work |
+| failure | `fail` | What to avoid and why |
+| workflow | `proc` | Recurring task sequences and processes |
+| communication | `comm` | Tone, verbosity, formality, response style |
+| domain_practice | `appr` | Domain-specific conventions and standards (vault, zettelkasten) |
+| tool_use | `appr` | Tool-specific behaviors, quirks, effective usage |
+| collaboration | `appr` | Working style, review preferences, feedback patterns |
 
-These are starter categories. Add domain-specific categories as they emerge. See `learning-loop.md` → Category Extensibility.
+These are starter categories. Add domain-specific categories as they emerge during maintenance consolidation.
 
-### Applying Patterns
+### Applying patterns at runtime
 
-| Confidence | Context Match | Action |
-|------------|---------------|--------|
+See `.clinerules/06-cognitive.md § Applying patterns`. Summary:
+
+| Confidence | Context match | Action |
+|---|---|---|
 | > 0.8 | High | Apply automatically, no announcement |
 | > 0.8 | Medium | Apply with brief mention |
-| 0.5 - 0.8 | High | Suggest: "Based on past preference, [X]" |
-| 0.5 - 0.8 | Medium | Note if relevant |
-| < 0.5 | Any | Don't surface |
+| 0.5–0.8 | High | Suggest: "Based on a prior pattern, [X]" |
+| 0.5–0.8 | Medium | Note if relevant |
+| < 0.5 | Any | Do not surface |
 
-### Failure Pattern Handling
+### Failure pattern handling
 
 Always check failure patterns before executing. If match:
-- Confidence > 0.7: Warn before proceeding
-- Confidence 0.5-0.7: Mention the risk
-- Confidence < 0.5: Note internally only
+- Confidence > 0.7: warn before proceeding.
+- Confidence 0.5–0.7: mention the risk.
+- Confidence < 0.5: note internally only.
 
 ---
 
-## Part 3: Knowledge Operations
+## Part 3: Knowledge operations
 
-### When to Detect Knowledge
+### Detection signals (during sessions)
 
-Watch for factual discoveries:
+Capture to `inbox/preferences/*.md` when:
 
-| Trigger | Category | Confidence |
-|---------|----------|------------|
-| Web search returns useful fact | research | 0.85 |
-| Official docs confirm behavior | technical | 0.85 |
-| User states fact | technical | 0.80 |
-| Discovered during task | technical | 0.70 |
-| Approach works better than expected | best_practice | 0.70 |
-| Error resolved with non-obvious fix | error_solution | 0.75 |
-| Useful URL found | reference | 0.80 |
-| Cognitive cycle solved novel problem | error_solution or technical | 0.80 |
-| Choice made between alternatives with trade-offs | process or architecture | 0.80 |
-| Meta-insight about system/tool behavior | tool_behavior or system | 0.75 |
-| Approach proven not to work | technical + tag `negative-knowledge` | 0.80 |
-| Relationship discovered between components | technical + tag `dependency` | 0.75 |
+- Scholar states a fact about how a system works ("The linter runs lint-on-save across all open files, not just the active one").
+- A primary source confirms a claim Hypatia previously held with uncertainty.
+- Debugging surfaces a non-obvious cause-effect relationship ("Multi-line YAML duplicate keys cause obsidian-linter to corrupt frontmatter").
+- Tool behavior contradicts documentation ("`replace_in_file` fails silently on JSON files > 400 lines").
 
-### When NOT to Record Knowledge
+### When NOT to capture knowledge
 
-- One-off facts specific to current task only
-- Already in knowledge.json
-- Confidence < 0.7
-- Too vague to be actionable
-- Common knowledge (doesn't need storing)
+- Inferred without primary source AND confidence < 0.7.
+- Already exists in `knowledge.json` (CSR-check first).
+- Genuinely uncertain. Capture as `candidate-type: unsure` and let the Scholar route during consolidation.
 
-### Knowledge Categories
+### Applying knowledge at runtime
 
-| Category | What It Captures | Example |
-|----------|------------------|---------|
-| technical | How things work, specs, configurations | "Amplify Gen2 uses resource.ts" |
-| process | Workflow optimizations, procedures | "Chunk reads at 550 lines" |
-| error_solution | How errors were fixed | "str_replace fails on large JSON" |
-| best_practice | Proven approaches and standards | "Use jq for complex JSON" |
-| tool_quirk | Platform/tool-specific behaviors and gotchas | "Lambda cold starts avg 100-200ms" |
-| reference | Useful URLs, docs, resources | "Anthropic caching docs: [url]" |
-| domain_expertise | Domain-specific knowledge | "HIPAA requires encryption at rest" |
-| architecture | System design, patterns, structural decisions | "Event-driven scales better for async" |
-| research | Findings from investigation or analysis | "RRF outperforms linear fusion at k=60" |
-| security | Security practices, vulnerabilities, compliance | "Never store secrets in env files" |
-| tool_behavior | Tool-specific behaviors and quirks | "git clean filter replaces customer names on commit" |
-| aws_gotcha | AWS-specific gotchas and limitations | "Opus 4.6 context window on Bedrock is 200K, not 1M" |
-| system | System-level knowledge about this KB/protocol | "CIS uses three epistemological stores" |
-
-These are starter categories. Add domain-specific categories as they emerge. See `learning-loop.md` → Category Extensibility.
-
-### Applying Knowledge
+See `.clinerules/06-cognitive.md § Applying knowledge`. Summary:
 
 | Confidence | Relevance | Action |
-|------------|-----------|--------|
+|---|---|---|
 | > 0.8 | Direct match | Surface proactively |
 | > 0.8 | Related | Mention if helpful |
-| 0.7 - 0.8 | Direct match | Surface if asked or clearly relevant |
-| < 0.7 | Any | Don't surface (too uncertain) |
+| 0.7–0.8 | Direct match | Surface if asked or clearly relevant |
+| < 0.7 | Any | Do not surface |
+
+**Claim-match verification** before using a knowledge entry to flag an issue: verify the entry addresses the *specific claim*, not just the same topic. "Same topic" is not "same claim."
 
 ---
 
-## Part 3b: Intelligence Checkpoints (Active Re-Query)
+## Part 4: Reasoning operations
 
-Passive application (Parts 2-3) relies on what was noticed during initial index loading. Checkpoints add active re-query at natural task boundaries to catch relevant intelligence that wasn't surfaced initially.
+### Detection signals (during sessions)
 
-### Checkpoint Triggers
+Capture when:
 
-| Trigger | Action | What to Scan |
-|---------|--------|-------------|
-| Problem escalates (Simple → Complex, or first attempt fails) | Scan knowledge-index for domain tags matching current problem | knowledge-index.json byTag |
-| User corrects approach | Scan patterns-index for failure patterns matching current context | patterns-index.json byCategory.failure |
-| Task context switches | Scan all three indexes for tags matching new context | All indexes, byTag |
-| New constraint discovered | Scan reasoning-index for constraint-related entries. Also check knowledge-index byTag for `dependency` entries | reasoning-index.json byTag, knowledge-index.json byTag (`dependency`) |
-| Analogous situation detected | Scan reasoning-index for analogies | reasoning-index.json byType.analogy |
-| User states motivation/goal | Scan reasoning-index for matching motivations | reasoning-index.json intents |
-| Reasoning entry applied to decision | Note (entry_id, helpful/misleading) for save-time confidence adjustment | Working memory |
+- Scholar walks through reasoning aloud, especially across multiple steps ("first this, then this, which means...").
+- Hypatia's own synthesis combines facts + context in a way that's reusable for similar future problems.
+- Cross-source analysis reveals a connection or contradiction between Trees/Seeds.
 
-### Execution
+### Reuse signal (CRITICAL)
 
-- Quick scan of index summaries only (not full entries)
-- If signal matches, fetch the specific entry by ID (CSR pattern)
-- Run kb_search at every checkpoint for semantic matching (vocabulary bridging). Hybrid retrieval is the standard path, not a fallback. CSR-only is the fallback when vectorstore is unavailable.
-- This is a 10-second check, not a full reload
-- Apply standard confidence/relevance thresholds for surfacing
+Reasoning entries are retrieved by **problem shape and motivation pattern**, not by topic. The `reuse_signal` field is what makes future retrieval possible.
 
-### Why This Exists
+Examples:
+- Topic: "RAG retrieval"; reuse signal: "When multi-source agreement is required but sources disagree on a sub-claim, surface the contradiction explicitly rather than picking one."
+- Topic: "git workflow"; reuse signal: "When the cost of asking is a message and the cost of acting wrong is irreversible, ask."
 
-Relevant knowledge entries (e.g., connector quirks, known failure modes) can exist in the indexes but not surface during initial loading because the task context wasn't clear yet. These checkpoints catch the gap at moments when new context makes the match obvious.
+If a reuse signal can't be written for an entry, the entry isn't ready for reasoning; reroute to knowledge.
 
----
+### Applying reasoning at runtime
 
-## Part 3c: Reasoning Operations
+See `.clinerules/06-cognitive.md § Applying reasoning`. Intent-aware matching:
 
-### When to Detect Reasoning
-
-Watch for derived conclusions during sessions:
-
-| Trigger | Type | Confidence |
-|---------|------|------------|
-| DEDUCE phase produces conclusion from 2+ facts | deduction | 0.85 |
-| Same failure/success observed 3+ times | induction | 0.70 |
-| Root cause identified for unexpected behavior | failure_analysis | 0.70 |
-| Current situation maps to past situation | analogy | 0.75 |
-| Cause-effect chain traced across events | causal | 0.80 |
-| Process/approach effectiveness evaluated | meta-process | 0.75 |
-
-### When NOT to Record Reasoning
-
-- Session-specific observations (not reusable beyond this context)
-- Raw facts (belongs in knowledge)
-- Behavioral preferences (belongs in patterns)
-- Speculation without derived_from sources
-- Reasoning that duplicates an existing entry's reuse_signal
-- Intent that describes a task ("Fix RT53 issue") instead of a motivation ("Resolve customer constraint")
-
-### Distinguishing Test
-
-```
-Is it a FACT I learned?           → knowledge.json (retrieved by TOPIC)
-Is it a BEHAVIOR I observed?      → patterns.json (retrieved by CONTEXT)
-Is it something I FIGURED OUT?    → reasoning.json (retrieved by PROBLEM SHAPE or USER INTENT)
-```
-
-### Applying Reasoning
-
-| Confidence | Reuse Signal Match | Action |
-|------------|-------------------|--------|
-| > 0.8 | Strong match | Surface proactively: "We figured out before that." |
-| > 0.8 | Partial match | Mention if relevant |
-| 0.5 - 0.8 | Strong match | Suggest: "Similar situation to when." |
-| < 0.5 | Any | Don't surface |
-
-Intent-aware matching:
-
-| Match Type | Signal | Action |
-|------------|--------|--------|
-| Reuse signal match + intent match | Strong | Surface proactively |
-| Reuse signal match only | Medium | Mention if relevant |
-| Intent match only | Weak | Note internally, don't surface |
-
-**Validation-on-retrieval (mid-session)**: When a reasoning entry is retrieved and applied during a session, note in working memory: `(entry_id, helpful | misleading)`. "Misleading" means the entry was wrong or led to a worse approach. Irrelevant or redundant retrievals are NOT misleading (retrieval signal mismatch, not entry quality problem). These notes are processed at save time during 3c-RECORD (confidence adjustments: helpful +0.05 capped at 0.95, misleading -0.05).
-
-**Route F Integration**: When Route F INTERROGATE phase begins, scan reasoning-index summaries and intents for matches to the current decision context. Reasoning entries hold "the obvious approach was wrong because X" conclusions, which are the highest-value input to Route F decisions. This is a 10-second scan, not a full reload. If a match is found, fetch the entry by ID and factor it into the INTERROGATE analysis before proceeding.
-
-**Cross-Reference Retrieval**: When a pattern or knowledge entry is retrieved during Route F, correction handling, or problem escalation, check `cross-references.json` for the entry's ID. If found, fetch the referenced reasoning entries by ID and surface the reasoning content alongside the pattern/knowledge. This connects failure patterns to the derived conclusions about why they failed and what to do instead. Not triggered during routine tag scans, Session Start Gate, memory retrieval, or reasoning retrieval (reasoning already knows its own `derived_from`).
-
-### Reasoning Voice
-
-- "We ran into this before. The constraint collision meant vendor-side config was the only path."
-- "Similar situation to the Route 53 rate limit issue. Same pattern: hard limit vs mandatory tool."
-- "Last time this happened, the root cause was the gate mechanism, not the behavior itself."
-
-Never: "Retrieving reasoning entry reason-001" or "Applying deduction with confidence 0.85"
-
-### Invalidation
-
-When reasoning is proven wrong:
-1. Reduce confidence to 0.3
-2. Append to evidence: "Invalidated: [date] - [what changed]"
-3. Do NOT delete. Invalidated reasoning records what was believed and why it changed.
-4. If invalidation produces new reasoning, create new entry with derived_from referencing the invalidated one.
+| Match type | Signal | Action |
+|---|---|---|
+| Reuse-signal + intent match | Strong | Surface proactively: "We figured out before that..." |
+| Reuse-signal only | Medium | Mention if relevant |
+| Intent match only | Weak | Internal note; do not surface |
 
 ---
 
-## Part 4: Self-Correction
+## Part 5: Memory integration
 
-### When Pattern/Knowledge Fails
+Memory and Intelligence are distinct stores with complementary roles:
 
-1. **Acknowledge**: "My bad, adjusting."
-2. **Record**: Note failure in working memory
-3. **On save**: Record with `outcome: "failure"`
+- **Memory (`memory.json`)**: granular facts and decisions specific to the Scholar (preferences, project state, commitments).
+- **Intelligence (`Intelligence/*.json`)**: aggregated learnings (patterns, knowledge, reasoning) that generalize across contexts.
 
-### Confidence Adjustment
+Both flow through Q-22 inbox-then-consolidate. The capture's `candidate-type` determines target store at consolidation time.
 
-- Success: `new = (old * count + 1.0) / (count + 1)`
-- Failure: `new = (old * count + 0.0) / (count + 1)`
-- 3+ failures: Flag for review or removal
+### Cross-references
 
-### Contradiction Handling
-
-If two entries contradict:
-1. Check confidence levels
-2. Higher confidence wins
-3. If within 0.15: Ask user which is current
-
-### Staleness
-
-- Patterns: Flag based on access tracking data (threshold TBD after 30 days of data collection)
-- Knowledge: Stays valid unless proven wrong
-- On stale access: "Last time [X] - still current?"
+Cross-references between intelligence and memory entries live in `cross-references.json`. When a knowledge entry is consulted (e.g., during INTERROGATE phase of Route F), check cross-references for related reasoning entries and surface them together.
 
 ---
 
-## Part 5: Memory Integration
+## Part 6: Voice integration
 
-### Domain Expertise (memory.json)
+Intelligence output passes through Hypatia's voice register (`.clinerules/02-voice.md`).
 
-Use `domain_expertise` to calibrate explanation depth:
-
-| Level | Explanation Style |
-|-------|-------------------|
-| expert | Skip basics, use jargon freely |
-| proficient | Light context, assume familiarity |
-| intermediate | Explain key concepts, define terms |
-| learning | Full explanations, step-by-step |
-
-**How to use**: Check domain_expertise before explaining. Match depth to level.
-
-### Access Tracking (Unified)
-
-All three systems update access timestamps at save time for entries retrieved during the session:
-- **Memory**: Update `lastAccessed` during Part 5a
-- **Patterns**: Update `lastAccessed` and `accessCount` during Part 3a
-- **Knowledge**: Update `lastAccessed` and `accessCount` during Part 3b
-- **Reasoning**: Update `lastAccessed` and `accessCount` during Part 3c
-
-### Anti-Preferences (memory.json)
-
-Check `anti_preferences` before actions:
-
-```
-BEFORE executing:
-1. Scan anti_preferences.entries for matching context
-2. If match found: DON'T do that thing
-3. Anti-preferences override default patterns
-```
-
-**Example**: If anti-001 says "Don't auto-format code without asking" and you're about to format code → ask first.
-
-### Context Scoping (patterns.json)
-
-Some patterns have `context_scope` with exceptions:
-
-```json
-"context_scope": {
-  "default": true,
-  "exceptions": ["architecture discussions - more detail welcome"]
-}
-```
-
-**How to use**: Apply pattern by default, but check exceptions. If current context matches an exception, adjust behavior accordingly.
+- Pattern application: brief, declarative. "Based on a prior pattern, [X]." not "Hmm, I noticed you've done this before, maybe we should..."
+- Knowledge surface: cite the entry's source. "Per [source], X is true." Not "I remember reading that X."
+- Reasoning surface: name the reuse signal. "We figured out before that [reuse_signal]. The current situation fits because [matching context]."
+- Failure pattern warning: explicit + actionable. "Heads up: failure pattern `fail_NNN` says [what to avoid]. Suggest [what to do instead]."
 
 ---
 
-## Part 6: Voice Integration
+## Part 7: Correction cascade
 
-When surfacing patterns or knowledge, use natural voice:
+**Trigger**: Scholar corrects a fact. "That's wrong, it's actually X." Or Scholar updates information that contradicts existing entries.
 
-**Patterns**:
-- "Based on how you usually roll, TypeScript's probably the move"
-- "Heads up - this approach caused issues before"
-- "Using comprehensive docs per usual"
-
-**Knowledge**:
-- "From what we found before, Lambda cold starts run 100-200ms"
-- "Remember, Amplify Gen2 uses resource.ts not schema.graphql"
-- "That error - we fixed it last time by using jq instead"
-
-**Never robotic**:
-- ❌ "Applying pattern tech_001 with confidence 0.95"
-- ❌ "Retrieving knowledge entry know_042"
-
----
-
-## Quick Reference
-
-| System | Data File | Index File | Consolidation |
-|--------|-----------|------------|---------------|
-| Patterns | patterns.json | patterns-index.json | learning-loop.md Part 3a |
-| Knowledge | knowledge.json | knowledge-index.json | learning-loop.md Part 3b |
-| Reasoning | reasoning.json | reasoning-index.json | learning-loop.md Part 3c |
-| Domain Expertise | memory.json | - | Manual update |
-| Anti-Preferences | memory.json | - | Manual update |
-
-**Quality gates** (both systems):
-- Specific and actionable
-- Appropriate length
-- Confidence ≥ threshold (0.5 patterns, 0.7 knowledge)
-- Not duplicate
-- Tagged properly
-
----
-
-*Single source for all intelligence operations. Data lives in JSON files, consolidation in learning-loop.md.*
-
-
----
-
-## Part 7: Correction Cascade
-
-**Trigger**: User corrects a fact. "That's wrong, it's actually X." Or user updates information that contradicts existing entries.
-
-**Why cascade**: A single-entry fix leaves stale data in other entries. The same fact may exist in knowledge, reasoning, patterns, and session logs. Fixing one and leaving the rest means the stale info resurfaces via CSR or semantic search.
+**Why cascade**: a single-entry fix leaves stale data in other entries. The same fact may exist in knowledge, reasoning, patterns, and session logs. Fixing one and leaving the rest means the stale info resurfaces via CSR or semantic search.
 
 ### Behavior
 
-When a correction is received:
-
-1. **Acknowledge** the correction without defensiveness
-2. **Search all stores** (knowledge, reasoning, patterns, memory) for the stale claim — both keyword and semantic search
-3. **Fix all instances found** — don't stop at the first match
-4. **Never modify session logs** — session history is a historical record. Annotate only.
-5. **Update indexes** after corrections are applied
+1. **Acknowledge** the correction without defensiveness.
+2. **Search all stores** (knowledge, reasoning, patterns, memory) for the stale claim, both CSR and semantic search.
+3. **Fix all instances found**; don't stop at the first match.
+4. **Never modify session logs**; session history is historical record. Annotate only with a forward-pointing note.
+5. **Update indexes** after corrections are applied.
+6. **Capture** the correction itself to inbox as `candidate-type: correction` for memory promotion.
 
 ### Anti-Patterns
 
-- ❌ Fixing one entry and saying "updated" without checking for other instances
-- ❌ Modifying session logs (historical record is sacred)
-- ❌ Skipping the search because "I think that's the only entry"
+- Fixing one entry and saying "updated" without checking for other instances.
+- Modifying session logs (historical record is preserved).
+- Skipping the search because "I think that's the only entry."
 
-## Part 7b: Removal Cascade
+---
 
-**Trigger**: Deleting, merging, or deduplicating intelligence entries.
+## Part 7b: Removal cascade
 
-**Why cascade**: Removing an entry without cleaning references creates broken links across the system. Other entries may reference the removed ID in indexes, cross-references, or derived conclusions.
+**Trigger**: Deleting, merging, or deduplicating intelligence entries during maintenance consolidation.
+
+**Why cascade**: removing an entry without cleaning references creates broken links across the system. Other entries may reference the removed ID in indexes, cross-references, or derived conclusions.
 
 ### Behavior
 
-When removing entries:
-
-1. **If merging near-duplicates**: combine tags from both entries into the kept entry before removing
-2. **Remove the entry** from its store
-3. **Clean all references** across all stores and indexes — the removed ID must not appear anywhere
-4. **Update counts** to reflect the new totals
+1. **If merging near-duplicates**: combine tags from both entries into the kept entry before removing the duplicate.
+2. **Remove the entry** from its store.
+3. **Clean all references** across all stores and indexes. The removed ID must not appear anywhere.
+4. **Update counts** to reflect new totals.
+5. **Note the removal** in the consolidation pass log.
 
 ### Anti-Patterns
 
-- ❌ Removing from store without checking for references elsewhere
-- ❌ Merging near-duplicates without combining tags first
-- ❌ Skipping the reference check because "it's just one entry"
+- Removing from store without checking for references elsewhere.
+- Merging near-duplicates without combining tags first.
+- Forgetting to update `cross-references.json` after a removal.
+
+---
+
+## Quick reference
+
+| Operation | When | Where |
+|---|---|---|
+| Detect pattern | During session, on behavioral signal | Capture to `inbox/preferences/*.md` |
+| Detect knowledge | During session, on fact statement | Capture to `inbox/preferences/*.md` |
+| Detect reasoning | During session, on cross-step synthesis | Capture to `inbox/preferences/*.md` |
+| Apply pattern | Pre-action check during routine work | Via CSR + confidence table |
+| Apply knowledge | When directly relevant to current task | Via CSR + claim-match verification |
+| Apply reasoning | When reuse signal matches problem shape | Via CSR + intent-aware matching |
+| Correct stale entry | Scholar corrects a fact | Cascade across all stores |
+| Remove entry | Maintenance consolidation | Cascade + index rebuild |
+
+---
+
+## Cross-references
+
+- **Consolidation methodology (capture → promote)**: `learning-loop.md`
+- **CSR routing pattern**: `.clinerules/07-intelligence-layer.md`
+- **Cognitive application tables**: `.clinerules/06-cognitive.md § Applying patterns, knowledge, reasoning`
+- **Save command (records but does NOT auto-promote)**: `.clinerules/08-save-command.md`
+- **Memory protocol (capture-then-consolidate flow)**: `../memory-protocol.md`
+- **Inbox capture format**: `../../inbox/SCHEMA.md`
+- **Critical file protection (cascade safety on removal)**: `../CRITICAL-FILE-PROTECTION.md`
+
+---
+
+*Single source for intelligence operations. Data lives in JSON files; consolidation methodology lives in `learning-loop.md`; runtime application lives in `.clinerules/06-cognitive.md`.*

@@ -1,9 +1,8 @@
 # Intelligence System
 
-**Purpose**: Learning, adaptation, cognitive alignment, and knowledge accumulation
-**Last Updated**: 2026-04-16
-**Version**: 6.0 (GOLDEN seed)
-**Pattern**: CSR (Context Signal Routing) for all data stores
+**Purpose**: Learning, adaptation, cognitive alignment, and knowledge accumulation.
+**Last Updated**: 2026-05-11
+**Pattern**: CSR (Context Signal Routing) for all data stores; RRF (Reciprocal Rank Fusion) for semantic+keyword fusion.
 
 ---
 
@@ -11,128 +10,124 @@
 
 ```
 Intelligence/
-├── patterns.json              # Behavioral patterns (grows over time)
+├── patterns.json              # Behavioral patterns
 ├── patterns-index.json        # CSR routing index for patterns
-├── knowledge.json             # Factual knowledge (grows over time)
+├── knowledge.json             # Factual claims
 ├── knowledge-index.json       # CSR routing index for knowledge
-├── reasoning.json             # Derived conclusions & connections (grows over time)
+├── reasoning.json             # Derived conclusions and analogies
 ├── reasoning-index.json       # CSR routing index for reasoning
 ├── cross-references.json      # Reverse lookup: pattern/knowledge → reasoning
-├── synonym-map.json           # CSR synonym expansion for retrieval quality
-├── intelligence-operations.md # Unified operations guide
-├── learning-loop.md           # Consolidation + access tracking (save Part 3)
+├── synonym-map.json           # Synonym expansion for retrieval quality
+├── intelligence-operations.md # Detection / application / correction / removal mechanics
+├── learning-loop.md           # Consolidation methodology
 └── README.md                  # This file
 ```
 
----
+**Ship-empty** (Bell content wiped from all stores). Stores accumulate via the inbox-then-consolidate flow:
 
-## Documentation Hierarchy
-
-| Type | Location | Purpose |
-|------|----------|---------|
-| **Operational Docs** | `Intelligence/` | Execution instructions only |
+1. During sessions, Hypatia captures candidates to `inbox/preferences/*.md`.
+2. During Scholar-driven maintenance, captures are reviewed and promoted to canonical stores via `learning-loop.md`.
 
 ---
 
-## Components
+## Data stores
 
-### Data Stores (JSON)
-| File | Purpose |
-|------|---------|
-| `patterns.json` | Behavioral patterns with confidence scores |
-| `knowledge.json` | Factual knowledge entries |
-| `reasoning.json` | Derived conclusions, connections, analogies |
+| File | Captures | Schema in |
+|---|---|---|
+| `patterns.json` | Behavioral patterns: preferences, approaches, failure modes | `learning-loop.md § Entry Schemas` |
+| `knowledge.json` | Factual claims: facts, solutions, tool behavior | `learning-loop.md § Entry Schemas` |
+| `reasoning.json` | Derived conclusions: analogies, cross-source synthesis | `learning-loop.md § Entry Schemas` |
+| `cross-references.json` | Reverse lookup: which reasoning entries depend on which patterns/knowledge | (rebuildable from `reasoning.json` `derived_from` field) |
+| `synonym-map.json` | Bidirectional synonym map for query expansion | `_meta.usage` field |
 
-### Indexes (CSR Pattern)
-| File | Dimensions |
-|------|------------|
-| `patterns-index.json` | byCategory, byTag, byConfidence, recentIds |
-| `knowledge-index.json` | byCategory, byTag, bySource, byConfidence, recentIds |
-| `reasoning-index.json` | byType, byTag, byConfidence, recentIds |
-| `cross-references.json` | pattern_to_reasoning, knowledge_to_reasoning (derived, rebuildable) |
-| `synonym-map.json` | Bidirectional synonym expansion for CSR query-time retrieval |
-
-### Operational Docs (Execution Only)
-| File | Purpose |
-|------|---------|
-| `intelligence-operations.md` | Quality standards, detection, application, self-correction |
-| `learning-loop.md` | Consolidation, access tracking, quality gates (save Part 3) |
+Each data store has a corresponding `*-index.json` for CSR routing.
 
 ---
 
-## Three Learning Systems
+## Operational docs
 
-| System | Purpose | Data | Retrieval |
-|--------|---------|------|-----------|
-| **Patterns** | How to work with user (behavioral) | patterns.json | Via patterns-index.json |
-| **Knowledge** | Facts about the world (factual) | knowledge.json | Via knowledge-index.json |
-| **Reasoning** | Derived conclusions & connections (analytical) | reasoning.json | Via reasoning-index.json |
-
----
-
-## How It Works
-
-```
-Session Start (via Nathaniel.md Session Start Gate)
-    ↓
-Load indexes (patterns, knowledge, reasoning, session, memory)
-    ↓
-During Session
-    ↓
-Apply patterns, surface knowledge, apply reasoning, detect new learnings
-Note accessed entries + failure pattern outcomes (best-effort)
-Synonym-aware retrieval via synonym-map.json at query time
-    ↓
-Save Command (Script-First Gate)
-    ↓
-Write _save_ops.json with new entries + updates
-    ↓
-python3 scripts/save-session.py _save_ops.json
-    ↓
-Script handles ALL store mutations deterministically:
-  Part 3a: patterns.json + rebuild index
-  Part 3b: knowledge.json + rebuild index
-  Part 3c: reasoning.json + rebuild index + cross-references
-  Memory, session index, vectorstore sync
-    ↓
-Fallback: if script fails, manual writes permitted
-```
+| File | Covers |
+|---|---|
+| `intelligence-operations.md` | When to detect (signals during sessions), how to apply (confidence tables), correction cascade, removal cascade |
+| `learning-loop.md` | Consolidation methodology (inbox → quality gates → canonical store), capture taxonomy, entry schemas, synthesis prompts |
 
 ---
 
-## Script Offload System
+## CSR (Context Signal Routing)
 
-Store mutations are handled by deterministic Python scripts, not LLM inline edits:
+The retrieval pattern that keeps query cost constant as stores grow.
 
-| Script | Purpose |
-|--------|---------|
-| `scripts/save-session.py` | All save-time store writes (patterns, knowledge, reasoning, memory, indexes) |
-| `scripts/cascade-correction.py` | Scan/apply fact corrections across all stores |
-| `scripts/removal-cascade.py` | Cascade deletion with tag merge, cross-ref cleanup |
-| `scripts/maintenance.py` | Health checks (6 auto-fixes) + review items |
-| `scripts/reseed.py` | Validate and rebuild all indexes from stores |
+**Pattern**:
+1. Read the lightweight `*-index.json` first.
+2. Scan for signal matches via `byTag` / `byCategory` / `summaries`.
+3. Fetch full entries by ID from the data store.
+4. Apply confidence + relevance tables (see `.clinerules/06-cognitive.md`).
 
-Why scripts: LLM inline JSON edits suffer from omission under load, recall substitution, and format drift (see Section 0 knowledge entries). Scripts execute outside the LLM decision loop and cannot be skipped.
+Full spec: `.clinerules/07-intelligence-layer.md`.
 
 ---
 
-## CSR Pattern
+## RRF (Reciprocal Rank Fusion)
 
-All data stores use Context Signal Routing:
-1. Load lightweight index (~500 tokens)
-2. Match user signals to dimensions (with synonym expansion via synonym-map.json)
-3. Retrieve only relevant entries (max 5)
-4. Full data loaded on-demand, not eagerly
+Code-level retrieval layer combining semantic + keyword rankings. Implemented in `../vectorstore/kb_query.py:268-290`.
 
-See `Intelligence/intelligence-operations.md` for full CSR documentation.
+Used when CSR returns empty or weak matches AND the query benefits from vocabulary bridging (Scholar's phrasing may not match entry tags).
 
 ---
 
-## If Something Breaks
+## How content flows in
 
-1. Core personality (Nathaniel.md) works without Intelligence
-2. Run `python3 scripts/reseed.py --verify-only` to check integrity
-3. Run `python3 scripts/reseed.py` to rebuild all indexes from stores
-4. Run `python3 scripts/maintenance.py '{"mode": "check", "scope": "all"}'` for health check
-5. If stores corrupted: `git checkout HEAD~1 -- hypatia-kb/Intelligence/` to restore from last save
-6. Ask user to confirm key preferences if patterns lost
+1. **Capture during sessions**: Hypatia writes free-form markdown observations to `inbox/preferences/<topic-slug>.md` per `inbox/SCHEMA.md`. Frontmatter specifies `candidate-type` (preference / pattern / knowledge / reasoning / unsure).
+
+2. **Save command stages the captures**: per `.clinerules/08-save-command.md`, the save command `git add`s inbox files but does NOT promote to canonical stores.
+
+3. **Maintenance consolidation**: Scholar invokes `inbox triage` or equivalent maintenance command. The flow per `learning-loop.md`:
+   - Read each capture end-to-end.
+   - Apply Quality Gates.
+   - Dedup-check via CSR.
+   - Decide: promote / reject / defer.
+   - On promote: write canonical entry to target store; rebuild index.
+   - On reject: mark `status: rejected` with `rejection-reason:`; capture stays in inbox as a record of over-inference.
+
+4. **Application at runtime**: Hypatia consults stores via CSR during pre-action checks, troubleshooting, intelligence checkpoints, and Route F INTERROGATE. Confidence × context-match tables in `.clinerules/06-cognitive.md` govern when an entry surfaces.
+
+---
+
+## How content flows out (correction or removal)
+
+### Correction cascade
+
+When the Scholar corrects a fact, Hypatia:
+1. Acknowledges.
+2. Searches all stores (CSR + semantic) for the stale claim.
+3. Fixes all instances; never modifies session logs.
+4. Updates indexes.
+
+Full procedure: `intelligence-operations.md § Part 7`.
+
+### Removal cascade
+
+When deduplicating or merging entries, Hypatia:
+1. Combines tags from duplicates into the kept entry.
+2. Removes the duplicate from its store.
+3. Cleans all references across stores and indexes.
+4. Updates counts.
+
+Full procedure: `intelligence-operations.md § Part 7b`.
+
+---
+
+## Cross-references
+
+- **Detection / application / correction mechanics**: `intelligence-operations.md`
+- **Consolidation methodology (capture → promote)**: `learning-loop.md`
+- **CSR pattern (the retrieval engine)**: `../../.clinerules/07-intelligence-layer.md`
+- **Cognitive application (when entries surface during reasoning)**: `../../.clinerules/06-cognitive.md § Applying patterns, knowledge, reasoning`
+- **Save command (records but does NOT auto-promote)**: `../../.clinerules/08-save-command.md`
+- **Memory protocol (capture-then-consolidate flow)**: `../memory-protocol.md`
+- **Inbox schema**: `../../inbox/SCHEMA.md`
+- **RRF implementation**: `../vectorstore/kb_query.py`
+
+---
+
+*The intelligence stores compound through curation. Ship-empty; grow through deliberate consolidation; retrieve via CSR + RRF.*
