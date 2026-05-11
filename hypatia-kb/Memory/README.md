@@ -1,57 +1,106 @@
 # Memory Directory
 
-**Purpose**: Session memory, conversation continuity, and context management
-**Last Updated**: 2026-04-16
+**Purpose**: Session memory, conversation continuity, and context management.
+**Last Updated**: 2026-05-11
 
 ---
 
-## Directory Structure
+## Directory structure
 
 ```
 Memory/
-├── README.md              # This file
-├── memory.json            # Session memory, projects, preferences (grows over time)
-├── memory-index.json      # CSR index for efficient memory retrieval
-├── session-index.json     # CSR index for session lookup (60-day rolling window)
-├── session-archive.json   # Archived session fingerprints (created by first prune cycle)
-├── session-*.md           # Individual session logs (full detail)
-└── archive/               # Session logs older than 30 days
+├── README.md                 # This file
+├── memory.json               # Scholar's preferences, projects, commitments
+├── memory-index.json         # CSR index for memory retrieval
+├── session-index.json        # CSR index for session lookup (60-day rolling window)
+├── session-archive.json      # Archived session fingerprints (created by first prune cycle)
+├── sessions/                 # Individual session logs (created by save command)
+│   └── session-YYYY-MM-DD-NNN.md
+└── archive/                  # Session logs older than 30 days
 ```
 
+**Ship-empty** (Bell content wiped per the ship-empty convention). Memory accumulates only through Scholar-driven consolidation of inbox captures (see `../memory-protocol.md` and `../Intelligence/learning-loop.md`).
+
 ---
 
-## File Purposes
+## File purposes
 
-### memory.json
-Core memory store containing:
-- Memories (preferences, decisions, corrections)
-- Active projects with status tracking
-- Pattern detections pending consolidation
-- Confidence events for calibration
-- Proactive behavior offer history
-- Domain expertise levels
+### `memory.json`
 
-### memory-index.json (CSR Pattern)
+Core memory store. Sections:
+- `memories`: Scholar's preferences, decisions, corrections, learnings, critical-safety rules, system facts.
+- `active_projects`: project tracking with status, next actions, last_touched.
+- `commitments`: promises tracked for deadlines.
+- `pattern_detections`: session pattern observations pending consolidation.
+- `confidence_events`: prediction accuracy tracking.
+- `proactive_behavior`: offer history.
+- `domain_expertise`: Scholar's expertise levels by domain.
+- `anti_preferences`: explicit "don't do X" rules.
+- `last_session_snapshot`: latest counts (updated by save command).
+- `capture_taxonomy`: counters for inbox-capture categories.
+- `instance_identity`: Hypatia identity (Scholar address, voice register).
+
+Full schema: `../memory-protocol.md § Memory schema`.
+
+### `memory-index.json` (CSR pattern)
+
 Lightweight routing index for memory retrieval:
-- byTag, byType, byConfidence dimensions
-- Summaries for quick scanning
-- recentIds for recency-based access
+- `byTag`, `byType` dimensions.
+- `summaries` for quick scanning.
+- `recentIds` for recency-based access.
 
-### session-index.json (CSR Pattern)
-Lightweight session fingerprints for efficient context loading:
-- ~50 tokens per session vs ~1,500 for full log
-- Tags for signal-based retrieval
-- Key outcome for quick context
-- 60-day rolling window; older entries archived
+### `session-index.json` (CSR pattern)
 
-### session-archive.json
-Fingerprints for sessions older than 30 days. Enables historical recall without loading full logs.
+Lightweight session fingerprints for context loading. Each fingerprint: `id`, `date`, `tags`, `summary`, `outcome`, `outcome_note`.
+
+- ~50 tokens per fingerprint vs ~1,500 for full session log.
+- 60-day rolling window; older entries archived.
+
+### `session-archive.json`
+
+Fingerprints for sessions older than 60 days. Enables historical recall without loading full logs.
+
+### `sessions/`
+
+Individual session logs written by the save command. Format per `.clinerules/08-save-command.md § Step 1`.
+
+### `archive/`
+
+Session logs older than 30 days. Moved here during maintenance per `../maintenance-protocol.md § Part 2b Session Archival`.
 
 ---
 
-## Retention Rules
+## How memory flows in
 
-Per `memory-protocol.md`:
-- Session logs: 30-day retention, then archived to `archive/`
-- Session index: 60-day window, min keep 10
-- Full maintenance: see `maintenance-protocol.md`
+Per the inbox-then-consolidate pattern:
+
+1. **During sessions**: Hypatia captures memory candidates (preferences, decisions, corrections, etc.) to `inbox/preferences/*.md` with frontmatter `candidate-type: preference` (or similar).
+2. **Save command**: stages inbox captures via git. Does NOT promote to `memory.json`.
+3. **Scholar consolidation** (during maintenance): reviews captures, applies Quality Gates, promotes survivors to `memory.json`. See `../Intelligence/learning-loop.md § Consolidation pattern A`.
+
+The save command DOES write to `memory.json` for narrow mechanical-metadata exceptions: `last_session_snapshot`, `proactive_behavior.offer_history` consolidation, session_metadata reset.
+
+---
+
+## Retention rules
+
+Per `../memory-protocol.md § Pruning operations`:
+
+- Session logs (sessions/): 30-day retention, then archived to `archive/`.
+- Session index entries: 60-day window, min keep 10.
+- Pattern detections (consolidated): 30 days, min keep 5.
+- Confidence events: 30 days, min keep 5 most recent.
+- Offer history: 60 days, min keep 10.
+
+Full maintenance flow: `../maintenance-protocol.md`.
+
+---
+
+## Cross-references
+
+- **Memory CRUD operations + Q-22 capture flow**: `../memory-protocol.md`
+- **Save command (mechanical writes during save)**: `../../.clinerules/08-save-command.md`
+- **Consolidation methodology**: `../Intelligence/learning-loop.md`
+- **Maintenance + retention rules**: `../maintenance-protocol.md`
+- **Inbox capture format**: `../../inbox/SCHEMA.md`
+- **CSR routing pattern**: `../../.clinerules/07-intelligence-layer.md`
