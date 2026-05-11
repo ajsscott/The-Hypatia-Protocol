@@ -2,7 +2,7 @@
 
 This directory holds Hypatia's protocols for vault-librarian work on
 TabulaJacqueliana. They were migrated from the vault's CLAUDE.md
-during Phase 0 (2026-05-11) per decision Q-07 in `docs/open-questions.md`.
+during Phase 0 (2026-05-11).
 
 ## Files
 
@@ -11,7 +11,7 @@ during Phase 0 (2026-05-11) per decision Q-07 in `docs/open-questions.md`.
 | `librarian-role.md` | Operating pattern (llm-wiki), three operations (ingest/query/lint), librarian duties, what stays with the user, devil's advocate, what NOT to do proactively | First — orientation to the role. Read before any vault work. |
 | `librarian-vault-structure.md` | Vault identity, top-level folder reference, three parallel organizing schemes, files-to-read-first entry points | Second — orientation to the vault layout. |
 | `librarian-note-schemas.md` | Canonical atomic Tree schema, Seed→Tree linkage contract, naming conventions, tag taxonomy, Mountains PM hierarchy, frontmatter schemas per note type | Before drafting, refactoring, or validating any note. |
-| `librarian-tooling.md` | Bases (load-bearing fields), Obsidian plugin stack, YOLO transition note (Q-23: replaced by Hypatia) | Before reasoning about plugin behavior, schema-rename blast radius, or transition state. |
+| `librarian-tooling.md` | Bases (load-bearing fields), Obsidian plugin stack, YOLO transition note (: replaced by Hypatia) | Before reasoning about plugin behavior, schema-rename blast radius, or transition state. |
 | `librarian-writing-rules.md` | Known drift/landmines, active initiatives, writing rules (drafting, approval granularity, atomic commits), lessons learned, update protocol | Before any write that touches multiple files, any rename, any frontmatter-field change. |
 
 ## Recommended reading order

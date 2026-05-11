@@ -12,8 +12,8 @@
 | **Legacy decision-routing reference** | `Hypatia-Protocol.md` | Bell's original Routes A-F (superseded by `.clinerules/11-decision-routes.md`; retained for archaeology) |
 | **Protocols** | `*.md` (13 files in this directory) | Domain-specific behavior (memory, maintenance, research, writing, etc.); keyword-triggered lazy-load |
 | **Librarian protocols** | `protocols/librarian-*.md` (5 files + README) | Vault-specific librarian behavior migrated from TabulaJacqueliana CLAUDE.md (Phase 0) |
-| **Intelligence** | `Intelligence/` | Three learning layers: patterns, knowledge, reasoning (ship empty per Q-06; grow via Q-22 inbox consolidation) |
-| **Memory** | `Memory/` | Session logs, entity memory, project tracking (ship empty per Q-06) |
+| **Intelligence** | `Intelligence/` | Three learning layers: patterns, knowledge, reasoning (ship empty; grow via inbox consolidation) |
+| **Memory** | `Memory/` | Session logs, entity memory, project tracking (ship empty) |
 | **Vectorstore** | `vectorstore/` | Hybrid semantic + keyword search over the KB. Source code git-tracked; artifacts rebuildable via `kb_vectorize.py` |
 | **Benchmarks** | `Benchmarks/` | Self-testing artifacts inherited from Bell; may be deprecated or rebuilt in Phase 1.5 |
 
@@ -21,7 +21,7 @@
 
 ## Intelligence system
 
-Three stores that compound over time (per Q-22 inbox-then-consolidate):
+Three stores that compound over time:
 
 | Store | File | What it captures |
 |---|---|---|
@@ -33,7 +33,7 @@ Each store has a lightweight index (`*-index.json`) for Context Signal Routing (
 
 Cross-references (`Intelligence/cross-references.json`) link entries across stores. Retrieving a pattern can surface the reasoning that explains it.
 
-**Ship-empty (Q-06)**: at launch, all stores are empty. The Scholar consolidates from `inbox/preferences/*.md` captures during scheduled maintenance.
+**Ship-empty**: at launch, all stores are empty. The Scholar consolidates from `inbox/preferences/*.md` captures during scheduled maintenance.
 
 See `Intelligence/README.md` for architecture details and `Intelligence/learning-loop.md` for consolidation rules.
 
@@ -48,7 +48,7 @@ See `Intelligence/README.md` for architecture details and `Intelligence/learning
 | `Memory/session-index.json` | Session fingerprints for context-aware greetings and continuity |
 | `Memory/sessions/session-*.md` | Full session logs (created by save command) |
 
-See `memory-protocol.md` for CRUD operations and Q-22 capture-then-consolidate flow.
+See `memory-protocol.md` for CRUD operations and capture-then-consolidate flow.
 
 ---
 
@@ -96,7 +96,7 @@ See `memory-protocol.md` for CRUD operations and Q-22 capture-then-consolidate f
 | `detailed save` | Same as save with full accounting per step |
 | `health check` | Non-destructive ecosystem audit (per `maintenance-protocol.md`) |
 | `full maintenance` | Health check + cleanup with confirmation |
-| `inbox triage` | Surface inbox captures for Scholar's consolidation decisions (Q-22) |
+| `inbox triage` | Surface inbox captures for Scholar's consolidation decisions |
 | `customize` | See `customization-protocol.md` for runtime preference adjustments |
 
 ### Maintenance rhythm
@@ -162,7 +162,7 @@ Schema documented in each file's `_schema` field (where present) or in `memory-p
 
 | Doc | Covers |
 |---|---|
-| `CRITICAL-FILE-PROTECTION.md` | Safety rails for destructive operations + Q-22 inbox boundary enforcement |
+| `CRITICAL-FILE-PROTECTION.md` | Safety rails for destructive operations + inbox boundary enforcement |
 | `Intelligence/README.md` | Intelligence architecture overview |
 | `Intelligence/intelligence-operations.md` | How intelligence surfaces during work |
 | `Intelligence/learning-loop.md` | Consolidation algorithm, quality gates, capture rules |
@@ -178,8 +178,7 @@ Schema documented in each file's `_schema` field (where present) or in `memory-p
 - **Kernel (always-loaded)**: `.clinerules/`
 - **Save command**: `.clinerules/08-save-command.md`
 - **Protocol keyword map (single source of truth for triggers)**: `.clinerules/10-skills-loading.md`
-- **Inbox capture flow (Q-22)**: `inbox/SCHEMA.md`
-- **Decision log (Q-N)**: `docs/open-questions.md`
+- **Inbox capture flow**: `inbox/SCHEMA.md`
 - **Build plan**: `docs/Hypatia Build Plan.md` + `docs/hypatia-build-plan-addendum.md`
 
 ---

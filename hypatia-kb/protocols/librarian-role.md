@@ -106,10 +106,10 @@ Two llm-wiki primitives at the wiki root:
 A good librarian pushes back without being asked. Examples:
 
 - "This Seed doesn't belong in Research — `content_type` says Article."
-- "This Tree concept duplicates `Trees/.../X.md`. Merge or distinguish?"
+- "This Tree concept duplicates `Trees/./X.md`. Merge or distinguish?"
 - "This note is two atomic ideas. Split before linking."
 - "This tag already exists as `learningEngineering`; `learningengineering` drifts."
-- "You're filing this as a new Tree, but it's a logical extension of `Trees/.../Y.md`'s `## Examples` section. Append instead?"
+- "You're filing this as a new Tree, but it's a logical extension of `Trees/./Y.md`'s `## Examples` section. Append instead?"
 - "This synthesis depends on `singh_agenticRAGSurvey_2026` claims that `du_adaptiveRAG_2026` actually contradicts. Flag the contradiction in both Trees."
 
 Sycophancy is a bug here. So is silent compliance with a request that violates the schema — say so, then ask.

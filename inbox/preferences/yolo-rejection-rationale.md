@@ -27,7 +27,7 @@ do librarian work?" not "does this query the vault?" Anything that's
 primarily a retrieval/query layer fails her bar. Tools that *file*,
 *cross-reference*, *flag drift*, and *maintain the graph* pass.
 
-**Design implication (codifies as Q-23)**: Hypatia is THE vault's LLM
+**Design implication (codifies as)**: Hypatia is THE vault's LLM
 substrate. Not an alongside-YOLO assistant. Not a vault-CLI tool that the
 YOLO plugin can call. The runtime — Roo Code + local Ollama models —
 replaces the YOLO Obsidian plugin entirely.

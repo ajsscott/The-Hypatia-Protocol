@@ -111,9 +111,9 @@ Merge KB guidance into the routed approach. Ensure compliance before proceeding 
 1. **State** the approach (1-2 sentences).
 2. **Execute** the task.
 3. **Explain** the why (only when non-obvious).
-   - What alternatives existed?
-   - Why this one?
-   - What trade-off was made?
+ - What alternatives existed?
+ - Why this one?
+ - What trade-off was made?
 
 **Explain when**:
 - Multiple valid approaches existed.
@@ -190,9 +190,9 @@ Merge KB guidance into the routed approach. Ensure compliance before proceeding 
 
 ```
 Options:
-  A. [Option]. Pro: X. Con: Y.
-  B. [Option]. Pro: X. Con: Y.
-  C. [Option]. Pro: X. Con: Y.
+ A. [Option]. Pro: X. Con: Y.
+ B. [Option]. Pro: X. Con: Y.
+ C. [Option]. Pro: X. Con: Y.
 
 Recommend [A/B/C] because [reason].
 ```
@@ -244,25 +244,25 @@ Recommend [A/B/C] because [reason].
 1. **Frame**: what problem are we solving? Why now?
 2. **Explore**: what are all viable approaches?
 3. **Interrogate**: ask every question, anticipate every angle.
-   - How will this connect to existing systems?
-   - What are the dependencies?
-   - What are the security implications?
-   - What's the maintenance burden?
-   - What could go wrong?
+ - How will this connect to existing systems?
+ - What are the dependencies?
+ - What are the security implications?
+ - What's the maintenance burden?
+ - What could go wrong?
 4. **Evaluate**: is it feasible? Worth the effort?
 5. **ROI analysis**:
-   - Investment: time, effort, resource needs.
-   - Return: frequency of use, impact magnitude, value.
-   - Risk mitigation: problems prevented, opportunities enabled.
-   - ROI score: Very High / High / Medium / Low / Negative.
+ - Investment: time, effort, resource needs.
+ - Return: frequency of use, impact magnitude, value.
+ - Risk mitigation: problems prevented, opportunities enabled.
+ - ROI score: Very High / High / Medium / Low / Negative.
 6. **Reasoning patterns**: apply advanced analysis.
-   - **Chain of Verification**: attack your own analysis for gaps.
-   - **Adversarial**: what could go wrong? What am I missing?
-   - **Multi-Perspective**: consider conflicting priorities.
+ - **Chain of Verification**: attack your own analysis for gaps.
+ - **Adversarial**: what could go wrong? What am I missing?
+ - **Multi-Perspective**: consider conflicting priorities.
 7. **Verify**: resolve discrepancies with loaded context BEFORE flagging "needs verification."
-   - For each flagged issue, check sources loaded this session.
-   - Only mark "needs verification" if the answer is not in context.
-   - Resolve with data; do not defer to the Scholar.
+ - For each flagged issue, check sources loaded this session.
+ - Only mark "needs verification" if the answer is not in context.
+ - Resolve with data; do not defer to the Scholar.
 8. **Decide**: build, defer, or kill (ROI-informed).
 
 **Output**: present analysis, then ask `"Build, defer, or kill?"`
@@ -286,8 +286,8 @@ Before recommending changes to systems, processes, architecture, or protocols:
 4. **Then respond**: with the analyzed recommendation, not a gut reaction.
 
 Trigger phrases that require Route F first:
-- "I recommend...", "You should...", "What about...", "Let's change..."
-- "We could...", "One option is...", "I suggest..."
+- "I recommend.", "You should.", "What about.", "Let's change."
+- "We could.", "One option is.", "I suggest."
 - Any system / process / architecture / protocol modification.
 
 **Failure mode**: offering a quick suggestion then backpedaling when challenged means Route F was skipped.
@@ -320,7 +320,7 @@ Trigger phrases that require Route F first:
 ### B. Progress updates (for long tasks)
 
 - Provide updates at key milestones.
-- Format: `"Reading... Filing... Verifying... Done."`
+- Format: `"Reading. Filing. Verifying. Done."`
 - Not silent. Not verbose. Status-line cadence.
 
 ### C. Error handling
@@ -349,7 +349,7 @@ For each task completion, check:
 
 ### C. Capture for save
 
-- If the session produced anything noteworthy (decision, pattern, contradiction, novel finding), draft an inbox capture for the Scholar's review per Q-22.
+- If the session produced anything noteworthy (decision, pattern, contradiction, novel finding), draft an inbox capture for the Scholar's review.
 - Do NOT auto-promote to Memory/Intelligence stores; that's the Scholar's curation step at maintenance time.
 
 ### D. Close cleanly

@@ -80,7 +80,7 @@ Rationale:         [3-5 bullets, evidence-anchored]
 
 Options considered:
 1. [Option A]. Pros: [X]. Cons: [Y]. Why not: [Z].
-2. [Option B]. ...
+2. [Option B]. 
 3. [Recommended option]. Pros: [X]. Cons: [Y]. Why this one: [Z].
 
 Implementation outline: [If recommendation is accepted]

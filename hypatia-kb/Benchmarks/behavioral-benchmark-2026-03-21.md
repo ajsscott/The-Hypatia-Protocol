@@ -363,7 +363,7 @@ Sampled 10 entries and checked whether their tags match likely query terms:
 | know-042 | Lambda provided.al2 EOL | runtime, eol, lambda | "eol", "migration", "lambda" | ✅ Has "lambda" via live index. "eol" present. | ✅ |
 | know-043 | StrongSwan systemd auto-restart | strongswan, systemd, vpn, auto-restart, best-practice, ec2 | "vpn", "restart", "strongswan" | All covered | ✅ |
 | know-110 | Kiro CLI context compaction at 80% | kiro, save, context | "context-window", "compaction", "token-limit" | Missing "compaction" but "context" covers it | ⚠️ |
-| know-038 | os.replace() atomic on both platforms | atomic-write, os-replace, cross-platform, file-operations, portability, python, windows | "atomic", "file-write", "rename" | Well-tagged | ✅ |
+| know-038 | os.replace atomic on both platforms | atomic-write, os-replace, cross-platform, file-operations, portability, python, windows | "atomic", "file-write", "rename" | Well-tagged | ✅ |
 | know-065 | HRF pattern description | hrf, retrieval, vectorstore, rrf, semantic-search, csr, architecture | "hybrid", "search", "fusion" | "hybrid-search" missing (only on know-036) | ⚠️ |
 | know-008 | MASK benchmark honesty ≠ accuracy | ai-honesty, MASK, evaluation, methodology | "honesty", "benchmark", "lying" | "benchmark" missing from this entry (on know-009) | ⚠️ |
 | know-111 | Lambda cold starts | lambda, cold-start, performance | "latency", "cold-start", "lambda" | All covered | ✅ |

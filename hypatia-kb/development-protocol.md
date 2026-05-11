@@ -43,14 +43,14 @@ This protocol covers universal dev practices that apply to that work. Cross-refe
 
 | Use case | Language | Why |
 |---|---|---|
-| Hypatia scripts, vault tooling | Python 3.11+ | Aligns with pyproject.toml + uv.lock (Q-03) |
+| Hypatia scripts, vault tooling | Python 3.11+ | Aligns with pyproject.toml + uv.lock |
 | Shell helpers (setup, filters, hooks) | Bash with `set -euo pipefail` | Portable; no Python deps needed |
 | Vault plugins (rare) | TypeScript or JS | Obsidian's plugin runtime |
 | Data analysis | Python (pandas, polars) or R | Scholar's research preference |
 
 ### Python tooling (per `pyproject.toml`)
 
-- **Package manager**: `uv` (Q-03 2026-04-22).
+- **Package manager**: `uv`.
 - **Linter / formatter**: `ruff` (line-length 100, py311 target).
 - **Type checker**: `mypy` (strict=false, ignore_missing_imports for libraries without stubs).
 - **Test runner**: `pytest` (testpaths include `tests/` + `hypatia-kb/vectorstore/tests/`).
@@ -71,7 +71,7 @@ This protocol covers universal dev practices that apply to that work. Cross-refe
 **Required**:
 - Type hints on all public functions: `def f(x: int, y: str = "default") -> bool:`.
 - Docstrings only where they add information not in the signature.
-- `f"..."` for string formatting (Python 3.6+).
+- `f"."` for string formatting (Python 3.6+).
 - `pathlib.Path` over `os.path` string manipulation.
 - Context managers for file / resource handling: `with open(path) as f:`.
 
@@ -79,9 +79,9 @@ This protocol covers universal dev practices that apply to that work. Cross-refe
 - Bare `except:` or `except Exception:` without re-raise or structured log.
 - Mutable default arguments (`def f(items=[])` is a bug).
 - `print` where a logger belongs.
-- `os.environ[...]` scattered through modules; centralize at a config boundary.
+- `os.environ[.]` scattered through modules; centralize at a config boundary.
 - Missing type hints on public functions; `Any` as a shrug.
-- Silent `.get()` with no default and no handling of `None`.
+- Silent `.get` with no default and no handling of `None`.
 - HTTP clients with no timeout, no retry policy.
 - `subprocess` calls with `shell=True` and interpolated input.
 
@@ -103,7 +103,7 @@ This protocol covers universal dev practices that apply to that work. Cross-refe
 - `LIMIT` on exploratory queries.
 
 **Forbidden**:
-- Implicit joins (use explicit `JOIN ... ON ...`).
+- Implicit joins (use explicit `JOIN. ON.`).
 - `UPDATE` / `DELETE` without `WHERE` in scripts.
 - Schema changes without a migration tool.
 
@@ -161,10 +161,10 @@ When debugging surfaces, route through `problem-solving-protocol.md` for the met
 
 ### Python
 
-- `breakpoint()` (Python 3.7+) drops into pdb.
+- `breakpoint` (Python 3.7+) drops into pdb.
 - `python -m ipdb script.py` for ipdb if available.
-- `pdb.post_mortem()` after an unhandled exception in interactive sessions.
-- Logging at DEBUG level beats print statements (`logging.debug(...)` with formatter showing module + line).
+- `pdb.post_mortem` after an unhandled exception in interactive sessions.
+- Logging at DEBUG level beats print statements (`logging.debug(.)` with formatter showing module + line).
 
 ### Shell
 
@@ -174,7 +174,7 @@ When debugging surfaces, route through `problem-solving-protocol.md` for the met
 
 ### Cross-platform
 
-- macOS `stat -f %m` vs GNU `stat -c %Y`. Cross-platform pattern: `stat -c %Y ... || stat -f %m ... || echo 0`.
+- macOS `stat -f %m` vs GNU `stat -c %Y`. Cross-platform pattern: `stat -c %Y. || stat -f %m. || echo 0`.
 - `sed -i` differs (`sed -i ''` on macOS vs `sed -i` on GNU). Prefer Python for in-place YAML / JSON edits.
 
 ---
@@ -213,7 +213,7 @@ In-line dev-specific rules:
 - **Never** include credentials in error messages.
 - **Never** commit `.env` files (gitignore them).
 - **Validate inputs at system boundaries**: user input, external APIs. Don't validate trusted internal calls.
-- **Use `subprocess.run(..., shell=False)` and pass args as a list**. Never `shell=True` with interpolated input.
+- **Use `subprocess.run(., shell=False)` and pass args as a list**. Never `shell=True` with interpolated input.
 - **HTTP clients**: always set a timeout. Always handle network failure paths.
 
 ---
@@ -250,7 +250,7 @@ For prose standards, see `writing-protocol.md`. For code-specific documentation:
 - **Function docstrings**: only when signature alone is insufficient. Include "raises" if exceptions are part of the contract.
 - **README per script directory**: high-level overview, run instructions, dependency notes.
 - **Inline comments**: rare, WHY-focused.
-- **Don't** create planning / decision documents unprompted. Use the commit message + `docs/open-questions.md` for durable rationale.
+- **Don't** create planning / decision documents unprompted. Use commit messages for durable rationale.
 
 ---
 
@@ -293,7 +293,6 @@ See `.clinerules/03-anti-patterns.md § Code & technical work` for the canonical
 - **Problem-solving (debug methodology)**: `problem-solving-protocol.md`
 - **Planning (project decomposition)**: `planning-protocol.md`
 - **Writing (documentation prose)**: `writing-protocol.md`
-- **Dependency manifest (uv + pyproject.toml decision)**: `docs/open-questions.md § Q-03`
 
 ---
 

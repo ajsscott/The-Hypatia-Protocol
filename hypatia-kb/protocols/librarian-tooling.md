@@ -12,7 +12,7 @@
 
 | Path | Filter | Purpose |
 |---|---|---|
-| `Bases/Meridian.base` | `!kind.isEmpty()` | 25 views — PM spine |
+| `Bases/Meridian.base` | `!kind.isEmpty` | 25 views — PM spine |
 | `Bases/Articles Base.base` | `file.tags.contains("article")` | Articles cards |
 | `Bases/Books Base.base` | `file.tags.contains("book")` | Books TBR + all |
 | `Bases/Code Libraries.base` | `file.hasTag("library")` | Python + all libs |
@@ -64,12 +64,12 @@
 
 ## YOLO — being replaced by Hypatia
 
-Per Q-23 (2026-05-11), Hypatia replaces the Obsidian YOLO plugin as the vault's in-Obsidian LLM substrate. YOLO operates primarily as a SQL/vector-query generator over the vault DB — not as a librarian. Hypatia (running in Roo Code against local Ollama models) takes over curation, ingest, query, and lint.
+Per (2026-05-11), Hypatia replaces the Obsidian YOLO plugin as the vault's in-Obsidian LLM substrate. YOLO operates primarily as a SQL/vector-query generator over the vault DB — not as a librarian. Hypatia (running in Roo Code against local Ollama models) takes over curation, ingest, query, and lint.
 
 **Artifacts in the vault during transition** — present today, deprecating:
 
 - `_src/_YOLO/` — plugin runtime + skill definitions + 1.28 GB vector DB (gitignored). Inherit what's useful (skill prompts, system instructions) into Hypatia's protocol stack; let the rest decay.
-- `_src/_meta/{anti-patterns, preferences, patterns, reasoning}.md` — Nathaniel-mimicry intelligence stores from the YOLO experiment. **Not authoritative for Hypatia.** Hypatia's stores live in `hypatia-kb/Intelligence/` (and the inbox-capture pipeline per Q-22 feeds them).
+- `_src/_meta/{anti-patterns, preferences, patterns, reasoning}.md` — Nathaniel-mimicry intelligence stores from the YOLO experiment. **Not authoritative for Hypatia.** Hypatia's stores live in `hypatia-kb/Intelligence/` (and the inbox-capture pipeline feeds them).
 - `.obsidian/plugins/yolo/` — plugin config (4 agents, RAG, embeddings). Safe to leave installed during transition; safe to remove once Hypatia is fully wired.
 
 **Implication for librarian work**: don't tune YOLO config. Don't propose YOLO-side fixes (dormant skills, unscoped RAG indexing, `chatModels[].toolType: "none"` clamp). If a vault task surfaces a YOLO issue, note it for the transition rather than treating it as a bug to fix.

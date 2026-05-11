@@ -41,7 +41,7 @@ Full scope + open decisions live in the planning Documents (linked from each Slo
 | Slope | Status (snapshot) | Planning Document |
 |---|---|---|
 | `[[Trees Unprocessed Refactor]]` | Unstarted — 8 decisions pending | `[[Trees Unprocessed Refactor Plan]]` |
-| `[[YOLO Nathaniel Mimicry]]` | **Descoped 2026-05-11 (Q-23)** — superseded by Hypatia build; YOLO being replaced as vault LLM substrate | `[[YOLO Nathaniel Mimicry Report]]` |
+| `[[YOLO Nathaniel Mimicry]]` | **Descoped 2026-05-11** — superseded by Hypatia build; YOLO being replaced as vault LLM substrate | `[[YOLO Nathaniel Mimicry Report]]` |
 
 See `[[Meridian]]` for the full PM dashboard.
 
@@ -92,7 +92,7 @@ Examples: `Topics:` lowercase pass; the 2026-04-22 `kind:` list-form migration (
 
 ## Lessons learned from prior errors
 
-- **Don't sed multi-line YAML structures.** YAML keys whose values span lines (lists with `-` items, multiline strings, nested objects) cannot be safely transformed line-by-line. The 2026-04-21 attempt to backfill `kind:` on 249 Research seeds with `sed 's/^kind: *$/kind: Research/'` caught only the first line; the orphaned `  - Research` list items below produced invalid YAML on all 249 files. Use a YAML-aware tool (Python with PyYAML, `yq`) for any multi-line YAML edit, or hand-edit per file.
+- **Don't sed multi-line YAML structures.** YAML keys whose values span lines (lists with `-` items, multiline strings, nested objects) cannot be safely transformed line-by-line. The 2026-04-21 attempt to backfill `kind:` on 249 Research seeds with `sed 's/^kind: *$/kind: Research/'` caught only the first line; the orphaned ` - Research` list items below produced invalid YAML on all 249 files. Use a YAML-aware tool (Python with PyYAML, `yq`) for any multi-line YAML edit, or hand-edit per file.
 - **`^Pattern:` is a YAML key only inside the frontmatter block.** Markdown body content can also start lines with `Word:` — e.g., interview agenda labels (`Topics: SQL Paired Programming`), section headers, definition lists. Anchor any sed/grep YAML edit to the frontmatter `---` … `---` boundaries (e.g., `awk '/^---$/,/^---$/'` to extract). The 2026-04-21 Topics: lowercase pass over-replaced 5 inline occurrences in `Trees/Unprocessed/Job Search/Braze Interviewers.md`. Reverted.
 - **Verify agent-summarized counts and structures before scripting destructive operations.** A 30-second `grep -A1 <pattern> <sample>` beats a 249-file revert. The earlier codebase-analysis subagent reported "blank `kind` on ~25/30 Research seeds" — actual state was list-form on 249 of 298. The summary was qualitatively misleading; only direct inspection revealed the structure.
 - **Duplicate YAML keys masked by capitalization can become real conflicts when normalized.** Four files (`Hotkeys.md`, `Chain-of-Thought Prompting.md`, `Objects.md`, `fernandezDiVERTDistractorGeneration2024.md`) had pre-existing `Topics:` AND `topics:` as separate keys. Lowercasing one creates a YAML duplicate-key conflict with the other. Resolution requires merging the two values (a list union), not lowercasing alone.

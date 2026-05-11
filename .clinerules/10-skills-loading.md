@@ -43,7 +43,7 @@ Scan user input for the keywords below. On match, `read_file` the corresponding 
 
 | Protocol | Keywords | Adaptation status |
 |---|---|---|
-| `memory-protocol.md` | memory, remember, recall, history, capture, save memory, prune, retention | Adapt for Hypatia's inbox→consolidation flow (Q-22) |
+| `memory-protocol.md` | memory, remember, recall, history, capture, save memory, prune, retention | Adapt for Hypatia's inbox→consolidation flow |
 | `maintenance-protocol.md` | maintenance, cleanup, health check, prune, integrity, housekeeping | Mostly portable |
 | `planning-protocol.md` | plan, planning, roadmap, milestones, decompose, scope, phases | Mostly portable |
 | `proactive-offering-protocol.md` | proactive, offer, suggest, anticipate, surface, flag | Mostly portable; adapt for Hypatia's curatorial reflex |
@@ -66,9 +66,9 @@ Scan user input for the keywords below. On match, `read_file` the corresponding 
 2. **Multiple matches allowed.** A single input can trigger multiple protocols. Load all that apply.
 3. **Always-loaded protocols never re-load.** They are in context from session start; do not `read_file` again unless an explicit refresh is needed.
 4. **When no keyword matches**, default behavior:
-   - For a question, answer from already-loaded context.
-   - For a task, check `hypatia-kb/Hypatia-Protocol.md` Decision Routes to see if the task fits Route A-F.
-   - If still ambiguous, ask the Scholar.
+ - For a question, answer from already-loaded context.
+ - For a task, check `hypatia-kb/Hypatia-Protocol.md` Decision Routes to see if the task fits Route A-F.
+ - If still ambiguous, ask the Scholar.
 5. **When uncertain whether a keyword matches**, err toward loading. False positives are cheap; missed protocol coverage is expensive.
 
 ---

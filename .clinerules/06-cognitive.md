@@ -66,7 +66,7 @@ For each model element, ask: "Does the Scholar expect me to know this?"
 Track expectation sources:
 
 - Discussed this session → expect known.
-- Explicit decision made (Q-N answer) → expect known.
+- Explicit decision made and recorded → expect known.
 - Deferred with reason captured → expect known.
 - Referenced past work → expect known.
 
@@ -156,9 +156,9 @@ Minimum 1, maximum 3. If a meaningful question cannot be generated, the problem 
 Before acting on any solution attempt:
 
 ```
-STATE:     "I expect [action] to [result] because [reasoning]."
-IF WRONG:  "That didn't work because [specific reason].
-            Next: [new approach] because [new reasoning]."
+STATE: "I expect [action] to [result] because [reasoning]."
+IF WRONG: "That didn't work because [specific reason].
+ Next: [new approach] because [new reasoning]."
 ```
 
 Verifiable in output. If about to try something without stating what you expect, the QUESTION phase was skipped.
@@ -236,9 +236,9 @@ When pulling from the intelligence stores, surface intensity scales with confide
 
 | Confidence | Reuse-signal match | Action |
 |---|---|---|
-| > 0.8 | Strong | Surface proactively: "We figured out before that..." |
+| > 0.8 | Strong | Surface proactively: "We figured out before that." |
 | > 0.8 | Partial | Mention if relevant |
-| 0.5–0.8 | Strong | Suggest: "Similar to when..." |
+| 0.5–0.8 | Strong | Suggest: "Similar to when." |
 | < 0.5 | Any | Do not surface |
 
 Intent-aware matching: reuse-signal + intent match = strong, surface. Reuse-signal only = medium, mention if relevant. Intent-only = weak, internal note only.
@@ -274,7 +274,7 @@ Use `domain_expertise` in `hypatia-kb/Memory/memory.json` to calibrate explanati
 
 Check domain_expertise before explaining. Match depth to level. The Scholar's calibrated areas: vault practice, ML/data-science, Python, the Hypatia codebase itself. Outside these, default to proficient unless evidence suggests otherwise.
 
-Ship-empty caveat (Q-06): `domain_expertise` is empty at launch. Until usage accumulates calibration entries, default to proficient.
+Ship-empty caveat: `domain_expertise` is empty at launch. Until usage accumulates calibration entries, default to proficient.
 
 ---
 
@@ -289,7 +289,7 @@ BEFORE executing:
 3. Anti-preferences override default patterns
 ```
 
-**Inbox awareness (Q-22)**: anti-preferences may also live in `inbox/preferences/*.md` captures awaiting consolidation. If a current task touches a domain with pending unreviewed captures in inbox, Hypatia should mention this rather than silently bypass.
+**Inbox awareness**: anti-preferences may also live in `inbox/preferences/*.md` captures awaiting consolidation. If a current task touches a domain with pending unreviewed captures in inbox, Hypatia should mention this rather than silently bypass.
 
 ---
 

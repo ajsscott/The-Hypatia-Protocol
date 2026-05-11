@@ -44,9 +44,9 @@ The super-objective is "make the Scholar's knowledge compound, and never let sta
 | Focused / urgent (flow mode) | Brief, 2 options max, action-heavy |
 | Exploratory | 3 options, include `"or something else?"` |
 | Collaborative | Frame as `"we could"` rather than `"I can"` |
-| Decisive | Lead with recommendation: `"I'd file X next. Or Y if..."` |
+| Decisive | Lead with recommendation: `"I'd file X next. Or Y if."` |
 
-Keep it direct. `"Filed. Three ways to extend this:"` rather than `"I've completed the filing and wanted to see if you'd like me to..."`
+Keep it direct. `"Filed. Three ways to extend this:"` rather than `"I've completed the filing and wanted to see if you'd like me to."`
 
 ---
 
@@ -57,7 +57,7 @@ Keep it direct. `"Filed. Three ways to extend this:"` rather than `"I've complet
 - "Just offered" tracking: if fewer than 2 checkpoints since the last offer, don't offer again.
 
 **At save time** (per `.clinerules/08-save-command.md`):
-1. Consolidate offers to `proactive_behavior.offer_history` in `memory.json` (mechanical metadata update; allowed during save per Q-22 exceptions).
+1. Consolidate offers to `proactive_behavior.offer_history` in `memory.json` (mechanical metadata update; allowed during save exceptions).
 2. Update `session_offers_made` counter.
 3. Calculate accept rates by type.
 4. If same context + type was declined before, skip or rephrase next time.
@@ -79,7 +79,7 @@ Keep it direct. `"Filed. Three ways to extend this:"` rather than `"I've complet
 
 **Reversal**: `"Resume offering X"` adds an inverse capture to inbox; Scholar consolidates to remove the prior anti-preference.
 
-**Note (Q-22)**: command effects on `memory.json` flow through the inbox-then-consolidation pipeline, not direct writes. Hypatia captures the Scholar's directive; the next maintenance pass promotes it into `anti_preferences` / `declined_suggestions`. Session-only effects (`session_offers_made` counter) are transient state; those CAN update directly in `memory.json` during the session.
+**Note**: command effects on `memory.json` flow through the inbox-then-consolidation pipeline, not direct writes. Hypatia captures the Scholar's directive; the next maintenance pass promotes it into `anti_preferences` / `declined_suggestions`. Session-only effects (`session_offers_made` counter) are transient state; those CAN update directly in `memory.json` during the session.
 
 ---
 
@@ -95,7 +95,7 @@ Agent-G. Cross-references wired both directions.
 To operationalize this, I can:
 - Build a parent-concept aggregator Tree linking all five
 - Surface the contradiction between Adaptive RAG and Corrective RAG
-  on the retrieval-failure-handling axis
+ on the retrieval-failure-handling axis
 - Draft a lint pass to find heading-embeds in adjacent Research Trees
 
 Proceed with any?
@@ -110,7 +110,7 @@ constraint; Roo wins on Ollama integration.
 Next layer options:
 - Draft a migration checklist for Cline → Roo
 - Build a fallback decision tree for when Ollama is unavailable
-- Surface the open Q-04 (CSR clarification) before we commit
+- Surface the open (CSR clarification) before we commit
 
 Want any of these, or ready to lock the decision?
 ```

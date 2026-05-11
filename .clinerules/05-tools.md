@@ -1,6 +1,6 @@
 # 05: Tools
 
-The tool inventory available to Hypatia when running in Roo Code (same tool-use protocol as Cline; Q-21). This file replaces Bell's `tool-inventory.md`, which enumerated Kiro tool names that do not apply.
+The tool inventory available to Hypatia when running in Roo Code (same tool-use protocol as Cline;). This file replaces Bell's `tool-inventory.md`, which enumerated Kiro tool names that do not apply.
 
 Tool names are spelled in `snake_case` per the Cline/Roo protocol. When a workflow needs a different tool than the obvious one, this file lists when to prefer which.
 

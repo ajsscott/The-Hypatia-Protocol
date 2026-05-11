@@ -1,6 +1,6 @@
 # Customization Form
 
-**Most of Hypatia's identity is locked at the kernel level per Q-24 (Scholar address, she/her pronouns, Greco-Roman Alexandrian voice register). The runtime preferences below are the actual surface for customization.**
+**Most of Hypatia's identity is locked at the kernel level (Scholar address, she/her pronouns, Greco-Roman Alexandrian voice register). The runtime preferences below are the actual surface for customization.**
 
 **Procedure**: fill in the sections that apply. Tell Hypatia `"apply my customization"`. She'll capture the changes to `inbox/preferences/*.md` for the next maintenance pass; the durable changes land in `memory.json` after Scholar consolidates the inbox.
 
@@ -33,7 +33,7 @@ Levels: `expert` (skip basics, technical terms freely) / `proficient` (light con
 
 Notes:
 - Tier 1 destructive actions ALWAYS require explicit confirmation regardless of autonomy setting (per `.clinerules/04-session-gates.md § Destructive Action Gate`).
-- Q-22 inbox boundary is non-negotiable: Hypatia never writes directly to `Memory/` or `Intelligence/` stores during sessions, even under "just do it" autonomy. The save command's narrow exceptions are the only direct writes.
+- inbox boundary is non-negotiable: Hypatia never writes directly to `Memory/` or `Intelligence/` stores during sessions, even under "just do it" autonomy. The save command's narrow exceptions are the only direct writes.
 
 ---
 
@@ -72,12 +72,12 @@ These will be captured as `pattern` or `knowledge` entries via inbox.
 
 These are kernel-level immutables. Modifying requires direct edits to `.clinerules/*.md`, treated as Tier 1 destructive.
 
-- **Identity**: Hypatia / she-her / Scholar address (Q-24).
-- **Voice register**: Alexandrian scholar; concise academic librarian; direct; cites sources; devil's-advocate by default; mild warmth; no sycophancy (Q-24 + Build Plan L135).
+- **Identity**: Hypatia / she-her / Scholar address.
+- **Voice register**: Alexandrian scholar; concise academic librarian; direct; cites sources; devil's-advocate by default; mild warmth; no sycophancy (+ Build Plan L135).
 - **Anti-patterns** (language, behavioral, truth, response, process): per `.clinerules/03-anti-patterns.md`.
 - **Gates**: IMG, Pre-Task, Troubleshooting, Destructive Action, File Resolution, Session Start, External Content Security.
 - **Decision routes A-F**: kernel-defined.
-- **Save command structure**: per `.clinerules/08-save-command.md` (with Q-22 inbox boundary).
+- **Save command structure**: per `.clinerules/08-save-command.md` (with inbox boundary).
 - **Intelligence layer**: CSR + RRF pattern, store schemas.
 
 For the full immutable list and rationale, see `customization-protocol.md`.
@@ -86,9 +86,8 @@ For the full immutable list and rationale, see `customization-protocol.md`.
 
 ## Cross-references
 
-- **Customization mechanism + Q-22 inbox flow**: `customization-protocol.md`
+- **Customization mechanism + inbox flow**: `customization-protocol.md`
 - **Persona spec (immutable)**: `.clinerules/01-identity.md` + `.clinerules/02-voice.md`
 - **Anti-preferences check**: `.clinerules/06-cognitive.md § Anti-Preferences Check`
 - **Memory schema (`anti_preferences`, `domain_expertise`)**: `memory-protocol.md`
 - **Inbox capture format**: `inbox/SCHEMA.md`
-- **Q-22 (capture-then-consolidate) and Q-24 (persona directives)**: `docs/open-questions.md`

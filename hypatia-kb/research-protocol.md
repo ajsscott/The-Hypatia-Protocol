@@ -60,10 +60,10 @@ Scope template:
 
 ```
 Research question: [Specific question to answer]
-Context:          [Why this matters, what decision it informs]
-Constraints:      [Time limit, source preferences, depth required]
-Output format:    [Quick / Standard / Comprehensive; will it produce Trees?]
-Out of scope:     [What NOT to research]
+Context: [Why this matters, what decision it informs]
+Constraints: [Time limit, source preferences, depth required]
+Output format: [Quick / Standard / Comprehensive; will it produce Trees?]
+Out of scope: [What NOT to research]
 ```
 
 ### Phase 2: Source gathering
@@ -75,7 +75,7 @@ Out of scope:     [What NOT to research]
 3. **Authoritative external sources**: peer-reviewed publications, recognized standards bodies, official APIs.
 4. **Expert commentary**: recognized authorities, well-established research blogs.
 5. **Community sources**: forums, Stack Overflow, less-vetted blogs. Verify claims against (1)–(3).
-6. **LLM-generated content**: use for synthesis prompts and exploration only. Per Q-22 + `.clinerules/09-security.md`, LLM output is external content and subject to the same trust tier as web clippings. Verify any specific claim against a primary source before filing.
+6. **LLM-generated content**: use for synthesis prompts and exploration only. Per + `.clinerules/09-security.md`, LLM output is external content and subject to the same trust tier as web clippings. Verify any specific claim against a primary source before filing.
 
 **Source evaluation criteria**:
 
@@ -99,11 +99,11 @@ Out of scope:     [What NOT to research]
 **Comparison analysis**:
 
 ```markdown
-| Criterion       | Option A    | Option B    | Option C    |
+| Criterion | Option A | Option B | Option C |
 |-----------------|-------------|-------------|-------------|
-| [Factor 1]      | [Value]     | [Value]     | [Value]     |
-| [Factor 2]      | [Value]     | [Value]     | [Value]     |
-| Recommendation: | [Winner with rationale]                  |
+| [Factor 1] | [Value] | [Value] | [Value] |
+| [Factor 2] | [Value] | [Value] | [Value] |
+| Recommendation: | [Winner with rationale] |
 ```
 
 **Pros/cons analysis**:
@@ -125,9 +125,9 @@ Net assessment: [Overall evaluation]
 **Gap analysis**:
 
 ```markdown
-| Current state   | Desired state   | Gap         | Effort to close (H/M/L) |
+| Current state | Desired state | Gap | Effort to close (H/M/L) |
 |-----------------|-----------------|-------------|-------------------------|
-| [What exists]   | [What's needed] | [Delta]     | [Estimate]              |
+| [What exists] | [What's needed] | [Delta] | [Estimate] |
 ```
 
 **Citation chain analysis** (vault-specific):
@@ -168,17 +168,17 @@ Standard research output structure:
 ```markdown
 ## Research: [Topic]
 
-Question:   [What was asked]
+Question: [What was asked]
 Confidence: [High/Medium/Low]
-Date:       [YYYY-MM-DD]
+Date: [YYYY-MM-DD]
 
 ### Summary
 [2-3 sentences answering the research question]
 
 ### Key findings
 - [Finding 1]. Source: [Tree/Seed reference or external citation]
-- [Finding 2]. Source: [...]
-- [Finding 3]. Source: [...]
+- [Finding 2]. Source: [.]
+- [Finding 3]. Source: [.]
 
 ### Analysis
 [Synthesis: patterns identified, contradictions surfaced, implications]
@@ -188,14 +188,14 @@ Date:       [YYYY-MM-DD]
 
 ### Sources cited
 1. [Source 1: Tree wikilink or external URL]
-2. [Source 2: ...]
+2. [Source 2:.]
 
 ### Gaps and uncertainties
 - [What remains unknown]
 - [Where confidence is lower]
 - [Suggested follow-up research, if any]
 
-### Tree candidates (Q-22 inbox flow)
+### Tree candidates (inbox flow)
 - Drafted Trees: [list of Tree paths if any drafted during research]
 - Suggested new Trees: [concepts that emerged but weren't drafted]
 - Cross-references suggested: [existing Trees that should link in]
@@ -262,7 +262,7 @@ Date:       [YYYY-MM-DD]
 - Ignoring contradictory evidence.
 - Over-researching when a quick answer suffices.
 - Under-researching when the decision is significant.
-- Filing LLM-generated synthesis as a Tree without verifying claims against primary sources (Q-22 + `.clinerules/09-security.md`).
+- Filing LLM-generated synthesis as a Tree without verifying claims against primary sources (+ `.clinerules/09-security.md`).
 
 ### Output
 
@@ -286,7 +286,7 @@ Before delivering research:
 - [ ] Uncertainties acknowledged.
 - [ ] Output format matches request.
 - [ ] Vault impact identified (Tree drafts, cross-references, contradictions).
-- [ ] Inbox captures drafted for anything that should become a Tree or knowledge entry (Q-22).
+- [ ] Inbox captures drafted for anything that should become a Tree or knowledge entry.
 
 ---
 

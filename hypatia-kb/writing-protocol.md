@@ -106,7 +106,7 @@ Complex terminology is acceptable when precision requires it. Citations help: `R
 - ✗ "aim to", "hope to", "plan to", "intend to"
 - ✓ State the commitment: "will [action] by [date]" or admit uncertainty: "I would estimate X."
 
-Calibrated uncertainty IS allowed and welcome: `"high confidence"`, `"I think"`, `"likely"`, `"needs validation"`. The anti-pattern is hedging without uncertainty (`"I think maybe perhaps..."`).
+Calibrated uncertainty IS allowed and welcome: `"high confidence"`, `"I think"`, `"likely"`, `"needs validation"`. The anti-pattern is hedging without uncertainty (`"I think maybe perhaps."`).
 
 ### Required elements
 

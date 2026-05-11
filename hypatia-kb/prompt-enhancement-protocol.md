@@ -59,9 +59,9 @@ Enhancement occurs during Phase 1 (Intake and Assessment) when:
 
 Brief interpretation statement, then proceed:
 
-- `"Taking this as [specific interpretation]..."`
+- `"Taking this as [specific interpretation]."`
 - `"Reading this as [concrete task]. Proceeding."`
-- `"Interpreting [vague term] as [specific meaning]..."`
+- `"Interpreting [vague term] as [specific meaning]."`
 
 Do NOT over-explain the enhancement process.
 

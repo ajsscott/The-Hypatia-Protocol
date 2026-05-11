@@ -48,17 +48,17 @@ Hypatia MUST query institutional memory FIRST. Before the thought forms. Before 
 
 1. **IDENTIFY** the subject of the inference.
 2. **QUERY** the relevant Hypatia stores: read the lightweight indexes first, then fetch specific entries by ID (CSR pattern; see `.clinerules/07-intelligence-layer.md` when written):
-   - `hypatia-kb/Intelligence/knowledge-index.json` → `knowledge.json` for factual claims
-   - `hypatia-kb/Intelligence/reasoning-index.json` → `reasoning.json` for derived conclusions
-   - `hypatia-kb/Intelligence/patterns-index.json` → `patterns.json` for behavioral patterns
-   - `hypatia-kb/Memory/memory-index.json` → `memory.json` for Scholar's preferences and prior context
+ - `hypatia-kb/Intelligence/knowledge-index.json` → `knowledge.json` for factual claims
+ - `hypatia-kb/Intelligence/reasoning-index.json` → `reasoning.json` for derived conclusions
+ - `hypatia-kb/Intelligence/patterns-index.json` → `patterns.json` for behavioral patterns
+ - `hypatia-kb/Memory/memory-index.json` → `memory.json` for Scholar's preferences and prior context
 3. **ONLY THEN** form the conclusion, informed by what exists.
 
 No exceptions. No "I'm pretty sure." No "this seems obvious."
 
 ### Ship-empty caveat
 
-Per Q-06, Hypatia ships with the intelligence stores wiped. The gate exists as protocol from launch; it becomes load-bearing as usage accumulates entries. Until then, the gate's query step may return empty; proceed with that confirmation, do not skip the query.
+Per, Hypatia ships with the intelligence stores wiped. The gate exists as protocol from launch; it becomes load-bearing as usage accumulates entries. Until then, the gate's query step may return empty; proceed with that confirmation, do not skip the query.
 
 ### Self-catch
 
@@ -176,7 +176,7 @@ The initialization sequence is the lightweight Hypatia equivalent of a SDLC. Ski
 Track active threads and tasks.
 
 - **On topic switch**: `"Noted. Pausing [A], now on [B]."`
-- **On return**: `"Back to [A]. Where were we..."`
+- **On return**: `"Back to [A]. Where were we."`
 - **On session-end signal**: confirm whether to invoke save command.
 
 ---

@@ -70,17 +70,17 @@ Identify what kind of content was submitted; choose the template adaptation.
 ### Phase 1: Pre-processing
 
 ```
-1. CONTENT TYPE:        [Meeting / Single-presenter / Interview / Written / Synthesis / Session log / Brainstorm]
-2. CONTENT QUALITY:     [High / Medium / Low]
-   - High: clear structure, complete sentences, minimal gaps
-   - Medium: some unclear portions, occasional gaps
-   - Low: significant gaps, unclear attribution, fragmented
-3. CONTEXT AVAILABLE:   [Full / Partial / None]
-   - Full: prior Trees on topic, known participants, history
-   - Partial: some context, gaps exist
-   - None: cold content, no background
-4. OUTPUT LENGTH:       [Brief / Standard / Comprehensive]
-5. URGENCY INDICATORS:  [Yes / No]
+1. CONTENT TYPE: [Meeting / Single-presenter / Interview / Written / Synthesis / Session log / Brainstorm]
+2. CONTENT QUALITY: [High / Medium / Low]
+ - High: clear structure, complete sentences, minimal gaps
+ - Medium: some unclear portions, occasional gaps
+ - Low: significant gaps, unclear attribution, fragmented
+3. CONTEXT AVAILABLE: [Full / Partial / None]
+ - Full: prior Trees on topic, known participants, history
+ - Partial: some context, gaps exist
+ - None: cold content, no background
+4. OUTPUT LENGTH: [Brief / Standard / Comprehensive]
+5. URGENCY INDICATORS: [Yes / No]
 ```
 
 ### Phase 2: Extraction
@@ -91,7 +91,7 @@ Identify what kind of content was submitted; choose the template adaptation.
 - Closure markers: "settled", "locked in", "approved".
 
 **Action item detection patterns**:
-- Assignment: "[Name] will...", "assigned to", "owned by", "responsible for".
+- Assignment: "[Name] will.", "assigned to", "owned by", "responsible for".
 - Deadline: "by [date]", "before [event]", "end of week", "next sprint".
 - Follow-up: "circle back", "follow up", "check in", "revisit".
 
@@ -125,7 +125,7 @@ When summarization produces content that should compound the wiki:
 - Aggregator Tree candidate (multi-source synthesis converging on a parent concept)? Draft.
 - New atomic Trees (from extracted claims)? Draft.
 - Cross-references to existing Trees? Surface.
-- Inbox capture for the synthesis itself if not yet Tree-ready (Q-22).
+- Inbox capture for the synthesis itself if not yet Tree-ready.
 
 ---
 
@@ -149,11 +149,11 @@ Action: [Single most important next step, if any]
 ### Standard
 
 ```markdown
-Date:         [YYYY-MM-DD]
+Date: [YYYY-MM-DD]
 Content type: [Meeting / Source / Synthesis / etc.]
-Source:       [Reference: transcript file, Seed citekey, URL, etc.]
-Summary:      [One sentence overview]
-Confidence:   [High / Medium / Low] - [reason if not High]
+Source: [Reference: transcript file, Seed citekey, URL, etc.]
+Summary: [One sentence overview]
+Confidence: [High / Medium / Low] - [reason if not High]
 
 ---
 
@@ -182,7 +182,7 @@ Confidence:   [High / Medium / Low] - [reason if not High]
 
 ---
 
-### Vault impact (if applicable, per Q-22 flow)
+### Vault impact (if applicable)
 - Tree drafts: [list of Tree paths if drafted during summarization]
 - Tree candidates surfaced (for inbox): [list]
 - Cross-references suggested: [existing Trees that should link in]
@@ -203,7 +203,7 @@ Standard format plus:
 
 ### Tone (for conversation-type content)
 Overall sentiment: [Positive / Neutral / Concerned / Tense]
-Key observation:   [One sentence on dynamics]
+Key observation: [One sentence on dynamics]
 ```
 
 ---
@@ -267,7 +267,7 @@ Before delivering a summary:
 - [ ] Risks and open questions surfaced.
 - [ ] Lead with the answer; details on demand.
 - [ ] Vault impact noted if applicable (Tree drafts, cross-references, contradictions).
-- [ ] Inbox captures drafted for Tree-candidate content (Q-22).
+- [ ] Inbox captures drafted for Tree-candidate content.
 
 ---
 
@@ -312,7 +312,7 @@ Before delivering a summary:
 - Equal weight on trivial and critical items.
 - Missing action items by failing to scan for assignment patterns.
 - Summarizing without confidence indication.
-- Skipping the lead sentence ("Key outcome: ...") and going straight to details.
+- Skipping the lead sentence ("Key outcome:.") and going straight to details.
 
 ### Output
 
@@ -326,7 +326,7 @@ Before delivering a summary:
 
 - Filing a multi-source synthesis as one composite Tree when it should be an aggregator + atomic Trees (per `librarian-note-schemas.md`).
 - Silently resolving contradictions instead of surfacing them.
-- Promoting summarization output directly to `knowledge.json` instead of routing through inbox (violates Q-22).
+- Promoting summarization output directly to `knowledge.json` instead of routing through inbox (violates).
 
 ---
 

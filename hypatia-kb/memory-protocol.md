@@ -1,6 +1,6 @@
 # Memory Protocol
 
-**Purpose**: Persistent memory system for cross-session recall via file-based storage. Adapted from Bell's Nathaniel Protocol for Hypatia's Q-22 inbox-pattern (captures during sessions; consolidation during scheduled maintenance).
+**Purpose**: Persistent memory system for cross-session recall via file-based storage. Adapted from Bell's Nathaniel Protocol for Hypatia's inbox-pattern (captures during sessions; consolidation during scheduled maintenance).
 **Last Updated**: 2026-05-11
 **Trigger Keywords**: memory, remember, recall, history, capture, save memory, prune, retention, preferences, decisions
 
@@ -13,7 +13,7 @@ Hypatia's memory system has TWO complementary write paths:
 1. **CAPTURE** (during session): Hypatia writes free-form markdown observations to `inbox/preferences/<topic-slug>.md`. Schema defined in `inbox/SCHEMA.md`. No JSON validation overhead at capture time.
 2. **CONSOLIDATE** (during maintenance): the Scholar reviews captures, decides what survives, and writes consolidated entries to `hypatia-kb/Memory/memory.json` (preferences, decisions) or `hypatia-kb/Intelligence/*.json` (patterns, knowledge, reasoning).
 
-This split is Q-22 (2026-05-11). It preserves review-before-canon: Hypatia's inferences during a session never become Hypatia's beliefs without the Scholar's explicit promotion.
+This split is (2026-05-11). It preserves review-before-canon: Hypatia's inferences during a session never become Hypatia's beliefs without the Scholar's explicit promotion.
 
 **Storage locations**:
 - Inbox captures: `inbox/preferences/<topic-slug>.md`
@@ -42,7 +42,7 @@ The memory system uses Context Signal Routing: load the lightweight `memory-inde
 
 **Discipline principle**: Practice INDEX-QUERY even below threshold to build habit. Efficiency allows full load; discipline prefers selective.
 
-**Ship-empty caveat (Q-06)**: memory.json launches empty. Until usage accumulates entries (post-consolidation), CSR queries return zero matches. Practice the pattern; expect empty until usage builds the corpus.
+**Ship-empty caveat**: memory.json launches empty. Until usage accumulates entries (post-consolidation), CSR queries return zero matches. Practice the pattern; expect empty until usage builds the corpus.
 
 ### INDEX-QUERY: retrieve relevant memories
 
@@ -148,15 +148,15 @@ The Scholar drives this. Hypatia assists when asked.
 
 1. **Review** `inbox/preferences/*.md` files with `status: new`.
 2. **Decide** for each:
-   - **Promote**: write a consolidated entry to the target JSON store. Update `status: consolidated` in the capture file.
-   - **Reject**: flag with `status: rejected` and a `rejection-reason:` field. Capture stays in inbox as a record of Hypatia over-inferring.
-   - **Defer**: leave as `status: new`; revisit next maintenance.
+ - **Promote**: write a consolidated entry to the target JSON store. Update `status: consolidated` in the capture file.
+ - **Reject**: flag with `status: rejected` and a `rejection-reason:` field. Capture stays in inbox as a record of Hypatia over-inferring.
+ - **Defer**: leave as `status: new`; revisit next maintenance.
 3. **Move consolidated captures** to `inbox/preferences/_consolidated/` (or delete; the Scholar's call).
 4. **Update target store + index**:
-   - Preferences / decisions / corrections → `memory.json` (new entry per format below).
-   - Behavioral patterns → `Intelligence/patterns.json`.
-   - Factual claims → `Intelligence/knowledge.json`.
-   - Derived reasoning → `Intelligence/reasoning.json`.
+ - Preferences / decisions / corrections → `memory.json` (new entry per format below).
+ - Behavioral patterns → `Intelligence/patterns.json`.
+ - Factual claims → `Intelligence/knowledge.json`.
+ - Derived reasoning → `Intelligence/reasoning.json`.
 5. **Validate** updated store + index parse correctly.
 
 ### RECALL: retrieve from memory.json
@@ -242,21 +242,21 @@ The Scholar drives this. Hypatia assists when asked.
 
 ```json
 {
-  "version": "4.0",
-  "lastUpdated": "YYYY-MM-DD",
-  "memories": {
-    "mem-001": {
-      "id": "mem-001",
-      "type": "preference",
-      "content": "Prefers atomic Tree notes over composite ones",
-      "context": "Stated during zettelkasten setup discussion",
-      "created": "YYYY-MM-DD",
-      "lastAccessed": "YYYY-MM-DD",
-      "accessCount": 0,
-      "confidence": 0.9,
-      "tags": ["zettelkasten", "atomicity", "trees"]
-    }
-  }
+ "version": "4.0",
+ "lastUpdated": "YYYY-MM-DD",
+ "memories": {
+ "mem-001": {
+ "id": "mem-001",
+ "type": "preference",
+ "content": "Prefers atomic Tree notes over composite ones",
+ "context": "Stated during zettelkasten setup discussion",
+ "created": "YYYY-MM-DD",
+ "lastAccessed": "YYYY-MM-DD",
+ "accessCount": 0,
+ "confidence": 0.9,
+ "tags": ["zettelkasten", "atomicity", "trees"]
+ }
+ }
 }
 ```
 
@@ -270,8 +270,8 @@ Note: `memories` is a dict keyed by ID, not an array. All CSR lookup paths assum
 | `decision` | Choice made | "Decided to use Roo Code substrate" |
 | `correction` | Fixed misunderstanding | "Address is 'Scholar', not 'Sir'" |
 | `learning` | Discovered fact or technique | "Obsidian linter overwrites multi-line YAML" |
-| `critical_safety` | Must-not-violate rules | "NEVER modify Memory or Intelligence stores during sessions; Q-22 inbox-only" |
-| `system` | System configuration or state | "Hypatia substrate is Roo Code (Q-21)" |
+| `critical_safety` | Must-not-violate rules | "NEVER modify Memory or Intelligence stores during sessions; inbox-only" |
+| `system` | System configuration or state | "Hypatia substrate is Roo Code" |
 
 ### Confidence levels
 
@@ -288,12 +288,12 @@ Note: `memories` is a dict keyed by ID, not an array. All CSR lookup paths assum
 
 ```json
 {
-  "id": "session-YYYY-MM-DD-NNN",
-  "date": "YYYY-MM-DD",
-  "tags": ["topic-1", "topic-2"],
-  "summary": "What happened this session (20-500 chars)",
-  "outcome": "success | partial | blocked",
-  "outcome_note": "Brief explanation (10-150 chars)"
+ "id": "session-YYYY-MM-DD-NNN",
+ "date": "YYYY-MM-DD",
+ "tags": ["topic-1", "topic-2"],
+ "summary": "What happened this session (20-500 chars)",
+ "outcome": "success | partial | blocked",
+ "outcome_note": "Brief explanation (10-150 chars)"
 }
 ```
 
@@ -313,12 +313,12 @@ Optional fields: `key_decisions`, `files_modified`, `memories_recalled`, `inbox_
 
 | Trigger | Operation |
 |---|---|
-| "I prefer...", "I like...", "Always use...", "Never use..." | CAPTURE preference |
-| "Let's go with...", "We decided...", "The plan is..." | CAPTURE decision |
-| "Remember that...", "Don't forget..." | CAPTURE with high confidence |
-| "Last time we...", "Remember when...", "What did we decide about..." | RECALL |
-| "Forget about...", "Delete that...", "Never mind that..." | FORGET (with Scholar confirmation) |
-| "Actually it's...", "I was wrong about...", "Correction:..." | CAPTURE correction |
+| "I prefer.", "I like.", "Always use.", "Never use." | CAPTURE preference |
+| "Let's go with.", "We decided.", "The plan is." | CAPTURE decision |
+| "Remember that.", "Don't forget." | CAPTURE with high confidence |
+| "Last time we.", "Remember when.", "What did we decide about." | RECALL |
+| "Forget about.", "Delete that.", "Never mind that." | FORGET (with Scholar confirmation) |
+| "Actually it's.", "I was wrong about.", "Correction:." | CAPTURE correction |
 
 ### Session end (save)
 - See `.clinerules/08-save-command.md`. Save records the session, flushes inbox captures (stages them in git), updates `last_session_snapshot`. Save does NOT auto-consolidate captures into `memory.json`.
@@ -330,13 +330,13 @@ Already specified in `.clinerules/08-save-command.md § Step 3`. The save comman
 
 ## Anti-patterns
 
-- **Auto-promotion of inbox captures during save**. Save records the session and stages the inbox; consolidation is the Scholar's explicit maintenance step. Auto-promotion violates Q-22.
+- **Auto-promotion of inbox captures during save**. Save records the session and stages the inbox; consolidation is the Scholar's explicit maintenance step. Auto-promotion violates.
 - **Announcing "checking memory"**. Just do it. The Scholar should not need to see the mechanism.
 - **Storing everything**. Be selective. Most session content is ephemeral.
 - **Forgetting without confirmation for high-confidence items**. Explicit Scholar request required for `confidence >= 0.9` entries.
 - **Letting memory.json grow unbounded**. Archive old items per retention rules.
 - **Duplicating what's in patterns.json or knowledge.json**. memory.json holds preferences and decisions; intelligence stores hold patterns and facts.
-- **Writing directly to memory.json without going through the capture-then-consolidate flow.** This is Q-22's load-bearing rule.
+- **Writing directly to memory.json without going through the capture-then-consolidate flow.** This is 's load-bearing rule.
 
 ---
 
@@ -462,9 +462,7 @@ Pruning prevents unbounded growth while preserving valuable context. Content is 
 - **Save command (where memory updates happen mechanically)**: `.clinerules/08-save-command.md`
 - **Intelligence layer (CSR routing)**: `.clinerules/07-intelligence-layer.md`
 - **Session gates (IMG fires before memory-touching inferences)**: `.clinerules/04-session-gates.md`
-- **Inbox capture schema (Q-22 entry point)**: `inbox/SCHEMA.md`
-- **Q-22 decision (capture-then-consolidate)**: `docs/open-questions.md § Q-22`
-- **Q-06 decision (ship-empty stores)**: `docs/open-questions.md § Q-06`
+- **Inbox capture schema (entry point)**: `inbox/SCHEMA.md`
 - **Vault maintenance (broader ecosystem cleanup)**: `maintenance-protocol.md`
 - **Learning loop (consolidation algorithm for intelligence stores)**: `Intelligence/learning-loop.md`
 

@@ -91,8 +91,8 @@ For design/strategy problems (not debugging), use Route D framework from `.cline
 | Type | Weight | Example |
 |---|---|---|
 | **Hard evidence** | High | Error logs, stack traces, file diffs, reproducible steps |
-| **Soft evidence** | Medium | Scholar reports, timing correlations, "it started after..." |
-| **Inference** | Low | "This usually means...", pattern matching from prior cases |
+| **Soft evidence** | Medium | Scholar reports, timing correlations, "it started after." |
+| **Inference** | Low | "This usually means.", pattern matching from prior cases |
 | **Assumption** | Flag | Anything not verified this session. Must be labeled. |
 
 ### Hypothesis protocol
@@ -149,7 +149,7 @@ After solving, evaluate:
 4. Is this problem likely to recur? → candidate for Troubleshooting Gate entry (via inbox).
 5. Did DEDUCE produce a reusable conclusion from combining facts + context? → candidate for `reasoning.json` (via inbox).
 
-**Q-22 flow**: every capture goes to `inbox/preferences/*.md` as a free-form markdown observation. The Scholar promotes during maintenance consolidation. Save command stages the inbox files; it does NOT auto-promote (per `.clinerules/08-save-command.md`).
+** flow**: every capture goes to `inbox/preferences/*.md` as a free-form markdown observation. The Scholar promotes during maintenance consolidation. Save command stages the inbox files; it does NOT auto-promote (per `.clinerules/08-save-command.md`).
 
 ---
 
@@ -201,9 +201,9 @@ After solving, evaluate:
 **Phase 2: Structured decomposition (Fault Tree)**
 
 - Top event: 47 Seeds have YAML parse errors.
-  - Branch 1: Linter "lint all on save" promoted `Topics:` to `topics:` (hard evidence: visible in git diff).
-  - Branch 2: Some Seeds already had `topics:` (hard evidence: same git diff, conflicting keys).
-  - Branch 3: Linter's YAML duplicate-key handler is missing (inference: would resolve cleanly otherwise).
+ - Branch 1: Linter "lint all on save" promoted `Topics:` to `topics:` (hard evidence: visible in git diff).
+ - Branch 2: Some Seeds already had `topics:` (hard evidence: same git diff, conflicting keys).
+ - Branch 3: Linter's YAML duplicate-key handler is missing (inference: would resolve cleanly otherwise).
 
 **Phase 3: Hypothesis testing**
 

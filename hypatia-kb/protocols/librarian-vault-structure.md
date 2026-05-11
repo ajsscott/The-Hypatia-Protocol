@@ -46,7 +46,7 @@ Meridian.md     root dashboard, embeds Meridian.base global views
 The vault has **three parallel organizing schemes**, each load-bearing in a different way. Don't treat them as interchangeable.
 
 1. **Folder placement** — cosmetic + `auto-note-mover` uses tags to place new notes. Bases do not key on paths.
-2. **`kind:` frontmatter** — the project-management truth. `Meridian.base` is filtered on `!kind.isEmpty()`. Values: `Mountain`, `Slope`, `Trail`, `Step`, `Idea`, `Bug`, `Document`, plus source kinds `Research`, `Article`, `Book`, etc.
+2. **`kind:` frontmatter** — the project-management truth. `Meridian.base` is filtered on `!kind.isEmpty`. Values: `Mountain`, `Slope`, `Trail`, `Step`, `Idea`, `Bug`, `Document`, plus source kinds `Research`, `Article`, `Book`, etc.
 3. **Tags + `topics:` wikilinks** — `tags` are flat membership labels that other Bases key on. `topics: - "[[Parent]]"` carries the concept graph (a DAG of parent/sibling concepts without explicit MOCs).
 
 ---

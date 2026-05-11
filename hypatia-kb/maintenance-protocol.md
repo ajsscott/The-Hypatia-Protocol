@@ -20,7 +20,7 @@ Cross-cutting maintenance that no single protocol owns: integrity verification, 
 
 **Principle**: this protocol does not duplicate rules defined elsewhere. It references them. If a retention threshold lives in `memory-protocol.md`, this protocol calls it, not redefines it.
 
-**Ship-empty caveat (Q-06)**: at launch, the intelligence and memory stores are empty. Health checks pass trivially. Growth budgets apply once usage accumulates entries. Run maintenance during the first months mostly to verify the pipelines wire correctly, not to prune (there's nothing to prune yet).
+**Ship-empty caveat**: at launch, the intelligence and memory stores are empty. Health checks pass trivially. Growth budgets apply once usage accumulates entries. Run maintenance during the first months mostly to verify the pipelines wire correctly, not to prune (there's nothing to prune yet).
 
 ---
 
@@ -98,7 +98,7 @@ Verify index-to-data sync across all data stores.
 5. Verify model version in `config.json` matches `MODEL_NAME` in `kb_vectorize.py`.
 6. If vectorstore missing: note as INFO, not error (system degrades gracefully to CSR-only).
 
-**Inbox (Q-22)**:
+**Inbox**:
 1. Count files in `inbox/preferences/` by status (new / consolidated / rejected).
 2. Flag if `new` captures exceed 20 (consolidation backlog signal).
 3. Flag if any capture has malformed frontmatter (missing required fields).
@@ -157,35 +157,35 @@ Additionally, check for entries with `_needs_trim: true` flag in `patterns.json`
 ECOSYSTEM HEALTH CHECK: [Date]
 
 INTEGRITY:
-  Patterns:     [OK|ISSUES] - [detail if issues]
-  Knowledge:    [OK|ISSUES] - [detail if issues]
-  Reasoning:    [OK|ISSUES] - [detail if issues]
-  Memory:       [OK|ISSUES] - [detail if issues]
-  Sessions:     [OK|ISSUES] - [detail if issues]
-  Cross-refs:   [OK|ISSUES] - [detail if issues]
-  Synonym map:  [OK|ISSUES] - [detail if issues]
-  Vectorstore:  [OK|ISSUES|MISSING] - [detail if issues]
-  Inbox:        [OK|BACKLOG|MALFORMED] - [N new captures, oldest from YYYY-MM-DD]
+ Patterns: [OK|ISSUES] - [detail if issues]
+ Knowledge: [OK|ISSUES] - [detail if issues]
+ Reasoning: [OK|ISSUES] - [detail if issues]
+ Memory: [OK|ISSUES] - [detail if issues]
+ Sessions: [OK|ISSUES] - [detail if issues]
+ Cross-refs: [OK|ISSUES] - [detail if issues]
+ Synonym map: [OK|ISSUES] - [detail if issues]
+ Vectorstore: [OK|ISSUES|MISSING] - [detail if issues]
+ Inbox: [OK|BACKLOG|MALFORMED] - [N new captures, oldest from YYYY-MM-DD]
 
 GROWTH:
-  memory.json:       [X]/2,500 lines [OK|OVER]
-  patterns.json:     [X]/300 entries [OK|OVER]
-  knowledge.json:    [X] entries (monitor)
-  reasoning.json:    [X] entries (monitor)
-  Session logs:      [X] active, [Y] overdue for archive
-  active_projects:   [X]/15 active, [Y] stale, [Z] archivable
-  Inbox (new):       [X]/20 files [OK|BACKLOG]
-  Total KB:          [X]MB/10MB [OK|OVER]
-  Vectorstore:       [X] entries (source: [Y]) [OK|DRIFT]
-  Model cache:       [X] models cached, [Y]MB [OK|STALE]
+ memory.json: [X]/2,500 lines [OK|OVER]
+ patterns.json: [X]/300 entries [OK|OVER]
+ knowledge.json: [X] entries (monitor)
+ reasoning.json: [X] entries (monitor)
+ Session logs: [X] active, [Y] overdue for archive
+ active_projects: [X]/15 active, [Y] stale, [Z] archivable
+ Inbox (new): [X]/20 files [OK|BACKLOG]
+ Total KB: [X]MB/10MB [OK|OVER]
+ Vectorstore: [X] entries (source: [Y]) [OK|DRIFT]
+ Model cache: [X] models cached, [Y]MB [OK|STALE]
 
 STALENESS:
-  Stale projects:        [list or "none"]
-  Archivable projects:   [list or "none"]
-  Inbox aging (>30d):    [list or "none"]
+ Stale projects: [list or "none"]
+ Archivable projects: [list or "none"]
+ Inbox aging (>30d): [list or "none"]
 
 CLEANUP NEEDED: [YES|NO]
-  [If YES, list specific operations needed]
+ [If YES, list specific operations needed]
 ```
 
 ---
@@ -328,7 +328,7 @@ rm -rf /tmp/fastembed_cache/models--<non-active-model>
 
 **Benchmark after model upgrade**: run `uv run python hypatia-kb/vectorstore/kb_benchmark.py` first. See `vectorstore/BENCHMARK.md` for protocol.
 
-### 2g. Inbox triage (Q-22 maintenance)
+### 2g. Inbox triage (maintenance)
 
 **NOT destructive** in itself; surfaces what Scholar should act on.
 
@@ -338,7 +338,7 @@ rm -rf /tmp/fastembed_cache/models--<non-active-model>
 4. The Scholar decides per-capture: promote, reject, defer.
 5. Hypatia executes the promotion writes when the Scholar approves (consolidation flow per `memory-protocol.md § CONSOLIDATE`).
 
-Inbox triage IS the Q-22 consolidation flow's surface. It runs as a step of maintenance, not as a separate operation.
+Inbox triage IS the consolidation flow's surface. It runs as a step of maintenance, not as a separate operation.
 
 ### 2h. Orphan detection and cleanup
 
@@ -375,32 +375,32 @@ Wired in `.clinerules/04-session-gates.md` (Session Start Gate):
 
 ```
 [ ] Schema conformance spot-check: run validate-schemas.py
-    (scripts/validate-schemas.py). If errors found, run
-    normalize-schemas.py. If only warnings, classify manually.
+ (scripts/validate-schemas.py). If errors found, run
+ normalize-schemas.py. If only warnings, classify manually.
 
 [ ] Confidence decay + staleness review (single pass):
-    Entries with accessCount == 0 and created > 180 days:
-    - Reduce confidence by 0.05 (floor: 0.7 for knowledge,
-      0.5 for patterns/reasoning)
-    - Flag as _stale_candidate
-    - Knowledge: re-validate against current docs/APIs
-    - Patterns: check if behavior still applies
-    - Reasoning: check if derived_from sources still valid
-    Action per entry: re-validate (update lastAccessed),
-    archive, or delete.
-    If deleting: execute Removal Cascade
-    (Intelligence/intelligence-operations.md Part 7b).
+ Entries with accessCount == 0 and created > 180 days:
+ - Reduce confidence by 0.05 (floor: 0.7 for knowledge,
+ 0.5 for patterns/reasoning)
+ - Flag as _stale_candidate
+ - Knowledge: re-validate against current docs/APIs
+ - Patterns: check if behavior still applies
+ - Reasoning: check if derived_from sources still valid
+ Action per entry: re-validate (update lastAccessed),
+ archive, or delete.
+ If deleting: execute Removal Cascade
+ (Intelligence/intelligence-operations.md Part 7b).
 
 [ ] Tag health: check singleton tag rate. If above 40%, run tag
-    consolidation (merge singletons into semantically equivalent
-    common tags, update synonym-map).
+ consolidation (merge singletons into semantically equivalent
+ common tags, update synonym-map).
 
 [ ] Access audit: entries with accessCount == 0 and created > 90
-    days. Review for relevance. Re-tag, archive, or confirm.
+ days. Review for relevance. Re-tag, archive, or confirm.
 
 [ ] Inbox aging: captures with status: new older than 30 days.
-    Scholar should consolidate or reject; aging captures suggest
-    the consolidation cadence is too slow.
+ Scholar should consolidate or reject; aging captures suggest
+ the consolidation cadence is too slow.
 ```
 
 ### On-demand
@@ -432,7 +432,7 @@ This is a behavioral guideline, not an automated trigger. Relies on pattern reco
 | `Intelligence/intelligence-operations.md` | Knowledge quality gates, pattern application rules |
 | `.clinerules/04-session-gates.md` | Destructive Action Gate procedure |
 | `.clinerules/09-security.md` | Defense-in-depth rules, git sanitization |
-| `inbox/SCHEMA.md` | Inbox capture format (Q-22) |
+| `inbox/SCHEMA.md` | Inbox capture format |
 
 ### Documents that reference this protocol
 
@@ -454,7 +454,7 @@ This is a behavioral guideline, not an automated trigger. Relies on pattern reco
 - Do not archive active projects without confirming status with the Scholar.
 - Do not invent retention thresholds; use `memory-protocol.md` as source of truth.
 - Do not treat this protocol as a replacement for save-time pruning (they complement).
-- Do not auto-promote inbox captures during cleanup. Q-22 consolidation requires Scholar's per-capture decision.
+- Do not auto-promote inbox captures during cleanup. consolidation requires Scholar's per-capture decision.
 
 ---
 
@@ -470,4 +470,4 @@ This is a behavioral guideline, not an automated trigger. Relies on pattern reco
 
 ---
 
-*Prevention through regular maintenance beats emergency cleanup. The Hypatia ecosystem ships empty (Q-06) and grows through deliberate consolidation (Q-22). Run maintenance to verify the pipelines wire correctly during early months, then more substantively as usage accumulates real data.*
+*Prevention through regular maintenance beats emergency cleanup. The Hypatia ecosystem ships empty and grows through deliberate consolidation. Run maintenance to verify the pipelines wire correctly during early months, then more substantively as usage accumulates real data.*

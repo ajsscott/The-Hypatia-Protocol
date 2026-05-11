@@ -241,9 +241,9 @@ Is it something I FIGURED OUT?    → reasoning.json (retrieved by PROBLEM SHAPE
 
 | Confidence | Reuse Signal Match | Action |
 |------------|-------------------|--------|
-| > 0.8 | Strong match | Surface proactively: "We figured out before that..." |
+| > 0.8 | Strong match | Surface proactively: "We figured out before that." |
 | > 0.8 | Partial match | Mention if relevant |
-| 0.5 - 0.8 | Strong match | Suggest: "Similar situation to when..." |
+| 0.5 - 0.8 | Strong match | Suggest: "Similar situation to when." |
 | < 0.5 | Any | Don't surface |
 
 Intent-aware matching:

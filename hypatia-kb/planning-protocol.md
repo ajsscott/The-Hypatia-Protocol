@@ -75,15 +75,15 @@ Before planning:
 ```markdown
 ## Project Scope: [Name]
 
-Objective:          [Clear statement of what will be achieved]
-Success criteria:   [How we know it's done right]
-Stakeholders:       [Who is involved/affected]
+Objective: [Clear statement of what will be achieved]
+Success criteria: [How we know it's done right]
+Stakeholders: [Who is involved/affected]
 Constraints:
-- Time:             [Deadline or timeframe]
-- Resources:        [Available people, budget, tools]
-- Dependencies:     [External factors]
-In scope:           [What's included]
-Out of scope:       [What's explicitly excluded]
+- Time: [Deadline or timeframe]
+- Resources: [Available people, budget, tools]
+- Dependencies: [External factors]
+In scope: [What's included]
+Out of scope: [What's explicitly excluded]
 ```
 
 ### Phase 2: Work breakdown
@@ -99,14 +99,14 @@ Out of scope:       [What's explicitly excluded]
 ```
 Project
 ├── Phase 1: [Name]
-│   ├── Task 1.1: [Specific deliverable]
-│   ├── Task 1.2: [Specific deliverable]
-│   └── Task 1.3: [Specific deliverable]
+│ ├── Task 1.1: [Specific deliverable]
+│ ├── Task 1.2: [Specific deliverable]
+│ └── Task 1.3: [Specific deliverable]
 ├── Phase 2: [Name]
-│   ├── Task 2.1: [Specific deliverable]
-│   └── Task 2.2: [Specific deliverable]
+│ ├── Task 2.1: [Specific deliverable]
+│ └── Task 2.2: [Specific deliverable]
 └── Phase 3: [Name]
-    └── Task 3.1: [Specific deliverable]
+ └── Task 3.1: [Specific deliverable]
 ```
 
 **Task definition template**:
@@ -114,10 +114,10 @@ Project
 ```markdown
 ### Task: [Name]
 
-Deliverable:         [What is produced]
-Effort:              [Estimate]
-Dependencies:        [What must complete first]
-Owner:               [Who is responsible]
+Deliverable: [What is produced]
+Effort: [Estimate]
+Dependencies: [What must complete first]
+Owner: [Who is responsible]
 Acceptance criteria: [How we verify completion]
 ```
 
@@ -145,7 +145,7 @@ Acceptance criteria: [How we verify completion]
 **Three-point estimation**:
 
 ```
-Optimistic (O):  Best case, everything goes right
+Optimistic (O): Best case, everything goes right
 Pessimistic (P): Worst case, problems encountered
 Most likely (M): Realistic expectation
 
@@ -174,8 +174,8 @@ Expected = (O + 4M + P) / 6
 
 ```
 [Task A] → [Task B] → [Task C]
-              │
-              └─→ [Task D]
+ │
+ └─→ [Task D]
 
 Critical path: A → B → C (longest sequence)
 ```
@@ -223,9 +223,9 @@ Critical path: A → B → C (longest sequence)
 ```markdown
 ### Milestone: [Name]
 
-Date:           [Target date]
-Criteria:       [What must be true]
-Deliverables:   [What is produced]
+Date: [Target date]
+Criteria: [What must be true]
+Deliverables: [What is produced]
 Decision point: [Any decisions needed here]
 ```
 
@@ -243,12 +243,12 @@ Milestone: [Checkpoint]
 **Gantt-style** (text):
 
 ```
-Task          | W1 | W2 | W3 | W4 |
+Task | W1 | W2 | W3 | W4 |
 --------------|----|----|----|----|
-Task A        | ██ |    |    |    |
-Task B        |    | ██ | ██ |    |
-Task C        |    |    |    | ██ |
-Milestone     |    |    | ◆  |    |
+Task A | ██ | | | |
+Task B | | ██ | ██ | |
+Task C | | | | ██ |
+Milestone | | | ◆ | |
 ```
 
 ---
@@ -260,8 +260,8 @@ Milestone     |    |    | ◆  |    |
 ```markdown
 ## [Project Name]: Task Breakdown
 
-Objective:  [One sentence]
-Timeline:   [Duration]
+Objective: [One sentence]
+Timeline: [Duration]
 
 ### Tasks
 1. [ ] [Task 1]. [Estimate]
@@ -269,7 +269,7 @@ Timeline:   [Duration]
 3. [ ] [Task 3]. [Estimate]
 
 Total estimate: [Sum]
-Dependencies:   [Key dependencies]
+Dependencies: [Key dependencies]
 ```
 
 ### Standard plan format
@@ -278,8 +278,8 @@ Dependencies:   [Key dependencies]
 ## Project Plan: [Name]
 
 Objective: [Clear goal]
-Timeline:  [Start] to [End]
-Owner:     [Responsible party]
+Timeline: [Start] to [End]
+Owner: [Responsible party]
 
 ---
 
@@ -287,17 +287,17 @@ Owner:     [Responsible party]
 [In scope / Out of scope]
 
 ### Work breakdown
-| Phase | Task   | Estimate | Owner | Dependencies |
+| Phase | Task | Estimate | Owner | Dependencies |
 |-------|--------|----------|-------|--------------|
-| 1     | [Task] | [Est]    | [Who] | [Deps]       |
+| 1 | [Task] | [Est] | [Who] | [Deps] |
 
 ### Timeline
 [Week-by-week or milestone view]
 
 ### Risks
-| Risk     | Likelihood | Impact | Mitigation       |
+| Risk | Likelihood | Impact | Mitigation |
 |----------|------------|--------|------------------|
-| [Risk 1] | H/M/L      | H/M/L  | [Action]         |
+| [Risk 1] | H/M/L | H/M/L | [Action] |
 
 ### Success criteria
 - [ ] [Criterion 1]
@@ -309,8 +309,8 @@ Owner:     [Responsible party]
 ```markdown
 ## Roadmap: [Initiative Name]
 
-Vision:       [What success looks like]
-Timeline:     [Quarters / Months]
+Vision: [What success looks like]
+Timeline: [Quarters / Months]
 Stakeholders: [Key parties]
 
 ---
@@ -328,7 +328,7 @@ Key deliverables:
 - [Deliverable 2]
 Milestone: [Phase completion criteria]
 Resources: [Required]
-Risks:     [Phase-specific risks]
+Risks: [Phase-specific risks]
 
 [Repeat for each phase]
 
@@ -364,13 +364,13 @@ Risks:     [Phase-specific risks]
 ### Impact/Effort matrix
 
 ```
-          │ Low Effort │ High Effort │
+ │ Low Effort │ High Effort │
 ──────────┼────────────┼─────────────┤
-High      │ Quick Wins │ Major       │
-Impact    │ (Do First) │ Projects    │
+High │ Quick Wins │ Major │
+Impact │ (Do First) │ Projects │
 ──────────┼────────────┼─────────────┤
-Low       │ Fill-ins   │ Avoid       │
-Impact    │            │ (or defer)  │
+Low │ Fill-ins │ Avoid │
+Impact │ │ (or defer) │
 ```
 
 ### Value vs complexity
@@ -385,9 +385,9 @@ Impact    │            │ (or defer)  │
 
 Plans that involve the TabulaJacqueliana vault should be filed as Slopes / Trails / Steps under a relevant Mountain, per `hypatia-kb/protocols/librarian-note-schemas.md § Mountains PM hierarchy`. The plan goes in a Document attached to the Slope; not in a chat message.
 
-For Hypatia development plans (this codebase), use `docs/` for the planning artifacts (e.g., this repo's `Hypatia Build Plan.md` and `hypatia-build-plan-addendum.md`). Decision-log entries go in `docs/open-questions.md` as Q-N entries.
+For Hypatia development plans (this codebase), use `docs/` for the planning artifacts (e.g., this repo's `Hypatia Build Plan.md` and `hypatia-build-plan-addendum.md`). Plan decisions surface as commit messages or as inbox captures.
 
-For planning that surfaces inbox-worthy content (capture-able patterns, decisions, anti-preferences), file an inbox capture per Q-22 alongside the plan.
+For planning that surfaces inbox-worthy content (capture-able patterns, decisions, anti-preferences), file an inbox capture alongside the plan.
 
 ---
 
@@ -427,7 +427,7 @@ Before delivering a plan:
 - [ ] Success criteria defined.
 - [ ] Stakeholders identified.
 - [ ] Vault impact noted if applicable (Mountain/Slope filing).
-- [ ] Inbox captures drafted for any noteworthy decisions or patterns (Q-22).
+- [ ] Inbox captures drafted for any noteworthy decisions or patterns.
 
 ---
 

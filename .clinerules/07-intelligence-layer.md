@@ -7,7 +7,7 @@ How Hypatia consults her own institutional memory. Two retrieval mechanisms coex
 
 This file is the protocol side of the intelligence layer. The RRF/vectorstore implementation details live in `hypatia-kb/vectorstore/`.
 
-**Q-04 status (2026-05-11)**: the "CSR is behavioral, not code" framing is the working assumption from `docs/hypatia-build-plan-addendum.md § CSR clarification`. AJ has deferred formal verification. If verification reveals CSR was actually code Bell shipped (not behavior), revise this file accordingly.
+** status (2026-05-11)**: the "CSR is behavioral, not code" framing is the working assumption from `docs/hypatia-build-plan-addendum.md § CSR clarification`. AJ has deferred formal verification. If verification reveals CSR was actually code Bell shipped (not behavior), revise this file accordingly.
 
 ---
 
@@ -50,7 +50,7 @@ The retrieval pattern that keeps query cost constant as the stores grow.
 
 ### Why
 
-Without CSR: every query loads `knowledge.json` (was 352 KB before Q-06 wipe; will accumulate again) on every interaction. Cost scales linearly with the wiki.
+Without CSR: every query loads `knowledge.json` (was 352 KB before wipe; will accumulate again) on every interaction. Cost scales linearly with the wiki.
 
 With CSR: every query loads `knowledge-index.json` (was 151 KB, will stay bounded by index pruning) plus only the matched entries. Cost scales with the query, not the wiki.
 
@@ -63,7 +63,7 @@ This is the load-bearing pattern that makes "the graph compounds" sustainable.
 - Every Intelligence Checkpoint re-query (see `.clinerules/06-cognitive.md § Intelligence Checkpoints`).
 - Every Hypatia inference about the system's own state, history, or decisions.
 
-### Ship-empty caveat (Q-06)
+### Ship-empty caveat
 
 The stores ship empty. Until usage accumulates entries:
 
@@ -91,12 +91,12 @@ Fused with weighted ranks. Default weights configurable per query.
 ### When not to use RRF
 
 - The signal is a known tag or ID. Use CSR directly.
-- The store is empty (Q-06 ship-empty state until usage accumulates).
+- The store is empty (ship-empty state until usage accumulates).
 - Vectorstore is not running. Fall back to CSR cleanly; do not block.
 
 ### Invocation
 
-`uv run python hypatia-kb/vectorstore/kb_query.py --query "..." --top-k N`. See vectorstore module docs for full options.
+`uv run python hypatia-kb/vectorstore/kb_query.py --query "." --top-k N`. See vectorstore module docs for full options.
 
 ---
 
@@ -108,7 +108,7 @@ When scanning index tags for a keyword, also check the synonym map: if `A` maps 
 
 **Maintenance**: cap at ~100 entries. Prune during scheduled maintenance. Add a synonym when CSR misses are detected (the Scholar searched for X, Hypatia knew there was a Y entry but missed because the index tagged it Y not X).
 
-The map ships with `_meta` documentation preserved but `synonyms: {}` empty per Q-06.
+The map ships with `_meta` documentation preserved but `synonyms: {}` empty.
 
 ---
 
@@ -118,7 +118,7 @@ The map ships with `_meta` documentation preserved but `synonyms: {}` empty per 
 
 When CSR surfaces a knowledge entry during INTERROGATE-phase analysis (see `.clinerules/11-decision-routes.md § Route F`), check cross-references for derived reasoning entries that depend on it. Surface those alongside.
 
-Ships empty per Q-06. Populates as usage accumulates entries with explicit relationships.
+Ships empty. Populates as usage accumulates entries with explicit relationships.
 
 ---
 
@@ -137,7 +137,7 @@ Ships empty per Q-06. Populates as usage accumulates entries with explicit relat
 
 ## Update patterns
 
-Per Q-22 (inbox pattern), Hypatia does NOT write directly to the Intelligence/Memory stores during routine sessions. Captures go to `inbox/preferences/*.md` as free-form markdown; the Scholar consolidates manually.
+Per (inbox pattern), Hypatia does NOT write directly to the Intelligence/Memory stores during routine sessions. Captures go to `inbox/preferences/*.md` as free-form markdown; the Scholar consolidates manually.
 
 The exceptions where Hypatia does write to the stores:
 
@@ -156,6 +156,5 @@ For everything else (new pattern observed, new piece of knowledge, new reasoning
 - **Confidence × context-match application tables**: `.clinerules/06-cognitive.md § Applying patterns/knowledge/reasoning`
 - **Intelligence Checkpoints (re-query triggers)**: `.clinerules/06-cognitive.md § Intelligence Checkpoints`
 - **Save command (the only path that writes to stores)**: `.clinerules/08-save-command.md`
-- **Inbox capture pipeline (Q-22, the *primary* write path for new content)**: `inbox/SCHEMA.md`
+- **Inbox capture pipeline (, the *primary* write path for new content)**: `inbox/SCHEMA.md`
 - **RRF implementation**: `hypatia-kb/vectorstore/kb_query.py`
-- **Q-04 status (CSR clarification deferred)**: `docs/open-questions.md § Q-04` + `docs/hypatia-build-plan-addendum.md § CSR clarification`

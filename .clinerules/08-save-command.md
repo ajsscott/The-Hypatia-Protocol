@@ -2,7 +2,7 @@
 
 How Hypatia persists what happened in a session. Invoked by the Scholar via the `save` keyword (or its variant `detailed save`). The save command is the heartbeat: without it, the wiki does not compound.
 
-Hypatia's save is materially leaner than Bell's was, because Q-22 (inbox pattern) moved the *content consolidation* responsibility OFF the save path and INTO the Scholar's separate maintenance flow. The save command records what happened; the Scholar curates what survives.
+Hypatia's save is materially leaner than Bell's was. The inbox pattern moved the *content consolidation* responsibility OFF the save path and INTO the Scholar's separate maintenance flow. The save command records what happened; the Scholar curates what survives.
 
 ---
 
@@ -30,7 +30,7 @@ The save command does not auto-fire at session end. Persistence is the Scholar's
 
 ## What does NOT get saved
 
-**Hypatia does not promote inbox captures into `hypatia-kb/Memory/` or `hypatia-kb/Intelligence/` JSON stores during save.** That's Q-22 territory: those stores are AJ-curated, consolidated during scheduled maintenance sessions, not auto-grown during routine work.
+**Hypatia does not promote inbox captures into `hypatia-kb/Memory/` or `hypatia-kb/Intelligence/` JSON stores during save.** That's the inbox boundary: those stores are AJ-curated, consolidated during scheduled maintenance sessions, not auto-grown during routine work.
 
 Specifically, save does NOT:
 
@@ -66,7 +66,7 @@ Do NOT confirm complete until all six items are marked.
 **Step 1: Session log.** Write to `hypatia-kb/Memory/sessions/YYYY-MM-DD-NN.md`. Include:
 - Scope synthesis (1-2 sentences).
 - Files touched (paths, brief description per).
-- Decisions made (point at `docs/open-questions.md` Q-N if formalized).
+- Decisions made.
 - Outcome assessment (`success` | `partial` | `blocked`) + outcome_note.
 - Inbox captures created this session (paths).
 
@@ -76,13 +76,13 @@ Do NOT confirm complete until all six items are marked.
 
 ```json
 "last_session_snapshot": {
-    "session_id": "<current>",
-    "memory_version": "<version>",
-    "patterns_count": <from patterns-index>,
-    "knowledge_count": <from knowledge-index>,
-    "reasoning_count": <from reasoning-index>,
-    "inbox_captures_pending": <count of files in inbox/preferences/>,
-    "timestamp": "<now>"
+ "session_id": "<current>",
+ "memory_version": "<version>",
+ "patterns_count": <from patterns-index>,
+ "knowledge_count": <from knowledge-index>,
+ "reasoning_count": <from reasoning-index>,
+ "inbox_captures_pending": <count of files in inbox/preferences/>,
+ "timestamp": "<now>"
 }
 ```
 
@@ -91,7 +91,7 @@ Do NOT confirm complete until all six items are marked.
 **Step 5: Vectorstore sync (conditional).** If `hypatia-kb/vectorstore/config.json` exists, run `uv run python hypatia-kb/vectorstore/kb_sync.py`. Log result (added/updated/removed/unchanged counts). On failure: warn, do not block save. On missing vectorstore: skip silently.
 
 **Step 6: Git commit.** Invoke the Git Hardening Protocol from `.clinerules/09-security.md`:
-1. Run `git add --dry-run .`. Scan for sensitive patterns.
+1. Run `git add --dry-run.`. Scan for sensitive patterns.
 2. If clean, run `git add -A` (note: prefer staging specific files for non-save work, but save is the one operation that intentionally captures everything).
 3. If any flagged, STOP. Surface to the Scholar. Do not commit until resolved.
 4. If clean, commit with message `Session save: {session_id}`.
@@ -127,37 +127,37 @@ Use for: major milestones, audits, debugging captures.
 DETAILED SAVE: Session [ID]
 
 1. SESSION LOG
-   Path:     hypatia-kb/Memory/sessions/YYYY-MM-DD-NNN.md
-   Lines:    [count]
-   Scope:    [synthesis]
-   Files:    [list]
-   Outcome:  [success/partial/blocked] -- [outcome_note]
+ Path: hypatia-kb/Memory/sessions/YYYY-MM-DD-NNN.md
+ Lines: [count]
+ Scope: [synthesis]
+ Files: [list]
+ Outcome: [success/partial/blocked] -- [outcome_note]
 
 2. SESSION INDEX
-   Entry:    [id]
-   Tags:     [list]
-   Total sessions: [count]
+ Entry: [id]
+ Tags: [list]
+ Total sessions: [count]
 
 3. MEMORY SNAPSHOT
-   Previous: session [prior_id], memory v[X]
-   Current:  session [current_id], memory v[X]
-   Counts:   patterns=[N], knowledge=[N], reasoning=[N]
-   Inbox pending: [N]
+ Previous: session [prior_id], memory v[X]
+ Current: session [current_id], memory v[X]
+ Counts: patterns=[N], knowledge=[N], reasoning=[N]
+ Inbox pending: [N]
 
 4. INBOX FLUSH
-   Captures staged: [list of inbox/preferences/*.md created this session]
-   Promoted to stores: 0 (per Q-22 inbox boundary; consolidation is manual)
+ Captures staged: [list of inbox/preferences/*.md created this session]
+ Promoted to stores: 0
 
 5. VECTORSTORE SYNC
-   Status:   [synced | n/a | failed]
-   Counts:   added=[N], updated=[N], removed=[N], unchanged=[N]
-   Duration: [Ns]
+ Status: [synced | n/a | failed]
+ Counts: added=[N], updated=[N], removed=[N], unchanged=[N]
+ Duration: [Ns]
 
 6. GIT COMMIT
-   Hash:     [short-hash]
-   Message:  Session save: [id]
-   Files:    [N] changed
-   Hardening scan: clean | flagged [details]
+ Hash: [short-hash]
+ Message: Session save: [id]
+ Files: [N] changed
+ Hardening scan: clean | flagged [details]
 
 ✓ COMPLETE
 ```
@@ -203,6 +203,5 @@ The intelligence stores hold curated knowledge; the session logs hold the *narra
 
 - **Memory protocol (CRUD operations, pruning rules)**: `hypatia-kb/memory-protocol.md`
 - **Git Hardening Protocol invoked by step 6**: `.clinerules/09-security.md`
-- **Inbox capture pipeline (Q-22)**: `inbox/SCHEMA.md` + `docs/open-questions.md § Q-22`
 - **Session gates that govern when save fires**: `.clinerules/04-session-gates.md`
 - **Vectorstore sync script**: `hypatia-kb/vectorstore/kb_sync.py`

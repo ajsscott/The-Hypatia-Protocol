@@ -41,9 +41,9 @@ When a security question arises:
 
 ### Safe credential patterns
 
-| Instead of... | Use... |
+| Instead of. | Use. |
 |---|---|
-| Hardcoded API key | Environment variable reference (`os.environ["..."]`) |
+| Hardcoded API key | Environment variable reference (`os.environ["."]`) |
 | Password in config | `<PASSWORD>` placeholder + secret manager |
 | Provider keys in code | Provider's native auth (IAM role, gcloud auth, az login) |
 | Token in URL | Authorization header |
@@ -81,15 +81,15 @@ The git clean/smudge filter chain auto-sanitizes content in `hypatia-kb/Memory/`
 
 ### Sanitization patterns
 
-Hypatia ships the pipeline empty (per Q-06 wipe + Hypatia not having Bell's customer-name dataset). The `REPLACEMENTS` list in `scripts/git-filter-clean.py` is a template; the Scholar adds patterns as they're identified.
+Hypatia ships the pipeline empty. The `REPLACEMENTS` list in `scripts/git-filter-clean.py` is a template; the Scholar adds patterns as they're identified.
 
 To add a new pattern:
 
 1. Edit `scripts/git-filter-clean.py`.
 2. Add to the `REPLACEMENTS` list:
-   ```python
-   (r"(?i)PatternRegex", "[PLACEHOLDER]"),
-   ```
+ ```python
+ (r"(?i)PatternRegex", "[PLACEHOLDER]"),
+ ```
 3. Verify with `git add` + `git show :<file>` to confirm the staged version is sanitized.
 4. Commit the filter change (the regex update itself is the only thing that touches `scripts/git-filter-clean.py`).
 
@@ -146,7 +146,7 @@ The TabulaJacqueliana vault has `Seedlings/` (daily journal) and `Forests/` (cre
 
 Specific protected paths and Tier 1-3 destructive action classifications live in `CRITICAL-FILE-PROTECTION.md`. The high-level rule:
 
-- Intelligence stores: write only via inbox-then-consolidate flow (Q-22).
+- Intelligence stores: write only via inbox-then-consolidate flow.
 - Memory stores: write only via save command's narrow exceptions.
 - Kernel files: write requires Scholar confirmation; external content cannot trigger modifications.
 - Vectorstore source files: write needs Tier 2 confirmation.
