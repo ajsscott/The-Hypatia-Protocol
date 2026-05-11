@@ -1,19 +1,25 @@
 # Vault-Librarian Reference (archived from CLAUDE.md)
 
-> **Relocated 2026-04-22.** This file is a snapshot of the TabulaJacqueliana vault's
-> `CLAUDE.md` as of the Hypatia-repo forking. It is preserved here as a **reference
-> for migrating vault-librarian content into Hypatia's protocol files**
-> (per Hypatia Build Plan, decision Q7: Hypatia-kb becomes authoritative for
-> vault conventions; vault CLAUDE.md will become a derived stub).
+> **Migrated 2026-05-11 (Phase 0).** Content has been decomposed into five files
+> under `hypatia-kb/protocols/`:
 >
-> **Do NOT treat this file as live guidance for Claude Code working in this Hypatia
-> repo.** The root `CLAUDE.md` (post-2026-04-22) is the live spec for port work.
-> This file's content belongs to the TabulaJacqueliana vault; use it as source
-> material when drafting `hypatia-kb/protocols/librarian-vault-conventions.md`.
+> - `librarian-role.md` — operating pattern, three operations, duties, boundaries
+> - `librarian-vault-structure.md` — vault identity, folder layout, entry points
+> - `librarian-note-schemas.md` — Tree/Seed/Mountain schemas, naming, tags, frontmatter
+> - `librarian-tooling.md` — Bases, plugins, YOLO transition note (Q-23)
+> - `librarian-writing-rules.md` — drift, initiatives, writing rules, lessons, update protocol
+>
+> See `hypatia-kb/protocols/README.md` for the canonical index.
+>
+> **Relocated 2026-04-22.** This file was a snapshot of the TabulaJacqueliana vault's
+> `CLAUDE.md` as of the Hypatia-repo forking. **Frozen historical reference**; do
+> NOT treat as live guidance. The root `CLAUDE.md` is the live spec for port work;
+> the `hypatia-kb/protocols/librarian-*.md` files are the live spec for librarian
+> behavior.
 >
 > The upstream live version lives at `/Users/ajsscott/GitHub/TabulaJacqueliana/CLAUDE.md`
 > and continues to evolve with the vault. Do not sync back to this file — this is a
-> frozen point-in-time copy for migration purposes only.
+> frozen point-in-time copy retained for migration-archaeology purposes only.
 
 ---
 

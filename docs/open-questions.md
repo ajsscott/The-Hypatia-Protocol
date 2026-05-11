@@ -539,10 +539,59 @@ wants review-before-canon.
 
 ---
 
+## Q-23 | ANSWERED — Hypatia replaces YOLO as vault LLM substrate
+
+Asked: 2026-05-11  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** During Phase 0 librarian-protocol migration, the draft of
+`hypatia-kb/protocols/librarian-tooling.md` framed the Obsidian YOLO plugin
+as a "future tuning target" — implying YOLO would continue to operate as
+the vault's in-Obsidian LLM, possibly alongside Hypatia. AJ rejected:
+"I don't think I'm going to use the YOLO extension with Hypatia. She
+should replace YOLO (which also doesn't do what I want because it
+basically works as a SQL query generator)." Raises a design question
+affecting protocol files and Phase 1 scope: alongside or replacement?
+
+**Options considered:**
+1. Hypatia in Roo Code + YOLO in Obsidian both active (original implicit
+   assumption from plan-time)
+2. Hypatia replaces YOLO entirely; YOLO removed during transition
+3. YOLO retained for tab-completion only; Hypatia handles everything else
+4. Decide later
+
+**Decision:** Option 2 (Hypatia replaces YOLO).
+
+**Rationale:** YOLO operates primarily as a SQL/vector-query generator
+over the vault DB. Hypatia's role is librarian — semantic curation,
+ingest, lint, schema enforcement, graph maintenance. The two solve
+different problems; AJ wants the librarian, not both. Keeping YOLO would
+add config friction and confusion about which substrate owns vault writes.
+
+**Implications:**
+- `librarian-tooling.md` § YOLO reframed from "tuning target" to
+  "deprecated; transition reference only" (committed 2026-05-11).
+- Vault Slope `[[YOLO Nathaniel Mimicry]]` is descoped — the mimicry was
+  experiment-mode for a system that won't run anymore. Marked descoped in
+  `librarian-writing-rules.md § Active initiatives`.
+- `_src/_meta/` intelligence stores in the vault (Nathaniel-mimicry
+  artifacts) are no longer authoritative; Hypatia's `hypatia-kb/Intelligence/`
+  stores are canonical. Vault stores can be inherited-from selectively but
+  shouldn't be loaded as live state.
+- Phase 1 wiring: Hypatia must read/write the vault directly (Roo's
+  filesystem tools). YOLO's in-Obsidian-process approach is not the path.
+- `.obsidian/plugins/yolo/` can stay installed during transition; safe to
+  remove once Hypatia is fully wired into the vault.
+
+**Supersedes:** No prior Q-N answer addressed this. Implicit assumption in
+the original Build Plan (that YOLO would continue) is now overridden.
+
+---
+
 ## Change log
 
 - **2026-04-22** — initial log with Q-01 through Q-12 answered + Q-13
   through Q-20 queued. Created during the codebase-analysis session that
   followed Build Plan drafting.
 - **2026-05-11** — Q-21 supersedes Q-02 (Roo Code over Cline). Q-22
-  adds the inbox memory-capture pattern.
+  adds the inbox memory-capture pattern. Q-23 codifies Hypatia
+  replacing YOLO as the vault's in-Obsidian LLM substrate.
