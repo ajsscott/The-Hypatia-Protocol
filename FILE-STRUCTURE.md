@@ -15,7 +15,6 @@ The-Nathaniel-Protocol/
 ├── .gitignore                      # Exclusion rules
 ├── CONTRIBUTING.md                 # Contribution guidelines
 ├── CODE_OF_CONDUCT.md              # Community standards
-├── Nathaniel-protocol-case-study.md # Context engineering case study
 ├── CLAUDE.md                       # Claude Code configuration (generated from .steering-files/)
 ├── LICENSE                         # MIT License
 ├── SECURITY.md                     # Vulnerability reporting policy
@@ -39,7 +38,14 @@ The-Nathaniel-Protocol/
 │   └── Journal/                    # Reflections, monthly entries
 ├── Archive/                        # Completed/historical materials
 ├── docs/                           # Reference documentation
-│   └── system-maintenance.md       # System maintenance guide (4-phase)
+│   ├── system-maintenance.md       # System maintenance guide (4-phase)
+│   └── reference/
+│       └── nathaniel/              # Bell's Nathaniel framework — historical reference
+│           ├── Nathaniel-protocol-case-study.md
+│           ├── Nathaniel-Protocol.webp
+│           ├── Nathaniel-Protocol-SC.png
+│           ├── Nathaniel-Protocol-SC.webp
+│           └── Nathaniel-Protocol-Architecture.jpg
 │
 ├── hypatia-kb/                      # Core knowledge base system
 │   ├── README.md                   # KB overview and navigation
@@ -47,8 +53,6 @@ The-Nathaniel-Protocol/
 │   ├── CUSTOMIZATION.md            # Personality customization guide
 │   ├── CRITICAL-FILE-PROTECTION.md # Protection rules for intelligence files
 │   ├── Hypatia-Protocol.md            # Core decision engine (Routes A-F)
-│   ├── Nathaniel-Protocol.webp     # Portrait hero image (README)
-│   ├── Nathaniel-Protocol-SC.webp  # Social preview card (upload via GitHub Settings > General > Social preview)
 │   ├── lexicon.md                  # Vocabulary and terminology reference
 │   │
 │   ├── # Protocols (13 files)

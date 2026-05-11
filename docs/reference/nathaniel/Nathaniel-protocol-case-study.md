@@ -5,7 +5,7 @@
 **Last Updated**: April 17, 2026
 
 <p align="center">
-<img src="hypatia-kb/Nathaniel-Protocol.webp" alt="Nathaniel - Cognitive Consigliere" width="600">
+<img src="Nathaniel-Protocol.webp" alt="Nathaniel - Cognitive Consigliere" width="600">
 </p>
 
 ---

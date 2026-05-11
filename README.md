@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="hypatia-kb/Nathaniel-Protocol.webp" alt="Nathaniel - Cognitive Consigliere" width="700">
+<img src="docs/reference/nathaniel/Nathaniel-Protocol.webp" alt="Nathaniel - Cognitive Consigliere" width="700">
 
 <br>
 
@@ -68,7 +68,7 @@ Four months of daily AI use revealed the real problems:
 
 As we documented in [Generative Doctrine](https://www.linkedin.com/pulse/generative-doctrine-laws-observed-from-field-warner-bell-a6ewf), reliability in generative systems is managed, not assumed. The quality of what comes out tracks directly with the clarity and continuity of what goes in. And as [Agentic Doctrine](https://www.linkedin.com/pulse/agentic-doctrine-laws-observed-from-field-warner-bell-hwa3f) showed, memory accumulates noise alongside signal, unless the system is designed to manage that decay.
 
-These aren't edge cases. This is how AI systems behave when you try to use them seriously over time. The full breakdown is in the [case study](Nathaniel-protocol-case-study.md) ([read on Substack](https://techstar.substack.com/p/building-a-persistent-ai-partner)).
+These aren't edge cases. This is how AI systems behave when you try to use them seriously over time. The full breakdown is in the [case study](docs/reference/nathaniel/Nathaniel-protocol-case-study.md) ([read on Substack](https://techstar.substack.com/p/building-a-persistent-ai-partner)).
 
 > [!IMPORTANT]
 > **You deserve better.**
