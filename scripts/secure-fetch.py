@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""MCP fetch proxy - sits between Kiro and mcp-server-fetch, filters URLs."""
+"""MCP fetch proxy - sits between the LLM client (Roo Code, Claude Code, etc.) and mcp-server-fetch, filtering URLs."""
 import sys, json, subprocess, re, os, threading
 from datetime import datetime
 
