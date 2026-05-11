@@ -401,19 +401,19 @@ Prescribed tool choices for common tasks. Customize this table as you add MCP se
 
 | Task | Prescribed Tool | Avoid | Why |
 |------|----------------|-------|-----|
-| **Read files** | `fs_read` (Line mode, chunked at 550 lines) | Reading entire large files at once | Truncation causes silent data loss |
-| **Read file structure** | `code` → `get_document_symbols` (code files), `fs_read` Directory mode (non-code) | `fs_read` Line mode on entire file just to see structure | get_document_symbols returns symbols without reading content |
+| **Read files** | `read_file` (Line mode, chunked at 550 lines) | Reading entire large files at once | Truncation causes silent data loss |
+| **Read file structure** | `code` → `get_document_symbols` (code files), `read_file` Directory mode (non-code) | `read_file` Line mode on entire file just to see structure | get_document_symbols returns symbols without reading content |
 | **Search in files** | `grep` for literal text, `code` → `pattern_search` for code structure | grep for semantic/structural code queries | AST search is precise; grep matches strings, not meaning |
-| **Edit small text files** | `fs_write` (str_replace, create, append) | - | Native, reliable for text |
-| **Edit large JSON** (400+ lines) | `execute_bash` + python/jq | `fs_write` str_replace | str_replace fails silently on large JSON |
-| **Move/copy files** | `execute_bash` + mv/cp | `fs_write` create + delete | Shell preserves metadata, is faster |
-| **Find files by name** | Domain reasoning → FILE-STRUCTURE.md → `fs_read` Directory → `glob` | Starting with glob/grep | Reason about where it should be before searching |
+| **Edit small text files** | `write_to_file` (str_replace, create, append) | - | Native, reliable for text |
+| **Edit large JSON** (400+ lines) | `execute_command` + python/jq | `write_to_file` str_replace | str_replace fails silently on large JSON |
+| **Move/copy files** | `execute_command` + mv/cp | `write_to_file` create + delete | Shell preserves metadata, is faster |
+| **Find files by name** | Domain reasoning → FILE-STRUCTURE.md → `read_file` Directory → `glob` | Starting with glob/grep | Reason about where it should be before searching |
 | **KB search** | `kb_search` (primary) + `grep` (supplement) | grep alone for KB queries | grep misses semantic matches; kb_search does vocabulary bridging |
-| **Web content** | `fetch` (primary), `execute_bash` + curl (fallback) | Multiple rapid fetch calls | fetch can crash mid-session; curl is reliable fallback |
+| **Web content** | `fetch` (primary), `execute_command` + curl (fallback) | Multiple rapid fetch calls | fetch can crash mid-session; curl is reliable fallback |
 | **Code navigation** | `code` → search_symbols, lookup_symbols | grep for function/class definitions | AST-based search is precise across codebase |
 | **Code refactoring** | `code` → pattern_search + pattern_rewrite | Manual find-and-replace across files | Safe structural transforms, AST-aware |
 | **Parallel work** | `use_subagent` with analyst agent for research | Sequential work in main context | Isolated context prevents bloat |
-| **Run scripts/commands** | `execute_bash` | - | Full shell access |
+| **Run scripts/commands** | `execute_command` | - | Full shell access |
 | **Time** | `get_current_time` | Guessing time of day | Mandatory for greeting; never skip |
 
 > **Customize this table** as you add MCP servers. Pattern: task → prescribed tool → what to avoid → why.
@@ -457,8 +457,8 @@ If you work across WSL, Windows, and Mac:
 | Multiple path styles coexist (WSL, Windows, Git Bash) | Pick one style per context; don't mix |
 | inotify broken on /mnt/ DrvFs | File watchers won't work on Windows-mounted drives from WSL. |
 | IDE agent writes produce CRLF | .gitattributes normalizes on commit. Don't add CRLF hooks. |
-| `str_replace` fails silently on large JSON | Use `execute_bash` + python/jq for files over 400 lines. |
-| `fetch` can crash mid-session | Use `execute_bash` + curl as fallback. |
+| `str_replace` fails silently on large JSON | Use `execute_command` + python/jq for files over 400 lines. |
+| `fetch` can crash mid-session | Use `execute_command` + curl as fallback. |
 
 ### Python Routing
 

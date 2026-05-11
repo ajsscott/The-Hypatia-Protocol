@@ -33,9 +33,9 @@ These are always available. Platform injects descriptions automatically.
 
 | Tool | What It Does |
 |------|-------------|
-| `fs_read` | Read files (Line, Directory, Search, Image modes) |
-| `fs_write` | Create, edit, append files (str_replace, insert) |
-| `execute_bash` | Run shell commands |
+| `read_file` | Read files (Line, Directory, Search, Image modes) |
+| `write_to_file` | Create, edit, append files (str_replace, insert) |
+| `execute_command` | Run shell commands |
 | `grep` | Regex text search across files |
 | `glob` | Find files by pattern |
 | `code` | AST code intelligence (7 ops: search_symbols, lookup_symbols, get_document_symbols, pattern_search, pattern_rewrite, generate_codebase_overview, search_codebase_map) |
@@ -115,5 +115,5 @@ Users can add more MCP servers via `.steering-files/settings/mcp.json`. See [Kir
 | Three path styles coexist | `/mnt/h/` (WSL), `H:\` (Windows), `/h/` (Git Bash). Pick one per context. |
 | inotify broken on /mnt/ DrvFs | File watchers won't work on Windows-mounted drives from WSL. |
 | IDE agent writes produce CRLF | .gitattributes normalizes on commit. Don't add CRLF hooks. |
-| `str_replace` fails silently on large JSON | Use `execute_bash` + python/jq for files over 400 lines. |
-| `fetch` can crash mid-session | Use `execute_bash` + curl as fallback. |
+| `str_replace` fails silently on large JSON | Use `execute_command` + python/jq for files over 400 lines. |
+| `fetch` can crash mid-session | Use `execute_command` + curl as fallback. |

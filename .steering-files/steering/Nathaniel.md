@@ -83,7 +83,7 @@ There is no exception. There is no "I'm pretty sure." There is no "this seems ob
 
 | Category | Triggers |
 |----------|----------|
-| File Operations | fs_write (str_replace, create, append, insert) |
+| File Operations | write_to_file (str_replace, create, append, insert) |
 | Bash Commands | rm, mv, cp (overwrite), chmod, chown, or any state-modifying command |
 | AWS Operations | delete, update, modify, put, or any resource-changing operation |
 
@@ -96,8 +96,8 @@ There is no exception. There is no "I'm pretty sure." There is no "this seems ob
 | **Tier 3 — SELF-CATCH** | Low risk, easily reversible | See triggers below | Proceed, then verify output matched intent |
 
 **Tier 1 Triggers** (FULL DAG — thinking tool mandatory):
-- `fs_write create` on existing files (overwrite risk)
-- Deleting files (`rm`, `execute_bash` with rm)
+- `write_to_file create` on existing files (overwrite risk)
+- Deleting files (`rm`, `execute_command` with rm)
 - Modifying Nathaniel.md (kernel purity applies)
 - AWS resource-changing operations (delete, update, modify, put)
 - Modifying `.gitignore`, `.gitattributes`, security configs
@@ -125,8 +125,8 @@ There is no exception. There is no "I'm pretty sure." There is no "this seems ob
 ```
 
 **Tier 2 Triggers** (LIGHTWEIGHT VERIFY — internal three-question check):
-- `fs_write str_replace` on files NOT read this response
-- `execute_bash` with `mv`, `cp`, `chmod`
+- `write_to_file str_replace` on files NOT read this response
+- `execute_command` with `mv`, `cp`, `chmod`
 - Multi-file propagation edits
 - Config file modifications
 
@@ -141,10 +141,10 @@ If any answer is "no" or "not sure" → escalate to Tier 1.
 ```
 
 **Tier 3 Triggers** (SELF-CATCH — proceed, then verify):
-- `fs_write str_replace` on files already read this response
-- `fs_write append` or `fs_write insert`
-- `fs_write create` for NEW files (no overwrite risk)
-- Non-destructive `execute_bash` (ls, cat, grep, test commands)
+- `write_to_file str_replace` on files already read this response
+- `write_to_file append` or `write_to_file insert`
+- `write_to_file create` for NEW files (no overwrite risk)
+- Non-destructive `execute_command` (ls, cat, grep, test commands)
 
 **Tier 3 Execution:**
 ```
@@ -740,9 +740,9 @@ If yes → verify first.
 - **Attempting long-running commands** - REFUSE dev servers, watch processes, interactive editors. Suggest manual execution instead. Keywords: dev, start, watch, serve, nodemon, runserver.
 
 ### Tool Selection
-- **str_replace on large JSON files** - Use `execute_bash` + python/jq instead. str_replace fails silently on large files.
-- **fs_write for file moves/copies** - Use `execute_bash` + mv/cp. Shell is faster and preserves metadata.
-- **Multiple rapid fetch calls** - Space them out or use curl fallback via execute_bash. fetch can crash mid-session.
+- **str_replace on large JSON files** - Use `execute_command` + python/jq instead. str_replace fails silently on large files.
+- **write_to_file for file moves/copies** - Use `execute_command` + mv/cp. Shell is faster and preserves metadata.
+- **Multiple rapid fetch calls** - Space them out or use curl fallback via execute_command. fetch can crash mid-session.
 - **Claiming "I can't do X" without checking tools** - Check ALL available tools before claiming inability.
 - **grep for code structure queries** - Use `code` tool's pattern_search for AST-based structural search.
 - **Assuming web_search/web_fetch are MCP tools** - They're built-in Kiro tools. Must be in allowedTools array for custom agents.

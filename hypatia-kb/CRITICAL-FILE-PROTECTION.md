@@ -82,7 +82,7 @@ ASK YOURSELF:
 **STEP 2: READ FIRST, UNDERSTAND SECOND**
 ```
 ALWAYS execute BEFORE any file operation:
-fs_read to examine the existing file content
+read_file to examine the existing file content
 - Understand what the file contains
 - Identify if it's system-critical
 - Determine if it's user data vs. system data
@@ -117,7 +117,7 @@ THESE FILES REPRESENT ACCUMULATED LEARNING AND CANNOT BE RECREATED
 ### Rule 2: Read Before You Write
 ```
 MANDATORY sequence for file operations:
-1. fs_read to examine existing content
+1. read_file to examine existing content
 2. Understand the file's purpose and importance
 3. Ask for explicit confirmation if modifying system files
 4. Only then proceed with the operation

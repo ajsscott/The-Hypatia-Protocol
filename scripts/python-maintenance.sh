@@ -40,7 +40,7 @@ log "=== Phase 1: Current State ==="
 # Venvs
 log "  Virtual environments:"
 find "$PROJECT_ROOT" -maxdepth 8 -type d \( -name ".venv" -o -name "venv" \) 2>/dev/null | while read -r d; do
-    age_days=$(( ($(date +%s) - $(stat -c %Y "$d" 2>/dev/null || echo 0)) / 86400 ))
+    age_days=$(( ($(date +%s) - $(stat -c %Y "$d" 2>/dev/null || stat -f %m "$d" 2>/dev/null || echo 0)) / 86400 ))
     log "    $(size_of "$d")  ${d#$PROJECT_ROOT/}  (${age_days}d old)"
 done
 
@@ -105,7 +105,7 @@ echo ""
 # --- Phase 4: Stale Venv Audit ---
 log "=== Phase 4: Venv Audit ==="
 find "$PROJECT_ROOT" -maxdepth 8 -type d \( -name ".venv" -o -name "venv" \) 2>/dev/null | while read -r d; do
-    age_days=$(( ($(date +%s) - $(stat -c %Y "$d" 2>/dev/null || echo 0)) / 86400 ))
+    age_days=$(( ($(date +%s) - $(stat -c %Y "$d" 2>/dev/null || stat -f %m "$d" 2>/dev/null || echo 0)) / 86400 ))
     rel="${d#$PROJECT_ROOT/}"
     sz=$(size_of "$d")
 

@@ -458,10 +458,11 @@ if [ -n "$PYTHON_CMD" ] && command -v git &> /dev/null; then
             pass "Pre-commit hook installed"
         fi
 
-        # Ensure git user identity is configured (WSL doesn't inherit Windows git config)
+        # Ensure git user identity is configured (WSL doesn't inherit Windows git config).
+        # Use HYPATIA_GIT_EMAIL / HYPATIA_GIT_NAME env vars to override the defaults.
         if ! git --git-dir="$GIT_DIR" config user.email &>/dev/null; then
-            git --git-dir="$GIT_DIR" config user.email "nate@pocket-hq.local" 2>/dev/null || true
-            git --git-dir="$GIT_DIR" config user.name "Nathaniel" 2>/dev/null || true
+            git --git-dir="$GIT_DIR" config user.email "${HYPATIA_GIT_EMAIL:-hypatia@local}" 2>/dev/null || true
+            git --git-dir="$GIT_DIR" config user.name "${HYPATIA_GIT_NAME:-Hypatia}" 2>/dev/null || true
         fi
     else
         info "(dry run) Would configure git clean/smudge filters"
@@ -479,13 +480,14 @@ if command -v git &> /dev/null && [ -d .git ]; then
     GIT_CMD="git --git-dir=$REPO_ROOT/.git --work-tree=$REPO_ROOT"
     if [ -z "$($GIT_CMD log --oneline -1 2>/dev/null)" ]; then
         if ! $DRY_RUN; then
-            # Set default identity if not configured (fresh Git install)
+            # Set default identity if not configured (fresh Git install).
+            # Override via HYPATIA_GIT_EMAIL / HYPATIA_GIT_NAME env vars.
             if ! $GIT_CMD config user.email &>/dev/null; then
-                $GIT_CMD config user.email "nate@nathaniel-protocol"
-                $GIT_CMD config user.name "Nathaniel Protocol"
+                $GIT_CMD config user.email "${HYPATIA_GIT_EMAIL:-hypatia@local}"
+                $GIT_CMD config user.name "${HYPATIA_GIT_NAME:-Hypatia}"
             fi
             $GIT_CMD add -A
-            $GIT_CMD commit -q -m "Initial commit: Nathaniel Protocol setup"
+            $GIT_CMD commit -q -m "Initial commit: Hypatia Protocol setup"
             pass "Initial commit created"
         else
             info "(dry run) Would create initial commit"
