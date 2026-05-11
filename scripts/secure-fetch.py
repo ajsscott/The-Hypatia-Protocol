@@ -14,7 +14,7 @@ BLOCKED = [
     r"^https?://t\.co/", r"^https?://goo\.gl(/|$)",
     r"@(localhost|127\.|10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[01])\.|169\.254\.)",
 ]
-LOG = os.path.expanduser("~/.kiro/security.log")
+LOG = os.path.expanduser("~/.roo/security.log")
 
 def is_blocked(url):
     for p in BLOCKED:

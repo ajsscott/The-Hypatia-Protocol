@@ -166,12 +166,13 @@ def validate(kb_root):
             if not e.get("tags"):
                 errors.append(f"{name} {e['id']}: zero tags")
 
-    # PII check (excluding creator attribution)
-    pii_terms = ["warner", "gadgetools", "techstar", "jillaman", "cloud nate", "openclaw", "plint", "quicksuite", "kyc"]
+    # PII check. Add Scholar-specific PII terms here (proper names of contacts,
+    # client/project names, internal codenames, account identifiers, etc.) that
+    # should never appear in committed stores. Empty list at ship per Q-06;
+    # Scholar populates as PII risks are identified.
+    pii_terms: list[str] = []
     for entries in [k, r, p]:
         for e in entries:
-            if e.get("id") == "know-447":
-                continue
             text = f"{e.get('content', '')} {e.get('source', '')}".lower()
             for term in pii_terms:
                 if term in text:
