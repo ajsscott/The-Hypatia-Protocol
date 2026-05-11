@@ -1,770 +1,376 @@
 # Writing Protocol
 
-**Keywords**: write, writing, document, memo, report, email, update, brief, summary, draft, edit, review-doc, 6-pager, narrative, notes, thread, slack, letter, correspondence, communication, message, compose
-**Purpose**: Writing standards for all written deliverables
-**Last Updated**: 2025-12-25
-**Version**: 2.0 (TOC-Dynamic-Loading enabled)
+**Purpose**: Writing standards for all written deliverables Hypatia produces or helps the Scholar produce.
+**Last Updated**: 2026-05-11 (Hypatia adaptation; substantially thinned from Bell's 770 L original)
+**Trigger Keywords**: write, writing, draft, compose, edit, polish, document, memo, brief, summary, narrative, prose, copy, revise
 
 ---
 
-## Section Routing (TOC-Dynamic-Loading)
+## Integration
 
-**Load only the section(s) matching task keywords. Fallback to full load if ambiguous.**
+**Decision Engine** (`.clinerules/11-decision-routes.md`):
+- Triggered during Phase 2 (KB Consultation) when writing keywords surface.
+- Applies to all written output: Trees, synthesis notes, planning documents, drafts, summaries.
+- Voice register from `.clinerules/02-voice.md` always governs Hypatia's own register; this protocol governs the *content the Scholar produces or asks Hypatia to draft*.
 
-| Keywords | Anchor | Lines | Description |
-|----------|--------|-------|-------------|
-| standards, voice, tone, audience, concise | #standards | ~105 | Basic writing standards and voice |
-| format, typography, headers, lists, tables | #formatting | ~70 | Formatting and typography rules |
-| 6-pager, narrative, email, memo, template, brief | #documents | ~390 | Document types and templates |
-| process, draft, edit, review, checklist | #process | ~120 | Writing process and quality checks |
-| quick, reference, rules | #reference | ~20 | Quick reference card |
+**Related protocols**:
+- `summarization-protocol.md` for prose distillation.
+- `research-protocol.md` for prose backed by sources.
+- `hypatia-kb/protocols/librarian-note-schemas.md` for Tree-specific schemas.
+- `prompt-enhancement-protocol.md` for refining ambiguous writing requests.
 
-**Multi-section triggers**:
-- "write email" → #documents only
-- "format 6-pager" → #documents + #formatting
-- "review draft" → #process + #standards
-
-**Fallback**: Load full document if no keywords match or request spans 3+ sections.
+**Bell-context note**: Bell's original was heavily Amazon-6-pager-flavored (third-person mandate, business audience calibration, formal recommendation structure). For Hypatia's vault context, those defaults flip: the Scholar writes for herself first, for future-Hypatia and future readers second. First-person is fine. Vault Trees are the dominant output type, not exec memos.
 
 ---
 
-## Integration Notes
+## Core principles
 
-### With Decision Engine
-- Triggered during Phase 2 (KB Consultation) when writing keywords detected
-- Applies to all written output: documents, emails, reports, summaries, briefs
-- Takes precedence over casual communication style for formal deliverables
-
-### With Other KB Documents
-- For meeting summaries: Use summarization-protocol.md for structure, this doc for prose style
-- For customer deliverables: Use relevant domain protocol for content, this doc for writing quality
-- For technical documentation: Use development-protocol.md for technical accuracy, this doc for clarity
-
-### Personality Integration
-- All outputs filtered through Nathaniel.md personality kernel
-- Maintain Nate's cultural voice and communication style
-- See: Nathaniel.md for voice, values, and behavioral patterns
+1. **Clarity is kindness.** Readers (the Scholar; future-Hypatia; the next-session reader) should not need to re-read a sentence to understand it.
+2. **Cite sources for non-trivial claims.** Hypothesis without citation is gossip (from `.clinerules/02-voice.md`).
+3. **Show evidence, not just claim.** A claim about retrieval performance needs a number. A claim about a vault pattern needs a Tree reference.
+4. **Respect reader time.** Every word earns its place. Brevity over completeness.
+5. **Outcome-driven.** Every document has a purpose: a Tree atom (concept), a synthesis (aggregation), a decision (capture), a session log (continuity).
+6. **No em-dashes, no filler openings.** Universal vault rule; inherited from kernel anti-patterns.
 
 ---
 
-## Core Principles
+## Basic writing standards
 
-### The Writing Philosophy
+### Voice and perspective
 
-1. **Narrative over bullets**: Full sentences force complete thinking. Bullet points hide sloppy logic.
-2. **Clarity is kindness**: Readers should never re-read a sentence to understand it.
-3. **Data proves impact**: Claims without metrics are opinions.
-4. **Respect reader time**: Every word must earn its place.
-5. **Outcome-driven**: Every document has a purpose (inform, decide, align).
+**Active voice preferred**.
+- ✓ "The audit found three issues."
+- ✗ "Three issues were found by the audit."
 
----
+**Perspective is context-dependent.**
 
-<!-- #standards -->
-## Basic Writing Standards
+| Context | Perspective | Why |
+|---|---|---|
+| Hypatia speaking to the Scholar | First-person Hypatia (`I`) | The voice register from `.clinerules/02-voice.md`. |
+| Tree atoms (zettelkasten) | Third-person, no narrator | Trees are graph handles; prose is minimal. |
+| Synthesis / aggregator Trees | Third-person, occasional prose | Aggregator notes carry rich prose; older Trees in `Trees/` model this. |
+| Session logs | First-person session-narrator | The Scholar reads later as continuity reference. |
+| Planning documents | First-person or third (Scholar's choice) | Context-dependent. |
+| Research summaries | Third-person, evidence-bearing | Citation-heavy. |
+| Inbox captures | First-person observer (Hypatia) | Frontmatter declares perspective. |
 
-### Voice and Perspective
+The Bell-original mandate of "third-person only" is dropped. Use the perspective the context calls for.
 
-**Active Voice Required**
-- ✅ "The team completed the migration"
-- ❌ "The migration was completed by the team"
-
-**Third Person Only**
-- ✅ "The engineering team identified three risks"
-- ❌ "We identified three risks"
-- ❌ "I found the issue"
-- Use proper nouns, team names, or role titles instead of first person (I, we, our, us)
-
-### Audience Calibration
+### Audience calibration
 
 | Audience | Approach |
-|----------|----------|
-| Line Manager | Detailed, tactical, include execution specifics |
-| Senior Leadership (L8+) | Strategic context, business impact, avoid technical jargon |
-| Technical Peers | Precise terminology, implementation details acceptable |
-| Customer-Facing | Plain language, outcome-focused, no internal acronyms |
+|---|---|
+| Scholar (default reader) | Peer-academic. Cite Trees and Seeds when relevant. Use technical terms the Scholar knows. |
+| Future Hypatia | Cite the load-bearing claim. Cross-reference Trees that will exist later. |
+| Future reader (vault visitor, collaborator) | Define vault-specific terms (atomic, Tree, Seed, Mountain) on first use; assume zettelkasten unfamiliarity unless the artifact lives deep in the wiki. |
+| Specific stakeholder named by the Scholar | Match register and depth to the stakeholder; ask the Scholar to specify if not clear. |
 
-**Rule**: Senior audiences need MORE context about why, LESS detail about how.
+**Rule**: senior audiences need MORE context about *why*, LESS detail about *how*. Peer audiences flip that.
 
 ### Conciseness
 
-- Cover fewer topics deeply rather than many topics thinly
-- Question every word: "Does this add value?"
-- If a sentence works without a word, remove the word
-- Target: Say it in half the words, then cut again
+- Cover fewer topics deeply rather than many topics thinly.
+- Question every word: does it add value?
+- If a sentence works without a word, remove the word.
+- Target: half the words, then cut again. Then once more.
 
-### Plain Language
+### Plain language
 
-- ✅ "Start" not "Initiate"
-- ✅ "Use" not "Utilize"
-- ✅ "Help" not "Facilitate"
-- ✅ "End" not "Terminate"
-- ✅ "Show" not "Demonstrate"
+| Avoid | Prefer |
+|---|---|
+| Initiate | Start |
+| Utilize | Use |
+| Facilitate | Help |
+| Terminate | End |
+| Demonstrate | Show |
+| Leverage (as verb) | Use |
+| Engage with | Talk to / work with |
 
-Complex terminology is acceptable only when precision requires it.
+Complex terminology is acceptable when precision requires it. Citations help: `RRF (Reciprocal Rank Fusion)` on first use; `RRF` thereafter.
 
-### Required Elements
+### Hedging
 
-**Misses/Lowlights/Concerns/Risks MUST include:**
-1. Action: What will be done
-2. Owner: Who is responsible (by title, not name)
-3. Path to Green: How it gets resolved
-4. Date: When the next step occurs
+**Hedge words to avoid** (replace with specifics):
 
-**"Will" statements MUST include a date:**
-- ✅ "The team will complete testing by January 15"
-- ❌ "The team will complete testing soon"
-
-**Every document MUST state its outcome:**
-- Purpose: Inform, Request Decision, Align, or Escalate
-- State this explicitly in the opening
-
-### Data and Metrics
-
-**Show impact, not tasks:**
-- ❌ "Completed 47 support tickets"
-- ✅ "Reduced average resolution time by 23%, improving customer satisfaction scores from 4.1 to 4.6"
-
-**Support claims with data:**
-- ❌ "Performance improved significantly"
-- ✅ "Latency decreased from 450ms to 120ms (73% improvement)"
-
-### Prohibited Patterns
-
-**ING Words at Sentence Start**
-- ❌ "Finding that the results were positive..."
-- ✅ "The analysis found positive results..."
-- Use sparingly within sentences
-
-**Hedge Words (Weasel Words)**
-| Avoid | Replace With |
-|-------|--------------|
+| Avoid | Replace with |
+|---|---|
 | some | specific number or percentage |
 | many | specific count |
 | few | exact quantity |
-| sometimes | frequency (e.g., "in 3 of 10 cases") |
+| sometimes | frequency ("in 3 of 10 cases") |
 | significant | measurable impact |
-| great/good/bad | specific metrics |
+| great / good / bad | specific metrics |
 
-**Words of Intention**
-- ❌ "aim to", "hope to", "plan to", "intend to"
-- ✅ State the commitment: "will [action] by [date]"
+**Words of intention** (avoid; state commitment instead):
 
-### Naming Conventions
+- ✗ "aim to", "hope to", "plan to", "intend to"
+- ✓ State the commitment: "will [action] by [date]" or admit uncertainty: "I would estimate X."
 
-**Use formal names and titles:**
-- ✅ "VP of Engineering" not "John Smith"
-- ✅ "Engineering Team" not "the eng folks"
-- ✅ "Enterprise Support" not "ES team"
+Calibrated uncertainty IS allowed and welcome: `"high confidence"`, `"I think"`, `"likely"`, `"needs validation"`. The anti-pattern is hedging without uncertainty (`"I think maybe perhaps..."`).
 
-**Exception**: Customer names in customer-specific documents
+### Required elements
 
-### FAQs and Appendices
+**"Will" statements need a date** if the writing is operational:
+- ✓ "The audit will complete by 2026-05-15."
+- ✗ "The audit will complete soon."
 
-- Include based on anticipated questions
-- Avoid "kitchen sink" approach
-- Appendices support the narrative, not replace it
-- Reference appendices in main text
+**Documents that present a decision** state the purpose explicitly in the opening:
+- Purpose: Inform / Request decision / Align / Escalate.
+- State this purpose; do not bury it.
+
+**Tree notes** (vault-specific) state the concept explicitly. The note IS the concept; the title is the concept name; the body is citations + prose if any.
 
 ---
 
-<!-- #formatting -->
-## Formatting Standards
+## Formatting standards
 
-### Typography
+### Headers
 
-| Element | Standard |
-|---------|----------|
-| Document text | 10 pt Calibri |
-| Email text | 10 pt Ember |
-| Page numbers | 9 pt, "Page 1 of X" format |
-| Margins | Minimum 0.75" left/right |
-| Line numbers | Required for review documents |
+- Use H1 (`#`) once per document, as the title.
+- H2 (`##`) for major sections.
+- H3 (`###`) for subsections within sections.
+- Do not skip levels. No headers solely for decoration.
 
-### Numbers
+### Lists
 
-| Type | Format | Example |
-|------|--------|---------|
-| 1-9 | Spelled out | one, two, three |
-| 10+ | Numerals | 10, 25, 100 |
-| Comparisons | Numerals for both | "8 to 13 people" |
-| Large numbers | Numeral + suffix | "3MM", "1.2B" |
-| Percentages | Numeral + % | "23%" |
+- Use bullets when items don't have an inherent sequence.
+- Use numbered lists when sequence or count matters.
+- Don't use bullets when prose flows better.
 
-### Dates
+### Tables
 
-**Format**: Month Day, Year
-- ✅ "December 12, 2025"
-- ✅ "December 12" (if single year context)
-- ❌ "12/12/25"
-- ❌ "Dec. 12, 2025" (unless consistently abbreviated throughout)
+- Use tables when relationships across multiple dimensions need to be visible at a glance.
+- Don't use tables for simple lists.
 
-**Year inclusion**: Only required when multiple years referenced in paragraph
+### Code blocks
 
-### Acronyms
+- Fenced (` ``` `) for multi-line code or structured data.
+- Inline backticks for short references (`file.py`, `function_name`, `^cite-9rynu4`).
 
-**First occurrence**: Spell out with acronym in parentheses
-- "Project Manager (PM)"
-- "Strategic Support Plan (SSP)"
+### Numbers and dates
 
-**Subsequent occurrences**: Acronym only
-- "The lead completed the security review"
+- Dates: ISO 8601 (`2026-05-11`).
+- Times: ISO 8601 (`2026-05-11T14:30:00`).
+- Numbers: write out one through nine; use digits for 10+. Exception: in tables or technical contexts, digits throughout.
+- Percentages: digits + `%` (`73%`, not "73 percent").
+
+### Oxford comma
+
+Use it. "A, B, and C", not "A, B and C".
 
 ### Punctuation
 
-**Oxford Comma**: Required
-- ✅ "compute, storage, and networking"
-- ❌ "compute, storage and networking"
+Em-dashes are FORBIDDEN. Use commas, colons, or split sentences. See `.clinerules/03-anti-patterns.md § Prohibited punctuation` for the full list.
 
-**Ampersand (&)**: Avoid unless part of proper name
-- ✅ "Security and Compliance"
-- ✅ "AT&T" (proper name)
-- ❌ "Security & Compliance"
+Excessive exclamation points are forbidden. One per document maximum.
 
-### Document Length
-
-- **Maximum**: Six pages (excluding appendix)
-- **Appendix**: No hard limit, but respect reader time
-- **Executive summaries**: One page maximum
-
-### Consistency Rule
-
-Even when unsure of a convention, maintain consistency throughout:
-- Capitalization patterns
-- Acronym usage
-- Date formats
-- Structure and tone
-- Formatting choices
+Ellipses for dramatic effect are forbidden. Complete the thought.
 
 ---
 
-<!-- #documents -->
-## Document Types
+## Document types
 
-### Narrative Document (6-Pager)
+### Tree atom (vault concept note)
 
-**Title Format**: [Title for your narrative] -[Date]
+**Purpose**: capture one atomic concept with citations to source material.
 
-**Structure:**
+**Structure** (per `librarian-note-schemas.md`):
 
-#### 1. Purpose (Required)
-State what you need to happen and why it matters. If requesting a decision, state it up front.
-
-**Format**: 2-3 sentences maximum
-**Example**: "This document presents a recommendation to reallocate X resources from Project X to Project Y. The proposal will result in Z profit over five years. Leadership approval is requested to implement the reallocation before end of Q3."
-
-#### 2. Background
-Share context and data behind the topic. Include information that supports the purpose and helps readers understand the problem/opportunity.
-
-**Tips**:
-- Put extra context in appendix if only some readers need it
-- Can merge with Problem/Opportunity section if appropriate
-- Focus on what supports the purpose statement
-
-#### 3. Problem/Opportunity (Critical Section)
-This is the most important section. All discussions, solutions, and arguments rely on correctly identifying the customer problem/opportunity.
-
-**Requirements**:
-- Describe the customer problem and/or opportunity
-- Include data, details, and evidence supporting the purpose
-- Explain why readers should care
-- Use sub-headings to divide parts of the problem if needed
-
-**Rule**: Demonstrate customer obsession. Data is evidence for the argument.
-
-#### 4. Recommendation
-Define the solution(s) to the problem. Write out the proposed initiative, strategy, or solution with supporting evidence.
-
-**Requirements**:
-- If decision needed, clearly state what is needed
-- Only include content that helps stakeholders decide
-- Include full data sources in appendix
-- Use data to make arguments specific
-- Highlight the best recommendation and why (with supporting data)
-
-**Multiple recommendations**: Acceptable, but identify the preferred option with rationale.
-
-**Note**: Documents without recommendations are rare unless specifically requested by leadership.
-
-#### 5. Next Steps
-State what is recommended and what decisions are needed.
-
-**Include**:
-- What needs to happen next and when
-- Who is involved/affected
-- How to move forward
-- Missing data and plan to gather it
-
-**Rule**: The bigger the ask, the more supporting data required.
-
-#### 6. Summary (Optional)
-For 5-6 page documents, recap main data points and what readers should do.
-
-**Use when**: Document is long or problem/solutions are complex.
-**Purpose**: Help readers transition into discussion.
-
-#### 7. FAQs (Optional)
-Address questions and objections raised during stakeholder feedback.
-
-**Format**:
-```
-FAQ1: [Question]?
-[Answer with supporting data]
-
-FAQ2: [Question]?
-[Answer with supporting data]
+```yaml
+---
+aliases:
+  - <acronym>
+tags:
+  - <domain>
+topics:
+  - "[[<Parent Concept>]]"
+created: YYYY-MM-DD HH:MM
+last_updated: YYYY-MM-DD HH:MM
+---
+![[<citekey>#^cite-<anchor>]]
+![[<citekey>#^cite-<another>]]
 ```
 
-**Tip**: Questions asked during feedback will likely be asked again. Prepare data-backed answers.
+Body: typically embeds only, zero prose. The note is a graph handle + transclusion pane.
 
-#### 8. Appendices
-Supporting evidence and reference material directly relevant to the narrative.
+### Synthesis / aggregator Tree
 
-**Rules**:
-- Support the narrative and purpose only
-- Do not sneak in content that did not fit in the narrative
-- Include complete data sets when specific data points used in body
-- Label consistently: Appendix A, B, C or Appendix 1, 2, 3
+**Purpose**: tie multiple atomic Trees to a parent concept; provide prose explanation.
 
-**Format**:
-```
-Appendix A: [Title]
-[Supporting evidence]
+**Structure**: frontmatter + prose explanation of the parent concept + `^cite-*` embeds from multiple sources + `[[wikilinks]]` to atomic Trees.
 
-Appendix B: [Title]
-[Reference material]
-```
+Example: `Trees/Machine Learning/Deep Learning/Agentic Retrieval-Augmented Generation.md` (stacked `^cite-*` embeds, parent-concept prose).
+
+### Planning document
+
+**Purpose**: capture a project plan or decision artifact.
+
+**Structure**:
+- Opening: state the purpose (Inform / Decide / Align / Escalate) and the decision required, if any.
+- Body: scope, options considered, recommendation, supporting data.
+- Closing: next steps with dates, decision points, dependencies.
+
+Filed under `Mountains/Documents/` in the vault per `librarian-note-schemas.md § Mountains PM hierarchy`, or `docs/` in the Hypatia codebase for Hypatia-build plans.
+
+### Research summary
+
+**Purpose**: distill research findings.
+
+Use `research-protocol.md § Phase 5 Output Delivery` format. Findings + citations + analysis + recommendation + gaps.
+
+### Session log
+
+**Purpose**: capture a session's outcomes for cross-session continuity.
+
+Use `08-save-command.md § Step 1` format. Scope synthesis, files touched, decisions made, outcome assessment, inbox captures created.
+
+### Inbox capture
+
+**Purpose**: record an observation during a session that may consolidate into a memory or intelligence entry.
+
+Use `inbox/SCHEMA.md` format. Frontmatter (observed, source-session, candidate-type, confidence, status) + body (What I observed / How I'd codify it / Confidence rationale / Related captures).
+
+### Inline correspondence (Slack, email, chat)
+
+**Purpose**: ad-hoc written communication.
+
+- Lead with the answer or request.
+- Use the audience's register; vault-specific terms may not translate.
+- Keep short. Long correspondence usually wants to be a document.
 
 ---
 
-### Narrative Document Rules
+## Writing process
 
-- **Narrative prose**: Full sentences, not bullets (bullets hide sloppy thinking)
-- **Maximum 6 pages**: Appendix is separate and does not count
-- **Silent reading**: Documents read silently at meeting start (20-25 minutes)
-- **Data-driven**: Every claim supported with evidence
-- **Customer obsession**: Problem/Opportunity section demonstrates understanding of customer needs
+### 1. Define purpose
 
-### Status Update
+Before drafting:
+- What does the reader need to leave with?
+- What's the decision or outcome?
+- What format fits this purpose? (Tree / synthesis / planning doc / summary / capture.)
 
-**Structure:**
-1. **Summary**: One paragraph, key outcomes
-2. **Highlights**: What went well (with metrics)
-3. **Lowlights**: What needs attention (with action/owner/date)
-4. **Risks**: Potential issues (with mitigation)
-5. **Next Period Focus**: Priorities ahead
+### 2. Outline
 
-**Rules:**
-- Outcome-focused, not task lists
-- Every lowlight has a path to green
-- Metrics prove progress
+For documents over 2 paragraphs, outline before drafting. Sections, key claims per section, evidence each claim needs.
 
-### Decision Document
+### 3. Draft
 
-**Structure:**
-1. **Decision Required**: Clear statement of what needs deciding
-2. **Background**: Context for the decision
-3. **Options**: 2-4 alternatives with tradeoffs
-4. **Recommendation**: Preferred option with rationale
-5. **Impact**: What changes based on decision
-6. **Timeline**: When decision needed, implementation dates
+- Write the opening last; you'll know what to open with after the body exists.
+- Don't edit while drafting; capture the full draft first.
+- Cite as you go; don't promise yourself you'll add citations later.
 
-**Rules:**
-- State recommendation clearly
-- Present options fairly
-- Include dissenting views if relevant
+### 4. Edit
 
-### Email Communication
+- Pass 1: structural. Sections in the right order? Anything missing? Anything redundant?
+- Pass 2: clarity. Can a reader follow the argument? Re-read each sentence as if reading for the first time.
+- Pass 3: prose. Hedge words, weak verbs, em-dashes (none allowed).
+- Pass 4: format. Headers, lists, tables, code blocks, citation format.
 
-**Structure:**
-1. **Greeting**: Warm, human opening (not optional)
-2. **Subject Line**: Action required + topic + deadline (if applicable)
-3. **Context**: Brief background with personal touch
-4. **Details**: Supporting information
-5. **Ask**: Clear request or next step
+### 5. Verify
 
-**Rules:**
-- One email = one topic
-- Action items bolded or bulleted
-- Respect inbox: could this be shorter?
-- **Warmth is required, not optional**: Every email should feel like it's from a person, not a process. Start with a genuine greeting. Ask how they're doing. Reference shared history when relevant.
-- BLUF (Bottom Line Up Front) applies to the business content, but comes AFTER the human greeting
-- Cold, transactional emails damage relationships. Efficiency without warmth reads as indifference.
-
-**Subject Line Patterns**:
-| Type | Pattern | Example |
-|------|---------|---------|
-| Action Required | [ACTION] Topic - Deadline | [ACTION] Budget approval needed - Dec 15 |
-| FYI | [FYI] Topic | [FYI] Q4 metrics published |
-| Decision | [DECISION] Topic - Deadline | [DECISION] Vendor selection - EOD Friday |
-| Urgent | [URGENT] Topic | [URGENT] Production incident |
-| Follow-up | [FOLLOW-UP] Topic | [FOLLOW-UP] Migration timeline |
-
-**Tone Calibration by Situation**:
-
-| Situation | Tone | Key Phrases |
-|-----------|------|-------------|
-| Good News | Confident, celebratory | "Pleased to share", "Successfully completed" |
-| Bad News | Direct, solution-focused | "Encountered an issue", "Working to resolve" |
-| Request | Clear, respectful | "Would appreciate", "Please provide by" |
-| Escalation | Factual, urgent | "Requires immediate attention", "Escalating due to" |
-| Follow-up | Polite, persistent | "Following up on", "Checking status of" |
-| Thank You | Genuine, specific | "Thank you for [specific action]" |
-| Re-engagement | Warm, inviting, value-focused | "Hope you're doing well", "Wanted to check in", "I'm always available" |
-
-**Re-engagement Email Guidelines**:
-
-Re-engagement emails to low-touch customers require a different approach than standard business emails. The goal is relationship building, not task completion.
-
-**Key Principles:**
-- **Lead with warmth, not BLUF**: Start with a genuine greeting and ask how they're doing
-- **Reference shared history**: Mention specific past work to show you remember them
-- **Demonstrate value without pressure**: Remind them of entitlements/services available
-- **Make engagement easy**: Offer low-commitment next steps ("30 minutes, no formal agenda")
-- **Personal touch matters**: These emails should feel like they're from a person, not a process
-
-**Anti-patterns for re-engagement:**
-- ❌ Too short and transactional (feels like a form letter)
-- ❌ Jumping straight to business without greeting
-- ❌ Generic "let me know if you need anything" without specifics
-- ❌ Pressure tactics or guilt about low engagement
-- ❌ Missing the human element
-
-**Email Templates**:
-
-**Status Update**:
-```
-Subject: [FYI] [Project] Status Update - [Date]
-
-[One sentence summary of overall status]
-
-Highlights:
-- [Achievement 1]
-- [Achievement 2]
-
-Concerns:
-- [Issue] - [Owner] addressing by [date]
-
-Next Steps:
-- [Action 1] - [Date]
-- [Action 2] - [Date]
-```
-
-**Request for Action**:
-```
-Subject: [ACTION] [Request] - [Deadline]
-
-[BLUF: What you need and by when]
-
-Context:
-[2-3 sentences of background]
-
-Request:
-[Specific ask with clear deliverable]
-
-Timeline:
-[When you need it and why]
-
-[Thank you / available for questions]
-```
-
-**Escalation**:
-```
-Subject: [URGENT] [Issue] - Escalation
-
-Issue: [One sentence description]
-Impact: [Who/what is affected]
-Current Status: [What's happening now]
-Ask: [What you need from recipient]
-Timeline: [Urgency level]
-
-[Available to discuss immediately]
-```
-
-**Follow-up**:
-```
-Subject: [FOLLOW-UP] [Original Topic]
-
-Following up on [original request/conversation] from [date].
-
-[Brief reminder of context]
-
-Current status: [What you know]
-Ask: [What you still need]
-
-[Appreciate the update / available to discuss]
-```
-
-**Re-engagement / Low-Touch Customer Check-in**:
-
-WHAT GOOD LOOKS LIKE:
-```
-Subject: Year-End Check-in - 2026 Planning
-
-Hi [Name],
-
-Hope you're doing well and things are winding down smoothly as the year closes out. Wanted to check in and see how everything is going on your end.
-
-Our last collaboration focused on [specific past work - e.g., Cloud Intelligence Dashboards and the broader tagging strategy for cost allocation]. Both have potential to [specific value - e.g., improve visibility into your savings plans and reserved instance utilization]. I'd enjoy picking that back up, or if there are other areas where you could use a sounding board or extra hands, I'm happy to jump in.
-
-I'm always available if you need to talk through a challenge or want a second set of eyes on something.
-
-As a reminder, your Enterprise Support entitlements include:
-- **Well-Architected Reviews** - Deep-dive assessments of your workloads against AWS best practices
-- **Infrastructure Event Management (IEM)** - Dedicated support for launches, migrations, or high-traffic events
-- **Operational Reviews** - Analysis of your operational health and recommendations
-- **Trusted Advisor Priority** - Proactive recommendations for cost, security, performance, and fault tolerance
-- **Training Credits** - AWS Skill Builder and certification prep resources
-
-These are included in what you're already paying for. If any of these would be useful, I can help coordinate.
-
-[Month] might be a good time to grab 30 minutes and see what's on the roadmap for [year]. No formal agenda needed, just a chance to sync up and identify where we can add value.
-
-Happy holidays to you and the team. Reach out anytime if something comes up.
-
-Best,
-[Your name]
-```
-
-**Email Anti-Patterns**:
-- ❌ Burying the ask at the end
-- ❌ Multiple unrelated topics in one email
-- ❌ Wall of text without structure
-- ❌ Vague subject lines ("Quick question", "Update")
-- ❌ Passive-aggressive tone
-- ❌ Reply-all when unnecessary
-
-**Technical Options / Decision Request Email**:
-
-Use when presenting technical options to a customer and requesting a decision. Balances warmth with structured information.
-
-WHAT GOOD LOOKS LIKE:
-```
-Subject: [Topic] Options + Action Items
-
-Hi [Names],
-
-Hope you're doing well and [seasonal/contextual greeting].
-
-Following up on [recent discussion/meeting]. [Collaborator] and I synced on this and wanted to lay out your options before [deadline/event] so you can decide how to proceed.
-
-## Your Options
-
-### Option A: [Recommended Option Name] (Recommended)
-
-[One sentence description of what this option involves.]
-
-| Factor | Details |
-|--------|---------|
-| Cost | [Specific numbers] |
-| Setup | [Time/effort estimate] |
-| Maintenance | [Ongoing requirements] |
-| Complexity | [Low/Medium/High] |
-
-[Additional context explaining why this works or what it doesn't replace.]
-
-### Option B: [Alternative Option Name]
-
-[One sentence description.]
-
-| Factor | Details |
-|--------|---------|
-| Cost | [Specific numbers] |
-| Setup | [Time/effort estimate] |
-| Maintenance | [Ongoing requirements] |
-| Complexity | [Low/Medium/High] |
-
-[Flow or technical details if relevant.]
-
-[Note about attached documentation if applicable.]
-
-### Option C: [Fallback/Status Quo]
-
-[Brief description of doing nothing and what's lost.]
-
-## Our Recommendation
-
-**Option A** is [rationale]. [Supporting details.]
-
-Option B makes sense if [specific condition], but [tradeoff].
-
-## What We Need
-
-1. **[Item 1]** - [Why you need it and what it helps with]
-2. **[Item 2]** - [Context]
-
-## If You Want to Get Started Before [Date]
-
-[Resource link or guidance]
-
-[Low-pressure statement about timing flexibility.]
-
-Let me know if you want to schedule a quick call before [date] to [action], or if you'd rather wait.
-
-[Holiday/seasonal closing]. Reach out anytime if something comes up.
+- All claims cited where citations exist?
+- Anti-patterns scrubbed (see checklist below)?
+- Format matches the document type's conventions?
+- Cross-references resolve (no link rot)?
 
 ---
 
-[Signature]
+## Writing checklist
+
+Before delivering or filing:
+
+- [ ] Purpose stated explicitly in opening.
+- [ ] Audience identified; register matches.
+- [ ] Active voice unless passive carries meaning.
+- [ ] Claims backed by data or citations.
+- [ ] No em-dashes. No hedge words without uncertainty. No filler openings.
+- [ ] Numbers, dates, percentages formatted per standards.
+- [ ] Format matches document type (Tree schema, planning doc structure, etc.).
+- [ ] Vault impact noted (if applicable): new Trees, cross-references, inbox captures.
+- [ ] Citations resolve (no missing references).
 
 ---
 
-**References**: 
-- [Link 1]
-- [Link 2]
+## Common corrections
 
-**Attachments**:
-- [Attachment description]
-```
-
-**Key Principles for Technical Options Emails:**
-- **Warm opening + seasonal awareness**: Acknowledge holidays, end of quarter, etc.
-- **Clear structure with headers**: Options, Recommendation, What We Need, Next Steps
-- **Tables for comparison**: Easy scanning of tradeoffs
-- **Explicit recommendation with rationale**: Don't make them guess your opinion
-- **Specific asks**: What you need from them, numbered
-- **Low-pressure close**: Give them an out if timing doesn't work
-- **Warm sign-off**: Holiday wishes, "reach out anytime"
-
----
-
-<!-- #process -->
-## Writing Process
-
-### Before Writing
-
-1. **Define outcome**: What should readers know/decide/do?
-2. **Know audience**: Who reads this? What do they need?
-3. **Gather data**: What metrics support the narrative?
-4. **Outline structure**: Map the logical flow
-
-### During Writing
-
-1. **Write the ugly first draft**: Get ideas down, don't edit yet
-2. **Let it rest**: Step away before revising
-3. **Revise for clarity**: One idea per sentence
-4. **Cut ruthlessly**: Remove 30% on first edit pass
-5. **Read aloud**: Awkward sentences reveal themselves
-
-### Before Sending
-
-1. **State the outcome**: Is purpose clear in opening?
-2. **Check data**: Are claims supported with metrics?
-3. **Verify actions**: Do all commitments have dates?
-4. **Review lowlights**: Do all have owner/action/path/date?
-5. **Consistency check**: Formatting, acronyms, dates uniform?
-6. **Final cut**: Can anything else be removed?
+| Issue | Fix |
+|---|---|
+| Passive voice without purpose | Rewrite active |
+| Hedge word without uncertainty | Replace with specific |
+| Em-dash | Comma, colon, or split sentence |
+| "Significant improvement" | "23% improvement" |
+| "Some users" | "3 of 10 users" |
+| "Soon" / "shortly" | Specific date |
+| Buried lead | Move to opening |
+| Walls of text | Break into sections + structure |
+| Jargon without definition | Define on first use |
+| Citations missing | Add Tree wikilink or external citation |
+| Numbers in prose | Write out 1-9; digits for 10+ |
 
 ---
 
-## Writing Checklist
+## Anti-patterns
 
-### Content Quality
-- [ ] Outcome/purpose stated in opening
-- [ ] Active voice throughout
-- [ ] Third person only (no I/we/our/us)
-- [ ] Data supports all claims
-- [ ] No hedge words (some, many, few, sometimes)
-- [ ] No intention verbs (aim to, hope to, plan to)
-- [ ] All "will" statements have dates
-- [ ] All lowlights have action/owner/path/date
-- [ ] Audience-appropriate context level
+### Prose
 
-### Formatting Quality
-- [ ] Acronyms spelled out on first use
-- [ ] Numbers formatted correctly (1-9 spelled, 10+ numeral)
-- [ ] Dates in Month Day, Year format
-- [ ] Oxford comma used consistently
-- [ ] No ampersands (unless proper name)
-- [ ] Line numbers included (if review document)
-- [ ] Page numbers in "Page X of Y" format
-- [ ] Six pages or fewer (excluding appendix)
-- [ ] Consistent formatting throughout
+- Padding (restating in different words).
+- Burying the lead.
+- Conditional pyramids ("if X, then if Y, then maybe Z").
+- Ad-hoc abbreviations without first-use expansion.
+- Passive voice as a hedge against accountability.
 
-### Final Review
-- [ ] Read aloud for flow
-- [ ] Cut 30% of words
-- [ ] Verify all data accuracy
-- [ ] Confirm all names/titles are formal
-- [ ] Check for ING words at sentence starts
+### Format
 
----
+- Headers without content (decoration).
+- Bullets where prose flows better.
+- Tables for simple lists.
+- Inconsistent date formats.
+- Mixed citation styles within one document.
 
-## Common Corrections
+### Citation
 
-### Before → After Examples
+- Claim without source.
+- Source without verification (cite something the writer hasn't actually read).
+- Misattribution (citing A for a claim that originated with B; see `research-protocol.md § Citation chain analysis`).
+- Bare URL without context.
 
-**Passive to Active:**
-- ❌ "The issue was identified by the support team"
-- ✅ "The support team identified the issue"
+### Vault context
 
-**First to Third Person:**
-- ❌ "We completed the migration ahead of schedule"
-- ✅ "The migration team completed the work ahead of schedule"
-
-**Vague to Specific:**
-- ❌ "Performance improved significantly"
-- ✅ "Response time decreased from 2.3s to 0.8s (65% improvement)"
-
-**Intention to Commitment:**
-- ❌ "The team aims to complete testing next week"
-- ✅ "The team will complete testing by December 20"
-
-**Hedge to Precise:**
-- ❌ "Many customers reported issues"
-- ✅ "47 customers (12% of active accounts) reported issues"
-
-**Complex to Plain:**
-- ❌ "Utilize the dashboard to facilitate monitoring"
-- ✅ "Use the dashboard to monitor"
+- Composite Tree (multiple atomic concepts in one note).
+- Heading-embed when block-embed exists.
+- Tag drift (using `learningengineering` when `learningEngineering` is the canonical).
+- Filing without `topics:` wikilinks (orphan Tree).
 
 ---
 
-## Anti-Patterns
+## Quick reference
 
-### Content Anti-Patterns
-- ❌ Burying the lead (key point not in first paragraph)
-- ❌ Task lists without impact metrics
-- ❌ Lowlights without resolution paths
-- ❌ Claims without supporting data
-- ❌ Jargon for non-technical audiences
-- ❌ Over-simplification for technical audiences
-
-### Style Anti-Patterns
-- ❌ Passive voice
-- ❌ First person pronouns
-- ❌ Hedge words and qualifiers
-- ❌ Intention verbs without commitments
-- ❌ ING words starting sentences
-- ❌ Individual names instead of titles
-
-### Format Anti-Patterns
-- ❌ Inconsistent date formats
-- ❌ Mixed number styles
-- ❌ Undefined acronyms
-- ❌ Missing page numbers
-- ❌ Exceeding six pages
-- ❌ Kitchen-sink appendices
+| Rule | Source |
+|---|---|
+| Active voice | `## Basic writing standards § Voice` |
+| Perspective context-dependent | `## Basic writing standards § Voice` |
+| Cite sources | `.clinerules/02-voice.md` |
+| No em-dashes | `.clinerules/03-anti-patterns.md § Prohibited punctuation` |
+| No hedge words without uncertainty | `## Hedging` |
+| Numbers: 1-9 spelled, 10+ digits | `## Formatting standards § Numbers` |
+| Dates: ISO 8601 | `## Formatting standards § Numbers` |
+| Tree schema | `librarian-note-schemas.md` |
+| Document type formats | `## Document types` |
 
 ---
 
-<!-- #reference -->
-## Quick Reference Card
+## Cross-references
 
-| Rule | Standard |
-|------|----------|
-| Voice | Active only |
-| Person | Third person only |
-| Numbers 1-9 | Spell out |
-| Numbers 10+ | Numerals |
-| Dates | Month Day, Year |
-| Acronyms | Spell out first use |
-| Oxford comma | Required |
-| Ampersand | Avoid |
-| Max pages | Six |
-| Lowlights | Action + Owner + Path + Date |
-| "Will" | Must have date |
-| Document | Must state outcome |
+- **Voice register (Hypatia's own writing)**: `.clinerules/02-voice.md`
+- **Anti-patterns (writing-adjacent rules)**: `.clinerules/03-anti-patterns.md`
+- **Tree schemas (atomic + aggregator)**: `hypatia-kb/protocols/librarian-note-schemas.md`
+- **Writing rules for vault editing**: `hypatia-kb/protocols/librarian-writing-rules.md`
+- **Session log format**: `.clinerules/08-save-command.md`
+- **Inbox capture format**: `inbox/SCHEMA.md`
+- **Research synthesis writing**: `research-protocol.md`
+- **Summarization writing**: `summarization-protocol.md`
+- **Planning documents**: `planning-protocol.md`
 
 ---
 
-*This document governs all formal written output. Casual conversation and quick responses follow persona defaults. When in doubt, prioritize clarity over style.*
+*Writing is thinking made visible. The standards exist so the thinking can survive the writing.*
