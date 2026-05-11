@@ -1,84 +1,70 @@
-# Contributing to The Nathaniel Protocol
+# Contributing to The Hypatia Protocol
 
-Thanks for your interest in contributing. Whether it's a bug fix, a new protocol, a pattern you've discovered, or an improvement to the intelligence system, we'd love to hear from you.
+Hypatia is AJ Strauman-Scott's personal-use AI partner-scholar. The codebase is MIT-licensed and public in case the architecture is useful to others, but the persona itself is tuned for a single Scholar's working register. Contributions are welcome with that scope in mind.
 
-## How to Contribute
+---
 
-### Report a Bug
+## What's open for contribution
 
-[Open an issue](../../issues/new?template=bug_report.md) with:
-- What you expected to happen
-- What actually happened
-- Steps to reproduce
-- Your platform (Kiro IDE/CLI, Claude Desktop, Cursor, etc.)
+**Substrate-agnostic improvements**: vectorstore (RRF tuning, fastembed model swaps, performance), save pipeline (`save-session.py`), schema validation (`validate-schemas.py`, `normalize-schemas.py`), security filters (`git-filter-clean.py`, `git-filter-smudge.py`), cross-platform polyfills if anyone wants to port off Mac, test scaffolding under `tests/`.
 
-### Suggest a Feature
+**Bug reports**: anything in `scripts/` or `hypatia-kb/vectorstore/` that doesn't work as documented.
 
-[Open an issue](../../issues/new?template=feature_request.md) describing:
-- The problem you're trying to solve
-- Your proposed solution
-- Why it benefits the broader community (not just your instance)
+**Documentation improvements**: typos, broken cross-references, stale paths.
 
-### Submit a Pull Request
+---
 
-1. Fork the repo
-2. Create a branch (`git checkout -b my-change`)
-3. Make your changes
-4. Test with a fresh clone if possible (run `scripts/setup.sh` on a clean copy)
-5. Submit a PR with a clear description of what changed and why
+## What's NOT open for contribution
 
-## What You Can Contribute
+**Hypatia's persona**: name, voice register, address term ("Scholar"), Greco-Roman Alexandrian framing. These are tuned for one user. Forks are encouraged for other personas.
 
-### New Protocols
+**Decision routes (A-F) and gates**: the kernel architecture in `.roo/rules-hypatia/` is purpose-built for vault-librarian work. Changes here are unlikely to be accepted unless they fix a load-bearing bug.
 
-The ecosystem is designed to be extensible. To add a domain protocol:
+**Bell-derived content** in `docs/reference/`: frozen historical artifacts. Do not edit.
 
-1. Create `hypatia-kb/[domain]-protocol.md` following the structure of existing protocols
-2. Add trigger keywords to the Protocol Keyword Map in the kernel (`.steering-files/steering/Nathaniel.md`)
-3. Test that the protocol activates on the expected keywords
+---
 
-### New Patterns
+## How to contribute
 
-If you've discovered a reusable context engineering pattern:
+### Report a bug
 
-1. Document it in the case study or a dedicated markdown file with methodology, examples, and trade-offs
-2. Include the attribution line at the end: *This pattern was developed for the Nathaniel Protocol knowledge base and is documented for community adaptation.*
-3. Open a PR describing the pattern and where you've validated it
+[Open an issue](../../issues/new) with:
+- What you expected to happen.
+- What actually happened.
+- Steps to reproduce.
+- Platform (must be Mac for runtime issues; substrate is Roo Code in VS Code).
+- Output of `uv run python --version` and `uv run pip list | grep -i hypatia`.
 
-### Intelligence Baseline Improvements
+### Suggest an improvement
 
-The template ships with a curated baseline of patterns, knowledge, and reasoning entries. If you find entries that are incorrect, outdated, or could be improved:
+[Open an issue](../../issues/new) describing the substrate-agnostic problem you're trying to solve and your proposed fix. Persona-tuning suggestions will be politely declined.
 
-1. Edit the relevant JSON file in `hypatia-kb/Intelligence/`
-2. Update the corresponding index file
-3. Validate JSON (`python -m json.tool < file.json`) before submitting
-4. Describe what changed and why in your PR
+### Submit a pull request
 
-### Bug Fixes and Improvements
+1. Fork the repo.
+2. Create a branch (`git checkout -b fix/<short-name>`).
+3. Make your changes. Add tests if the change affects `scripts/` or `hypatia-kb/vectorstore/`.
+4. Verify locally:
+   - `uv run pytest` passes.
+   - `uv run ruff check` passes.
+   - `bash -n scripts/<changed-script>.sh` passes for shell changes.
+5. Atomic commit per concern; imperative-mood subject explaining *why*.
+6. Submit PR with a clear description and links to relevant issues.
 
-Scripts, setup flow, documentation, agent configs: all fair game. If it's broken or could be better, fix it.
+---
 
-## What Not to Change
+## Style guide
 
-The following are core architecture and should not be modified in PRs without discussion:
+- **No em-dashes.** Use commas, colons, or split sentences. (Kernel-level rule per `.roo/rules-hypatia/03-anti-patterns.md`.)
+- **No filler openings** ("Great question!", "So,", "Well,"). Lead with the answer.
+- **Active voice preferred.** "The audit found three issues." not "Three issues were found."
+- **Cite sources** for non-trivial claims. Tree wikilinks for vault content; external URLs for documentation references.
+- **Markdown files should read without rendering.** Tables, code blocks, headers should work in raw form.
+- **JSON files validate.** Run `uv run python -m json.tool < file.json` before committing.
+- **Imperative-mood commits.** `fix: vectorstore returns wrong rank on tied scores` not `fixed bug`.
 
-- **Consciousness architecture** (super-objective, irreducible self, paradoxes, shadow)
-- **Decision routing** (Routes A-F structure)
-- **Gate system** (six mandatory gates)
-- **Core patterns** (CSR, HRF, Protocol-as-MCP, TOC-Dynamic-Loading)
-- **Save protocol** (atomic checklist)
-- **Intelligence system** (learning loop, cross-references, index structure)
+---
 
-If you think these need changes, open an issue first to discuss. Users who fork and initialize their own copy can customize freely.
+## Code of conduct
 
-## Style Guide
-
-- No em dashes. Use commas, colons, or separate sentences.
-- Lead with the answer, context on demand.
-- Markdown files should be readable without rendering.
-- JSON files should be valid (run `python -m json.tool < file.json` to verify).
-- Test your changes with `scripts/setup.sh --dry-run` to catch issues.
-
-## Code of Conduct
-
-Be respectful. Be constructive. Focus on the work, not the person. We're building something useful here.
+Be respectful. Be specific. Focus on the work, not the person. Disagree in writing if you have evidence; defer otherwise.

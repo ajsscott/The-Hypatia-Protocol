@@ -1,107 +1,81 @@
-# Pocket HQ (AI-MOB)
+# Pocket HQ
 
-**The foundational pattern. Everything else operates inside it.**
+**An inherited pattern from the upstream fork. Hypatia adopts parts of it and diverges from others.**
 
 ---
 
-## What Is Pocket HQ?
+## What Pocket HQ is
 
-Pocket HQ is a concept and work pattern, not a product or a feature. It's an approach to organizing your entire digital operational world into a single, portable, AI-navigable structure that travels with you and compounds in value over time.
+Pocket HQ is a work-organization pattern, not a product. The premise: consolidate your digital operational world (projects, business, learning, personal planning, and your AI partner's intelligence layer) into one local repository, so an AI agent can see it, reason across it, and remember it.
 
-The idea is simple: consolidate everything you work on, think about, and manage into one repository where your AI partner can see it all, reason across it, remember it, and learn from it. Your projects, your business, your learning, your personal planning, your AI's intelligence layer, all siblings in the same file tree.
+The pattern formalizes five architectural principles:
 
-This isn't file organization. It's context engineering. The directory structure itself becomes part of the prompt. When your AI partner can see `Projects/`, `Business/`, and `Life/` at the root, it understands the shape of your world without you explaining it every session.
+1. **Single-repo consolidation.** One tree, one disk, one machine. The AI can only connect dots it can see.
+2. **AI-first directory design.** The folder structure is itself part of the prompt. Predictable paths, domain-based routing.
+3. **Persistent intelligence layer.** A dedicated knowledge base where the AI accumulates preferences, patterns, knowledge, reasoning, session history. Compounds over time.
+4. **Portability.** The entire workspace runs from a flash drive. Plug in, work, unplug.
+5. **Save discipline.** End-of-session save is non-negotiable. It is the heartbeat that turns ephemeral conversation into persistent memory.
 
-## Why It's a Pattern, Not Just a Folder Structure
+The full original framing is preserved at `docs/reference/nathaniel/` for historical reference.
 
-A Pocket HQ isn't "a repo with stuff in it." Five architectural principles distinguish it:
+---
 
-### 1. Single-Repo Consolidation
+## How Hypatia adopts and diverges
 
-Everything lives in one place. Not because it's tidy, but because the AI can only connect dots it can see. Scattered work means scattered intelligence. When your customer notes, your project code, and your learning materials all live in the same repo, the AI can draw connections you'd never think to make.
+| Principle | Hypatia status |
+|---|---|
+| Single-repo consolidation | **Partial.** The framework (kernel + protocols + intelligence) consolidates here. The TabulaJacqueliana vault stays external by design. |
+| AI-first directory design | **Adopted.** `.roo/rules-hypatia/` + `hypatia-kb/` + `inbox/` are structured for Roo Code to navigate without explanation. |
+| Persistent intelligence layer | **Adopted with inbox boundary.** Hypatia captures to `inbox/preferences/*.md`; the Scholar consolidates into canonical stores. No auto-promotion. |
+| Portability | **Deferred to Phase 1.5.** Phase 1 targets the Scholar's Mac. Flash-drive bootstrap (`hypatia.config.yaml` + cross-platform setup) is not implemented. |
+| Save discipline | **Adopted.** `save` triggers session log + index + snapshot + inbox flush + vectorstore sync + git commit, in that order, atomically. |
 
-### 2. AI-First Directory Design
+### Why the vault stays external
 
-The folder structure is designed for the AI to navigate, not just for humans to browse. Consistent naming, predictable paths, domain-based routing. When the AI needs project context, it knows where to look without searching. The structure IS the context.
+The upstream pattern colocates everything. Hypatia's working context is a zettelkasten vault (Obsidian on TabulaJacqueliana) that predates the framework and has its own lifecycle, sync, and tooling. Forcing it into this repo would break Obsidian, force git-LFS for media, and entangle vault history with framework history. Hypatia reads and writes the vault as an external sense. The framework knows the vault's structure (`hypatia-kb/protocols/librarian-vault-structure.md`); it does not own it.
 
-### 3. Persistent Intelligence Layer
+### Why portability is deferred
 
-A dedicated knowledge base where the AI stores what it learns: preferences, patterns, facts, reasoning, session history. This isn't chat history. It's structured, indexed, confidence-scored intelligence that compounds over time. Session 200 is smarter than session 1 because the learning accumulated.
+The flash-drive use case is real but secondary. Phase 1's goal is a working Hypatia on the Scholar's Mac. Per-machine bootstrap, path abstraction, and POSIX/Windows polyfill (the `save-session.py:53-55` `fcntl` exit, for instance) are tracked for Phase 1.5.
 
-### 4. Portability
+---
 
-The entire workspace fits on a flash drive. Plug into any machine, open your IDE, and you're operational. No cloud dependencies. No sync conflicts. No "I left that on my other computer." Your AI partner comes with you because the intelligence lives in the files. Secure, local, private.
+## The scaffold
 
-### 5. Save Discipline
-
-The AI doesn't learn automatically. At the end of each session, a save command triggers consolidation: session log, pattern extraction, knowledge capture, memory update. This is the heartbeat of the system. Skip it and the session's learnings are lost. Maintain it and the intelligence compounds.
-
-**If your setup follows these five principles, it's a Pocket HQ, regardless of what you name the folders.**
-
-## Why It Matters
-
-| Without Pocket HQ | With Pocket HQ |
-|-------------------|----------------|
-| Files scattered across machines | One repo, one flash drive, any machine |
-| AI starts cold every session | AI reads the workspace and knows what's active |
-| Context lost between projects | Cross-project awareness is structural |
-| "Where did I put that?" | Domain-based routing: reason about where it lives |
-| Workspace and AI system are separate | The workspace IS the intelligence layer's home |
-| Knowledge stays in your head | Knowledge lives in a continuously updated, searchable corpus |
-
-## The Scaffold
-
-These directories ship with the template as a starting point. They're one expression of the pattern. Rename, remove, or add whatever fits your life:
+Five empty directories ship at the repo root from the upstream fork:
 
 ```
-Projects/       → Active project work (code, specs, deliverables)
-Business/       → Business operations (clients, finances, planning)
-Brand/          → Personal brand, content, social media, website
-Life/           → Personal planning, goals, health, family (optional)
-                  Career/, Education/, Family/, Finances/,
-                  Goals/, Health/, Home/, Journal/
-Archive/        → Completed or historical materials
-docs/           → Reference documentation
+Projects/   Active project work
+Business/   Business operations
+Brand/      Personal brand, content, social
+Life/       Personal planning (Career/, Education/, Family/, Finances/, Goals/, Health/, Home/, Journal/)
+Archive/    Completed or historical materials
 ```
 
-The `hypatia-kb/` directory (the intelligence system) sits alongside these as a peer, not above them. Your workspace and your AI's brain live at the same level because they're part of the same system.
+These currently hold only `.gitkeep` markers. The Scholar may populate them, rename them, or remove them. They are not load-bearing for Hypatia's vault-librarian work, which routes through `hypatia-kb/` and the external vault.
 
-**Customization examples**: Freelancer? Maybe `Clients/` instead of `Business/`. Student? Maybe `Courses/` instead of `Projects/`. Researcher? Add `Research/`. The principle is what matters, not the specific names.
+The intelligence system (`hypatia-kb/`) sits alongside these as a peer, not above them. That is the part of the pattern Hypatia retains: the framework lives at the same level as the work it observes, not in a hidden config tree.
 
-## How to Use It
+---
 
-1. **Clone the template** and you get both the Nate intelligence system and the workspace scaffold
-2. **Customize the folders** to match your actual domains
-3. **Put it on fast portable storage** (USB 3.2+ flash drive or external SSD) for true portability across machines
-4. **Work inside it**. The more your work lives here, the more context your AI partner has to work with
-5. **Save at the end of every session**. This is the non-negotiable. It's how the intelligence compounds.
+## The connection to Hypatia
 
-## The Connection to Nate
+The structural lesson worth keeping: a persistent AI partner needs a stable, navigable file substrate, and a save mechanism that turns each session into durable state. Without those, every session starts cold.
 
-The intelligence system (`hypatia-kb/`) is designed to operate inside a Pocket HQ. When Nate's memory references "that project we worked on last week," the project files are right here in the same repo. When session logs capture decisions, the artifacts those decisions produced are siblings in the file tree.
+Hypatia's instantiation of the pattern:
 
-This is what "the workspace IS the prompt" means. The structure isn't decoration. It's functional context.
+- **Kernel** at `.roo/rules-hypatia/` (always loaded; Roo Code reads on mode switch).
+- **Intelligence layer** at `hypatia-kb/Intelligence/` (curated; ships empty; grows through Scholar consolidation).
+- **Memory** at `hypatia-kb/Memory/` (session logs + entity memory + cache).
+- **Inbox** at `inbox/preferences/` (free-form captures awaiting curation; no auto-promotion to stores).
+- **Save command** wired through `scripts/save-session.py` (atomic, idempotent, git-committed).
 
-## Portability
+The phrase "the workspace is the prompt" still holds. The structure carries context the kernel does not have to restate.
 
-The entire repo (workspace + intelligence + scripts) is designed to run from portable storage:
+---
 
-- **No cloud dependencies**: Everything is local markdown and JSON
-- **No install required**: Scripts handle setup on any new machine
-- **Git-backed**: Version history travels with you. Every session save creates a commit, giving you rollback, diff, and disaster recovery without ever pushing to a remote
-- **Platform-agnostic**: Works with Kiro, Claude Desktop, Cursor, or any agentic IDE
+## What this file is not
 
-Plug in, open your terminal, start working. Full operational capability, anywhere.
-
-**A note on git**: Git in a Pocket HQ is a local backup and undo mechanism, not a publishing workflow. You want everything committed locally because that's your disaster recovery and your agent's audit trail. Most users will never push to a remote, and that's the intended use. If you do push, use a private repo. Your workspace content is yours to protect.
-
-## What It Feels Like
-
-| Timeframe | Experience |
-|-----------|-----------|
-| Week 1 | Capable, polite, learning the terrain |
-| Week 4 | Knows your stack, your style, your pet peeves |
-| Week 8 | Anticipates what you need before you ask |
-| Month 4 | You forget the AI isn't human |
-
-The compounding effect is the real value. You stop re-explaining. You start building on what came before. Every session makes the next one better. That's not marketing. It's architecture.
+- Not a marketing document. The "compounding effect" framing in the upstream version assumed a productivity-tool audience. Hypatia is a personal-use research partner; the value compounds because the vault grows, not because of session counts.
+- Not a deployment guide. See `README.md` for setup and `hypatia-kb/QUICKSTART.md` for operating.
+- Not a contract. The five principles are a useful shorthand. The Scholar reserves the right to break any of them when the work demands it.

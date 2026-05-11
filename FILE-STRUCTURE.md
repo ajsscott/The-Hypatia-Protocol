@@ -1,61 +1,52 @@
-# The Nathaniel Protocol - File Structure
+# File Structure
 
-**Last Updated**: 2026-04-17
+Snapshot of the repo's directory layout. Verified against the working tree, not aspirational.
 
 ```
-The-Nathaniel-Protocol/
-├── .github/                        # GitHub community files
+The-Hypatia-Protocol/
+├── .github/                          GitHub community files
 │   ├── ISSUE_TEMPLATE/
-│   │   ├── bug_report.md           # Bug report template
-│   │   └── feature_request.md      # Feature request template
-│   └── workflows/
-│       └── validate.yml            # CI: JSON validation, setup dry-run, vectorstore tests
-├── .gitattributes                  # Git attributes (LF normalization + sanitization filters)
-├── .editorconfig                   # Editor config (LF line endings, UTF-8, trim whitespace)
-├── .gitignore                      # Exclusion rules
-├── CONTRIBUTING.md                 # Contribution guidelines
-├── CODE_OF_CONDUCT.md              # Community standards
-├── CLAUDE.md                       # Claude Code configuration (generated from .steering-files/)
-├── LICENSE                         # MIT License
-├── SECURITY.md                     # Vulnerability reporting policy
-├── README.md                       # Public-facing project overview
-├── POCKET-HQ.md                    # Pocket HQ pattern guide
-├── FILE-STRUCTURE.md               # This file
-├── setup.bat                       # One-click Windows installer (auto-elevates, chains bootstrap + setup-wsl)
+│   └── workflows/validate.yml        CI: JSON validity + vectorstore tests
+├── .vscode/                          Editor config (Roo Code lives here)
+├── .roo/
+│   └── rules-hypatia/                The kernel (11 files, ~111 KB)
+│       ├── 01-identity.md
+│       ├── 02-voice.md
+│       ├── 03-anti-patterns.md
+│       ├── 04-session-gates.md
+│       ├── 05-tools.md
+│       ├── 06-cognitive.md
+│       ├── 07-intelligence-layer.md
+│       ├── 08-save-command.md
+│       ├── 09-security.md
+│       ├── 10-skills-loading.md
+│       └── 11-decision-routes.md
+├── .roomodes                         Custom mode definition (slug: hypatia)
+├── .gitattributes                    LF normalization + sanitization filter attribs
+├── .gitignore                        Excludes secrets, generated artifacts, venvs
+├── .editorconfig                     LF line endings, UTF-8, trim whitespace
+├── .python-version                   3.11
+├── pyproject.toml                    Project metadata + dependencies (uv)
+├── uv.lock                           Locked dependency tree
+├── AGENTS.md                         Cross-tool workspace agent spec
+├── CLAUDE.md                         Claude Code port-work notes (gitignored)
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── FILE-STRUCTURE.md                 This file
+├── LICENSE                           MIT, AJ Strauman-Scott 2026
+├── POCKET-HQ.md                      Inherited pattern from Bell (see file for caveats)
+├── README.md
+├── SECURITY.md
 │
-├── # Pocket HQ Scaffold (starter workspace directories)
-├── Projects/                       # Active project work
-├── Business/                       # Business operations
-├── Brand/                          # Personal brand, content, social
-├── Life/                           # Personal planning (optional)
-│   ├── Career/                     # Career progression, resumes, certs
-│   ├── Education/                  # Degrees, transcripts, courses
-│   ├── Family/                     # Important docs, records
-│   ├── Finances/                   # Investments, taxes, budgets
-│   ├── Goals/                      # Sprints, weekly ops, aspirations
-│   ├── Health/                     # Health records, fitness
-│   ├── Home/                       # Property, vehicle, community
-│   └── Journal/                    # Reflections, monthly entries
-├── Archive/                        # Completed/historical materials
-├── docs/                           # Reference documentation
-│   ├── system-maintenance.md       # System maintenance guide (4-phase)
-│   └── reference/
-│       └── nathaniel/              # Bell's Nathaniel framework — historical reference
-│           ├── Nathaniel-protocol-case-study.md
-│           ├── Nathaniel-Protocol.webp
-│           ├── Nathaniel-Protocol-SC.png
-│           ├── Nathaniel-Protocol-SC.webp
-│           └── Nathaniel-Protocol-Architecture.jpg
-│
-├── hypatia-kb/                      # Core knowledge base system
-│   ├── README.md                   # KB overview and navigation
-│   ├── QUICKSTART.md               # Quick start cheat sheet
-│   ├── CUSTOMIZATION.md            # Personality customization guide
-│   ├── CRITICAL-FILE-PROTECTION.md # Protection rules for intelligence files
-│   ├── Hypatia-Protocol.md            # Core decision engine (Routes A-F)
-│   ├── lexicon.md                  # Vocabulary and terminology reference
+├── hypatia-kb/                       Knowledge base
+│   ├── README.md
+│   ├── QUICKSTART.md                 Operating cheat sheet (save, health check, etc.)
+│   ├── CUSTOMIZATION.md
+│   ├── CRITICAL-FILE-PROTECTION.md   Protected paths + inbox boundary enforcement
+│   ├── Hypatia-Protocol.md           Decision Routes A-F (content rewrite pending)
+│   ├── lexicon.md
 │   │
-│   ├── # Protocols (13 files)
+│   ├── # Domain protocols (13)
 │   ├── customization-protocol.md
 │   ├── development-protocol.md
 │   ├── executive-communication-protocol.md
@@ -70,97 +61,88 @@ The-Nathaniel-Protocol/
 │   ├── summarization-protocol.md
 │   ├── writing-protocol.md
 │   │
-│   ├── Intelligence/               # Learning and knowledge system
+│   ├── protocols/                    Librarian protocols (vault-specific)
+│   │   ├── README.md
+│   │   ├── librarian-role.md
+│   │   ├── librarian-vault-structure.md
+│   │   ├── librarian-note-schemas.md
+│   │   ├── librarian-tooling.md
+│   │   └── librarian-writing-rules.md
+│   │
+│   ├── Intelligence/                 Patterns, knowledge, reasoning stores
 │   │   ├── README.md
 │   │   ├── intelligence-operations.md
 │   │   ├── learning-loop.md
-│   │   ├── synonym-map.json        # Enhanced CSR synonym routing
-│   │   ├── cross-references.json   # Reverse lookup (curated baseline)
-│   │   ├── knowledge.json          # Factual knowledge (curated baseline)
-│   │   ├── knowledge-index.json    # Knowledge routing index (curated baseline)
-│   │   ├── patterns.json           # Behavioral patterns (curated baseline)
-│   │   ├── patterns-index.json     # Pattern routing index (curated baseline)
-│   │   ├── reasoning.json          # Derived conclusions (curated baseline)
-│   │   └── reasoning-index.json    # Reasoning routing index (curated baseline)
+│   │   ├── knowledge.json            Ships empty
+│   │   ├── knowledge-index.json
+│   │   ├── patterns.json             Ships empty
+│   │   ├── patterns-index.json
+│   │   ├── reasoning.json            Ships empty
+│   │   ├── reasoning-index.json
+│   │   ├── cross-references.json
+│   │   └── synonym-map.json
 │   │
-│   ├── Memory/                     # Session and memory system
+│   ├── Memory/                       Session and entity memory
 │   │   ├── README.md
-│   │   ├── memory.json             # Entity memory (starter template)
-│   │   ├── memory-index.json       # Memory routing index (starter template)
-│   │   ├── session-index.json      # Session fingerprints (starter template)
-│   │   └── archive/                # Archived session logs
-│   │       └── README.md
+│   │   ├── memory.json               Starter (identity + preferences)
+│   │   ├── memory-index.json
+│   │   ├── session-index.json
+│   │   ├── archive/                  Archived session logs
+│   │   └── cache/                    Session-local SQLite cache
 │   │
-│   ├── Benchmarks/                  # Performance and scale metrics
-│   │   ├── README.md
-│   │   ├── run-benchmark.py        # Automated benchmark runner
-│   │   ├── benchmark-metrics.json  # Historical benchmark results
-│   │   ├── benchmark-candidates.md
-│   │   ├── img-gate-stress-test.md
-│   │   ├── ecosystem-benchmark-2026-03-21.md
-│   │   ├── behavioral-benchmark-2026-03-21.md
-│   │   ├── security-benchmark-2026-03-22.md
-│   │   └── save-protocol-benchmark.md
-│   └── vectorstore/                # Hybrid semantic search (venv local to this dir, see SETUP.md)
-│       ├── SETUP.md                # Venv setup instructions (PEP 668 compatibility)
+│   ├── Benchmarks/                   Frozen Bell-era benchmark snapshots
+│   │
+│   └── vectorstore/                  Hybrid semantic search
+│       ├── SETUP.md
 │       ├── BENCHMARK.md
-│       ├── concat.py               # Shared KB concatenation module
-│       ├── kb_vectorize.py         # Build vector index from KB
-│       ├── kb_query.py             # Hybrid search (CSR + semantic)
-│       ├── kb_sync.py              # Sync vectorstore with KB changes
-│       ├── kb_server.py            # MCP server for semantic search
-│       ├── kb_benchmark.py         # Embedding model benchmarking
-│       ├── run-server.sh           # MCP server launcher (handles paths with spaces)
-│       └── tests/
-│           ├── __init__.py
-│           ├── test_build.py
-│           ├── test_concat.py
-│           ├── test_query.py
-│           └── test_sync.py
+│       ├── concat.py                 Shared KB concatenation
+│       ├── kb_vectorize.py           Build vector index from KB
+│       ├── kb_query.py               Hybrid search (RRF: semantic + keyword)
+│       ├── kb_sync.py                Sync vectorstore with KB changes
+│       ├── kb_server.py              MCP server for semantic search
+│       ├── kb_benchmark.py           Embedding model benchmarking
+│       ├── run-server.sh             MCP server launcher
+│       └── tests/                    Hypothesis-based tests
 │
-├── .steering-files/                # Platform configuration (portable source of truth)
-│   ├── README.md                   # Directory guide and platform setup reference
-│   ├── settings/
-│   │   └── mcp.json               # MCP server configurations (fetch uses security proxy)
-│   ├── steering/
-│   │   ├── Nathaniel.md            # Personality kernel (always-loaded)
-│   │   └── tool-inventory.md       # Tool reference (always-loaded)
-│   ├── specs/                      # Kiro spec-driven development (empty)
-│   └── agents/                     # Specialized sub-agents
-│       ├── analyst.json            # Config
-│       └── analyst/
-│           ├── README.md
-│           ├── analyst-prompt.md
-│           ├── consciousness.md
-│           └── specialization.md
+├── inbox/                            Curation staging
+│   ├── SCHEMA.md                     Capture frontmatter spec
+│   └── preferences/                  Free-form markdown captures
 │
-└── scripts/                        # Automation and maintenance
-    ├── setup.sh                    # First-run setup (git filters, deps, vectorstore)
-    ├── setup-filters.sh            # Git sanitization filter config only
-    ├── bootstrap-windows.ps1       # Windows bootstrap (Git, Python, uv, WSL, Ubuntu)
-    ├── setup-wsl.ps1               # WSL environment setup (no admin needed)
-    ├── teardown.ps1                # Environment teardown (PowerShell)
-    ├── run-python.sh               # Python runner (venv-aware)
-    ├── save-session.py             # Atomic save: all JSON mutations, index rebuilds, vectorstore sync
-    ├── session-cache.py            # Session-local cached KB access (SQLite-backed, FTS5 search)
-    ├── cascade-correction.py       # Scan stores for stale claims, apply fixes atomically
-    ├── removal-cascade.py          # Delete entries with full cascade (store, indexes, cross-refs)
-    ├── maintenance.py              # Health checks + safe auto-fixes
-    ├── reseed.py                   # Golden seed verification and reseeding
-    ├── secure-fetch.py             # MCP fetch security proxy (URL filtering)
-    ├── full-maintenance.sh         # Unified wrapper: chains Phases 1-3 with flag passthrough
-    ├── git-filter-clean.py         # Git clean filter (sanitize on commit)
-    ├── git-filter-smudge.py        # Git smudge filter (restore on checkout)
-    ├── harden-repo.sh              # Security hardening script
-    ├── normalize-schemas.py        # JSON schema normalization
-    ├── validate-schemas.py         # JSON schema validation
-    ├── pre-commit-kb-validate.sh   # Pre-commit hook for KB validation
-    ├── kiro-maintenance.sh         # Kiro CLI maintenance automation
-    ├── python-maintenance.sh       # Python environment maintenance
-    ├── wsl-compact.ps1             # WSL disk compaction (PowerShell)
-    └── wsl-maintenance.sh          # WSL maintenance automation
-
-├── tests/                          # Script test suites
+├── docs/                             Reference documentation
+│   ├── Hypatia Build Plan.md         Locked planning spine
+│   ├── hypatia-build-plan-addendum.md
+│   ├── port-inventory.md             File-by-file Bell disposition
+│   ├── open-questions.md             Durable decisions log
+│   ├── system-maintenance.md
+│   ├── vault-librarian-reference.md  Frozen vault CLAUDE.md (source of librarian-* protocols)
+│   ├── growth-spec-script-offload.md
+│   ├── llm-wiki.md                   Geoff Huntley's pattern reference
+│   ├── research/
+│   └── reference/
+│       ├── nathaniel/                Frozen Bell historical artifacts
+│       └── bell-steering-files/      Archived Bell .steering-files content
+│
+├── scripts/                          Setup, validation, save-time persistence
+│   ├── setup.sh                      First-run setup (filters, deps, vectorstore)
+│   ├── setup-filters.sh              Git sanitization filter config only
+│   ├── run-python.sh                 Python runner (venv-aware)
+│   ├── save-session.py               Atomic save: JSON mutations + index + vectorstore + commit
+│   ├── session-cache.py              Session-local SQLite cache (FTS5)
+│   ├── cascade-correction.py         Scan stores for stale claims; apply fixes
+│   ├── removal-cascade.py            Delete entries with full cascade
+│   ├── maintenance.py                Health checks + safe auto-fixes
+│   ├── reseed.py                     Golden seed verification and reseed
+│   ├── secure-fetch.py               MCP fetch security proxy (URL filtering)
+│   ├── full-maintenance.sh           Maintenance wrapper (Mac, single phase)
+│   ├── python-maintenance.sh         Python cache cleanup
+│   ├── harden-repo.sh                Pre-push confidential-pattern scan
+│   ├── git-filter-clean.py           Git clean filter (sanitize on commit)
+│   ├── git-filter-smudge.py          Git smudge filter (restore on checkout)
+│   ├── normalize-schemas.py          JSON schema normalization
+│   ├── validate-schemas.py           JSON schema validation
+│   └── pre-commit-kb-validate.sh     Pre-commit hook for KB validation
+│
+├── tests/                            Script test suites (scaffold; gaps tracked in Build Plan)
 │   ├── test_save_session.py
 │   ├── test_session_cache.py
 │   ├── test_cascade_correction.py
@@ -168,24 +150,39 @@ The-Nathaniel-Protocol/
 │   ├── test_maintenance.py
 │   ├── test_edge_cases.py
 │   └── test_columbo_oob.py
+│
+└── # Pocket HQ scaffold (inherited from Bell; empty .gitkeep at present)
+    ├── Projects/
+    ├── Business/
+    ├── Brand/
+    ├── Life/
+    │   ├── Career/  Education/  Family/  Finances/
+    │   └── Goals/   Health/     Home/    Journal/
+    └── Archive/
 ```
 
-## Path Routing Table
+## Path routing reference
 
-| Domain | Root Path | Description |
-|--------|-----------|-------------|
-| Projects | `Projects/` | Active project work (Pocket HQ scaffold) |
-| Business | `Business/` | Business operations (Pocket HQ scaffold) |
-| Brand | `Brand/` | Personal brand, content, social (Pocket HQ scaffold) |
-| Life | `Life/` | Personal planning (Pocket HQ scaffold, optional) |
-| Archive | `Archive/` | Completed/historical materials (Pocket HQ scaffold) |
-| Docs | `docs/` | Reference documentation (Pocket HQ scaffold) |
-| Knowledge Base | `hypatia-kb/` | All protocols, intelligence, memory |
-| Protocols | `hypatia-kb/*.md` | Behavioral and task protocols |
-| Intelligence | `hypatia-kb/Intelligence/` | Patterns, knowledge, reasoning stores |
-| Memory | `hypatia-kb/Memory/` | Session logs, entity memory |
-| Vectorstore | `hypatia-kb/vectorstore/` | Hybrid semantic search (.venv local to vectorstore/) |
-| Benchmarks | `hypatia-kb/Benchmarks/` | Performance and scale metrics |
-| Kiro Config | `.steering-files/` | Portable Kiro CLI mirror |
-| Agents | `.steering-files/agents/` | Sub-agent packages |
-| Scripts | `scripts/` | Automation and maintenance |
+| Domain | Path | Purpose |
+|---|---|---|
+| Kernel | `.roo/rules-hypatia/` | Always-loaded system-prompt rules (Roo mode = hypatia) |
+| Mode definition | `.roomodes` | Hypatia custom mode (slug, role, tool groups) |
+| Agent spec | `AGENTS.md` | Cross-tool workspace agent overview |
+| Knowledge base | `hypatia-kb/` | All protocols, intelligence, memory, vectorstore |
+| Domain protocols | `hypatia-kb/*-protocol.md` | Substrate-agnostic protocols (memory, research, etc.) |
+| Librarian protocols | `hypatia-kb/protocols/librarian-*.md` | Vault-specific behavior (TabulaJacqueliana) |
+| Intelligence | `hypatia-kb/Intelligence/` | patterns / knowledge / reasoning + indexes |
+| Memory | `hypatia-kb/Memory/` | memory.json + session logs + cache |
+| Vectorstore | `hypatia-kb/vectorstore/` | fastembed + RRF semantic search |
+| Inbox | `inbox/preferences/` | Free-form captures awaiting Scholar consolidation |
+| Build docs | `docs/Hypatia Build Plan.md` + `docs/*-addendum.md` | Locked planning spine + corrections |
+| Bell reference | `docs/reference/` | Frozen historical artifacts from upstream fork |
+| Scripts | `scripts/` | Setup, save, validation, maintenance, git filters |
+| Tests | `tests/` + `hypatia-kb/vectorstore/tests/` | Script + vectorstore test scaffolding |
+
+## Notes on inherited state
+
+- **Pocket HQ scaffold** (`Projects/`, `Business/`, `Brand/`, `Life/`, `Archive/`) ships from the upstream fork. See `POCKET-HQ.md` for the pattern's origins and how Hypatia diverges from it (the TabulaJacqueliana vault is intentionally external, not consolidated here).
+- **`hypatia-kb/Benchmarks/`** retains Bell-era benchmark snapshots as historical reference. Hypatia-specific benchmarks will replace them as the framework accumulates usage.
+- **`docs/reference/`** is the holding pen for frozen upstream content. Do not edit in place; treat as read-only history.
+- **`tests/` at repo root** contains Bell's original test scaffolding. Phase 1 of the port writes new tests for Hypatia's adapted scripts.
