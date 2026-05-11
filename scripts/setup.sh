@@ -180,17 +180,7 @@ else
 fi
 
 # ============================================================
-# Step 4b: sqlite3 CLI (used by kiro-maintenance.sh VACUUM)
-# ============================================================
-if command -v sqlite3 &> /dev/null; then
-    pass "sqlite3 CLI installed: $(sqlite3 --version 2>&1 | head -1)"
-else
-    warn "sqlite3 CLI not found (kiro-maintenance.sh VACUUM will be skipped)"
-    info "Install: sudo apt-get install sqlite3"
-fi
-
-# ============================================================
-# Step 5: Deploy Kiro configuration
+# Step 5: Deploy Roo configuration
 # ============================================================
 step 5 "Kiro configuration (.steering-files → .kiro)"
 
