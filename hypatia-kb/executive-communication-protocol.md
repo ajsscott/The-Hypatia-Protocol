@@ -1,253 +1,119 @@
 # Executive Communication Protocol
 
-**Purpose**: Framework for effective communication with C-suite executives, board members, investors, and senior stakeholders.
-
-**Trigger Keywords**: executive, C-suite, CxO, CEO, CFO, CIO, CTO, board, investor, stakeholder presentation, pitch, B2B
-
-**Last Updated**: 2025-12-19
-**Version**: 1.0
+**Purpose**: Framework for communication with senior stakeholders (executives, board members, investors, sponsors).
+**Last Updated**: 2026-05-11 (Hypatia adaptation; substantially thinned from Bell's 253 L original)
+**Trigger Keywords**: executive, C-suite, CEO, CFO, CIO, CTO, board, investor, stakeholder presentation, pitch, exec comms
 
 ---
 
-## Core Principles
+## Scope note
 
-1. **Listen first, validate the problem** - Don't lead with solutions
-2. **Speak in outcomes, not features** - Business impact over technical details
-3. **Understand decision-making psychology** - Fear, pain, and confirmation bias drive most decisions
-4. **Tailor to the specific org** - No generic pitches. What's right for THIS company?
-5. **Facilitate decisions, don't push products** - Help stakeholders make informed decisions
+This protocol is **not load-bearing for Hypatia's primary work**. The Scholar's main domains (zettelkasten curation, scholarly research, vault maintenance, Hypatia development) rarely involve executive communication.
 
----
+When executive comms ARE needed (Scholar requests a stakeholder document, board update, sponsor communication, conference pitch, or similar), apply the universal principles below. They derive from Bell's original framework, distilled to the parts that survive outside the SaaS/CTO context where Bell wrote them.
 
-## Building Your Ally Network
-
-Before you can influence executives, you need access. Key question: What ally network can you create to gain insight and access to C-suite?
-
-**Value Prop Framework** (Three Audiences):
-| Audience | Question to Answer |
-|----------|-------------------|
-| Your Team | What value does this create internally? |
-| C-Suite Execs | What business outcomes matter to them? |
-| Yourself | How does this strengthen your position/relationships? |
+If the deliverable is substantial (multi-page memo, formal presentation, investor briefing), engage Route F (`.clinerules/11-decision-routes.md`) to scope it properly before drafting.
 
 ---
 
-## The Working Backwards Framework
+## Universal principles
 
-**Sequence**: Listen → Define → Invent → Refine → Test & Iterate
-
-### 1. LISTEN - Understand the Executive
-
-- Who is the customer and what insights do we have?
-- What challenges or opportunities is the CxO facing?
-- How did we validate this is their focus?
-- What are they most interested in discussing?
-- What are potential success metrics?
-- Why would this executive have a personal stake?
-- Could they delegate this? (If yes, you may be talking to the wrong person)
-- What blockers or difficult conversations exist?
-
-### 2. DEFINE - Clarify the Problem/Opportunity
-
-- What is the prevailing customer problem/opportunity?
-- What strategic outcomes align with CxO's top priorities?
-- What opportunity have we identified? How did we qualify it?
-- What initiatives can we drive to address this?
-
-### 3. INVENT - Create Value
-
-- What is the solution? (non-technical language)
-- How does it work? (non-technical language)
-- Why are we the best choice vs. alternatives?
-- What blockers do we anticipate?
-- Is the impact significant enough for executive attention?
-- Do we have proof points or similar use cases?
-
-**Business Objection Categories** (anticipate which applies):
-- Strategic Alignment - Does this fit our direction?
-- Ethical & Legal Responsibility - Who's accountable?
-- Financial & Operational Impact - What's the true cost/benefit?
-- Risk Management - What new risks does this introduce?
-- Stakeholder Confidence - How will this be perceived?
-- Safeguarding Innovation - How do we protect competitive advantage?
-
-### 4. REFINE - Describe the Transformation
-
-- What is the end-to-end customer experience?
-- What is the most important benefit?
-- What business processes may change?
-- Will the organization need to change? How?
-- What is the impact to their customers?
-
-**Four Pillars of Transformation**:
-- Technology
-- Process
-- Organization
-- Product
-
-### 5. TEST & ITERATE - Executive Messaging Format
-
-Structure your message:
-1. Provide Context
-2. Confirm Objective
-3. Observation
-4. Recommendation
-5. Description
-6. Impact
-7. Proof Point
+1. **Listen first, validate the problem.** Do not lead with the solution.
+2. **Speak in outcomes, not features.** Business or scholarly impact over implementation detail.
+3. **Understand the audience's decision frame.** What's the question they need to answer? What evidence will satisfy them?
+4. **Tailor to the specific audience.** Generic framings fail. What does THIS reader need?
+5. **Facilitate the decision; don't push.** Help the audience make an informed decision, not coerce one.
 
 ---
 
-## Board-Level AI Concerns
+## Working Backwards framework
 
-AI decisions reach beyond IT into board-level concerns. Be prepared to address:
+For substantial deliverables, the Working Backwards sequence (originally Amazon's pattern) still applies:
 
-| Area | The Question |
-|------|-------------|
-| Strategic Alignment | Does AI strategy align with overall business direction? |
-| Ethical & Legal Responsibility | Who's accountable for AI decisions and outcomes? |
-| Financial & Operational Impact | What's the true cost/benefit across the organization? |
-| Risk Management | What new risks does AI introduce? How are they mitigated? |
-| Stakeholder Confidence | How do investors, customers, employees perceive our AI approach? |
-| Safeguarding Innovation | How do we protect competitive advantage while adopting AI? |
+### 1. Listen
 
----
+Understand the audience: what they care about, what their decision frame is, what evidence has historically moved them. If you don't know these, find out before drafting.
 
-## Executive Decision-Making Psychology
+### 2. Define
 
-**Most decisions are driven by**:
-- Fear (of failure, of missing out, of looking bad)
-- Pain (current problems they need solved)
-- Confirmation bias (they want validation of existing beliefs)
+Write the press release / executive summary first: what does success look like from the audience's perspective? If you can't write this, you don't understand the goal yet.
 
-**Questions to understand their process**:
-- Who else is involved in this decision?
-- What criteria will you use to evaluate options?
-- What would make this a "no" for you?
-- What's your timeline for making this decision?
-- What's worked (or failed) in similar decisions before?
+### 3. Invent
+
+Generate the options that achieve the defined success. Multiple options, with trade-offs.
+
+### 4. Refine
+
+Apply Route F-style analysis to the options. ROI, feasibility, risk, alignment with audience constraints.
+
+### 5. Test and iterate
+
+Show a draft early. Refine on feedback. Production-quality version comes last, not first.
 
 ---
 
-## Business-Focused Conversation Checklist
+## Output formats
 
-- [ ] Don't lead with "us" (your company)
-- [ ] Validate the problem first
-- [ ] Use plain language (no jargon)
-- [ ] Articulate what success looks like
-- [ ] Provide business justification
-- [ ] Quantify potential financial impact
-- [ ] Describe business transformation
-- [ ] Make a specific ask
+### Quick stakeholder update
 
----
+```markdown
+## [Topic]: Update for [Audience]
 
-## Common Executive Concerns
+What changed:    [1-2 sentences]
+Why it matters:  [Outcome framing, not feature]
+What's next:     [Decision or action needed, if any]
+```
 
-Be prepared to address:
+### Substantive memo
 
-| Concern | The Real Question |
-|---------|-------------------|
-| Security & Data Privacy | Where does my data go? Who can see it? |
-| Cost & ROI | How do I justify this investment? |
-| Accuracy/Trust | Can I rely on this? What's the error rate? |
-| Compliance | Does this meet our industry requirements? |
-| Workforce Impact | What happens to my people? |
-| Vendor Lock-in | Am I stuck with you? |
-| Implementation Risk | How long until value? What if it fails? |
-| IP & Ownership | Who owns what? Is my data training competitors? |
-| Governance | How do we control it? Who's accountable? |
-| Integration | How does this fit with what we have? |
+Use the Working Backwards sequence. Lead with the executive summary (the "press release"). Body fills in detail in the order: problem → options → recommended option → implementation outline → risks.
 
----
+### Decision-support brief
 
-## What Executives Care About
+When the audience needs to make a decision:
 
-**They don't care about**: The tool, the technology, the features
+```markdown
+## Decision: [Subject]
 
-**They care about**: Implications, security, outcomes, benefits, risk reduction
+Recommendation:    [One sentence]
+Rationale:         [3-5 bullets, evidence-anchored]
 
-**Numbers alone aren't enough**: Context and impact matter
+Options considered:
+1. [Option A]. Pros: [X]. Cons: [Y]. Why not: [Z].
+2. [Option B]. ...
+3. [Recommended option]. Pros: [X]. Cons: [Y]. Why this one: [Z].
 
-**Outcome categories that resonate**:
-- Revenue growth
-- Cost reduction
-- Risk mitigation
-- Operational efficiency
-- Competitive advantage
-- Customer experience improvement
+Implementation outline: [If recommendation is accepted]
+Risks and mitigations: [What could go wrong]
+```
 
 ---
 
-## Talking Tech Without Talking Tech
+## Anti-Patterns
 
-**Pattern**: Lead with business outcome, not technology
-
-**Example**:
-- Instead of: "This is an agentic AI IDE with spec-driven development"
-- Say: "This tool takes ideas from concept to reality faster and more efficiently than manual processes"
-
----
-
-## The Power of Storytelling
-
-**Story Arc Structure**:
-1. Introduction / Challenge
-2. Opportunity
-3. Solution
-4. Resolution
-
-Stories and outcomes must be relatable to the current audience.
+- Leading with the solution before the audience has agreed there's a problem.
+- Technical detail without outcome framing.
+- Generic pitches that don't reference the audience's specific context.
+- Treating executive comms as a vehicle for personal-position-building.
+- Over-padding to seem substantive.
+- Sycophancy. The audience knows when they're being managed.
 
 ---
 
-## Competitive Positioning
+## When this protocol does NOT fire
 
-**AWS Differentiators for Exec Conversations**:
-- **Choice**: Multiple foundation models (Anthropic, Meta, Mistral, Amazon), not locked to one
-- **Data Privacy**: Your data stays yours, doesn't train other customers' models
-- **Integration**: Builds on existing AWS investments
-- **Enterprise Ready**: Security, compliance, governance built in from day one
-- **Hybrid**: Works with on-prem if needed
-
-**Handling "Why Not Just Use ChatGPT?"**:
-- ChatGPT is a consumer product. Enterprise needs are different.
-- Where does your data go? Who sees it? How is it secured?
-- Can you audit it? Control it? Integrate it with your systems?
-- Consumer tools don't meet compliance requirements (HIPAA, SOC2, PCI)
-
-**Competitive Positioning Principles**:
-- Never bash competitors directly
-- Acknowledge strengths where genuine ("Azure is solid if you're all-in on Microsoft")
-- Redirect to customer's specific needs
-- Focus on outcomes, not feature comparisons
-- Use proof points: "Here's what we did with a similar company..."
+Most Hypatia work. Scholar-to-Hypatia conversation uses `.clinerules/02-voice.md`. Vault-internal documentation uses `writing-protocol.md`. Research synthesis uses `research-protocol.md`. Project planning uses `planning-protocol.md`. Documents for the Scholar's own consumption don't need executive framing.
 
 ---
 
-## Broader Applicability
+## Cross-references
 
-This framework applies beyond customer engagements:
-- Stakeholder presentations
-- Investor pitches
-- B2B sales conversations
-- Internal leadership alignment
-- Board presentations
-- Partnership discussions
-
-The core principles work anywhere you're influencing senior decision-makers.
+- **Voice register (default Hypatia-to-Scholar communication)**: `.clinerules/02-voice.md`
+- **Route F (substantial deliverable analysis)**: `.clinerules/11-decision-routes.md § Route F`
+- **Writing standards (when the executive deliverable is a written document)**: `writing-protocol.md`
+- **Research (when the deliverable derives from research)**: `research-protocol.md`
+- **Planning (when the deliverable is a project plan or roadmap)**: `planning-protocol.md`
 
 ---
 
-## Quick Reference
-
-| Situation | Approach |
-|-----------|----------|
-| First exec meeting | Listen mode. Validate problem. Don't pitch. |
-| Follow-up with proposal | Executive Messaging Format. Lead with their words. |
-| Handling objections | Acknowledge the concern. Address with proof points. |
-| Asking for commitment | Specific, time-bound ask. Make it easy to say yes. |
-
----
-
-*Version 1.0 - December 2025. Based on AWS Executive Acumen: Generative AI training.*
+*This protocol is reference material for an edge case in Hypatia's primary domain. The universal principles transfer; the SaaS/B2B-specific tactics from Bell's original were dropped as out of scope.*
