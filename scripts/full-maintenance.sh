@@ -1,13 +1,15 @@
 #!/bin/bash
-# Unified System Maintenance Script
-# Chains Phases 1-2 in the correct order. Phase 3 (VHDX compact) is a manual
-# follow-up that runs from Admin PowerShell on Windows.
+# Unified System Maintenance Script (Mac-only)
+#
+# Wraps python-maintenance.sh as the single maintenance phase Hypatia ships
+# with on Mac. Bell's original had additional phases for Kiro cleanup, WSL
+# cleanup, and VHDX compaction (Windows-specific); those were removed when
+# the substrate changed to Roo Code and the platform scope narrowed to Mac.
 #
 # Usage:
-#   ./scripts/full-maintenance.sh                  # Run all phases
-#   ./scripts/full-maintenance.sh --dry-run        # Preview all phases
-#   ./scripts/full-maintenance.sh --skip-phase 2   # Skip Linux/WSL cleanup
-#   ./scripts/full-maintenance.sh --delete-stale-venvs  # Pass to Python phase
+#   ./scripts/full-maintenance.sh                       # Run Python cleanup
+#   ./scripts/full-maintenance.sh --dry-run             # Preview without changing anything
+#   ./scripts/full-maintenance.sh --delete-stale-venvs  # Pass through to python-maintenance.sh
 
 set -euo pipefail
 
@@ -16,39 +18,23 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # --- Defaults ---
 DRY_RUN=false
 DELETE_STALE=false
-SKIP_PHASE_1=false
-SKIP_PHASE_2=false
 
 # --- Parse flags ---
 while [[ $# -gt 0 ]]; do
     case $1 in
         --dry-run) DRY_RUN=true; shift ;;
         --delete-stale-venvs) DELETE_STALE=true; shift ;;
-        --skip-phase)
-            case "${2:-}" in
-                1) SKIP_PHASE_1=true ;;
-                2) SKIP_PHASE_2=true ;;
-                *) echo "[ERROR] --skip-phase requires 1 or 2"; exit 1 ;;
-            esac
-            shift 2 ;;
         --help)
-            echo "Usage: $0 [--dry-run] [--skip-phase N] [--delete-stale-venvs]"
+            echo "Usage: $0 [--dry-run] [--delete-stale-venvs]"
             echo ""
-            echo "Runs maintenance phases in order:"
-            echo "  Phase 1: Python cleanup (caches, __pycache__, venv audit)"
-            echo "  Phase 2: Linux/WSL cleanup + fstrim"
+            echo "Mac-only system maintenance. Runs Python cleanup phase only."
             echo ""
             echo "Flags:"
-            echo "  --dry-run              Preview all phases without changing anything"
-            echo "  --skip-phase N         Skip phase N (1 or 2)"
-            echo "  --delete-stale-venvs   Pass --delete-stale-venvs to Python phase"
+            echo "  --dry-run              Preview without changing anything"
+            echo "  --delete-stale-venvs   Pass --delete-stale-venvs to python-maintenance.sh"
             echo ""
-            echo "Phase 3 (VHDX compact) must be run separately from Admin PowerShell on Windows:"
-            echo "  powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\\wsl-compact.ps1"
-            echo ""
-            echo "Note: Bell's original Phase 2 was Kiro cache cleanup. The Roo Code"
-            echo "substrate (per substrate decision) manages its own state via VS Code's"
-            echo "extension storage; no external Roo maintenance script needed."
+            echo "Roo Code (the substrate) manages its own state via VS Code's"
+            echo "extension storage; no external maintenance script is needed."
             exit 0 ;;
         *) echo "[ERROR] Unknown flag: $1. Use --help for usage."; exit 1 ;;
     esac
@@ -66,91 +52,33 @@ log() { echo -e "${GREEN}[MAINT]${RESET} $1"; }
 warn() { echo -e "${YELLOW}[WARNING]${RESET} $1"; }
 err() { echo -e "${RED}[ERROR]${RESET} $1"; }
 
-# --- Header ---
-banner "UNIFIED SYSTEM MAINTENANCE"
+banner "HYPATIA SYSTEM MAINTENANCE (Mac)"
 log "Mode: $( $DRY_RUN && echo 'DRY RUN' || echo 'LIVE' )"
-log "Phases: $( $SKIP_PHASE_1 && echo '⊘1' || echo '✓1' ) $( $SKIP_PHASE_2 && echo '⊘2' || echo '✓2' )"
 echo ""
 
-# Track timing
 TOTAL_START=$(date +%s)
-PHASE_RESULTS=()
 
-run_phase() {
-    local phase_num="$1"
-    local phase_name="$2"
-    local script="$3"
-    shift 3
-    local args=("$@")
+# Python cleanup
+banner "PYTHON CLEANUP"
+PY_ARGS=()
+$DRY_RUN && PY_ARGS+=(--dry-run)
+$DELETE_STALE && PY_ARGS+=(--delete-stale-venvs)
 
-    banner "PHASE $phase_num: $phase_name"
-
-    if [ ! -f "$script" ]; then
-        err "Script not found: $script"
-        PHASE_RESULTS+=("Phase $phase_num: SKIPPED (script missing)")
-        return 1
-    fi
-
-    local phase_start
-    phase_start=$(date +%s)
-
-    if bash "$script" "${args[@]}"; then
-        local elapsed=$(( $(date +%s) - phase_start ))
-        PHASE_RESULTS+=("Phase $phase_num: DONE (${elapsed}s)")
-        log "Phase $phase_num complete (${elapsed}s)"
-    else
-        local elapsed=$(( $(date +%s) - phase_start ))
-        PHASE_RESULTS+=("Phase $phase_num: FAILED (${elapsed}s)")
-        warn "Phase $phase_num had errors (${elapsed}s). Continuing."
-    fi
-}
-
-# ═══════════════════════════════════════════
-# PHASE 1: Python Cleanup
-# ═══════════════════════════════════════════
-if $SKIP_PHASE_1; then
-    log "Phase 1 (Python): skipped"
-    PHASE_RESULTS+=("Phase 1: SKIPPED")
-else
-    PY_ARGS=()
-    $DRY_RUN && PY_ARGS+=(--dry-run)
-    $DELETE_STALE && PY_ARGS+=(--delete-stale-venvs)
-
-    run_phase 1 "PYTHON CLEANUP" "$SCRIPT_DIR/python-maintenance.sh" "${PY_ARGS[@]}"
+PY_SCRIPT="$SCRIPT_DIR/python-maintenance.sh"
+if [ ! -f "$PY_SCRIPT" ]; then
+    err "Script not found: $PY_SCRIPT"
+    exit 1
 fi
 
-# ═══════════════════════════════════════════
-# PHASE 2: Linux/WSL Cleanup + fstrim
-# ═══════════════════════════════════════════
-if $SKIP_PHASE_2; then
-    log "Phase 2 (Linux/WSL): skipped"
-    PHASE_RESULTS+=("Phase 2: SKIPPED")
+PHASE_START=$(date +%s)
+if bash "$PY_SCRIPT" "${PY_ARGS[@]}"; then
+    PHASE_ELAPSED=$(( $(date +%s) - PHASE_START ))
+    log "Python cleanup complete (${PHASE_ELAPSED}s)"
 else
-    WSL_ARGS=()
-    $DRY_RUN && WSL_ARGS+=(--dry-run)
-
-    run_phase 2 "LINUX/WSL CLEANUP" "$SCRIPT_DIR/wsl-maintenance.sh" "${WSL_ARGS[@]}"
+    PHASE_ELAPSED=$(( $(date +%s) - PHASE_START ))
+    warn "Python cleanup had errors (${PHASE_ELAPSED}s)"
 fi
 
-# ═══════════════════════════════════════════
-# SUMMARY
-# ═══════════════════════════════════════════
 TOTAL_ELAPSED=$(( $(date +%s) - TOTAL_START ))
-
 banner "MAINTENANCE COMPLETE"
-for result in "${PHASE_RESULTS[@]}"; do
-    log "  $result"
-done
-log ""
 log "Total time: ${TOTAL_ELAPSED}s"
-
-# Phase 3 reminder (WSL only)
-if grep -qi microsoft /proc/version 2>/dev/null; then
-    echo ""
-    log "━━━ Phase 3: VHDX Compact (manual) ━━━"
-    log "To reclaim disk space on Windows:"
-    log "  1. Open PowerShell as Administrator"
-    log "  2. Run:"
-    log "     powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\\wsl-compact.ps1"
-    echo ""
-fi
