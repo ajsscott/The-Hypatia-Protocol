@@ -1,293 +1,165 @@
-# Learning Loop - Executable Instructions
+# Learning Loop
 
-**EXECUTE DURING SAVE COMMAND PART 3**
-**Last Updated**: 2026-04-03
-
----
-
-## Part 3a: Pattern Consolidation
-
-### 1. Direct-Write (Primary Path)
-
-Write items routed from taxonomy sweep to patterns. The sweep (Phase A) is the extraction; this step is the write.
-
-**For each sweep item routed to patterns:**
-1. Run Quality Gates (see below)
-2. Dedup check against existing entries in patterns.json
-3. If passes: write new entry to patterns.json per Pattern Entry Schema
-
-**In the same write operation, also:**
-- Update `lastAccessed` and increment `accessCount` for pattern entries retrieved this session
-- Record failure pattern outcomes (see Failure Outcome Tracking)
-- Check distillation level transitions: if any retrieved entry crossed an accessCount threshold (3, 7, 15) this session, flag as "refinement candidate" in taxonomy sweep output. Refinement = sharpen content, verify confidence calibration, ensure tags are routing-quality.
-
-### 3. Rebuild Index
-
-**Rebuild patterns-index.json from patterns.json** (not incremental):
-1. Read all entries from patterns.json
-2. For each entry, read field: `entry.content`
-3. Build fresh: byCategory, byTag, byConfidence arrays
-4. Build fresh: summaries (first 150 chars of content)
-5. Preserve: recentIds (prepend new/updated IDs, slice to 20)
-6. Set stats.totalPatterns = actual entry count
-7. Write complete index
-
-**Why rebuild**: Incremental updates drift under context pressure. Full rebuild is idempotent and self-correcting. At <200 entries, cost is negligible.
-
-### 4. Validation Spot-Check
-
-Quick verification after rebuild:
-1. Count check: index stats.totalPatterns == actual entries
-2. Spot check: pick 3 entries, verify tags appear in byTag
-3. Confidence check: high + medium + low == total
-
-On failure: re-run rebuild.
-
-### 5. Report
-
-```
-Patterns: X new, Y updated, Z access-tracked. Failure outcomes: N prevented, M missed.
-```
+**Purpose**: Consolidation methodology. How captures in `inbox/preferences/*.md` get promoted (or rejected) into the canonical intelligence stores (`patterns.json`, `knowledge.json`, `reasoning.json`) and memory store (`memory.json`).
+**Last Updated**: 2026-05-11 (Hypatia adaptation; substantially restructured from Bell's save-auto framing)
+**Trigger Keywords**: consolidate, learning loop, promote inbox, intelligence consolidation, capture review
 
 ---
 
-## Part 3b: Knowledge Consolidation
+## Scope and context
 
-### 1. Direct-Write (Primary Path)
+Bell's learning-loop ran AUTOMATICALLY during the save command (Parts 3a/3b/3c/3d). For Hypatia, the inbox boundary moved consolidation OFF the save path and INTO Scholar-driven maintenance sessions.
 
-Write items routed from taxonomy sweep to knowledge. The sweep (Phase A) is the extraction; this step is the write.
+This file holds the consolidation methodology: how to look at inbox captures, decide which become canonical entries, and write them with quality gates applied. The learning loop is invoked when the Scholar runs `inbox triage` or similar maintenance commands.
 
-**4-LAYER CAPTURE RELIABILITY (run before writing, run again before marking 3b complete):**
-- **Layer 1**: Check `_capture_candidates` from session. If tagged knowledge candidates exist, process them.
-- **Layer 2**: If about to write "none" or "no new" → STOP. That phrase is the trigger. Proceed to Layer 3.
-- **Layer 3**: Run Taxonomy Sweep (10-category check per Capture Taxonomy section). Route knowledge-bound items to this step.
-- **Layer 4**: If genuinely zero after Layers 1-3, write explicit justification citing existing entry IDs or session facts. "Nothing new" without citation is not valid.
-
-**For each sweep item routed to knowledge:**
-1. Run Quality Gates (see below)
-2. Dedup check against existing entries in knowledge.json
-3. If passes: write new entry per Knowledge Entry Schema
-
-**In the same write operation, also:**
-- Update `lastAccessed` and increment `accessCount` for knowledge entries retrieved this session
-- Check distillation level transitions: if any retrieved entry crossed an accessCount threshold (3, 7, 15) this session, flag as "refinement candidate" in taxonomy sweep output.
-1. Read all entries
-2. Build fresh: byCategory, byTag, bySource, byConfidence arrays
-3. Build fresh: summaries (first 150 chars of content)
-4. Preserve: recentIds (prepend new IDs, slice to 20)
-5. Set stats.totalEntries = actual entry count
-6. Write complete index
-
-### 4. Report
-
-```
-Knowledge: X new, Y access-tracked.
-```
-
-Part 3b references shared Quality Gates and Index Rebuild approach. Not duplicated.
+**Save vs. consolidate**:
+- **Save** (`.clinerules/08-save-command.md`): records the session, stages inbox files, runs vectorstore sync. Does NOT promote captures to stores.
+- **Consolidate** (this file): Scholar-invoked maintenance step. Reviews inbox captures, applies quality gates, promotes survivors to canonical stores, rejects others (with rationale captured).
 
 ---
 
-## Part 3c: Reasoning Consolidation
+## Consolidation flow
 
-Part 3c has three phases executed in order: RECORD, SYNTH, CROSS.
+For each `inbox/preferences/*.md` capture with `status: new`:
 
-### 3c-RECORD: Capture Stated Reasoning
-
-Review session for derived conclusions, connections, and extrapolations that were explicitly articulated during the session.
-
-**4-LAYER CAPTURE RELIABILITY (run before writing, run again before marking 3c-RECORD complete):**
-- **Layer 1**: Check `_capture_candidates` from session. If tagged reasoning candidates exist, process them.
-- **Layer 2**: If about to write "none" or "no new" → STOP. That phrase is the trigger. Proceed to Layer 3.
-- **Layer 3**: Run Taxonomy Sweep (10-category check per Capture Taxonomy section). Route reasoning-bound items to this step.
-- **Layer 4**: If genuinely zero after Layers 1-3, write explicit justification citing existing entry IDs or session facts. "Nothing new" without citation is not valid.
-
-**For each sweep item routed to reasoning:**
-1. Run Quality Gates (see below, plus reasoning-specific gates)
-2. Dedup check: scan existing entries by reuse_signal similarity (not content)
-3. If passes: write new entry to reasoning.json per Reasoning Entry Schema
-
-### Reasoning-specific quality gates (in addition to shared gates):
-- Is this reusable beyond this session? (If no, skip)
-- Is this distinct from existing knowledge? (If fact, move to knowledge)
-- Does the reuse_signal describe a recognizable future scenario, not a specific incident?
-- Does the intent describe a user motivation, not a task description?
-- Distinguishing test: retrieved by problem shape or user intent? → reasoning. Retrieved by topic? → knowledge.
-
-**In the same write operation, also:**
-- Update `lastAccessed` and increment `accessCount` for reasoning entries retrieved this session
-- Check distillation level transitions: if any retrieved entry crossed an accessCount threshold (3, 7, 15) this session, flag as "refinement candidate" in taxonomy sweep output.
-- **Validation-on-retrieval processing**: For entries noted as misleading during session: confidence -= 0.05. For entries noted as helpful: confidence += 0.05 (cap at 0.95). "Misleading" means the entry was wrong or led to a worse approach. Irrelevant or redundant retrievals are NOT misleading.
-
-### 3c-SYNTH: Synthesize New Reasoning
-
-**4-layer capture does NOT apply to SYNTH.** 0 survivors is valid when the pipeline visibly ran.
-
-**SYNTH ZERO-CHECK**: If about to write "0 survivors", STOP. That phrase is the trigger. Name each prompt you ran (P7, P1, P5 if conditional met), state what each surfaced (even if "nothing"). Then write 0 with prompt outputs as justification. Missing outputs = incomplete step.
-
-**Generate** (2 fixed prompts + 1 conditional):
-
-Re-read the session log, then run these prompts against it:
-
-- **P7**: "What would I tell the next session that the session log doesn't capture?"
-- **P1**: "What two things from this session are related that nobody connected?"
-- **P5** (conditional, only when session had an expected outcome: a spec being implemented, a design being tested, or an explicit goal stated by the user): "What's the delta between expected and actual, and what does that delta teach?"
-
-Each prompt produces 0-1 candidates.
-
-**Sharpen** (each candidate, P6 interrogation):
-
-For each candidate, ask:
-1. "So what? Why does this matter beyond this session?"
-2. "Prove it. Cite specific tool calls, file changes, or user statements from this session."
-3. "What would disprove this?"
-
-Revise the candidate based on answers. If it collapses under interrogation, it was empty.
-
-**Filter** (each sharpened candidate, P8 three-check gate):
-
-1. **Behavioral**: "Does this change how I'd approach a future situation?" No → discard.
-2. **Specificity**: "What specifically would I do differently, and in what situation?" Vague → discard.
-3. **Alternative**: "What other explanation fits these observations?" Equally plausible AND behavioral insight is identical → discard. Equally plausible BUT behavioral insight differs → weaken (keep the behavioral insight, remove the causal claim). The goal is to preserve actionable guidance even when the underlying explanation is contested.
-
-**Store** survivors to reasoning.json with `"provenance": "synthesized"`. Same schema, same quality gates, same dedup check as 3c-RECORD.
-
-**Targets**: 0-3 entries per save. More than 3 suggests insufficient gating.
-
-**Escape hatch**: If synthesis produces low-quality entries for 3+ consecutive saves, skip 3c-SYNTH and note "SYNTH suspended" in session log until prompts are revised.
-
-### 3c-CROSS: Cross-Session Synthesis
-
-**Trigger**: 3+ sessions since `last_cross_session_synthesis` in memory.json. If not triggered, skip entirely.
-
-**Cold start**: On first implementation, initialize `last_cross_session_synthesis` to current session ID. First trigger fires 3 sessions later.
-
-**Input**: Load 2-3 most recent session logs since last cross-session synthesis (~100-150 lines). If a session log is missing or archived, skip it. If fewer than 2 logs available, skip cross-session for this trigger.
-
-**Generate**: "What pattern connects these sessions that neither session states?"
-
-**Sharpen + Filter**: Same P6 interrogation and P8 gate as SYNTH.
-
-**Store** survivors to reasoning.json with `"provenance": "cross_session"`. Same schema, same quality gates.
-
-**After store**: Update `last_cross_session_synthesis` in memory.json to current session ID.
-
-**Targets**: 0-1 entries per trigger.
-
-**False pattern review**: Manually review first 3 cross-session entries for false pattern risk.
-
-### Rebuild Index
-
-**Rebuild reasoning-index.json from reasoning.json** (not incremental):
-1. Read all entries from reasoning.json
-2. Build fresh: byType, byTag, byConfidence arrays
-3. Build fresh: byProvenance (group entries by `.get('provenance', 'stated')` into `stated`, `synthesized`, `cross_session`)
-4. Build fresh: summaries (reuse_signal text, not content)
-5. Build fresh: intents (intent text)
-6. Preserve: recentIds (prepend new/updated IDs, slice to 20)
-7. Set stats.totalEntries = actual entry count
-8. Write complete index
-
-### 2b. Update Cross-References
-
-**Update cross-references.json incrementally** (not full rebuild):
-
-**ID Filtering Rule**: Include source IDs that do NOT start with `session-`. Pattern IDs follow formats like `fail_143`, `approach_025`, `tech_001`. Knowledge IDs follow `know-105`. Session IDs follow `session-YYYY-MM-DD-NNN`.
-
-```
-For each NEW reasoning entry added this session:
-  1. Read its derived_from array
-  2. Filter to pattern and knowledge IDs only (skip session- prefixed IDs)
-  3. For each qualifying source ID:
-     a. If source ID exists in cross-references.json → append reasoning ID to referenced_by (if not already present)
-     b. If source ID doesn't exist → create new entry with referenced_by: [reasoning_id], related_to: []
-  4. Preserve existing `related_to` links on all entries (never overwrite during incremental update)
-  5. Update stats (total_sources, total_references)
-
-For each EXISTING reasoning entry whose derived_from was MODIFIED this session:
-  1. Re-read its derived_from array
-  2. Filter to pattern and knowledge IDs only
-  3. Diff against current cross-references for this reasoning ID
-  4. Add new references, remove stale ones
-  5. Update stats
-
-Update _meta.last_updated
-```
-
-**Full rebuild** (read all reasoning.json entries, rebuild from scratch) is the recovery path only. Use when cross-references.json is missing or corrupted.
-
-### 3. Report
-
-```
-Reasoning: X new, Y access-tracked.
-```
-
-Target: 2-5 entries per session maximum. Not all sessions produce reasoning.
-
-### Content Length by Type
-
-| Type | Target | Fallback |
-|------|--------|----------|
-| Deduction | 50-700 chars | `_needs_trim: true` |
-| Induction | 50-700 chars | `_needs_trim: true` |
-| Analogy | 50-700 chars | `_needs_trim: true` |
-| Causal | 50-700 chars | `_needs_trim: true` |
-| Meta-process | 50-700 chars | `_needs_trim: true` |
-| Insight | 50-700 chars | `_needs_trim: true` |
-| Architectural Decision | 50-700 chars | `_needs_trim: true` |
-| Failure Analysis | 50-700 chars | `_needs_trim: true` |
-
-### Deduplication
-
-1. Scan existing entries by reuse_signal similarity (not content)
-2. Exact reuse_signal match → skip, update access fields on existing
-3. >80% word overlap on reuse_signal → review. Keep both only if meaningfully different conclusion or intent. If merging, execute Removal Cascade (Part 7b) on the removed entry.
-4. Same intent + overlapping tags but different reuse_signal → keep both (different problem shapes)
+1. **Read the capture** end-to-end. Frontmatter + body.
+2. **Classify** by `candidate-type` field (preference / pattern / knowledge / reasoning / unsure).
+3. **Apply Quality Gates** (see below).
+4. **Dedup-check** against existing entries in the target store via CSR.
+5. **Decide**:
+   - **Promote**: write a new entry to the target store; update index; mark capture `status: consolidated`.
+   - **Reject**: mark capture `status: rejected` with `rejection-reason:` field. Capture stays in inbox as a record of Hypatia over-inferring.
+   - **Defer**: leave `status: new`; revisit next maintenance.
+6. **Update indexes** (rebuild from source).
+7. **Move consolidated captures** to `inbox/preferences/_consolidated/` (or delete; Scholar's call).
 
 ---
 
-## Part 3d: Save-Time Discovery Capture
+## Capture taxonomy
 
-**When**: After Parts 3a-3c complete, before vectorstore sync.
-**Trigger**: Steps 3a-3c generated insights during execution (duplicates found, schema drift corrected, index integrity gaps, stale references cleaned, merge decisions made).
-**Skip if**: Save operations were clean (no discoveries, no corrections, no integrity issues).
-**Max 3 entries per save** (prevents save bloat).
-**Route to**: knowledge.json (factual: "this drift pattern happens when X") or patterns.json (behavioral: "this failure mode recurs"). Reasoning unlikely from maintenance work.
-**Quality gate**: Only genuinely novel discoveries. "Updated an index" is not a discovery. "Found that schema X drifts because of Y" is.
-**Dedup**: Check existing entries before writing. If the insight already exists, update confidence/lastAccessed instead of creating a new entry.
-**Update indexes** for any new entries created.
+Each capture classifies into one of these categories. Use the `candidate-type` field in capture frontmatter; this taxonomy is the canonical type list.
+
+| Type | Goes to | Definition |
+|---|---|---|
+| **preference** | `memory.json` `memories` | Scholar likes/dislikes ("I prefer atomic Trees over composite ones") |
+| **decision** | `memory.json` `memories` | Choice made ("Decided to use Roo Code") |
+| **correction** | `memory.json` `memories` | Fixed misunderstanding |
+| **learning** | `memory.json` `memories` | Discovered fact or technique |
+| **critical_safety** | `memory.json` `memories` | Must-not-violate rule |
+| **system** | `memory.json` `memories` | System configuration or state |
+| **pattern (approach)** | `patterns.json` | How Scholar tends to approach a class of problem |
+| **pattern (failure)** | `patterns.json` | A failure mode that recurs; every failure pattern must answer "what to do instead" |
+| **knowledge** | `knowledge.json` | Factual claim (must have citation or evidence) |
+| **reasoning (recorded)** | `reasoning.json` | Stated reasoning the Scholar walked through |
+| **reasoning (synthesized)** | `reasoning.json` | Derived from cross-source analysis (Hypatia's synthesis during maintenance) |
+| **commitment** | `memory.json` `commitments` | Promise the Scholar made; tracked for deadlines |
+| **anti-preference** | `memory.json` `anti_preferences` | Explicit "don't do X" |
 
 ---
 
-## Step 8: Vectorstore Sync
+## Consolidation pattern A: preferences and decisions
 
-**When**: After prune check (step 7), before git commit (step 9). This is the last write-dependent step.
-**Condition**: Only if `hypatia-kb/vectorstore/config.json` exists.
-**Behavior**: Try `python3 hypatia-kb/vectorstore/kb_sync.py`, fall back to `python hypatia-kb/vectorstore/kb_sync.py`. Runs ONCE after ALL writes (intelligence 3a-3d + memory 5a + any pruning) to catch everything in a single pass. Log result (added/updated/removed/unchanged counts).
-**On failure**: Warn, never block save. Save completes without vectorstore sync.
-**On missing vectorstore**: Skip silently (vectorstore is optional).
+For captures with `candidate-type: preference` (or decision, correction, learning, critical_safety, system):
+
+1. Apply Quality Gates.
+2. Dedup against `memory.json` `memories`. Read field: `entry.content`. Normalize (lowercase, trim). Exact match → update existing entry's `accessCount` + `lastAccessed`, skip writing new.
+3. If unique: write new entry per Memory Entry Schema (see § Entry Schemas).
+4. Update `memory-index.json` `byType`, `byTag`, `summaries`, `recentIds`.
+5. Update `stats.totalEntries`, `stats.activeEntries`, `stats.nextId`.
+
+---
+
+## Consolidation pattern B: patterns
+
+For captures with `candidate-type: pattern`:
+
+1. Apply Quality Gates.
+2. Failure-pattern check: if the capture is a failure pattern, verify it answers "what to do instead." If not, reject with that rationale.
+3. Dedup against `patterns.json` entries. Read field: `entry.content`. Normalize. Exact match → update existing; >80% word overlap → log "similar exists" and reject (or merge, Scholar's call).
+4. If unique: write new entry per Pattern Entry Schema.
+5. Tag Quality Gate: minimum 2 tags, at least one domain-specific, isolation check.
+6. Rebuild `patterns-index.json` from `patterns.json` (full rebuild, idempotent at <300 entries).
+
+---
+
+## Consolidation pattern C: knowledge
+
+For captures with `candidate-type: knowledge`:
+
+1. Apply Quality Gates.
+2. Verify confidence ≥ 0.7 (knowledge requires evidence; below this threshold, reject or reroute to reasoning).
+3. Dedup against `knowledge.json` entries.
+4. If unique: write new entry per Knowledge Entry Schema. Ensure citation source is named.
+5. Tag Quality Gate.
+6. Rebuild `knowledge-index.json`.
+
+---
+
+## Consolidation pattern D: reasoning
+
+For captures with `candidate-type: reasoning`:
+
+Three sub-types:
+
+### D-recorded
+
+Stated reasoning the Scholar walked through during a session.
+
+1. Apply Quality Gates.
+2. Dedup-check.
+3. If unique: write per Reasoning Entry Schema with `provenance: "recorded"`.
+
+### D-synthesized
+
+Derived from cross-source analysis Hypatia performed during maintenance.
+
+1. Re-read 3+ recent session logs.
+2. Apply synthesis prompts (see § Synthesis Prompts below).
+3. Filter via three-check gate (see § Three-check filter).
+4. Survivors get written with `provenance: "synthesized"`.
+
+### D-cross-session
+
+When 3+ sessions have elapsed since the last cross-session consolidation:
+
+1. Load recent session logs (last 3-5).
+2. Run cross-session prompt: "what concepts surfaced across multiple sessions that didn't get atomized?"
+3. Filter via three-check gate.
+4. Survivors get written with `provenance: "cross_session"`.
+5. Update `last_cross_session_synthesis` in `memory.json`.
+
+---
+
+## Save-time discovery capture
+
+When save operations themselves surface novel findings (duplicates found, schema drift corrected, index integrity gaps, stale references cleaned, merge decisions made), these become candidates for inbox captures.
+
+- **Max 3 captures per save** (prevents save bloat).
+- **Quality gate**: only genuinely novel discoveries. "Updated an index" is not a discovery. "Found that schema X drifts because of Y" is.
+- **Route to inbox** as `candidate-type: knowledge` or `pattern`. NOT directly to stores (per `.clinerules/08-save-command.md`).
 
 ---
 
 ## Quality Gates
 
-**Run before every new entry write (patterns and knowledge).**
+**Run before promoting any inbox capture to a canonical store.**
 
-### Content Length
+### Content length
 
-| Type | Target | Action if Over |
-|------|--------|----------------|
-| Pattern (preference/approach) | 10-400 chars | Condense, or write with `_needs_trim: true` |
-| Pattern (failure) | 10-400 chars | Condense, or write with `_needs_trim: true` |
-| Knowledge | 20-600 chars | Condense, or write with `_needs_trim: true` |
+| Type | Target | Action if over |
+|---|---|---|
+| Pattern (preference / approach) | 10-400 chars | Condense, or promote with `_needs_trim: true` |
+| Pattern (failure) | 10-400 chars | Condense, or promote with `_needs_trim: true` |
+| Knowledge | 20-600 chars | Condense, or promote with `_needs_trim: true` |
 
-`_needs_trim` entries are trimmed during maintenance only, not during save.
+`_needs_trim` entries are trimmed during scheduled maintenance, not during the consolidation itself.
 
-### Failure Pattern Prevention Rule
+### Failure pattern prevention rule
 
 Every new failure pattern must answer "what to do instead."
-- Bad: "Skipped validation step"
-- Good: "Skipped validation step. Read current state before modifying."
+
+- ✗ Bad: "Skipped validation step."
+- ✓ Good: "Skipped validation step. Read current state before modifying."
 
 ### Specificity
 
@@ -296,205 +168,191 @@ No vague terms ("good", "better", "quality"). Rewrite with specifics.
 ### Deduplication
 
 Before adding any new entry:
-1. Read field: `entry.content` for comparison
-2. Normalize text (lowercase, trim)
-3. Exact match → skip, update existing entry's access fields
-4. >80% word overlap → skip, log "similar exists"
 
-### Confidence Assignment
+1. Read field: `entry.content` for comparison.
+2. Normalize text (lowercase, trim).
+3. Exact match → skip; update existing entry's access fields.
+4. > 80% word overlap → log "similar exists"; consider merge or reject.
 
-Use evidence strength to derive confidence:
+### Confidence assignment
 
 | Evidence type | Base confidence |
-|--------------|-----------------|
-| `explicit_statement` | 0.90 |
-| `user_correction` | 0.85 |
-| `user_acceptance` | 0.70 |
-| `observed_behavior` | 0.55 |
-| `single_instance` | 0.40 |
+|---|---|
+| `explicit_statement` (Scholar explicit) | 0.90 |
+| `user_correction` (Scholar corrected Hypatia) | 0.85 |
+| `user_acceptance` (Hypatia proposed, Scholar accepted) | 0.70 |
+| `observed_behavior` (inferred from pattern) | 0.55 |
+| `single_instance` (one occurrence only) | 0.40 |
 
-Knowledge entries require confidence ≥ 0.7.
+Knowledge entries require confidence ≥ 0.7. Pattern entries can land below if the capture rationale justifies it.
 
 ### Tag Quality Gate
 
 Run after tag assignment for every new entry:
 
-1. **Minimum 2 tags** per entry
-2. **No overly generic single-word tags** ("code", "work", "thing"). Tags should be specific enough to route queries.
-3. **At least one domain-specific tag** (not just category-level like "technical" or "process")
-4. **Isolation check**: Does this entry share at least one tag with an existing entry? If zero overlap, flag: "Heads up: this entry shares no tags with existing entries. Isolated entries are harder to find via CSR." This is a flag, not a blocker. Some entries are genuinely unique.
+1. **Minimum 2 tags** per entry.
+2. **No overly generic single-word tags** ("code", "work", "thing"). Tags route queries; they should be specific.
+3. **At least one domain-specific tag** (not just category-level like "technical" or "process").
+4. **Isolation check**: does this entry share at least one tag with an existing entry? Zero overlap → flag: "this entry shares no tags with existing entries; isolated entries are harder to find via CSR." Flag, not blocker; some entries are genuinely unique.
 
-### Synonym-Aware Retrieval
+### Synonym-aware retrieval
 
-When scanning index tags during retrieval, also consult `Intelligence/synonym-map.json`. If the query keyword matches a synonym map key, expand the search to include all mapped synonyms. The map is bidirectional: if "portable" maps to "flash-drive", a search for "flash-drive" also checks "portable."
+When scanning index tags during retrieval, also consult `Intelligence/synonym-map.json`. If a query keyword matches a synonym map key, expand the search to mapped synonyms. The map is bidirectional: A → B implies B → A.
 
-Synonym map maintenance: add new entries when CSR misses are detected during sessions. Cap at ~100 entries. Prune during monthly maintenance.
-
----
-
-## Failure Outcome Tracking
-
-**Execute during Part 3a, after pattern consolidation.**
-
-One retrospective question (re-read session log before answering, look for moments where a failure pattern was retrieved and the approach was changed as a result):
-"Did any failure pattern prevent a mistake this session? If yes, which pattern ID?"
-
-- If yes: increment accessCount on that pattern, note in evidence: "Prevented: [date] - [brief context]"
-- If no: skip. No tracking needed for non-events.
-
-For missed failures (user corrected a mistake that an existing failure pattern should have caught):
-- These are captured naturally via user_correction evidence type when the correction creates or updates a failure pattern.
-- No separate tracking mechanism needed.
+Maintenance: add new entries when CSR misses are detected. Cap at ~100. Prune during monthly maintenance.
 
 ---
 
-## Capture Taxonomy
+## Synthesis prompts (for D-synthesized reasoning)
 
-**Purpose**: Deterministic 10-category sweep replacing vibes-based extraction. Runs once in Phase A (before Parts 3a-3c). Items route to stores for writing.
+When deriving reasoning entries from cross-session content, apply these prompts during consolidation:
 
-### Categories
+- **P1 (Intent prompt)**: "What was the underlying motivation across these sessions? Phrase as the Scholar's question, not the answer."
+- **P5 (Counter-source prompt)** (conditional, when contradictory sources surfaced): "What's the contradicting claim? Which source does each side cite?"
+- **P6 (Sharpen prompt)**: "Rewrite this so the reuse signal is recognizable. Future Hypatia should match it on the shape of the problem, not the topic."
+- **P7 (Distillation prompt)**: "What's the single sentence that captures the reusable insight? Discard everything that's just narrative."
+- **P8 (Three-check filter)**: see below.
 
-| # | Category | Definition | Target Store | Check Question |
-|---|----------|-----------|-------------|----------------|
-| 1 | Decisions | Choices made with reasoning and alternatives rejected | reasoning (`architectural_decision`) or knowledge (`process`) | Did we choose X over Y? |
-| 2 | Corrections | Facts corrected by user or evidence | knowledge (fact) + patterns (`failure`, mistake) — always dual | Did the user correct anything? |
-| 3 | Discoveries | New facts verified this session | knowledge (category by domain) | What do we know now that we didn't before? |
-| 4 | Process | Approaches that worked or failed | patterns (`approach`) or knowledge (`process`) | Did we follow a new method? |
-| 5 | Failures | What went wrong and root cause | patterns (`failure`) | Did anything fail? |
-| 6 | Preferences | User stated or demonstrated preferences | patterns (`preference`) or memory | Did the user express how they want things done? Did they correct an approach (implicit preference)? Did they choose one option over another? Did they react positively/negatively to output style, format, or approach? |
-| 7 | Observations | Meta-insights about tools, systems, behaviors | knowledge (`system`/`tool_behavior`) or reasoning (`insight`) | Did we notice how a system behaves? |
-| 8 | Negative Knowledge | Things proven NOT to work | knowledge (original category + tag `negative-knowledge`) | Did we rule anything out? |
-| 9 | Dependencies | Relationships between components | knowledge (original category + tag `dependency`) or reasoning | Did we discover A affects B? |
-| 10 | Commitments | Promises made to people | memory.json commitments array (write via save step 5c) | Did we promise anything? |
+---
 
-### Routing Rules
+## Three-check filter
 
-1. Capture once, tag for both. Don't duplicate across stores.
-2. Higher-value store wins: reasoning > knowledge > patterns > memory.
-3. The "figured out" test: derived from evidence → reasoning. Observed → knowledge. Behavioral → patterns.
-4. Corrections are always dual: corrected fact → knowledge, mistake → patterns. Both mandatory.
-5. Ambiguity scope: only categories 7 and 9 have genuine routing ambiguity. Use "figured out" test.
+Before writing any synthesized reasoning entry, run all three:
 
-### Enforcement
+1. **Reusable?** Will Future Hypatia retrieve this via problem-shape match, not topic match?
+2. **Distinct from knowledge?** Knowledge entries are facts; reasoning entries are derived conclusions. If this is a fact, route to knowledge instead.
+3. **Has a clear reuse signal?** A phrase or motivation pattern that future queries can match. If you can't write the reuse signal, the entry isn't ready.
 
-Every sweep line requires citation:
-- Fired: 1-sentence draft summary identifying item and routing. Detail goes in the entry during write phase.
-- None: must cite existing entry ID (`none: covered by know-217`) OR specific session fact (`none: single-task code review, no alternatives considered`).
-- `none: no decisions made` is NOT valid. Generic justifications indicate the check was skipped.
+Survive all three → write. Fail any → reject and capture rationale in the inbox.
 
-### Tag Conventions
+**SYNTH ZERO-CHECK**: if a consolidation pass would write 0 synthesized survivors, STOP. Name each prompt run. State what each surfaced (even if "nothing"). Then write 0 with prompt outputs as justification. Missing outputs = incomplete step.
 
-| Category | Tag | Purpose |
-|----------|-----|---------|
-| Negative Knowledge | `negative-knowledge` | Retrieval via Troubleshooting Gate |
-| Dependencies | `dependency` | Retrieval via Destructive Action Gate |
+---
 
-Tags are added IN ADDITION to domain-specific tags.
+## Failure outcome tracking
 
-### Counter Update (MANDATORY after sweep)
+During consolidation, after pattern promotion (Pattern B), run one retrospective question (re-read recent session logs before answering):
 
-After the taxonomy sweep completes, update `capture_taxonomy` in memory.json:
-- Increment `category_hits` for each category that fired (produced an item, not "none")
-- Increment `sessions_tracked` by 1
-- Use canonical lowercase keys: `decisions`, `corrections`, `discoveries`, `process`, `failures`, `preferences`, `observations`, `negative_knowledge`, `dependencies`, `commitments`
+> "Did any failure pattern prevent a mistake this session, or has any pattern been observed to fail to prevent its intended mistake?"
 
-### Anti-Patterns
-
-- Rubber-stamping "none" on all 10 without citations
-- Capturing everything (quality gates still apply, 2-5 per store cap, corrections exempt)
-- Duplicating across categories (capture once, tag for both)
-- Re-capturing items from previous sessions (sweep checks for NEW items only)
+If yes: update the pattern entry's `outcome_count` (prevention) or surface that the pattern needs revision (failed to prevent). This is the feedback signal that keeps patterns calibrated.
 
 ---
 
 ## Entry Schemas
 
-### Schema Conformance Gate (run FIRST, before all other quality gates)
-
-Before writing any new entry to patterns.json, knowledge.json, or reasoning.json:
-
-0. **VERIFY NEXT ID (MANDATORY)**: Do NOT trust index nextId alone. Scan the target store for the actual max numeric ID. Use `max(index.nextId, store_max_id + 1)` as the starting ID for new entries. Update index nextId after writing. This prevents ID collisions when multiple instances (CLI + IDE) write to the same store.
-1. **CHECK REQUIRED FIELDS**: Verify every required field is present.
-   - Missing required field → add it with default value, log warning.
-   - Defaults: accessCount=0, lastAccessed=today, created=today, provenance="stated" (reasoning only), derived_from=[] (reasoning only)
-2. **CHECK FIELD NAMES**: Verify no legacy field names are used.
-   - Legacy name detected → rename to canonical name before write.
-   - Map: pattern→content, summary→content, first_observed→created, last_observed→lastAccessed, observation_count→accessCount, access_count→accessCount, last_accessed→lastAccessed, lastOccurred→lastAccessed, lastUpdated→lastAccessed (if no lastAccessed), lastModified→lastAccessed, firstSeen→created, lastSeen→lastAccessed, timestamp→created
-3. **CHECK CATEGORY/TYPE**: Verify value is in the documented enum.
-   - Unknown category/type → flag for review, write with _needs_review: true.
-4. **CHECK CONTENT CONFLICT** (patterns only): If both pattern and content exist, keep the longer value as content, drop the shorter.
-5. **CHECK UNKNOWN FIELDS**: If entry has fields not in required or optional lists, log warning. Not a blocker.
-
-### Pattern Entry Schema
+### Memory entry
 
 ```json
 {
-  "id": "{prefix}_{number}",
-  "category": "preference|approach|failure|process|procedure|ai_agent",
-  "content": "{the behavior/preference/failure, 10-400 chars}",
-  "confidence": 0.XX,
-  "tags": ["{2-5 strings}"],
-  "context": "{task domain, 5-50 chars}",
-  "created": "{YYYY-MM-DD}",
-  "lastAccessed": "{YYYY-MM-DD}",
+  "id": "mem-NNN",
+  "type": "preference|decision|correction|learning|critical_safety|system",
+  "content": "<10-300 chars>",
+  "context": "<5-100 chars: why this matters>",
+  "created": "YYYY-MM-DD",
+  "lastAccessed": "YYYY-MM-DD",
+  "accessCount": 0,
+  "confidence": 0.9,
+  "tags": ["tag1", "tag2"]
+}
+```
+
+### Pattern entry
+
+```json
+{
+  "id": "pat-NNN",
+  "category": "approach|failure",
+  "content": "<10-400 chars>",
+  "tags": ["tag1", "tag2"],
+  "confidence": 0.85,
+  "created": "YYYY-MM-DD",
+  "lastAccessed": "YYYY-MM-DD",
+  "accessCount": 0,
+  "outcome_count": {"prevented": 0, "missed": 0}
+}
+```
+
+### Knowledge entry
+
+```json
+{
+  "id": "know-NNN",
+  "content": "<20-600 chars>",
+  "tags": ["tag1", "tag2"],
+  "confidence": 0.85,
+  "source": "<citation or evidence reference>",
+  "created": "YYYY-MM-DD",
+  "lastAccessed": "YYYY-MM-DD",
   "accessCount": 0
 }
 ```
 
-**Optional fields**: prevention, outcome, evidence, source, _imported_from, _stale_candidate, _needs_trim, _needs_review, _history
-
-**Category prefixes**: `pref`, `approach`, `fail`, `proc`, `ai_agent`. Legacy prefixes (`comm`, `content`, `dev`, `exec`, `org`, `pres`, `prob`, `tech`, `tool`) exist on old entries — don't rename.
-
-### Knowledge Entry Schema
+### Reasoning entry
 
 ```json
 {
-  "id": "know-{number}",
-  "category": "technical|process|error_solution|best_practice|tool_quirk|reference|domain_expertise|architecture|research|security|tool_behavior|aws_gotcha|system",
-  "content": "{the knowledge, 20-600 chars}",
-  "confidence": 0.XX,
-  "tags": ["{2-5 strings}"],
-  "source": "{provenance — session ID, URL, or enum value}",
-  "created": "{YYYY-MM-DD}",
-  "lastAccessed": "{YYYY-MM-DD}",
+  "id": "reason-NNN",
+  "intent": "<one-sentence question framing>",
+  "reuse_signal": "<phrase or motivation pattern for retrieval>",
+  "content": "<the derived conclusion>",
+  "tags": ["tag1", "tag2"],
+  "confidence": 0.80,
+  "provenance": "recorded|synthesized|cross_session",
+  "derived_from": ["source-id-1", "source-id-2"],
+  "created": "YYYY-MM-DD",
+  "lastAccessed": "YYYY-MM-DD",
   "accessCount": 0
 }
 ```
-
-**Optional fields**: context, validated, validationNote, sourceUrl, detail, _imported_from, _stale_candidate, _needs_trim, _needs_review, _history
-
-### Reasoning Entry Schema
-
-```json
-{
-  "id": "reason-{number}",
-  "type": "deduction|induction|analogy|causal|meta-process|insight|architectural_decision|failure_analysis",
-  "content": "{the derived conclusion, 50-700 chars}",
-  "intent": "{why this was figured out, 20-80 chars}",
-  "reuse_signal": "{when this applies again, 30-100 chars}",
-  "confidence": 0.XX,
-  "derived_from": ["{system IDs, session IDs, or file paths}"],
-  "provenance": "stated|synthesized|cross_session",
-  "tags": ["{2-5 strings}"],
-  "created": "{YYYY-MM-DD}",
-  "lastAccessed": "{YYYY-MM-DD}",
-  "accessCount": 0
-}
-```
-
-**Optional fields**: _imported_from, _stale_candidate, _needs_trim, _needs_review, _history
-
-**Provenance field**: Absence defaults to `"stated"`. Implementation must use `.get('provenance', 'stated')` pattern.
 
 ---
 
-## Failure Modes
+## Index rebuild (after any store write)
 
-| Failure | Recovery |
-|---------|----------|
-| JSON parse error on read | Log error, skip consolidation, don't corrupt files |
-| Write failure | Retry once, then log and continue without update |
-| Partial update (crash mid-save) | Next save re-runs full consolidation (idempotent) |
-| Index desync | Rebuild catches it (full rebuild is self-correcting) |
-| Duplicate detection (cross-session) | Deduplication catches it, updates existing |
-| Duplicate detection (same-session) | Content hash check catches it |
+Indexes are derived from store content. Rebuild from source after each consolidation pass (not incremental):
+
+1. Read all entries from the source store.
+2. For each, build: `byTag`, `byCategory` (or `byType`, `byProvenance`), `byConfidence` (where applicable), `summaries` (first 150 chars of content).
+3. Preserve: `recentIds` (prepend new/updated IDs, slice to 20).
+4. Set `stats` (totalEntries, activeEntries, nextId).
+5. Write complete index.
+
+**Why rebuild not incremental**: incremental updates drift under context pressure. Full rebuild is idempotent and self-correcting. At <300 entries per store, cost is negligible.
+
+### Validation spot-check
+
+After rebuild:
+
+1. Count check: index `stats.totalEntries` == actual entry count.
+2. Spot check: pick 3 entries, verify tags appear in `byTag`.
+3. Confidence check: `byConfidence` sums to total.
+
+On failure: re-run rebuild.
+
+---
+
+## Failure modes
+
+- **Skipped quality gates**: writes ungated entries; degrades the wiki over time.
+- **Skipped dedup check**: creates duplicate entries that fragment retrieval.
+- **Auto-consolidation during save**: violates the inbox boundary; should be Scholar-invoked during maintenance.
+- **Empty justification for "0 survivors"**: SYNTH ZERO-CHECK exists to catch this; never write 0 without named prompt outputs.
+- **Incremental index updates**: drift under context pressure; always rebuild.
+- **Promoting captures without reading them**: the consolidation step REQUIRES reading the capture body, not just trusting frontmatter `candidate-type`.
+
+---
+
+## Cross-references
+
+- **Save command (the path that stages inbox but does NOT auto-consolidate)**: `.clinerules/08-save-command.md`
+- **Inbox capture format (input to consolidation)**: `inbox/SCHEMA.md`
+- **Memory protocol (CAPTURE / CONSOLIDATE operations)**: `memory-protocol.md`
+- **Maintenance protocol (where consolidation triggers fire)**: `maintenance-protocol.md`
+- **Intelligence layer (CSR routing during dedup and retrieval)**: `.clinerules/07-intelligence-layer.md`
+- **Cognitive Application tables (how consolidated entries are surfaced)**: `.clinerules/06-cognitive.md § Applying patterns, knowledge, reasoning`
+- **Critical file protection (Tier 1 destructive treatment of direct store writes)**: `../CRITICAL-FILE-PROTECTION.md`
+
+---
+
+*Consolidation is curation, not accretion. The Scholar's review is the load-bearing step. Quality gates exist because the alternative is a wiki that grows faster than it gets smarter.*
