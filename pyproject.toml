@@ -1,0 +1,43 @@
+[project]
+name = "hypatia"
+version = "0.0.1"
+description = "Persistent AI partner for the TabulaJacqueliana zettelkasten vault. Fork of Warner Bell's Nathaniel Protocol, rebuilt for AJ Strauman-Scott."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [
+    {name = "AJ Strauman-Scott", email = "aj.scott@renphil.org"},
+]
+
+dependencies = [
+    "fastembed>=0.3,<1.0",
+    "numpy>=1.24,<3.0",
+    "mcp>=1.0,<2.0",
+]
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.0",
+    "pytest>=7.0",
+    "ruff>=0.5",
+    "mypy>=1.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"hypatia-kb/vectorstore/tests/*" = ["B018"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "hypatia-kb/vectorstore/tests"]
+addopts = "-ra --strict-markers"
+
+[tool.mypy]
+python_version = "3.11"
+strict = false
+ignore_missing_imports = true
