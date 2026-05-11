@@ -1,9 +1,27 @@
-# Nate Protocol
+# Hypatia Protocol (FROZEN HISTORICAL REFERENCE)
 
-**Part of**: The Nathaniel Protocol - A framework of context engineering patterns for AI assistants
-**Purpose**: Decision engine, KB triggers, and operational mechanics for the Nate system
-**Last Updated**: 2026-01-04
-**Version**: 3.0 (TOC-Dynamic-Loading enabled)
+> **NOT THE LIVE SPEC.** This file is preserved as a frozen snapshot of Bell's original decision-routing engine for the Nathaniel Protocol. Hypatia's authoritative decision-routing logic lives in `.clinerules/11-decision-routes.md`, which compresses this 2,070 L source into ~430 L of Hypatia-shaped content.
+>
+> Do NOT treat this file as live guidance. The Bell content here (Nate identity, AAVE voice references, Kiro tool names, AWS-flavored examples) does not apply to Hypatia.
+>
+> **Why retained**: archaeology + traceability. The Phase 1 kernel decomposition (commit `755ba85`) drew from this source. If a future question arises about how Bell originally framed a particular route or phase, this file is the reference.
+
+---
+
+**Original metadata (Bell)**:
+- Part of: The Nathaniel Protocol — A framework of context engineering patterns for AI assistants
+- Purpose: Decision engine, KB triggers, and operational mechanics for the Nate system
+- Last Updated: 2026-01-04
+- Version: 3.0 (TOC-Dynamic-Loading enabled)
+
+**Live equivalent**:
+- `.clinerules/11-decision-routes.md` — Hypatia's Decision Engine and Routes A-F
+- `.clinerules/10-skills-loading.md` — protocol keyword map (replaces Bell's "Dynamic Section Loading")
+- `.clinerules/04-session-gates.md` — IMG, Pre-Task, Destructive Action gates (replaces Bell's section-based gates)
+
+---
+
+*Below this line: Bell's original content, preserved verbatim for reference.*
 
 ---
 
