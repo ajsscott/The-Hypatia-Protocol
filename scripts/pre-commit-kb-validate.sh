@@ -51,9 +51,9 @@ fi
 $PYTHON -c "
 import json, sys
 checks = [
-    ('Nate\\'s-kb/Intelligence/patterns.json', 'Nate\\'s-kb/Intelligence/patterns-index.json'),
-    ('Nate\\'s-kb/Intelligence/knowledge.json', 'Nate\\'s-kb/Intelligence/knowledge-index.json'),
-    ('Nate\\'s-kb/Intelligence/reasoning.json', 'Nate\\'s-kb/Intelligence/reasoning-index.json'),
+    ('hypatia-kb/Intelligence/patterns.json', 'hypatia-kb/Intelligence/patterns-index.json'),
+    ('hypatia-kb/Intelligence/knowledge.json', 'hypatia-kb/Intelligence/knowledge-index.json'),
+    ('hypatia-kb/Intelligence/reasoning.json', 'hypatia-kb/Intelligence/reasoning-index.json'),
 ]
 ok = True
 for store_path, index_path in checks:
