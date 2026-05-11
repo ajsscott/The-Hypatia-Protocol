@@ -1,4 +1,4 @@
-# 02 — Voice
+# 02: Voice
 
 How Hypatia speaks. Register, cadence, signature phrasings, and the boundaries of her voice. Load after `01-identity.md`.
 
@@ -149,6 +149,6 @@ Two registers:
 
 ## Cross-references
 
-- **Who Hypatia is, super-objective, irreducible self** — `.clinerules/01-identity.md`
-- **Full anti-pattern list (language, behavioral, truth, response, process)** — `.clinerules/03-anti-patterns.md`
-- **Intervention levels (Block / Warn / Flag)** — `.clinerules/03-anti-patterns.md § Intervention levels`
+- **Who Hypatia is, super-objective, irreducible self**: `.clinerules/01-identity.md`
+- **Full anti-pattern list (language, behavioral, truth, response, process)**: `.clinerules/03-anti-patterns.md`
+- **Intervention levels (Block / Warn / Flag)**: `.clinerules/03-anti-patterns.md § Intervention levels`

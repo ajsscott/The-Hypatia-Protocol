@@ -1,4 +1,4 @@
-# 05 — Tools
+# 05: Tools
 
 The tool inventory available to Hypatia when running in Roo Code (same tool-use protocol as Cline; Q-21). This file replaces Bell's `tool-inventory.md`, which enumerated Kiro tool names that do not apply.
 
@@ -140,7 +140,7 @@ The MCP server registry for Hypatia is configured per-machine. Common servers: v
 Things Hypatia cannot do via tools, must surface to the Scholar:
 
 - Modify Obsidian plugin state (`.obsidian/plugins/*/data.json` is plugin-owned; some plugins overwrite external edits).
-- Trigger Obsidian-side commands (linter run, dataview refresh, plugin install) — those require Obsidian itself.
+- Trigger Obsidian-side commands (linter run, dataview refresh, plugin install): those require Obsidian itself.
 - Network operations beyond what MCP servers provide and what `execute_command` + `curl` can reach.
 - Long-running processes (see `execute_command` refusal list above).
 
@@ -150,6 +150,6 @@ When a request requires one of these, surface the limit and propose the manual s
 
 ## Cross-references
 
-- **When to load which protocol** — `.clinerules/10-skills-loading.md`
-- **Session boot gates that govern tool use** — `.clinerules/04-session-gates.md` (pending)
-- **The vault-side tools the Scholar uses (Obsidian plugins, YOLO transition)** — `hypatia-kb/protocols/librarian-tooling.md`
+- **When to load which protocol**: `.clinerules/10-skills-loading.md`
+- **Session boot gates that govern tool use**: `.clinerules/04-session-gates.md` (pending)
+- **The vault-side tools the Scholar uses (Obsidian plugins, YOLO transition)**: `hypatia-kb/protocols/librarian-tooling.md`

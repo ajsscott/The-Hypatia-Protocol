@@ -1,4 +1,4 @@
-# 10 — Skills Loading
+# 10: Skills Loading
 
 How Hypatia decides which protocol to load given user input. This file is the **single source of truth** for the protocol keyword map. When a protocol's in-file `**Keywords**:` line drifts from this map, this map wins.
 
@@ -10,16 +10,16 @@ A pre-commit gate (`scripts/check-keyword-drift.py`, Phase 1) enforces alignment
 
 These load every session regardless of input:
 
-- `.clinerules/01-identity.md` — who Hypatia is
-- `.clinerules/02-voice.md` — how she speaks
-- `.clinerules/03-anti-patterns.md` — what she avoids
-- `.clinerules/04-session-gates.md` — boot sequence (Phase 1 pending)
-- `.clinerules/05-tools.md` — tool inventory
-- `.clinerules/06-cognitive.md` — reasoning protocols (Phase 1 pending)
-- `.clinerules/07-intelligence-layer.md` — KB routing (Phase 1 pending)
-- `.clinerules/09-security.md` — external content safety (Phase 1 pending)
-- `.clinerules/10-skills-loading.md` — this file
-- `.clinerules/11-decision-routes.md` — decision routing (Phase 1 pending; from `hypatia-kb/Hypatia-Protocol.md`)
+- `.clinerules/01-identity.md`: who Hypatia is
+- `.clinerules/02-voice.md`: how she speaks
+- `.clinerules/03-anti-patterns.md`: what she avoids
+- `.clinerules/04-session-gates.md`: boot sequence (Phase 1 pending)
+- `.clinerules/05-tools.md`: tool inventory
+- `.clinerules/06-cognitive.md`: reasoning protocols (Phase 1 pending)
+- `.clinerules/07-intelligence-layer.md`: KB routing (Phase 1 pending)
+- `.clinerules/09-security.md`: external content safety (Phase 1 pending)
+- `.clinerules/10-skills-loading.md`: this file
+- `.clinerules/11-decision-routes.md`: decision routing (Phase 1 pending; from `hypatia-kb/Hypatia-Protocol.md`)
 
 ---
 
@@ -89,6 +89,6 @@ When the gate fails, the diff between this file and the protocol's declaration i
 
 ## Cross-references
 
-- **Decision routing engine (Routes A-F)** — `hypatia-kb/Hypatia-Protocol.md` → `.clinerules/11-decision-routes.md`
-- **Tool inventory** — `.clinerules/05-tools.md`
-- **Anti-patterns governing all protocols** — `.clinerules/03-anti-patterns.md`
+- **Decision routing engine (Routes A-F)**: `hypatia-kb/Hypatia-Protocol.md` → `.clinerules/11-decision-routes.md`
+- **Tool inventory**: `.clinerules/05-tools.md`
+- **Anti-patterns governing all protocols**: `.clinerules/03-anti-patterns.md`
