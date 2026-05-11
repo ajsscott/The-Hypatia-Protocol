@@ -1,12 +1,10 @@
 # ===========================================
-# Nathaniel Protocol .gitignore
+# Hypatia Protocol .gitignore
 # ===========================================
 
-# Kiro runtime config (deployed from .steering-files by setup.sh)
+# Kiro runtime config (legacy; substrate is now Roo Code; .kiro/ is no longer
+# created by setup.sh but kept gitignored if accidentally generated)
 .kiro/
-
-# Kiro memory (may contain session-specific data)
-.steering-files/memory.jsonl
 
 # Claude
 .claude/

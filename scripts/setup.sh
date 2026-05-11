@@ -1,15 +1,17 @@
 #!/bin/bash
 # ============================================================
-# The Nathaniel Protocol - Setup Script
-# One-command deployment for Kiro IDE/CLI
+# The Hypatia Protocol - Setup Script
+# One-command repo setup for Roo Code substrate.
 # ============================================================
 #
 # Usage: chmod +x scripts/setup.sh && ./scripts/setup.sh
 # Options:
 #   --skip-vectorstore   Skip venv creation and vectorstore deps
-#   --skip-kiro-config   Don't copy .steering-files to .kiro
 #   --dry-run            Show what would happen without doing it
 #
+# Roo Code installation is manual (VS Code extension marketplace);
+# this script verifies prerequisites and sets up the Python +
+# vectorstore + git environment. See Step 4 for Roo install pointers.
 # ============================================================
 
 set -euo pipefail
@@ -23,16 +25,14 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 ERRORS=0
 WARNINGS=0
 STEPS_PASSED=0
-STEPS_TOTAL=8
+STEPS_TOTAL=7
 DRY_RUN=false
 SKIP_VECTORSTORE=false
-SKIP_KIRO_CONFIG=false
 
 # --- Parse args ---
 for arg in "$@"; do
     case $arg in
         --skip-vectorstore) SKIP_VECTORSTORE=true ;;
-        --skip-kiro-config) SKIP_KIRO_CONFIG=true ;;
         --dry-run) DRY_RUN=true ;;
         *) echo "Unknown option: $arg"; exit 1 ;;
     esac
@@ -68,7 +68,7 @@ detect_pip() {
 
 # ============================================================
 echo "============================================"
-echo "  The Nathaniel Protocol - Setup"
+echo "  The Hypatia Protocol - Setup"
 echo "============================================"
 if $DRY_RUN; then echo "  (DRY RUN - no changes will be made)"; fi
 echo ""
@@ -145,7 +145,7 @@ if [ -n "$PIP_CMD" ] && [ -n "$PYTHON_CMD" ]; then
         fi
     fi
 
-    # uv (Kiro CLI uses it for MCP server environments)
+    # uv (per pyproject.toml; manages the project's Python env + lockfile)
     if command -v uv &> /dev/null; then
         pass "uv installed: $(uv --version 2>&1 | head -1)"
     else
@@ -166,71 +166,30 @@ else
 fi
 
 # ============================================================
-# Step 4: Kiro CLI
+# Step 4: Roo Code (VS Code extension)
 # ============================================================
-step 4 "Kiro CLI"
+step 4 "Roo Code (VS Code extension)"
 
-if command -v kiro-cli &> /dev/null; then
-    pass "Kiro CLI found: $(kiro-cli --version 2>&1 | head -1)"
-else
-    warn "Kiro CLI not found"
-    info "Install: curl -fsSL https://cli.kiro.dev/install | bash"
-    info "Or visit: https://kiro.dev/docs/cli/installation/"
-    info "The protocol works without Kiro but is built for it. Also works with Claude Code, Cursor, and other agentic IDEs."
-fi
-
-# ============================================================
-# Step 5: Deploy Roo configuration
-# ============================================================
-step 5 "Kiro configuration (.steering-files → .kiro)"
-
-if $SKIP_KIRO_CONFIG; then
-    info "Skipped (--skip-kiro-config)"
-else
-    if [ -d ".steering-files" ]; then
-        if ! $DRY_RUN; then
-            mkdir -p .kiro
-            # Copy each subdirectory, preserving existing content
-            for dir in agents settings steering specs; do
-                if [ -d ".steering-files/$dir" ]; then
-                    mkdir -p ".kiro/$dir"
-                    # Copy files, skip existing to preserve user customizations
-                    find ".steering-files/$dir" -type f | while read src; do
-                        dest=".kiro/${src#.steering-files/}"
-                        if [ ! -f "$dest" ] || [ "$(basename "$src")" = "mcp.json" ]; then
-                            mkdir -p "$(dirname "$dest")"
-                            cp "$src" "$dest"
-                        fi
-                    done
-                fi
-            done
-            # Copy root-level settings.json (trusted commands, workspace config)
-            if [ -f ".steering-files/settings.json" ]; then
-                cp ".steering-files/settings.json" ".kiro/settings.json"
-            fi
-            pass "Kiro config deployed to .kiro/"
-        else
-            info "(dry run) Would copy .steering-files/* to .kiro/"
-        fi
-    else
-        fail ".steering-files/ directory not found"
-    fi
-fi
-
-# Claude Code support: copy CLAUDE.md if not present
-if [ ! -f "CLAUDE.md" ] && [ -f ".steering-files/steering/Nathaniel.md" ]; then
-    if ! $DRY_RUN; then
-        cp .steering-files/steering/Nathaniel.md CLAUDE.md
-        pass "Claude Code config deployed (CLAUDE.md)"
-    else
-        info "(dry run) Would copy CLAUDE.md"
-    fi
-fi
+# Roo Code is a VS Code extension; install via VS Code's extension marketplace
+# rather than a CLI. This step is informational only.
+info "Roo Code is installed via VS Code:"
+info "  1. Open VS Code"
+info "  2. Cmd/Ctrl-Shift-X (Extensions)"
+info "  3. Search 'Roo Code' and install"
+info "  4. Configure your LLM provider in Roo Code settings"
+info ""
+info "This repo provides:"
+info "  - .roomodes              (custom Hypatia mode definition)"
+info "  - .roo/rules-hypatia/    (11 kernel files, loaded when mode=hypatia)"
+info "  - AGENTS.md              (cross-tool agent spec)"
+info ""
+info "Roo Code reads these in place; no deployment step needed."
+pass "Roo Code config provided in repo (no deploy required)"
 
 # ============================================================
-# Step 6: Vectorstore venv + dependencies
+# Step 5: Vectorstore venv + dependencies
 # ============================================================
-step 6 "Vectorstore (hybrid search)"
+step 5 "Vectorstore (hybrid search)"
 
 if $SKIP_VECTORSTORE; then
     info "Skipped (--skip-vectorstore)"
@@ -399,10 +358,10 @@ sys.exit(0 if d.get('entries') else 1)
 fi
 
 # ============================================================
-# Step 7: Git repository + sanitization filters
+# Step 6: Git repository + sanitization filters
 # (Late in sequence so NTFS/WSL chmod failures don't block setup)
 # ============================================================
-step 7 "Git repository and sanitization filters"
+step 6 "Git repository and sanitization filters"
 
 if [ -n "$PYTHON_CMD" ] && command -v git &> /dev/null; then
     if [ ! -d .git ]; then
@@ -462,9 +421,9 @@ else
 fi
 
 # ============================================================
-# Step 8: Initial commit
+# Step 7: Initial commit
 # ============================================================
-step 8 "Initial commit"
+step 7 "Initial commit"
 
 if command -v git &> /dev/null && [ -d .git ]; then
     GIT_CMD="git --git-dir=$REPO_ROOT/.git --work-tree=$REPO_ROOT"
