@@ -6,10 +6,6 @@ license.workspace = true
 authors.workspace = true
 description = "Hypatia custom Tauri frontend (Phase 1.5)"
 
-[lib]
-name = "hypatia_frontend_lib"
-crate-type = ["staticlib", "cdylib", "rlib"]
-
 [[bin]]
 name = "hypatia-frontend"
 path = "src/main.rs"

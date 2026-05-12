@@ -15,7 +15,7 @@
 
 use anyhow::{Context, Result};
 use rmcp::{
-    Error as McpError, ServerHandler, ServiceExt,
+    ErrorData as McpError, ServerHandler, ServiceExt,
     model::*,
     service::*,
 };
@@ -194,12 +194,18 @@ impl ServerHandler for ProtocolsServer {
         let resources = self
             .resources
             .iter()
-            .map(|(uri, entry)| Resource {
-                uri: uri.clone(),
-                name: entry.name.clone(),
-                description: Some(entry.description.clone()),
-                mime_type: Some("text/markdown".into()),
-                annotations: None,
+            .map(|(uri, entry)| {
+                // rmcp 0.3.2: Resource = Annotated<RawResource>. Build via raw.
+                Annotated {
+                    raw: RawResource {
+                        uri: uri.clone(),
+                        name: entry.name.clone(),
+                        description: Some(entry.description.clone()),
+                        mime_type: Some("text/markdown".into()),
+                        size: None,
+                    },
+                    annotations: None,
+                }
             })
             .collect();
         Ok(ListResourcesResult {
