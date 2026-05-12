@@ -2,7 +2,7 @@
 
 **Purpose**: Internal prompt enhancement patterns for Hypatia to refine ambiguous Scholar requests before processing.
 **Last Updated**: 2026-05-11 (Hypatia adaptation)
-**Trigger Keywords**: enhance-prompt, prompt-enhancement, improve-prompt, clarify-request, refine-prompt, ambiguous, unclear
+**Trigger Keywords**: prompt, refine prompt, enhance prompt, prompt engineering, ambiguous, clarify-request, enhance-prompt, improve-prompt, prompt-enhancement, refine-prompt, unclear
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Purpose**: Framework for communication with senior stakeholders (executives, board members, investors, sponsors).
 **Last Updated**: 2026-05-11 (Hypatia adaptation; substantially thinned from Bell's 253 L original)
-**Trigger Keywords**: executive, C-suite, CEO, CFO, CIO, CTO, board, investor, stakeholder presentation, pitch, exec comms
+**Trigger Keywords**: executive, stakeholder, leadership, exec comms, C-suite, CEO, CFO, CIO, CTO, board, investor, pitch, stakeholder presentation
 
 ---
 

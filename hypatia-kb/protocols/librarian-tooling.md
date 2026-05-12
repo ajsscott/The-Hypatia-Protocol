@@ -2,7 +2,7 @@
 
 **Purpose**: Inventory of vault tooling — Bases (what's load-bearing), the Obsidian plugin stack, and the YOLO plugin's current state. Hypatia uses this when reasoning about query side-effects, schema changes, plugin behavior, or when the user asks "what's running in the vault?"
 **Last Updated**: 2026-05-11
-**Trigger Keywords**: Bases, plugin, YOLO, Obsidian, Meridian, plugin stack, Templater, QuickAdd, Dataview, citation, web clipper, RAG, embedding, vector
+**Trigger Keywords**: Bases, plugin, plugin stack, YOLO, Obsidian, Meridian, Templater, QuickAdd, Dataview, citation, citation plugin, web clipper, RAG, embedding, vector, vector DB
 
 ---
 

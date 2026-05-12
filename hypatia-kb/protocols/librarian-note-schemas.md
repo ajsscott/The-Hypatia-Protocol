@@ -2,7 +2,7 @@
 
 **Purpose**: Canonical schemas for every note type in TabulaJacqueliana: atomic Tree notes, Seed→Tree linkage contracts, naming conventions, tag taxonomy, the Mountains PM hierarchy, and per-note-type frontmatter fields. Hypatia uses this as the source of truth when drafting, refactoring, or validating any note.
 **Last Updated**: 2026-05-11
-**Trigger Keywords**: schema, Tree, Seed, Mountain, frontmatter, YAML, naming, tag, kind, content_type, atomic, citekey, cite, embed, topics, aliases
+**Trigger Keywords**: schema, atomic note, atomic, frontmatter, YAML, naming, tag, kind, content_type, citekey, cite, embed, topics, aliases, Tree, Seed, Mountain, Mountain hierarchy
 
 ---
 

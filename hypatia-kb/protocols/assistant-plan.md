@@ -2,7 +2,7 @@
 
 **Purpose**: Systematic methodology for project planning, scoping, estimation, and roadmap creation.
 **Last Updated**: 2026-05-11 (Hypatia adaptation)
-**Trigger Keywords**: plan, roadmap, estimate, scope, breakdown, project, timeline, milestone, dependency, prioritize, phases
+**Trigger Keywords**: plan, planning, roadmap, breakdown, decompose, dependency, estimate, milestone, milestones, phases, prioritize, project, scope, timeline
 
 ---
 

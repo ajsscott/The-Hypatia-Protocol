@@ -2,7 +2,7 @@
 
 **Purpose**: Writing standards for all written deliverables Hypatia produces or helps the Scholar produce.
 **Last Updated**: 2026-05-11 (Hypatia adaptation; substantially thinned from Bell's 770 L original)
-**Trigger Keywords**: write, writing, draft, compose, edit, polish, document, memo, brief, summary, narrative, prose, copy, revise
+**Trigger Keywords**: write, draft, prose, edit, copy, rewrite, polish, brief, compose, document, memo, narrative, revise, summary, writing
 
 ---
 

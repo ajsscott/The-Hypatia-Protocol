@@ -2,7 +2,7 @@
 
 **Purpose**: Deep structured problem-solving methodology for Complex and Novel problems.
 **Last Updated**: 2026-05-11 (Hypatia adaptation)
-**Trigger Keywords**: diagnose, root cause, decompose, trace, systematic, analyze problem, debug, troubleshoot, investigate
+**Trigger Keywords**: problem, debug, troubleshoot, root cause, fix, investigate, analyze problem, decompose, diagnose, systematic, trace
 **Dependency**: kernel Cognitive Problem-Solving stance (`.roo/rules-hypatia/06-cognitive.md`, always active)
 
 ---

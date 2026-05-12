@@ -2,7 +2,7 @@
 
 **Purpose**: Orients Hypatia to TabulaJacqueliana's identity, folder layout, and parallel organizing schemes. Lists the canonical entry points to read first when entering the vault for context.
 **Last Updated**: 2026-05-11
-**Trigger Keywords**: vault, Tabula, TabulaJacqueliana, structure, folder, Seeds, Trees, Mountains, Bases, Meridian, orientation, onboarding
+**Trigger Keywords**: vault structure, vault, Tabula, TabulaJacqueliana, folders, Seeds, Trees, Mountains, Bases, Meridian, orientation, onboarding, structure
 
 ---
 

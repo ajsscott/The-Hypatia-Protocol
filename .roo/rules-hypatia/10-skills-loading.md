@@ -25,38 +25,53 @@ These load every session regardless of input:
 
 ## Keyword-triggered (lazy-load)
 
-Scan user input for the keywords below. On match, `read_file` the corresponding protocol. Match the longest / most-specific keyword first.
+Scan user input for the keywords below. On match, `read_file` the corresponding protocol. Match the longest / most-specific keyword first. Multiple matches load all that apply.
 
-### Librarian protocols (`hypatia-kb/protocols/`)
+### Librarian protocols (`hypatia-kb/protocols/librarian-*.md`)
 
 | Protocol | Keywords |
 |---|---|
-| `librarian-role.md` | librarian, vault, zettelkasten, Tabula, curate, ingest, query, lint, Seed, Tree, wiki, knowledge base, PKB |
-| `librarian-vault-structure.md` | vault structure, Tabula, folders, Seeds, Trees, Mountains, Bases, Meridian, orientation, onboarding |
-| `librarian-note-schemas.md` | schema, atomic note, frontmatter, YAML, naming, tag, kind, content_type, citekey, cite, embed, topics, aliases, Mountain hierarchy |
-| `librarian-tooling.md` | Bases, plugin, YOLO, Obsidian, Templater, QuickAdd, Dataview, citation plugin, web clipper, RAG, embedding, vector DB |
-| `librarian-writing-rules.md` | drift, landmine, refactor, guardrail, commit, approval, batch, sample, verify, lesson, prior incident, atomic commit, link rot |
+| `librarian-role.md` | librarian, vault, zettelkasten, Tabula, curate, ingest, query, lint, Seed, Tree, Mountain, wiki, knowledge base, PKB |
+| `librarian-vault-structure.md` | vault structure, vault, Tabula, TabulaJacqueliana, folders, Seeds, Trees, Mountains, Bases, Meridian, orientation, onboarding, structure |
+| `librarian-note-schemas.md` | schema, atomic note, atomic, frontmatter, YAML, naming, tag, kind, content_type, citekey, cite, embed, topics, aliases, Tree, Seed, Mountain, Mountain hierarchy |
+| `librarian-tooling.md` | Bases, plugin, plugin stack, YOLO, Obsidian, Meridian, Templater, QuickAdd, Dataview, citation, citation plugin, web clipper, RAG, embedding, vector, vector DB |
+| `librarian-writing-rules.md` | drift, landmine, refactor, guardrail, write, edit, commit, approval, batch, sample, verify, lesson, error, prior incident, atomic commit, link rot |
+| `librarian-memory.md` | memory, remember, recall, history, capture, save memory, prune, retention, preferences, decisions |
+| `librarian-lint.md` | maintenance, cleanup, health check, prune, integrity, housekeeping |
+| `librarian-customize.md` | customize, personalize, configure, tune, adjust, set preference |
+| `librarian-save.md` | save, persist, snapshot, commit, checkpoint, save session, end of session |
 
-### Ported Bell protocols (`hypatia-kb/*-protocol.md`)
+### Researcher protocols (`hypatia-kb/protocols/researcher-*.md`)
 
-> Note: some of these still require content adaptation per Phase 1 protocol-port work. Keywords listed below are the load-trigger map; the protocol files themselves may need rewrites before they read coherently as Hypatia content. Load-triggers are still correct.
+| Protocol | Keywords |
+|---|---|
+| `researcher-investigate.md` | research, investigate, source, citation, study, paper, literature, analyze, assess, compare, deep-dive, evaluate, explore |
+| `researcher-prompt-enhance.md` | prompt, refine prompt, enhance prompt, prompt engineering, ambiguous, clarify-request, enhance-prompt, improve-prompt, prompt-enhancement, refine-prompt, unclear |
 
-| Protocol | Keywords | Adaptation status |
-|---|---|---|
-| `memory-protocol.md` | memory, remember, recall, history, capture, save memory, prune, retention | Adapt for Hypatia's inbox→consolidation flow |
-| `maintenance-protocol.md` | maintenance, cleanup, health check, prune, integrity, housekeeping | Mostly portable |
-| `planning-protocol.md` | plan, planning, roadmap, milestones, decompose, scope, phases | Mostly portable |
-| `proactive-offering-protocol.md` | proactive, offer, suggest, anticipate, surface, flag | Mostly portable; adapt for Hypatia's curatorial reflex |
-| `problem-solving-protocol.md` | problem, debug, troubleshoot, root cause, fix, investigate | Mostly portable |
-| `summarization-protocol.md` | summarize, summary, distill, condense, tldr, brief | Portable |
-| `writing-protocol.md` | write, draft, prose, edit, copy, rewrite, polish | Adapt for Hypatia's writing register (vs Bell's) |
-| `research-protocol.md` | research, investigate, source, citation, study, paper, literature | Adapt for Hypatia's zettelkasten research flow |
-| `prompt-enhancement-protocol.md` | prompt, refine prompt, enhance prompt, prompt engineering | Mostly portable |
-| `customization-protocol.md` | customize, personalize, configure, tune | Rewrite for Hypatia's customization model |
-| `development-protocol.md` | code, develop, programming, refactor, technical | Bell's was AWS/cloud-heavy; rewrite as universal dev practices |
-| `executive-communication-protocol.md` | executive, stakeholder, leadership, exec comms | Likely deprecate; not Hypatia's primary use case |
-| `security-protocol.md` | security, threat, credentials, secrets, access, permissions, exposure | Rewrite for vault-side security (token storage, git filter chain) |
-| `CRITICAL-FILE-PROTECTION.md` | critical file, protected, lockdown, destructive operation, dangerous edit | Adapt for hypatia-kb-specific critical paths |
+### Writer protocols (`hypatia-kb/protocols/writer-*.md`)
+
+| Protocol | Keywords |
+|---|---|
+| `writer-draft.md` | write, draft, prose, edit, copy, rewrite, polish, brief, compose, document, memo, narrative, revise, summary, writing |
+| `writer-summarize.md` | summarize, summary, distill, condense, tldr, brief, aggregate, minutes, recap, source synthesis, transcript |
+| `writer-executive.md` | executive, stakeholder, leadership, exec comms, C-suite, CEO, CFO, CIO, CTO, board, investor, pitch, stakeholder presentation |
+
+### Assistant protocols (`hypatia-kb/protocols/assistant-*.md`)
+
+| Protocol | Keywords |
+|---|---|
+| `assistant-development.md` | code, develop, programming, refactor, technical, build, debug, dependency, deploy, implement, library, test |
+| `assistant-plan.md` | plan, planning, roadmap, breakdown, decompose, dependency, estimate, milestone, milestones, phases, prioritize, project, scope, timeline |
+| `assistant-problem-solve.md` | problem, debug, troubleshoot, root cause, fix, investigate, analyze problem, decompose, diagnose, systematic, trace |
+| `assistant-proactive.md` | proactive, offer, suggest, anticipate, surface, flag, next step |
+| `assistant-ingest.md` | ingest, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in |
+
+### Cross-cutting (`hypatia-kb/protocols/`)
+
+| Protocol | Keywords |
+|---|---|
+| `security.md` | security, threat, credentials, secrets, access, permissions, exposure, sanitize, pii, classification |
+| `CRITICAL-FILE-PROTECTION.md` | critical file, protected, lockdown, destructive operation, dangerous edit |
 
 ---
 
@@ -75,7 +90,7 @@ Scan user input for the keywords below. On match, `read_file` the corresponding 
 
 ## Anti-drift discipline
 
-Each protocol file MUST declare its own keywords at the top in a `**Trigger Keywords**:` line. The pre-commit gate compares those declarations against this file and fails the commit on mismatch. Three protocols spot-checked at Phase 0 audit showed drift between kernel keyword map and protocol declarations; this file replaces that drift-prone duplication with a single source.
+Each protocol file MUST declare its own keywords at the top in a `**Trigger Keywords**:` line. The pre-commit gate compares those declarations against this file and fails the commit on mismatch. Phase 1 reconciliation (2026-05-12) resolved drift across 17 protocols by taking the union of kernel-listed and protocol-declared keyword sets; from this point forward, this file is the single source of truth and drift fails CI.
 
 When adding a new protocol or new keywords:
 
