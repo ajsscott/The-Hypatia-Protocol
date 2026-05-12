@@ -1,124 +1,78 @@
 # File Structure
 
-Snapshot of the repo's directory layout. Verified against the working tree as of Phase 1 close (2026-05-12).
+Snapshot of the repo's directory layout. Verified against the working tree as of Phase 1.5 substrate pivot (2026-05-12).
 
 ```
 The-Hypatia-Protocol/
 ├── .github/
-│   └── workflows/validate.yml        CI: JSON + schemas + keyword-drift + pytest
-├── .vscode/                          Editor config (Roo Code lives here)
-├── .roo/
-│   └── rules-hypatia/                The kernel (11 files, ~111 KB)
-│       ├── 01-identity.md
-│       ├── 02-voice.md
-│       ├── 03-anti-patterns.md
-│       ├── 04-session-gates.md
-│       ├── 05-tools.md
-│       ├── 06-cognitive.md
-│       ├── 07-intelligence-layer.md
-│       ├── 08-save-command.md
-│       ├── 09-security.md
-│       ├── 10-skills-loading.md      Single source of truth for keyword routing
-│       └── 11-decision-routes.md
-├── .roomodes                         Custom mode definition (slug: hypatia)
+│   └── workflows/validate.yml        CI: JSON + schemas + keyword-drift + pytest + (future) cargo
 ├── .gitattributes                    LF normalization + sanitization filter attribs
-├── .gitignore                        Excludes secrets, venvs, exports, workspace
+├── .gitignore                        Excludes secrets, venvs, exports, workspace, Rust target/, Tauri build
 ├── .editorconfig                     LF line endings, UTF-8, trim whitespace
 ├── .python-version                   3.11
-├── pyproject.toml                    Project metadata + dependencies (uv)
-├── uv.lock                           Locked dependency tree
-├── hypatia.config.yaml               Vault path, git identity, paths, preferences
-├── AGENTS.md                         Cross-tool workspace agent spec
-├── CLAUDE.md                         Claude Code port-work notes (gitignored)
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
-├── FILE-STRUCTURE.md                 This file
-├── LICENSE                           MIT, AJ Strauman-Scott 2026 + Bell attribution
-├── POCKET-HQ.md                      Pattern reference (scaffold dirs removed)
-├── README.md
-├── SECURITY.md
+├── .vscode/                          VS Code workspace settings (carried for Continue.dev autocomplete)
+│
+├── kernel/                           Compact always-loaded kernel (~4K tokens, Q-33 redistribution)
+│   ├── 01-identity.md                Who Hypatia is, super-objective, irreducible self, non-negotiables
+│   ├── 02-voice.md                   Register, cadence, prohibitions
+│   ├── 03-critical-gates.md          Inbox boundary, destructive action tiers, security never-violates
+│   └── 04-routing.md                 Request classification, Decision Routes A-F, skills-loading discipline
+│
+├── mcp-servers/                      Hypatia-specific MCP servers (Rust)
+│   └── protocols/                    Serves protocols + kernel-archive as MCP resources
+│       ├── Cargo.toml
+│       ├── README.md
+│       └── src/main.rs
+│
+├── frontend/                         Custom Tauri 2.0 desktop UI (Rust)
+│   ├── README.md
+│   ├── src-tauri/                    Tauri Rust backend
+│   │   ├── Cargo.toml
+│   │   ├── tauri.conf.json           App bundle config (name, icon, permissions, build)
+│   │   ├── build.rs
+│   │   ├── icons/                    .gitkeep for now; populate before bundle build
+│   │   └── src/
+│   │       ├── main.rs               Entry point + Tauri setup
+│   │       ├── goose_client.rs       HTTP client for Goose daemon
+│   │       └── commands.rs           Tauri commands exposed to frontend JS
+│   └── src/                          Frontend (HTML/CSS/JS)
+│       ├── index.html
+│       ├── styles.css                Alexandrian palette
+│       └── main.js
+│
+├── goose-config/                     Goose custom-distro config
+│   ├── README.md
+│   ├── config.yaml                   Provider (Ollama) + extensions (MCP servers) + system prompt source
+│   ├── extensions.yaml               MCP server registrations (deferred — content in config.yaml)
+│   ├── regen-system-prompt.sh        Build script: kernel/01-04.md → system-prompt.md
+│   └── goosehints.md                 Per-session reminders Goose surfaces
 │
 ├── hypatia-kb/                       Knowledge base
 │   ├── README.md
 │   ├── QUICKSTART.md                 Operating cheat sheet
 │   ├── CUSTOMIZATION.md
-│   ├── Hypatia-Protocol.md           FROZEN HISTORICAL (superseded by .roo/rules-hypatia/11)
+│   ├── Hypatia-Protocol.md           FROZEN HISTORICAL (superseded by kernel/04-routing.md)
 │   ├── lexicon.md
 │   │
-│   ├── protocols/                    All lazy-loaded protocols (20 files)
+│   ├── protocols/                    20 protocol files (lazy-loaded via MCP)
 │   │   ├── README.md
 │   │   ├── CRITICAL-FILE-PROTECTION.md
 │   │   ├── security.md
-│   │   │
-│   │   ├── # Librarian cluster (8)
-│   │   ├── librarian-role.md
-│   │   ├── librarian-vault-structure.md
-│   │   ├── librarian-note-schemas.md
-│   │   ├── librarian-tooling.md
-│   │   ├── librarian-writing-rules.md
-│   │   ├── librarian-memory.md
-│   │   ├── librarian-lint.md
-│   │   ├── librarian-customize.md
-│   │   │
-│   │   ├── # Researcher cluster (2)
-│   │   ├── researcher-investigate.md
-│   │   ├── researcher-prompt-enhance.md
-│   │   │
-│   │   ├── # Writer cluster (3)
-│   │   ├── writer-draft.md
-│   │   ├── writer-summarize.md
-│   │   ├── writer-executive.md
-│   │   │
-│   │   └── # Assistant cluster (5)
-│   │       ├── assistant-development.md
-│   │       ├── assistant-plan.md
-│   │       ├── assistant-problem-solve.md
-│   │       ├── assistant-proactive.md
-│   │       └── assistant-ingest.md
+│   │   ├── librarian-{role,vault-structure,note-schemas,tooling,writing-rules,memory,lint,customize}.md  (8)
+│   │   ├── researcher-{investigate,prompt-enhance}.md  (2)
+│   │   ├── writer-{draft,summarize,executive}.md  (3)
+│   │   └── assistant-{development,plan,problem-solve,proactive,ingest}.md  (5)
 │   │
-│   ├── Intelligence/                 Patterns, knowledge, reasoning stores
-│   │   ├── README.md
-│   │   ├── intelligence-operations.md
-│   │   ├── learning-loop.md
-│   │   ├── knowledge.json            Ships empty (Q-06)
-│   │   ├── knowledge-index.json
-│   │   ├── patterns.json             Ships empty
-│   │   ├── patterns-index.json
-│   │   ├── reasoning.json            Ships empty
-│   │   ├── reasoning-index.json
-│   │   ├── cross-references.json
-│   │   └── synonym-map.json          Seeded (21 groups, Q-14)
+│   ├── Intelligence/                 patterns / knowledge / reasoning / cross-refs / synonym-map
+│   │   ├── *.json (ships empty; Q-06)
+│   │   └── intelligence-operations.md + learning-loop.md
 │   │
-│   ├── Memory/                       Session and entity memory
-│   │   ├── README.md
-│   │   ├── memory.json               Seeded (identity stanza)
-│   │   ├── memory-index.json
-│   │   ├── session-index.json
-│   │   ├── archive/                  Archived session logs
-│   │   └── cache/                    Session-local SQLite cache
-│   │
-│   ├── Benchmarks/                   24-test harness (re-baseline in Phase 3)
-│   │   ├── README.md
-│   │   ├── run-benchmark.py          Loads concat-kernel + stores; emits PASS/FAIL
-│   │   ├── benchmark-candidates.md
-│   │   ├── save-protocol-benchmark.md
-│   │   └── img-gate-stress-test.md
-│   │
-│   ├── exports/                      Generated Dataview markdown (gitignored)
-│   │
-│   └── vectorstore/                  Hybrid semantic search (Phase 3)
-│       ├── SETUP.md
-│       ├── BENCHMARK.md
-│       ├── concat.py                 Shared KB concatenation
-│       ├── kb_vectorize.py           Build vector index from KB
-│       ├── kb_query.py               Hybrid search (RRF: semantic + keyword)
-│       ├── kb_sync.py                Sync vectorstore with KB changes
-│       ├── kb_server.py              MCP server for semantic search
-│       ├── kb_benchmark.py           Embedding-model benchmarking
-│       ├── run-server.sh             MCP server launcher
-│       └── tests/                    Hypothesis-based tests
+│   ├── Memory/                       memory.json + session-index + cache
+│   ├── Benchmarks/                   24-test harness (Phase 3 re-baseline)
+│   ├── exports/                      Dataview markdown (gitignored)
+│   └── vectorstore/                  Python + fastembed (Phase 3 → vectorstore-mcp)
 │
-├── inbox/                            Curation staging (Q-22 boundary)
+├── inbox/                            Curation staging (Q-22)
 │   ├── SCHEMA.md                     Capture frontmatter spec
 │   └── preferences/                  Free-form markdown captures
 │
@@ -126,79 +80,103 @@ The-Hypatia-Protocol/
 │   └── README.md
 │
 ├── docs/                             Reference documentation
-│   ├── Hypatia Build Plan.md         Locked planning spine
-│   ├── hypatia-build-plan-addendum.md
-│   ├── port-inventory.md             File-by-file Bell disposition
-│   ├── open-questions.md             Durable decisions log (Q-01 .. Q-32)
+│   ├── Hypatia Build Plan.md         Current planning spine (Phase 1.5 pivot edition)
+│   ├── hypatia-build-plan-addendum.md   Phase 1 close-out deltas
+│   ├── port-inventory.md             File-by-file Bell disposition (historical)
+│   ├── open-questions.md             Durable decisions log (Q-01 ... Q-33)
+│   ├── phase-1.5-kernel-redistribution-design.md   Q-33 implementation design
 │   ├── system-maintenance.md
 │   ├── vault-librarian-reference.md  Frozen vault CLAUDE.md
 │   ├── growth-spec-script-offload.md
 │   ├── llm-wiki.md                   Geoff Huntley's pattern reference
 │   ├── research/
 │   └── reference/
+│       ├── phase-1-kernel-archive/   The 11-file Phase 1 kernel (now MCP-resource source)
 │       ├── nathaniel/                Frozen Bell historical artifacts
 │       └── bell-steering-files/      Archived Bell .steering-files content
 │
-├── scripts/                          Setup, validation, save-time persistence
+├── scripts/                          Python tooling
 │   ├── setup.sh                      First-run setup (filters, deps)
-│   ├── setup-filters.sh              Git sanitization filter config only
+│   ├── setup-filters.sh              Git sanitization filter config
 │   ├── run-python.sh                 Python runner (venv-aware)
 │   ├── save-session.py               Atomic save: JSON + index + inbox + export + commit-stage
-│   ├── hypatia-git-commit.py         Wraps `git commit` with Hypatia identity from config
+│   ├── hypatia-git-commit.py         Wraps git commit with Hypatia identity from config
 │   ├── check-keyword-drift.py        Kernel keyword-map vs protocol-declaration linter
 │   ├── export-intelligence-to-markdown.py   Dataview-queryable markdown exports
 │   ├── session-cache.py              Session-local SQLite cache (FTS5)
-│   ├── cascade-correction.py         Scan stores for stale claims; apply fixes
-│   ├── removal-cascade.py            Delete entries with full cascade
-│   ├── maintenance.py                Health checks + safe auto-fixes
-│   ├── reseed.py                     Golden seed verification and reseed
-│   ├── secure-fetch.py               MCP fetch security proxy (URL filtering)
-│   ├── full-maintenance.sh           Maintenance wrapper (Mac)
-│   ├── python-maintenance.sh         Python cache cleanup
-│   ├── harden-repo.sh                Pre-push confidential-pattern scan
-│   ├── git-filter-clean.py           Git clean filter (sanitize on commit)
-│   ├── git-filter-smudge.py          Git smudge filter (restore on checkout)
-│   ├── normalize-schemas.py          JSON schema normalization
-│   ├── validate-schemas.py           JSON schema validation
-│   └── pre-commit-kb-validate.sh     Pre-commit hook for KB validation
+│   ├── cascade-correction.py
+│   ├── removal-cascade.py
+│   ├── maintenance.py
+│   ├── reseed.py
+│   ├── secure-fetch.py               MCP fetch security proxy
+│   ├── full-maintenance.sh
+│   ├── python-maintenance.sh
+│   ├── harden-repo.sh
+│   ├── git-filter-clean.py + smudge.py
+│   ├── normalize-schemas.py
+│   ├── validate-schemas.py
+│   └── pre-commit-kb-validate.sh
 │
-└── tests/                            Script-level test suites
-    ├── test_save_session.py          Includes TestInboxFlush + TestMarkdownExport
+└── tests/                            Pytest suites (175 passing as of Phase 1 close)
+    ├── test_save_session.py          Inbox + markdown-export coverage
     ├── test_save_oob.py              End-to-end + out-of-bounds
-    ├── test_schema_validation.py     Schema gate per Q-05 (NEW)
-    ├── test_keyword_drift.py         Kernel-map linter gate per Q-05 (NEW)
+    ├── test_schema_validation.py     Schema gate (Q-05)
+    ├── test_keyword_drift.py         Kernel-map linter gate (Q-05)
+    ├── test_protocols_mcp.py         MCP server tests (Phase 1.5; needs `cargo build` first)
     ├── test_session_cache.py
     ├── test_cascade_correction.py
     ├── test_removal_cascade.py
     ├── test_maintenance.py
     └── test_edge_cases.py
+
+Workspace root:
+├── pyproject.toml + uv.lock          Python deps
+├── Cargo.toml                        Rust workspace (frontend + mcp-servers)
+├── hypatia.config.yaml               Per-machine config (vault path, git identity, model)
+├── LICENSE                           MIT, AJ Strauman-Scott 2026 + Bell attribution
+├── README.md
+├── AGENTS.md
+├── FILE-STRUCTURE.md                 This file
+├── POCKET-HQ.md                      Pattern reference (scaffold dirs removed in Phase 1)
+├── CLAUDE.md                         Claude Code port notes (gitignored)
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+└── SECURITY.md
 ```
+
+---
 
 ## Path routing reference
 
 | Domain | Path | Purpose |
 |---|---|---|
-| Kernel | `.roo/rules-hypatia/` | Always-loaded system-prompt rules (Roo mode = hypatia) |
-| Mode definition | `.roomodes` | Hypatia custom mode (slug, role, tool groups) |
-| Agent spec | `AGENTS.md` | Cross-tool workspace agent overview |
+| Compact kernel (always-loaded) | `kernel/` | Identity + voice + critical gates + routing instinct |
+| MCP server (Rust) | `mcp-servers/protocols/` | Serves 32 protocol resources to Goose |
+| Frontend (Rust + Tauri) | `frontend/` | Hypatia's desktop app |
+| Goose distro | `goose-config/` | Provider + extensions + system prompt source |
 | Per-machine config | `hypatia.config.yaml` | Vault path, git identity, paths, preferences |
 | Knowledge base | `hypatia-kb/` | All protocols, intelligence, memory, vectorstore |
-| Protocols | `hypatia-kb/protocols/` | All 20 lazy-load protocols (4 clusters + cross-cutting) |
+| Protocols | `hypatia-kb/protocols/` | 20 lazy-load cluster + cross-cutting protocols |
 | Intelligence | `hypatia-kb/Intelligence/` | patterns / knowledge / reasoning / cross-refs / synonym-map |
 | Memory | `hypatia-kb/Memory/` | memory.json + session logs + cache |
 | Vectorstore | `hypatia-kb/vectorstore/` | fastembed + RRF semantic search |
-| Generated exports | `hypatia-kb/exports/` | Dataview markdown (gitignored, regenerated on save) |
 | Inbox | `inbox/preferences/` | Free-form captures awaiting Scholar consolidation |
 | Workspace | `workspace/` | Per-machine scratch (gitignored except README) |
-| Build docs | `docs/Hypatia Build Plan.md` + `docs/*-addendum.md` | Locked planning spine + corrections |
-| Bell reference | `docs/reference/` | Frozen historical artifacts from upstream fork |
+| Build docs | `docs/Hypatia Build Plan.md` + `docs/*-addendum.md` | Planning spine + corrections |
+| Phase 1 kernel archive | `docs/reference/phase-1-kernel-archive/` | The 11-file Phase 1 kernel, now MCP-resource source |
+| Bell reference | `docs/reference/nathaniel/` + `bell-steering-files/` | Frozen historical artifacts |
 | Scripts | `scripts/` | Setup, save, validation, maintenance, git filters |
-| Tests | `tests/` + `hypatia-kb/vectorstore/tests/` | Script + vectorstore test scaffolding |
+| Tests | `tests/` + `hypatia-kb/vectorstore/tests/` | Pytest suites |
+
+---
 
 ## Notes on state
 
-- **`hypatia-kb/protocols/` consolidates the entire protocol layer** (Phase 1 commit e18568b). Bell's `hypatia-kb/*-protocol.md` flat layout was relocated and cluster-prefixed.
-- **`hypatia-kb/Benchmarks/`** holds the 24-test harness only. Bell's dated snapshots were removed in Phase 1; re-baseline in Phase 3 once stores accumulate.
-- **`hypatia-kb/Hypatia-Protocol.md`** is frozen historical reference. Live decision routing is `.roo/rules-hypatia/11-decision-routes.md`.
-- **`docs/reference/`** is the holding pen for frozen upstream content. Do not edit in place.
-- **`tests/`** contains Bell's original scaffolding plus three new Hypatia-native tests (`test_schema_validation`, `test_keyword_drift`, the extended `test_save_session`).
+- **`kernel/`** is the always-loaded compact system prompt (~4K tokens). Hypatia's identity, voice, critical gates, and routing instinct. Loaded by Goose at session start.
+- **`docs/reference/phase-1-kernel-archive/`** holds the Phase 1 11-file kernel (~20K tokens). Now serves as MCP-resource source via `mcp-servers/protocols/` (Q-33 redistribution).
+- **`hypatia-kb/protocols/`** consolidates the entire protocol layer; cluster-prefixed naming.
+- **`mcp-servers/protocols/`** is the Rust MCP server that serves `protocols/` + `phase-1-kernel-archive/` as resources to Goose.
+- **`frontend/`** is the custom Tauri 2.0 desktop UI (Phase 1.5 v1 scaffold; Phase 2 adds menubar/USB/screen).
+- **`goose-config/`** is the Goose custom-distro config; tells Goose how to load Hypatia + which MCP servers to register.
+- **`hypatia-kb/Hypatia-Protocol.md`** is frozen historical reference. Live decision routing is `kernel/04-routing.md` + `docs/reference/phase-1-kernel-archive/11-decision-routes.md` (via MCP).
+- **Roo Code substrate (Phase 1)** was abandoned during the 2026-05-12 pivot. `.roomodes` deleted. `.roo/rules-hypatia/` content moved to `docs/reference/phase-1-kernel-archive/`.
