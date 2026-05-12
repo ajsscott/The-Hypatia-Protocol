@@ -1,0 +1,68 @@
+# Hypatia configuration. Committed; single-user personal project, no secrets.
+#
+# Read by: scripts/save-session.py, scripts/secure-fetch.py, and any future
+# script that needs vault paths, git identity, or per-machine state dirs.
+#
+# If you ever run Hypatia on a different machine (Phase 1.5+), edit
+# vault.path + paths.state_dir locally — don't ship multi-machine resolution
+# yet.
+
+vault:
+  # Absolute path to the TabulaJacqueliana vault. Hypatia reads/writes here
+  # via Roo's filesystem tools. No trailing slash.
+  path: /Users/ajsscott/GitHub/TabulaJacqueliana
+
+  # Branch Hypatia operates on. Vault uses `work-safe` as the curation branch;
+  # main is reserved for clean publishable state.
+  branch: work-safe
+
+  # Run the Obsidian linter on save-session completion (vault-side hook).
+  linter_on_save: true
+
+  # Vault's obsidian-git auto-commit cadence. Informational only; Hypatia
+  # spaces her own commits to avoid race conditions.
+  auto_commit_interval_min: 15
+
+instance:
+  # Hypatia's identity. Stored in Memory/memory.json `instance_identity` stanza.
+  name: Hypatia
+  created: 2026-04-22
+
+  # Canonical local-model design target (Q-17, 2026-05-12). Kernel prose and
+  # protocol structure are calibrated against this model's tool-use behavior.
+  # Other supported models: mistral-nemo:12b, deepseek-r1:14b (with caveats).
+  design_target_model: qwen3:14b
+
+git:
+  # Git identity for commits Hypatia herself authors (Q-08, 2026-04-22).
+  # save-session.py exports these as GIT_AUTHOR_* and GIT_COMMITTER_* env vars
+  # before invoking `git commit`, so both author and committer are Hypatia.
+  # Port-work commits (AJ + Claude Code collaborating on the port) continue to
+  # attribute to AJ's normal git config; this identity is only applied when
+  # save-session.py runs Hypatia's curation workflow.
+  author_name: Hypatia
+  author_email: hypatia@local
+  committer_name: Hypatia
+  committer_email: hypatia@local
+
+preferences:
+  # Voice register (Q-24, 2026-05-11). See .roo/rules-hypatia/02-voice.md.
+  register: alexandrian-scholar
+
+  # Stress-test plans before agreeing. See global CLAUDE.md.
+  devil_advocate: true
+
+  # Address term for the user. Used sparingly; never reflexively.
+  address_term: Scholar
+
+paths:
+  # Per-machine state directory for Hypatia's local artifacts (logs, caches,
+  # secrets that should never be committed). Created on first run if absent.
+  state_dir: ~/.hypatia
+
+  # secure-fetch.py audit log. Replaces Bell's ~/.kiro/security.log.
+  security_log: ~/.hypatia/security.log
+
+  # fastembed model cache (Phase 3). Defaults to fastembed's own ~/.cache/
+  # location if unset; override for flash-drive portability (Phase 1.5).
+  # fastembed_cache: ~/.hypatia/fastembed-cache

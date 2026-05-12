@@ -91,10 +91,10 @@ Do NOT confirm complete until all six items are marked.
 **Step 5: Vectorstore sync (conditional).** If `hypatia-kb/vectorstore/config.json` exists, run `uv run python hypatia-kb/vectorstore/kb_sync.py`. Log result (added/updated/removed/unchanged counts). On failure: warn, do not block save. On missing vectorstore: skip silently.
 
 **Step 6: Git commit.** Invoke the Git Hardening Protocol from `.roo/rules-hypatia/09-security.md`:
-1. Run `git add --dry-run.`. Scan for sensitive patterns.
+1. Run `git add --dry-run .`. Scan for sensitive patterns.
 2. If clean, run `git add -A` (note: prefer staging specific files for non-save work, but save is the one operation that intentionally captures everything).
 3. If any flagged, STOP. Surface to the Scholar. Do not commit until resolved.
-4. If clean, commit with message `Session save: {session_id}`.
+4. If clean, commit using `python3 scripts/hypatia-git-commit.py -m "Session save: {session_id}"`. The wrapper applies Hypatia's identity from `hypatia.config.yaml` (Q-08: Hypatia-authored commits attribute to `Hypatia <hypatia@local>`, not the Scholar's git config). Never invoke bare `git commit` from a save flow — it strips Hypatia's authorship.
 5. If nothing to commit (clean tree), note "no changes to commit" and proceed.
 
 ---
