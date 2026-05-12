@@ -630,6 +630,261 @@ the Build Plan left open.
 
 ---
 
+## Q-25 | ANSWERED — Protocol relocation strategy
+
+Asked: 2026-05-12  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** Build Plan called for moving Bell's 13 `hypatia-kb/*-protocol.md`
+files into `hypatia-kb/protocols/` with skill-cluster-prefixed names
+(librarian-* / researcher-* / writer-* / assistant-*). By Phase 1
+close-out the rewrites had already happened in place at the old
+locations; the question was whether to actually relocate.
+
+**Options considered:**
+1. Plan-canonical relocation + cluster-prefix (18 files in protocols/)
+2. Move but keep original names (path-rename only)
+3. Leave at hypatia-kb/ root
+
+**Decision:** Option 1.
+
+**Implementation (commits e18568b, c53d41f, 9799f71, ba9cbe2):**
+- 14 files relocated: 12 with cluster-prefix renames + 2 cross-cutting
+  (security.md, CRITICAL-FILE-PROTECTION.md) kept their names but moved.
+- 1 new file written: `assistant-ingest.md` (Phase 1 deliverable per
+  Build Plan; no Bell analog).
+- 1 planned new file SKIPPED: `librarian-save.md` — kernel
+  `08-save-command.md` already always-loaded with the full save spec; a
+  separate lazy-load protocol would duplicate.
+- Kernel keyword map (`10-skills-loading.md`) restructured into 5
+  cluster-organized tables; 17 protocols had drifting keyword sets
+  reconciled via union.
+
+**Supersedes:** Build Plan § File-by-file customization strategy + port
+inventory § "Hypatia target" column. Final layout matches the plan's
+intent.
+
+---
+
+## Q-26 | ANSWERED — Git identity wiring mechanism
+
+Asked: 2026-05-12  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** Q-08 (2026-04-22) locked the distinct Hypatia git identity
+(`Hypatia <hypatia@local>`). The mechanism for applying it on commit was
+left "to be decided during Phase 1 Week 3."
+
+**Options considered:**
+1. Env vars in subprocess (GIT_AUTHOR_* + GIT_COMMITTER_*)
+2. `--author=` flag only (author = Hypatia, committer = Scholar)
+3. Inline `-c user.name= -c user.email=` config flags
+
+**Decision:** Option 1. Both author and committer become Hypatia.
+
+**Implementation (commit bf720bc):**
+- Identity values live in `hypatia.config.yaml` (new) under `git:` stanza.
+- `scripts/hypatia-git-commit.py` (new) reads config, exports the four
+  env vars, exec's `git commit "$@"`.
+- Kernel `.roo/rules-hypatia/08-save-command.md` Step 6.4 updated to
+  instruct Hypatia to invoke the wrapper instead of bare `git commit`.
+- PyYAML added as runtime dep for config parsing.
+
+**Supersedes:** Build Plan § Q-08 "Final form to be decided during Phase
+1 Week 3." Q-08 stands; this is its implementation form.
+
+---
+
+## Q-13 | ANSWERED — Hypatia-Protocol.md Routes A-F: "apply the 4 fixes"
+
+Asked: 2026-04-22  Status: ANSWERED  Decided by: AJ Strauman-Scott (2026-05-12)
+
+**Context:** Plan-level Q-13 promised "4 fixes vs prior TabulaJacqueliana
+port." During Phase 1 close-out review, all four were checked against
+the current `.roo/rules-hypatia/11-decision-routes.md`:
+
+1. **Route E "just do it" override language** — already at lines 217 +
+   228-229 (Tier 3 skippable, Tier 1-2 require confirmation regardless).
+   No edit needed.
+2. **Route B expertise-detection in skip-explanation** — already at line
+   125 ("Scholar is expert in domain" listed under "Skip explanation
+   when"). No edit needed.
+3. **Route F verification-rule tightening (no punt-back-to-user)** —
+   already at lines 262-265, ending with "Resolve with data; do not
+   defer to the Scholar." No edit needed.
+4. **Drop the CoV reference pointer** — line 259 "Chain of Verification"
+   bullet. AJ chose to KEEP it (CoV pattern is fine as-is; the original
+   "no longer exists" reasoning didn't apply).
+
+**Decision:** All 4 satisfied without edits to 11-decision-routes.md.
+
+**Supersedes:** Build Plan § Week 2 Day 11-12 "apply the 4 fixes" — done
+by virtue of the file's existing state plus the keep-CoV call.
+
+---
+
+## Q-14 | ANSWERED — synonym-map.json initial seed
+
+Asked: 2026-04-22  Status: ANSWERED  Decided by: AJ Strauman-Scott (2026-05-12)
+
+**Context:** Build Plan § Week 2 Day 6-7 called for seeding
+`hypatia-kb/Intelligence/synonym-map.json` with zettelkasten / Obsidian
+/ workflow vocabulary. Concrete seed not specified.
+
+**Options considered:**
+1. Draft from `docs/vault-librarian-reference.md` terminology; AJ reviews diff
+2. AJ dumps groups directly in chat
+3. Ship empty (Q-06 accepts empty stores)
+
+**Decision:** Option 1.
+
+**Implementation (commit 51891cd):** 21 synonym groups covering note
+taxonomy (Tree/Seed/Mountain/Slope/Trail/Step), workflow verbs (ingest/
+curate/consolidate/lint/query/save), Obsidian primitives (wikilink/
+backlink/block-ref/embed/frontmatter), and identity terms (Scholar/
+vault/atomic note/drift). 84 total aliases, under the 100-entry cap.
+
+---
+
+## Q-17 | ANSWERED — Canonical Ollama design target
+
+Asked: 2026-04-22  Status: ANSWERED  Decided by: AJ Strauman-Scott (2026-05-12)
+
+**Context:** Q-02 / Q-21 locked LLM-agnostic design with Ollama as the
+fallback substrate. The kernel + protocol prose needs to be calibrated
+against a specific model's tool-use reliability.
+
+**Options considered:**
+1. qwen3:14b — best tool-use reputation in 14B class
+2. mistral-nemo:12b — smaller, faster, current default
+3. deepseek-r1:14b — strongest reasoning, but `<thinking>` blocks
+   interact poorly with Roo's tool-use parsing
+4. Design for all three
+
+**Decision:** Option 1 (qwen3:14b).
+
+**Rationale:** Tool-use reliability is load-bearing for Hypatia (every
+save flow + every read/write goes through Roo's tools). qwen3 holds the
+contract most reliably in the 14B class. mistral-nemo is the default in
+AJ's vault but its tool-use is weaker; deepseek-r1's reasoning style
+interferes with structured tool invocation.
+
+**Stored in:** `hypatia.config.yaml` under `instance.design_target_model`.
+
+---
+
+## Q-27 | ANSWERED — hypatia-kb/Benchmarks/ disposition
+
+Asked: 2026-05-12  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** Bell's Benchmarks/ dir held a 24-test harness +
+2026-03-21/22 snapshot reports + historical metrics JSON. All contained
+Nate/Kiro refs.
+
+**Options considered:**
+1. Discard entire dir
+2. Rewrite for Hypatia (keep harness, adapt criteria)
+3. Freeze as historical reference
+
+**Decision:** Option 2.
+
+**Implementation (commit 662ef78):** Pragmatic scope — deleted Bell's
+3 dated snapshot reports + historical metrics JSON (they measured a
+populated Bell-era system; Hypatia ships empty per Q-06 and will
+produce its own baseline in Phase 3). Kept and scrubbed the 24-test
+harness (`run-benchmark.py`), the candidates catalog, the save-protocol
+benchmark, and the img-gate stress test. README rewritten for Hypatia.
+
+**Phase 1.5 follow-up:** tests 8, 23, 24 in `run-benchmark.py` reference
+Bell-era gate names ("Failure-to-Fix Cycle", etc.) that may not match
+Hypatia's evolved vocabulary 1:1. Audit + pin to Hypatia's actual gate
+enumeration when Phase 1.5 lands.
+
+---
+
+## Q-28 | ANSWERED — Pocket HQ scaffold disposition
+
+Asked: 2026-05-12  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** Top-level dirs `Projects/`, `Business/`, `Brand/`, `Life/`
+(+ 9 subdirs), `Archive/` shipped from Bell's repo as empty
+`.gitkeep`-only scaffolding for personal project management. AJ's
+project management lives in TabulaJacqueliana's Mountains/, not here.
+
+**Options considered:**
+1. Discard all 5 top-level scaffold dirs
+2. Keep as-is
+3. Discard + create one scratch dir for Hypatia
+
+**Decision:** Option 3.
+
+**Implementation (commit 3fe3aca):** 14 `.gitkeep` files removed across
+14 dirs; new `workspace/` dir created with README explaining intent
+(per-machine scratch for logs, drafts, queued ingests). `workspace/*`
+gitignored except for README. POCKET-HQ.md (the philosophy doc)
+retained at repo root.
+
+---
+
+## Q-29 | ANSWERED — Test + CI strategy
+
+Asked: 2026-05-12  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** Bell shipped 7 test files covering scripts/ + a CI workflow
+that referenced stale paths. Q-05 (2026-04-22) scoped Phase 1 test
+coverage to critical-path (save-session, schema, keyword-drift); the
+question was whether to keep, rewrite, or discard Bell's existing tests.
+
+**Options considered:**
+1. Audit + extend Bell's tests in place (lowest LOC churn)
+2. Rewrite critical-path only; defer the other 6 to Phase 1.5
+3. Full clean slate (delete all 7; write only 3 from scratch)
+
+**Decision:** Option 1.
+
+**Implementation (commits e0021ce, d50031f, 14b32d9, fff4886, 7695bc7):**
+- Audit: scrubbed Bell-era sample data ("Sir" → "Scholar",
+  "Nate writes ops" → "Hypatia writes ops") across 2 test files.
+- Rename: `test_columbo_oob.py` → `test_save_oob.py` (drop Columbo
+  branding).
+- Extend: `test_save_session.py` gained TestInboxFlush (5 tests) +
+  TestMarkdownExport (2 tests) covering the Q-22 inbox boundary +
+  the new markdown export wiring.
+- New: `test_schema_validation.py` (20 tests) — Q-05 critical-path gate
+  against scripts/validate-schemas.py.
+- New: `test_keyword_drift.py` (8 tests) — Q-05 critical-path gate
+  against scripts/check-keyword-drift.py.
+- CI rewrite: `.github/workflows/validate.yml` switched from pip to
+  uv, fixed stale `Nate\'s-kb/vectorstore` path, added gates for
+  schema validation + keyword drift + script pytest + vectorstore
+  pytest.
+
+**Pytest total:** 175 (140 inherited + 35 new), all green.
+
+---
+
+## Q-30 | ANSWERED — `.example` config templates skipped for Hypatia
+
+Asked: 2026-05-12  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** Initial draft of the per-machine config followed OSS
+convention: write `hypatia.config.yaml.example` (committed) + gitignore
+the real `hypatia.config.yaml`. AJ rejected the ceremony.
+
+**Decision:** Write the real file directly; commit it.
+
+**Rationale:** The `.example` convention serves two scenarios —
+distributing to multiple users, or hiding secrets — neither of which
+apply. Hypatia has one user (AJ), no secrets in the config (vault path
+in CLAUDE.md, git identity public per Q-08, model name + preferences
+documented). Writing both the template and the real file doubles work
+for zero benefit.
+
+**Stored as feedback memory:** `feedback_skip_example_configs.md`. The
+general rule extends to AJ's other personal projects: skip reflexive
+OSS conventions when they don't fit the single-user / no-secrets
+context.
+
+---
+
 ## Change log
 
 - **2026-04-22** — initial log with Q-01 through Q-12 answered + Q-13
@@ -640,3 +895,8 @@ the Build Plan left open.
   replacing YOLO as the vault's in-Obsidian LLM substrate. Q-24
   formalizes the Hypatia persona directives (Scholar address, she/her
   pronouns, Alexandrian register).
+- **2026-05-12** — Phase 1 close-out session. Q-25 through Q-30 added
+  (protocol relocation, git identity wiring, Benchmarks rewrite,
+  scaffold disposition, test/CI strategy, .example skip). Q-13, Q-14,
+  Q-17 moved from OPEN to ANSWERED. Q-15, Q-16, Q-18, Q-19, Q-20
+  remain open (empirical / post-ship decisions).
