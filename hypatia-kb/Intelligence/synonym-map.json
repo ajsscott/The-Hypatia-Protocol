@@ -1,9 +1,32 @@
 {
   "_meta": {
-    "description": "Synonym expansion map for CSR retrieval. Consulted at query time to bridge vocabulary gaps.",
+    "description": "Synonym expansion map for CSR retrieval. Consulted at query time to bridge vocabulary gaps between user phrasing and canonical tag taxonomy.",
     "usage": "When scanning index tags for a keyword, also check synonyms. Bidirectional: if A maps to B, B implicitly maps to A.",
     "maintenance": "Cap at ~100 entries. Prune during monthly maintenance. Add new synonyms when CSR misses are detected.",
-    "last_updated": "2026-05-11"
+    "seed_source": "docs/vault-librarian-reference.md + hypatia-kb/protocols/librarian-*.md (canonical zettelkasten + Obsidian + workflow vocabulary, Q-14 decision 2026-05-12)",
+    "last_updated": "2026-05-12"
   },
-  "synonyms": {}
+  "synonyms": {
+    "Tree": ["atomic note", "concept note", "wiki page", "atomic Tree", "Tree note"],
+    "Seed": ["source", "source note", "clipping", "raw source", "capture"],
+    "Mountain": ["project", "initiative"],
+    "Slope": ["phase", "subproject", "milestone group"],
+    "Trail": ["workstream", "subphase"],
+    "Step": ["task", "action item"],
+    "vault": ["knowledge base", "PKB", "zettelkasten", "wiki", "kb"],
+    "ingest": ["process", "capture", "file source", "intake", "onboard"],
+    "curate": ["maintain", "tend", "prune", "wiki tend"],
+    "consolidate": ["promote", "canonize", "persist", "materialize", "graduate", "inbox flush"],
+    "lint": ["audit", "check", "scan", "health check", "sanity check"],
+    "query": ["search", "find", "retrieve", "look up", "ask"],
+    "wikilink": ["internal link", "backlink target", "vault link"],
+    "backlink": ["incoming link", "inbound reference", "mentioned in"],
+    "block-ref": ["block reference", "^cite", "anchor", "cite callout"],
+    "embed": ["transclusion", "inline include", "inline embed"],
+    "frontmatter": ["YAML", "metadata", "header", "properties", "YAML header"],
+    "drift": ["inconsistency", "divergence", "schema rot", "format decay"],
+    "atomic note": ["one-concept note", "single-idea note", "focused note", "atomic Tree"],
+    "save": ["commit", "persist", "snapshot", "checkpoint", "save session"],
+    "Scholar": ["user", "AJ", "director", "author"]
+  }
 }
