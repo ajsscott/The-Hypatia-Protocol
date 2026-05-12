@@ -1,6 +1,6 @@
 # Benchmark Candidates
 
-Measurable metrics across the Nathaniel Protocol ecosystem, tiered by collection readiness.
+Measurable metrics across the Hypatia ecosystem, tiered by collection readiness.
 
 ---
 
@@ -97,7 +97,7 @@ Note: CSR savings represent the Session Start Gate cost reduction (loading index
 | Metric | How Measured | Baseline |
 |--------|-------------|----------|
 | Total KB size | Walk hypatia-kb/ | 7.4 MB |
-| Kernel size | Nathaniel.md file size | 113 KB (~28,813 tokens), 2,344 lines |
+| Kernel size | Concatenated `.roo/rules-hypatia/*.md` (11 files) | TBD per Hypatia baseline (Phase 1 decomposition split Bell's 2,344-line monolith across 11 files) |
 | Total ecosystem | KB + kernel | 7.5 MB |
 | Protocol count | Count *.md protocol files | 14 |
 | Protocol total size | Sum protocol file sizes | 237 KB (~60,778 tokens) |
@@ -156,7 +156,7 @@ These would require new tooling or external measurement.
 |--------|---------------|-------|
 | Actual token usage per save | API-level token counter | True cost, not estimate |
 | Actual token usage per session | API-level token counter | True session cost |
-| Response latency | Timestamp request/response pairs | How fast is Nate? |
+| Response latency | Timestamp request/response pairs | How fast is Hypatia? |
 | Pattern prediction accuracy | Track predictions vs. outcomes systematically | Is confidence calibration working? |
 | User satisfaction score | Explicit feedback mechanism | Quality signal |
 | Cross-session learning transfer | Track when session N's learning helps session N+X | Compounding value measurement |

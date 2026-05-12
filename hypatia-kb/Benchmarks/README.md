@@ -1,72 +1,68 @@
 # Benchmarks
 
-Performance, scale, and behavioral metrics for the Nathaniel Protocol ecosystem.
+Performance, scale, and behavioral metrics for the Hypatia ecosystem.
 
 ## Contents
 
 | File | What It Tracks |
-|------|----------------|
-| `benchmark-candidates.md` | Full catalog of measurable metrics, tiered by readiness. Includes Tier 4 adversarial interrogation findings. |
-| `ecosystem-benchmark-2026-03-21.md` | Ecosystem scale snapshot: store sizes, CSR efficiency, vectorstore, memory system, growth rates |
-| `behavioral-benchmark-2026-03-21.md` | 23 behavioral tests: routing accuracy, integrity, retrieval effectiveness, tag quality, adversarial resistance, schema integrity, duplicate detection |
-| `security-benchmark-2026-03-22.md` | Defense-in-depth: proxy URL filtering (44 tests), behavioral trigger detection (16 tests), defense hierarchy validation |
-| `save-protocol-benchmark.md` | Per-save timing, token estimates, capture counts |
+|---|---|
+| `run-benchmark.py` | 24-test harness — CSR routing, integrity, retrieval, schemas, gate coverage. Run from `hypatia-kb/`. |
+| `benchmark-candidates.md` | Catalog of measurable metrics, tiered by collection readiness. |
+| `save-protocol-benchmark.md` | Per-save timing, token estimates, capture counts. |
+| `img-gate-stress-test.md` | Image-source gate adversarial stress test. |
 
-## How Benchmarks Are Collected
+## Running
 
-Benchmarks are captured against the live system operating at optimal conditions. The reports document what a mature, healthy Nathaniel Protocol ecosystem looks like: its scale, its behavioral accuracy, and its operational characteristics. These serve as reference documentation, not a continuous monitoring system.
+```bash
+cd hypatia-kb
+uv run python Benchmarks/run-benchmark.py
+```
 
-A fresh template clone starts with empty stores. These benchmarks show the target state of a populated, healthy instance after sustained use.
+The harness loads `Intelligence/*.json` + `Memory/*.json` + the `.roo/rules-hypatia/` kernel (concatenated) and emits PASS / FAIL / INFO per test.
 
-## Test Suite (23 tests)
+## Expected behavior with empty stores
+
+Hypatia ships with empty Intelligence/Memory stores per Q-06. On a fresh-clone run, the harness will return zero-hit results for entry-counting / retrieval / coverage tests. That's correct, not broken — the stores grow only through deliberate Scholar consolidation.
+
+Tests against the kernel (gate coverage, anti-pattern coverage, kernel coherence) run independent of store population and produce real signal even on a fresh clone.
+
+## Re-baseline cadence
+
+Once Hypatia has accumulated ≥3 months of consolidated entries (rough threshold for representative usage), regenerate baseline snapshots. Suggested cadence after that: quarterly, or after major protocol edits / refactors.
+
+The 2026-03-21/22 Bell-era snapshot reports were deleted during the Phase 1 rewrite — they measured a different system. The first Hypatia baseline will be its own ground truth.
+
+## Test catalog (24 tests)
 
 | # | Test | Type | What It Proves |
-|---|------|------|----------------|
+|---|---|---|---|
 | 1 | CSR Retrieval Accuracy | Component | Index lookup mechanics work |
-| 2 | End-to-End Retrieval | E2E | Full CSR pipeline surfaces relevant entries for real queries |
+| 2 | End-to-End Retrieval | E2E | Full CSR pipeline surfaces relevant entries |
 | 3 | Adversarial CSR Routing | Adversarial | Off-domain signals return zero hits |
 | 4 | Index-Store Consistency | Integrity | No orphans, ghosts, or duplicates |
-| 5 | Tag Reachability | Coverage | Every entry findable via at least one tag |
-| 6 | Cross-Reference Integrity | Integrity | All reasoning chain references valid |
+| 5 | Tag Reachability | Coverage | Every entry findable via ≥1 tag |
+| 6 | Cross-Reference Integrity | Integrity | All reasoning-chain references valid |
 | 7 | Protocol Trigger Accuracy | Routing | Every keyword maps to an existing protocol |
-| 8 | Gate Coverage | Documentation | All 7 gates documented with triggers |
-| 9 | Vectorstore Quality | Integrity | Vectors normalized, self-consistent, corruption-free |
-| 10 | Memory Retrieval Simulation | E2E | Active projects can reach relevant memories |
+| 8 | Gate Coverage | Docs | All gates documented with triggers |
+| 9 | Vectorstore Quality | Integrity | Vectors normalized, self-consistent |
+| 10 | Memory Retrieval | E2E | Active projects reach relevant memories |
 | 11 | Session Index Integrity | Integrity | 1:1 index-to-file correspondence |
 | 12 | Confidence Distribution | Quality | Scores distributed enough for prioritization |
-| 13 | Kernel & Anti-Pattern Coverage | Documentation | All sections non-empty, all categories present |
-| 14 | Reasoning Retrieval via Reuse Signals | E2E | Reasoning entries findable via native routing (not tags) |
-| 15 | Synonym Map Effectiveness | Behavioral | Synonym expansion finds entries direct lookup misses |
-| 16 | HRF Hybrid Retrieval | E2E | Semantic search bridges vocabulary gaps CSR can't |
-| 17 | Tag Quality Audit | Quality | Tags match likely query terms, not just exist |
+| 13 | Kernel & Anti-Pattern Coverage | Docs | All kernel sections non-empty |
+| 14 | Reasoning Retrieval via Reuse Signals | E2E | Reasoning entries findable via native routing |
+| 15 | Synonym Map Effectiveness | Behavioral | Synonym expansion catches what direct lookup misses |
+| 16 | RRF Hybrid Retrieval | E2E | Semantic + keyword fusion bridges vocabulary gaps |
+| 17 | Tag Quality Audit | Quality | Tags match likely query terms |
 | 18 | Negative Protocol Routing | Adversarial | Non-matching keywords don't trigger protocols |
-| 19 | Schema Integrity | Integrity | Every entry has required fields for its store type |
-| 20 | ID Sequence Integrity | Integrity | IDs are sequential with documented gaps only |
-| 21 | Index Meta Accuracy | Integrity | _meta.total matches actual entry counts |
-| 22 | Proxy URL Filtering | Security | Blocked URLs rejected, legitimate URLs pass, zero false positives |
-| 23 | Behavioral Trigger Detection | Security | Injection patterns caught in external content, low false positive rate |
+| 19 | Schema Integrity | Integrity | Every entry has required fields per schema |
+| 20 | ID Sequence Integrity | Integrity | IDs sequential with documented gaps only |
+| 21 | Index Meta Accuracy | Integrity | `_meta.total` matches actual entry counts |
+| 22 | Proxy URL Filtering | Security | Blocked URLs rejected; legitimate pass |
+| 23 | Behavioral Trigger Detection | Security | Injection patterns caught; low false positive rate |
+| 24 | Kernel Coherence | Integrity | Keyword-map protocols all exist on disk |
 
-## Baseline Snapshot (Development Instance, Session 41)
+## Phase status
 
-*These numbers reflect the development instance at a point in time. The template ships with a curated subset. Run `python3 hypatia-kb/Benchmarks/run-benchmark.py` to generate current metrics for your instance.*
+This harness is structurally ready but contains tests (8, 23, 24) referencing Bell-era gate names that may not match Hypatia's evolved vocabulary 1:1. Phase 1.5 follow-up: audit gate references, pin to actual Hypatia gate enumeration.
 
-| Metric | Value |
-|--------|-------|
-| Total ecosystem size | ~7.5 MB |
-| Kernel | 2,344 lines, ~28,813 tokens |
-| Intelligence entries | 340 (169 patterns, 119 knowledge, 52 reasoning) |
-| Vectorstore | 388 chunks, 384 dimensions |
-| Sessions | 41 (40 success, 1 partial) |
-| Memories | 48 |
-| Active projects | 5 of 6 |
-| Protocols | 14 domain protocols |
-| CSR savings (start gate) | 58.3% vs. full store load |
-| Behavioral tests | 23 (13 original + 5 adversarial interrogation + 3 hardened + 2 security) |
-
-## History
-
-| Date | Event |
-|------|-------|
-| Session 39 | First benchmarked save (save-protocol-benchmark.md) |
-| Session 40 | First behavioral benchmark (13 tests). Research-informed methodology (Ragas, Fowler, Hamel). |
-| Session 41 | Adversarial interrogation of benchmark suite. 15 findings. 5 new tests added (14-18). Test 10 reinvestigated. Test 12 renamed. All stale numbers updated. 3-pass consistency validation: all identical. Hardened re-run: expanded to 21 tests (added T19 Schema Integrity, T20 ID Sequence, T21 Index Meta Accuracy). Doubled adversarial signals. 3-pass hardened validation: all identical. 17 PASS, 2 PARTIAL, 0 FAIL, 2 INFO. |
+Phase 3 follow-up: re-baseline against populated stores; capture as `baseline-YYYY-MM-DD.md`.

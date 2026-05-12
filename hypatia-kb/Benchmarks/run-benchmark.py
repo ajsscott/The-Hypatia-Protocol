@@ -1,7 +1,20 @@
 #!/usr/bin/env python3
-"""Ecosystem Behavioral Benchmark Suite - April 2026
-Run from hypatia-kb/ directory.
-Tests CSR routing, integrity, retrieval quality, and system health.
+"""Hypatia Ecosystem Behavioral Benchmark Suite.
+
+Run from hypatia-kb/ directory. Tests CSR routing, integrity, retrieval
+quality, and system health.
+
+This harness runs against a populated Hypatia. On a fresh-from-clone
+repo (empty Intelligence/Memory stores per Q-06), most tests will return
+zero hits / zero entries; that's expected. The Phase 3 deliverable is
+re-baselining these metrics against a Hypatia with accumulated usage.
+
+Several tests reference Bell-era gate names ("Failure-to-Fix Cycle",
+specific Hypatia-Protocol gate labels) that have evolved during the
+port. Those tests will be PASS/FAIL based on whether the new kernel
+language carries the same semantic gates, even if phrased differently.
+A Phase 1.5 rewrite should pin gate names to Hypatia's actual
+vocabulary.
 """
 
 import json, os, time, sys
@@ -19,6 +32,16 @@ def metric(key, value):
 def load_json(path):
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
+
+def load_kernel():
+    """Concatenate all .roo/rules-hypatia/*.md into one string for keyword
+    + phrase searches. Run from hypatia-kb/; kernel lives at
+    ../.roo/rules-hypatia/. Returns None if directory absent."""
+    kernel_dir = Path("../.roo/rules-hypatia")
+    if not kernel_dir.exists():
+        return None
+    parts = [p.read_text(encoding="utf-8") for p in sorted(kernel_dir.glob("*.md"))]
+    return "\n\n".join(parts) if parts else None
 
 def test(name, passed, detail="", info_only=False):
     status = "INFO" if info_only else ("PASS" if passed else "FAIL")
@@ -223,10 +246,8 @@ for proto_file, keyword in protocols:
 print("\n═══ TEST 8: Gate Coverage ═══")
 gates = ["Troubleshooting Gate", "Removal Cascade", "Destructive Action Gate",
          "Source-Fidelity Gate", "Template Propagation Gate", "File Resolution", "Recommendation Gate"]
-kernel_path = "../.kiro/steering/Nathaniel.md"
-if os.path.exists(kernel_path):
-    with open(kernel_path, 'r', encoding='utf-8') as f:
-        kernel = f.read()
+kernel = load_kernel()
+if kernel is not None:
     for gate in gates:
         found = gate in kernel
         test(f"Gate: {gate}", found, "found" if found else "MISSING")
@@ -532,10 +553,8 @@ for store_name in ["patterns", "knowledge", "reasoning"]:
 # TEST 23: Failure-to-Fix Cycle Coverage
 # ══════════════════════════════════════════════
 print("\n═══ TEST 23: Failure-to-Fix Cycle Coverage ═══")
-kernel_path = "../.kiro/steering/Nathaniel.md"
-if os.path.exists(kernel_path):
-    with open(kernel_path, 'r', encoding='utf-8') as f:
-        kernel = f.read()
+kernel = load_kernel()
+if kernel is not None:
     test("Failure-to-Fix: exists in kernel",
          "Failure-to-Fix Cycle" in kernel and "MANDATORY" in kernel[kernel.index("Failure-to-Fix"):kernel.index("Failure-to-Fix")+500],
          "found" if "Failure-to-Fix Cycle" in kernel else "MISSING")
@@ -552,15 +571,13 @@ else:
 # TEST 24: Kernel Coherence
 # ══════════════════════════════════════════════
 print("\n═══ TEST 24: Kernel Coherence ═══")
-kernel_path = "../.kiro/steering/Nathaniel.md"
-if os.path.exists(kernel_path):
-    with open(kernel_path, 'r', encoding='utf-8') as f:
-        kernel = f.read()
+kernel = load_kernel()
+if kernel is not None:
 
     # 24a: Keyword map protocols exist on disk
     import re
-    keyword_map_match = re.findall(r'`([a-z\-]+(?:-protocol)?\.md)`', kernel)
-    protocol_dir = "."
+    keyword_map_match = re.findall(r'`([a-zA-Z\-\.]+\.md)`', kernel)
+    protocol_dir = "protocols"
     missing_protocols = []
     for proto in set(keyword_map_match):
         if proto.endswith('.md') and 'protocol' in proto:
