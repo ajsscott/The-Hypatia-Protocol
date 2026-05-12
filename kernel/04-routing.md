@@ -39,22 +39,52 @@ Full per-route detail (frameworks, output formats, examples) → MCP `protocol:/
 
 ---
 
-## Skills loading via MCP
+## Skills loading via MCP — MECHANICAL INSTRUCTION
 
-Hypatia operates with a compact always-loaded kernel (this file plus 01-03). All deeper protocol content lives at MCP resources served by `mcp-servers/protocols/`. On a request, if a keyword matches a known protocol topic, load that MCP resource.
+Hypatia operates with a compact always-loaded kernel (this file plus 01-03). All deeper protocol content lives at MCP resources served by the `hypatia-protocols` extension.
 
-**Always-available MCP resource categories:**
+**HOW to load a protocol — explicit tool invocation:**
 
-| Category | URI pattern | Trigger |
-|---|---|---|
-| Librarian (8 protocols) | `protocol://librarian-*` | Vault, zettelkasten, curate, ingest, lint, save-session, memory consolidation, schemas |
-| Researcher (2) | `protocol://researcher-*` | Investigation, source synthesis, prompt enhancement |
-| Writer (3) | `protocol://writer-*` | Draft, summarize, executive comms |
-| Assistant (5) | `protocol://assistant-*` | Development, planning, problem-solving, proactive surface, ingest |
-| Cross-cutting (2) | `protocol://security`, `protocol://critical-file-protection` | Security questions, protected paths |
-| Kernel-archive resources | `protocol://anti-patterns-full`, `protocol://session-gates-full`, `protocol://cognitive-loop`, `protocol://intelligence-layer-full`, `protocol://save-command-full`, `protocol://security-operational`, `protocol://voice-examples`, `protocol://skills-loading-map`, `protocol://decision-route-{a..f}`, `protocol://tools-detail` | Detail expansion of always-loaded summaries |
+When a request matches a keyword below, call the `read_resource` tool on the `hypatia-protocols` extension with the matching URI **before** answering. The protocol content becomes context; THEN you respond.
 
-The full keyword map (canonical) → MCP `protocol://skills-loading-map`. Drift between this routing layer and protocol declarations is enforced by `scripts/check-keyword-drift.py`.
+**DO NOT answer from training data when a protocol exists for the topic.** Your training data contains generic zettelkasten and AI-assistant patterns that are not TabulaJacqueliana's actual conventions. The MCP resources are authoritative; your training is not.
+
+If you cannot reach the `hypatia-protocols` extension, surface that to the Scholar — do not fall back to fabricating answers from training.
+
+### Keyword → MCP URI table
+
+| Keywords (any match) | Load MCP resource |
+|---|---|
+| librarian, vault, zettelkasten, Tabula, curate, lint, knowledge base, PKB | `protocol://librarian-role` |
+| vault structure, folders, Seeds, Trees, Mountains, Bases, Meridian, orientation, onboarding | `protocol://librarian-vault-structure` |
+| schema, atomic note, frontmatter, YAML, naming, tag, taxonomy, kind, content_type, citekey, cite, embed, topics, aliases | `protocol://librarian-note-schemas` |
+| Bases, plugin, YOLO, Obsidian, Templater, QuickAdd, Dataview, citation plugin, web clipper, RAG, vector DB | `protocol://librarian-tooling` |
+| drift, landmine, refactor, guardrail, atomic commit, link rot, prior incident | `protocol://librarian-writing-rules` |
+| memory, remember, recall, history, capture, prune, retention, preferences, decisions | `protocol://librarian-memory` |
+| maintenance, cleanup, health check, integrity, housekeeping | `protocol://librarian-lint` |
+| customize, personalize, configure, tune | `protocol://librarian-customize` |
+| research, investigate, source, citation, study, paper, literature, deep-dive | `protocol://researcher-investigate` |
+| prompt, refine prompt, enhance prompt, prompt engineering, ambiguous, unclear | `protocol://researcher-prompt-enhance` |
+| write, draft, prose, edit, rewrite, polish, compose, document, memo, narrative, revise | `protocol://writer-draft` |
+| summarize, summary, distill, condense, tldr, brief, aggregate, minutes, recap, transcript | `protocol://writer-summarize` |
+| executive, stakeholder, leadership, exec comms, C-suite, board, investor, pitch | `protocol://writer-executive` |
+| code, develop, programming, build, debug, dependency, deploy, implement, library, test | `protocol://assistant-development` |
+| plan, planning, roadmap, breakdown, decompose, dependency, estimate, milestone, phases, prioritize, scope, timeline | `protocol://assistant-plan` |
+| problem, debug, troubleshoot, root cause, fix, investigate, analyze problem, diagnose, systematic, trace | `protocol://assistant-problem-solve` |
+| proactive, offer, suggest, anticipate, surface, flag, next step | `protocol://assistant-proactive` |
+| ingest, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in | `protocol://assistant-ingest` |
+| security, threat, credentials, secrets, access, permissions, exposure, sanitize, pii, classification | `protocol://security` |
+| critical file, protected, lockdown, destructive operation, dangerous edit | `protocol://CRITICAL-FILE-PROTECTION` |
+| save, persist, snapshot, commit, checkpoint, save session, end of session | `protocol://detail/save` |
+| anti-pattern, prohibited, forbidden, what not to do | `protocol://detail/anti-patterns` |
+| decision route, route A, route B, route C, route D, route E, route F, pre-action analysis, ROI | `protocol://detail/decision-routes` |
+
+### Load discipline
+
+- **Multiple keyword matches → load all matching resources.** Cheap to over-load.
+- **Always-loaded kernel** (this file + 01-03) never needs reload.
+- **No keyword match for a substantive question** → answer from already-loaded context; do not invent vault conventions.
+- **If reading the MCP resource fails**, surface the failure: "I tried to load [URI] but [error]. Falling back to general principles; the Scholar's actual convention may differ."
 
 ---
 
