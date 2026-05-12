@@ -39,7 +39,6 @@ Scan user input for the keywords below. On match, `read_file` the corresponding 
 | `librarian-memory.md` | memory, remember, recall, history, capture, save memory, prune, retention, preferences, decisions |
 | `librarian-lint.md` | maintenance, cleanup, health check, prune, integrity, housekeeping |
 | `librarian-customize.md` | customize, personalize, configure, tune, adjust, set preference |
-| `librarian-save.md` | save, persist, snapshot, commit, checkpoint, save session, end of session |
 
 ### Researcher protocols (`hypatia-kb/protocols/researcher-*.md`)
 
