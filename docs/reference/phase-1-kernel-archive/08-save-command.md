@@ -99,6 +99,117 @@ Do NOT confirm complete until all six items are marked.
 
 ---
 
+## Operational mechanics — exact shell commands
+
+The behavioral steps above describe WHAT save does. This section describes HOW to invoke it via the `developer` extension's shell tool. The Scholar's vault and Hypatia's repo are both git-backed; both need staging and commits coordinated.
+
+**You must actually invoke these commands via the shell tool.** Narrative description of the save flow is not a save. Do not report success until you have observed:
+- The Python script's stdout containing `EXIT:0`
+- The `hypatia-git-commit.py` invocation returning a real commit hash
+
+### Save flow — mechanical sequence
+
+```bash
+# Variables (Hypatia fills in)
+SESSION_ID="session-$(date -u +%Y-%m-%d)-NN"   # NN = next index from session-index.json
+OPS_FILE="workspace/_save_ops_${SESSION_ID}.json"
+COMMIT_MSG="Session save: ${SESSION_ID}"
+```
+
+**Step 1 — Write the session log.**
+
+Use `developer.text_editor` (write file) to create `hypatia-kb/Memory/sessions/${SESSION_ID}.md` with scope synthesis, files touched, decisions, outcome assessment, and inbox captures created this session. This is a normal markdown write; the kernel/03 inbox boundary does NOT block this path (Memory/sessions/ is the exception listed there).
+
+**Step 2 — Construct + write the ops.json.**
+
+Write to `${OPS_FILE}` (under `workspace/`, gitignored — temp file). Minimum shape:
+
+```json
+{
+  "session_id": "session-YYYY-MM-DD-NN",
+  "schema_version": 1,
+  "inbox_flush": true,
+  "vectorstore_sync": true,
+  "markdown_export": true,
+  "memory_updates": {
+    "last_session_snapshot": {
+      "session_id": "session-YYYY-MM-DD-NN",
+      "memory_version": "4.0",
+      "patterns_count": <int from Intelligence/patterns-index.json stats.totalEntries>,
+      "knowledge_count": <int from Intelligence/knowledge-index.json>,
+      "reasoning_count": <int from Intelligence/reasoning-index.json>,
+      "inbox_captures_pending": <count of inbox/preferences/*.md>,
+      "timestamp": "<ISO-8601 UTC now>"
+    }
+  }
+}
+```
+
+Optional fields:
+- `knowledge_additions`: list of validated entries to add to `knowledge.json` (rare; usually inbox-then-consolidate via Q-22)
+- `patterns_additions`, `reasoning_additions`: same
+- `access_updates.{knowledge,reasoning,patterns}`: list of entry IDs whose `accessCount` should increment
+
+**Step 3 — Invoke save-session.py.**
+
+```bash
+uv run python scripts/save-session.py "${OPS_FILE}"
+```
+
+This handles steps 2 (session index), 3 (memory snapshot), 4 (inbox flush via git add), 5 (vectorstore sync if configured), AND regenerates markdown exports in `hypatia-kb/exports/`. Validate stdout for `EXIT:0`. If `EXIT:1` or `EXIT:2`, surface the failure to the Scholar; do not proceed to commit.
+
+**Step 4 — Security scan (Git Hardening from kernel/03 + 09):**
+
+```bash
+# Dry-run see what would be staged
+git add --dry-run -A
+
+# Scan staged content for sensitive patterns. See protocol://detail/security-gates
+# for the full pattern list; minimum check:
+git diff --cached -A | grep -iE "(API[_-]?KEY|SECRET|TOKEN|PRIVATE[_-]?KEY|ghp_|sk_live_|sk_test_|AKIA[A-Z0-9]+)"
+# If any matches, STOP and surface to Scholar.
+```
+
+**Step 5 — Stage everything.**
+
+```bash
+git add -A
+```
+
+(Save is the one operation that captures everything intentionally; non-save work prefers specific paths.)
+
+**Step 6 — Commit via the Hypatia identity wrapper.**
+
+```bash
+uv run python scripts/hypatia-git-commit.py -m "${COMMIT_MSG}"
+```
+
+This sets `GIT_AUTHOR_*` and `GIT_COMMITTER_*` env vars from `hypatia.config.yaml` so the commit attributes to `Hypatia <hypatia@local>`, not the Scholar. Never use bare `git commit` from a save flow.
+
+Capture the commit hash from stdout. If the wrapper errors, surface the error.
+
+**Step 7 — Clean up the temp ops file:**
+
+```bash
+rm "${OPS_FILE}"
+```
+
+(Optional; the ops file is gitignored regardless, but tidiness.)
+
+### Report only what actually happened
+
+After running the sequence, the save output (per § Standard save output below) must reflect ACTUAL observed state:
+
+- `Session saved: <path>` — confirm the session log file exists with `ls`
+- `Outcome: success | partial | blocked` — based on whether all 6 steps observed clean
+- `Inbox captures this session: [N]` — count from the actual file listing
+- `Vectorstore: [synced | n/a | failed]` — based on save-session.py stdout
+- `Committed: [short-hash]` — from `git rev-parse --short HEAD` after the commit
+
+If any step did not actually fire, do not include it in the success report. Surface the gap.
+
+---
+
 ## Standard save output
 
 ```
