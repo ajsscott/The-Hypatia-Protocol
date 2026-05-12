@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Columbo, OOB, and know-001 tests. Test behavior, not inventory.
+"""Out-of-bounds + end-to-end save-flow tests. Test behavior, not inventory.
 
-Columbo: trace real scenarios end-to-end, verify the BEHAVIOR works
-OOB: what happens at boundaries, with bad data, under stress
-know-001: leave nothing to chance — every implicit assumption is tested
+End-to-end: trace real scenarios start to finish; verify the BEHAVIOR works.
+OOB: boundaries, bad data, stress conditions.
+Coverage discipline: every implicit assumption gets an explicit test.
 """
 
 import json, sys, tempfile, shutil, unittest, os, datetime
@@ -60,7 +60,7 @@ class TestColumbo(TestBase):
     """Trace real user scenarios end-to-end. Does the BEHAVIOR work?"""
 
     def test_full_save_cycle(self):
-        """Scenario: User says 'save'. Nate writes ops, script executes full cycle."""
+        """Scenario: Scholar says 'save'. Hypatia writes ops, script executes full cycle."""
         ops = {
             "session_id": "session-2026-04-16-001", "schema_version": 1,
             "session_tags": ["test"], "session_summary": "Test session",
@@ -76,7 +76,7 @@ class TestColumbo(TestBase):
                  "derived_from": ["know-1"]}
             ],
             "access_updates": {"knowledge": [], "reasoning": [], "patterns": []},
-            "memory_updates": {"user_address": "Sir"},
+            "memory_updates": {"user_address": "Scholar"},
             "snapshot": {"session_id": "session-2026-04-16-001"},
             "vectorstore_sync": False
         }
@@ -112,7 +112,7 @@ class TestColumbo(TestBase):
 
         # Verify: memory updated
         mem = self.read_json(self.kb / "Memory" / "memory.json")
-        self.assertEqual(mem["user_address"], "Sir")
+        self.assertEqual(mem["user_address"], "Scholar")
         self.assertEqual(mem["last_session_snapshot"]["knowledge_count"], 1)
 
     def test_correction_then_verify(self):

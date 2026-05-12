@@ -203,10 +203,10 @@ class TestMemoryUpdates(TestBase):
     """6. Memory mutation correctness"""
 
     def test_top_level_fields(self):
-        ops = self.make_ops(memory_updates={"user_address": "Sir"})
+        ops = self.make_ops(memory_updates={"user_address": "Scholar"})
         save_mod.update_memory(self.kb, ops)
         mem = self.read_json(self.kb / "Memory" / "memory.json")
-        self.assertEqual(mem["user_address"], "Sir")
+        self.assertEqual(mem["user_address"], "Scholar")
 
     def test_domain_expertise_merge(self):
         ops = self.make_ops(memory_updates={"domain_expertise": {"aws": "expert"}})
