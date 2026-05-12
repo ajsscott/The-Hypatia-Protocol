@@ -2,11 +2,16 @@
 """check-keyword-drift.py — enforce alignment between Hypatia's keyword map
 and each protocol's declared `**Trigger Keywords**:` line.
 
-The kernel file `.roo/rules-hypatia/10-skills-loading.md` is the single
-source of truth for which user-input keywords route to which protocol.
+The canonical keyword map lives at
+`docs/reference/phase-1-kernel-archive/10-skills-loading.md` (post Phase
+1.5 Q-33 kernel redistribution; was previously `.roo/rules-hypatia/`).
 Each protocol file ALSO declares its trigger keywords at the top. The two
 must match. Drift between them is the bug class that motivated the Phase 1
 lint gate (addendum landmine #12, 2026-04-22).
+
+At runtime, Hypatia's protocols MCP server serves this map as
+`protocol://detail/skills-map`. Goose's MCP host consults it when
+deciding which protocol resource to load on keyword match.
 
 Exit codes:
     0  — keyword map and all protocol declarations aligned
@@ -24,7 +29,8 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-KERNEL_MAP = REPO_ROOT / ".roo/rules-hypatia/10-skills-loading.md"
+# Canonical keyword map (post Q-33 redistribution).
+KERNEL_MAP = REPO_ROOT / "docs/reference/phase-1-kernel-archive/10-skills-loading.md"
 
 KEYWORD_LINE_RE = re.compile(
     r"^\*\*(?:Trigger )?Keywords\*\*\s*:\s*(.+?)\s*$"
