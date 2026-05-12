@@ -760,6 +760,36 @@ def inbox_flush(kb):
         return False
 
 
+def markdown_export(kb):
+    """Regenerate hypatia-kb/exports/{patterns,knowledge,reasoning,memory}.md
+    from canonical JSON stores. Idempotent; gitignored output.
+
+    Runs after Intelligence/Memory writes complete so the exports reflect
+    the just-saved state. Failures warn but do not block the save.
+    """
+    repo_root = kb.parent
+    script = repo_root / "scripts" / "export-intelligence-to-markdown.py"
+    if not script.exists():
+        print("  - export-intelligence-to-markdown.py not found")
+        return True
+    if DRY_RUN:
+        print("  [DRY-RUN] Would regenerate hypatia-kb/exports/")
+        return True
+    try:
+        result = subprocess.run(
+            ["python3", str(script)],
+            cwd=str(repo_root), capture_output=True, text=True, timeout=30
+        )
+        if result.returncode == 0:
+            print(f"  ✓ Markdown exports regenerated")
+            return True
+        print(f"  ⚠ Export failed: {result.stderr[:200]}", file=sys.stderr)
+        return False
+    except (subprocess.TimeoutExpired, FileNotFoundError) as e:
+        print(f"  ⚠ Export failed: {e}", file=sys.stderr)
+        return False
+
+
 def vectorstore_sync(kb):
     config = kb / "vectorstore" / "config.json"
     if not config.exists():
@@ -896,6 +926,11 @@ def main():
     if ops.get("inbox_flush", True):
         print("Inbox Flush")
         inbox_flush(kb)
+        print()
+
+    if ops.get("markdown_export", True):
+        print("Markdown Export")
+        markdown_export(kb)
         print()
 
     if ops.get("vectorstore_sync", True):

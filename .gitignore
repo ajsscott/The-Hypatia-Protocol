@@ -60,3 +60,6 @@ hypatia-kb/vectorstore/.hypothesis/
 # Hypatia scratch space (logs, drafts, queued ingests; per-machine, not curated)
 workspace/*
 !workspace/README.md
+
+# Generated markdown exports (rebuilt on every save-session from JSON stores)
+hypatia-kb/exports/
