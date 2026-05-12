@@ -32,7 +32,7 @@ CANDIDATES = [
 # Test suite: (query, expected_substring_in_top_result_or_None_for_noise)
 TESTS = [
     ("how to avoid repeating past mistakes", "fail"),
-    ("making Nate smarter over time", "intellig"),
+    ("making Hypatia smarter over time", "intellig"),
     ("what happens when context runs out", "context"),
     ("how does the save process work", "save"),
     ("debugging a broken deployment", "fail"),
