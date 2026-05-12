@@ -70,7 +70,16 @@ def _mcp_request(proc: subprocess.Popen, method: str, params: dict, req_id: int)
     proc.stdin.write(msg + "\n")
     proc.stdin.flush()
     line = proc.stdout.readline()
+    if not line:
+        raise RuntimeError(f"empty response from server for {method}; server may have exited")
     return json.loads(line)
+
+
+def _mcp_notify(proc: subprocess.Popen, method: str, params: dict) -> None:
+    """Send a JSON-RPC notification (no response expected)."""
+    msg = json.dumps({"jsonrpc": "2.0", "method": method, "params": params})
+    proc.stdin.write(msg + "\n")
+    proc.stdin.flush()
 
 
 @unittest.skipUnless(
@@ -91,7 +100,8 @@ class TestProtocolsMCPServer(unittest.TestCase):
             text=True,
             env=env,
         )
-        # MCP initialize handshake
+        # MCP initialize handshake: request -> response -> initialized notification.
+        # Without the notification, rmcp 0.3.2 errors with "connection closed: initialized request".
         init_resp = _mcp_request(
             cls.proc,
             "initialize",
@@ -104,6 +114,8 @@ class TestProtocolsMCPServer(unittest.TestCase):
         )
         assert init_resp.get("result") is not None, f"initialize failed: {init_resp}"
         cls.init_resp = init_resp
+        # Required completion of MCP handshake.
+        _mcp_notify(cls.proc, "notifications/initialized", {})
 
     @classmethod
     def tearDownClass(cls):
