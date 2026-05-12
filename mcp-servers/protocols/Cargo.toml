@@ -1,0 +1,22 @@
+[package]
+name = "hypatia-protocols-mcp"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "MCP server serving Hypatia's protocol library + kernel-archive resources"
+
+[[bin]]
+name = "hypatia-protocols-mcp"
+path = "src/main.rs"
+
+[dependencies]
+rmcp = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+walkdir = "2"

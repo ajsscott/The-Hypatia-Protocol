@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Hypatia",
+  "version": "0.1.0",
+  "identifier": "com.ajstraumanscott.hypatia",
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "devUrl": "../src",
+    "frontendDist": "../src"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Hypatia",
+        "width": 900,
+        "height": 700,
+        "minWidth": 600,
+        "minHeight": 400,
+        "resizable": true,
+        "fullscreen": false,
+        "transparent": false,
+        "decorations": true,
+        "alwaysOnTop": false,
+        "skipTaskbar": false,
+        "label": "main"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; connect-src 'self' http://127.0.0.1:8765 http://localhost:8765; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app", "dmg"],
+    "icon": [
+      "icons/icon.png",
+      "icons/icon.icns"
+    ],
+    "category": "Productivity",
+    "shortDescription": "Hypatia — a persistent AI partner-scholar for the TabulaJacqueliana zettelkasten vault",
+    "longDescription": "Hypatia is a curator, not a chatbot. She processes Seeds into Trees, maintains the citation graph, flags contradictions across sources, and refuses to silently let stale claims outlast the session that could have caught them. Forked from Warner Bell's Nathaniel Protocol; rebuilt for the Alexandrian-scholar register."
+  }
+}

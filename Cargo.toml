@@ -1,0 +1,31 @@
+[workspace]
+resolver = "2"
+members = [
+    "mcp-servers/protocols",
+    "frontend/src-tauri",
+    # Phase 2 additions (commented until scaffolded):
+    # "mcp-servers/vault-rw",
+    # "mcp-servers/save-session",
+    # "mcp-servers/screen-watcher",
+    # "mcp-servers/file-watcher",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["AJ Strauman-Scott <aj.scott@renphil.org>"]
+repository = "https://github.com/ajsscott/The-Hypatia-Protocol"
+
+[workspace.dependencies]
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+anyhow = "1"
+thiserror = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+# rmcp version pinned at workspace level. Update both backend (Goose) and
+# Hypatia servers in lockstep. Verify against latest at:
+# https://github.com/modelcontextprotocol/rust-sdk
+rmcp = { version = "0.3", features = ["server", "transport-io"] }

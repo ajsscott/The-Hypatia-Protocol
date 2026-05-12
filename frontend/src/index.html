@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hypatia</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <h1 id="hypatia-name">Hypatia</h1>
+        <p id="hypatia-pronouns" class="meta">she / her</p>
+      </header>
+      <section class="identity">
+        <p id="super-objective" class="objective"></p>
+      </section>
+      <section class="config">
+        <h3>Vault</h3>
+        <p id="vault-path" class="path"></p>
+        <h3>Model</h3>
+        <p id="model" class="path"></p>
+      </section>
+      <footer class="sidebar-footer">
+        <small>Phase 1.5 v1</small>
+      </footer>
+    </aside>
+
+    <main class="chat">
+      <div id="messages" class="messages">
+        <div class="message system">
+          <p>Hypatia is initializing. Goose daemon expected at <code id="goose-url">http://127.0.0.1:8765</code>.</p>
+        </div>
+      </div>
+      <form id="input-form" class="input-form" autocomplete="off">
+        <textarea id="input-box" placeholder="Ask Hypatia." rows="3"></textarea>
+        <button type="submit" id="send-btn">Send</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="main.js" type="module"></script>
+</body>
+</html>
