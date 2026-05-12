@@ -147,4 +147,4 @@ The ingestion mechanism (manual paste vs browser extension vs filesystem watch) 
 - **Git filter chain (sanitize-memory)**: `.gitattributes` + `scripts/setup-filters.sh` + `scripts/git-filter-clean.py` + `scripts/git-filter-smudge.py`
 - **Anti-patterns governing all security-adjacent decisions**: `.roo/rules-hypatia/03-anti-patterns.md`
 - **Vault-side sensitive paths (Seedlings, Forests, _attachments)**: `hypatia-kb/protocols/librarian-vault-structure.md`
-- **Vault-side critical files (protection rules)**: `hypatia-kb/CRITICAL-FILE-PROTECTION.md`
+- **Vault-side critical files (protection rules)**: `hypatia-kb/protocols/CRITICAL-FILE-PROTECTION.md`

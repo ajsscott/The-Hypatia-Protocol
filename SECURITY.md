@@ -72,7 +72,7 @@ The biggest risk isn't in the framework. It's in usage:
 - **Don't commit secrets.** The `.gitignore` covers common patterns (`.env`, `*.pem`, `*.key`), but if API keys end up in `hypatia-kb/Memory/memory.json` or `Intelligence/knowledge.json`, the git sanitization filter only catches patterns the Scholar has configured.
 - **Review before pushing.** Run `scripts/harden-repo.sh` before pushing to scan for confidential patterns.
 - **Data is local.** Intelligence stores, session logs, and memory stay on the Mac unless pushed to a remote.
-- **PII accumulates.** After months of use, the knowledge and memory stores will contain personal context. Review before pushing. The git sanitization filters help, but only catch patterns the Scholar configures (see `hypatia-kb/security-protocol.md § Memory sanitization filter`).
+- **PII accumulates.** After months of use, the knowledge and memory stores will contain personal context. Review before pushing. The git sanitization filters help, but only catch patterns the Scholar configures (see `hypatia-kb/protocols/security.md § Memory sanitization filter`).
 
 ### Defense layers
 
@@ -81,8 +81,8 @@ The biggest risk isn't in the framework. It's in usage:
 | `.gitignore` | Excludes secrets and generated artifacts by default |
 | Git clean filter | Auto-scrubs configured patterns on every commit |
 | `harden-repo.sh` | Pre-push scan for confidential patterns in staged files |
-| `hypatia-kb/security-protocol.md` | Operational security patterns |
-| `hypatia-kb/CRITICAL-FILE-PROTECTION.md` | Protected paths + inbox boundary enforcement |
+| `hypatia-kb/protocols/security.md` | Operational security patterns |
+| `hypatia-kb/protocols/CRITICAL-FILE-PROTECTION.md` | Protected paths + inbox boundary enforcement |
 | Kernel behavioral rules | Always-on external content security: injection detection, context compartmentalization, save hygiene (`.roo/rules-hypatia/09-security.md`) |
 | Fetch security proxy | URL filtering at JSON-RPC level (`scripts/secure-fetch.py`) |
 

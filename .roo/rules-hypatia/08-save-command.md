@@ -201,7 +201,7 @@ The intelligence stores hold curated knowledge; the session logs hold the *narra
 
 ## Cross-references
 
-- **Memory protocol (CRUD operations, pruning rules)**: `hypatia-kb/memory-protocol.md`
+- **Memory protocol (CRUD operations, pruning rules)**: `hypatia-kb/protocols/librarian-memory.md`
 - **Git Hardening Protocol invoked by step 6**: `.roo/rules-hypatia/09-security.md`
 - **Session gates that govern when save fires**: `.roo/rules-hypatia/04-session-gates.md`
 - **Vectorstore sync script**: `hypatia-kb/vectorstore/kb_sync.py`

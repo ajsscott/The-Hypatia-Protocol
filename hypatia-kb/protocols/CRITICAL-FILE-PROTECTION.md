@@ -75,14 +75,7 @@ The `.npy` and `.json` artifact files in `hypatia-kb/vectorstore/` are rebuildab
 ### Operational protocols (IMPORTANT)
 
 ```
-hypatia-kb/memory-protocol.md
-hypatia-kb/maintenance-protocol.md
-hypatia-kb/writing-protocol.md
-hypatia-kb/research-protocol.md
-hypatia-kb/problem-solving-protocol.md
-hypatia-kb/proactive-offering-protocol.md
-hypatia-kb/protocols/librarian-*.md
-hypatia-kb/CRITICAL-FILE-PROTECTION.md (this file)
+hypatia-kb/protocols/*.md   (all protocol files; this file included)
 ```
 
 Modifications require Tier 2 confirmation. Rewrites (full-file `write_to_file`) require Tier 1.
