@@ -56,3 +56,7 @@ hypatia-kb/vectorstore/config.json
 # Hypothesis test cache
 hypatia-kb/vectorstore/.hypothesis/
 .pytest_cache/
+
+# Hypatia scratch space (logs, drafts, queued ingests; per-machine, not curated)
+workspace/*
+!workspace/README.md
