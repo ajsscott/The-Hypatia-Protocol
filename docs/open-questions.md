@@ -885,6 +885,205 @@ context.
 
 ---
 
+## Q-17 | REOPENED — Canonical Ollama design target
+
+Reopened: 2026-05-12 (post Phase 1 empirical testing)  Status: REOPENED
+
+**Context:** Initial answer (2026-05-12) was `qwen3:14b` based on "best
+tool-use reputation in 14B class." Empirical testing during Phase 1
+close-out revealed: `qwen3:14b` thinking-mode + Hypatia's 40K kernel
+caused 3+ minute first responses + timeouts. Pivoted to `qwen2.5-coder:14b`
+(no thinking mode), but discovered substrate-level bugs (Roo Code
+forcing num_ctx=32768, IPv6 binding mismatch, dual ollama daemons)
+masked actual model behavior. Then evaluated `gemma4` (8B, 128K native
+context); same substrate bugs blocked clean test.
+
+**Reason for reopening:** No empirical signal on what the model
+actually does once substrate stabilizes. The 14B-class assumption
+itself may be wrong now that Q-33 redistributes the kernel into
+compact form + MCP resources (much smaller always-loaded prompt
+implies smaller models become viable).
+
+**Decision deferred:** Until Phase 1.5 Week 2, when Goose + Hypatia run
+clean and we can test model behavior without substrate noise.
+
+**Candidates to re-evaluate:**
+- `qwen2.5-coder:14b` — proven tool-use, no thinking mode, 32K trained
+- `gemma4` (8B) — native 128K context, function-calling trained in, MoE-like speed
+- `qwen3-coder:30b` — agentic flagship, 256K context, slower but more capable
+- `devstral:24b` — Mistral's purpose-built agentic-coding model
+
+**Supersedes:** Earlier Q-17 answer (qwen3:14b). Q-17 returns to OPEN
+state pending Phase 1.5 testing.
+
+---
+
+## Q-31 | ANSWERED — Substrate pivot: Goose over Roo Code
+
+Asked: 2026-05-12  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** Q-21 (2026-05-11) locked Roo Code as substrate. Phase 1
+close-out empirical testing revealed Roo Code has a load-bearing bug
+(forces `num_ctx` to model metadata's `context length` regardless of
+user settings — issues #7797, #7343, #1253, #2462, #4721). Hypatia's
+40K kernel exceeds any 14B model's trained 32K context, so Roo's
+hardcoded behavior guarantees prompt truncation. Independent of that
+bug, AJ's vision evolved during the session to include persistent
+system-level agent behavior (popup on flash-drive plug-in,
+screen-watching, multi-MCP) that Roo Code is structurally not designed
+for (it's a VS Code chat assistant).
+
+**Options considered:**
+1. Stay on Roo Code; trim kernel below 32K; accept IDE-bound substrate
+2. Switch to Goose (Block) — purpose-built agentic substrate, MCP-first
+3. Switch to AnythingLLM — productivity-app angle, less system-level
+4. Build custom Tauri agent from scratch (3-6 months)
+5. Goose-as-backend + custom frontend in another language
+6. Letta + custom frontend
+7. Python-native custom (PyQt6/PySide6) leveraging Phase 1 stack
+
+**Decision:** Option 5 — Goose backend + custom frontend (Q-32 picks
+the frontend stack).
+
+**Load-bearing rationale:**
+- Goose provides 6-12 months of agent-loop + MCP + Ollama wiring as
+  upstream (Apache 2.0). Reinventing this is 3-6 months of work.
+- Goose's "custom UI" explicitly supported pattern: run Goose core as
+  daemon/API, build custom frontend in any language. No need to fork
+  Goose's Electron UI.
+- MCP-first design matches "many MCPs" + screen-watching + vault-access
+  + flash-drive vision.
+- Custom distro pattern (CUSTOM_DISTROS.md) supports Hypatia branding +
+  preconfigured providers + extensions without rewriting core.
+- Active development + LF Agentic AI Foundation backing → sustainability
+  beyond Block's interest.
+- Q-02 LLM-agnostic constraint preserved (Goose supports Ollama as
+  primary provider).
+
+**Implication for Phase 1 work:** ~95% of Phase 1 deliverables are
+substrate-agnostic and survive intact. Sunk cost is limited to
+`.roomodes` + Roo-specific framing in AGENTS.md / README.md.
+
+**Supersedes:** Q-21 (Roo Code over Cline) — Q-21 stands as historical
+answer; Q-31 is the active decision.
+
+**New work it creates:** Phase 1.5 substrate integration (4-6 weeks);
+Q-33 architectural redistribution (kernel → compact + MCP); README /
+AGENTS.md / CLAUDE.md substrate-reference updates.
+
+---
+
+## Q-32 | ANSWERED — Frontend language and framework
+
+Asked: 2026-05-12  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** Q-31 chose Goose-as-backend + custom frontend. The
+frontend language/framework is its own decision since Goose exposes a
+daemon API consumable by any client.
+
+**Options considered:**
+1. Rust + Tauri — matches Goose's core language; smallest binary;
+   best macOS system-integration story
+2. Rust + egui or Slint — pure Rust GUI, no web frontend layer
+3. Python (PyQt6/PySide6) — leverages Phase 1 Python stack; AJ's
+   primary language
+4. Python + Tauri hybrid — Tauri frontend + Python backend via IPC
+
+**Decision:** Option 1 — Rust + Tauri.
+
+**Load-bearing rationale:**
+- Both Hypatia frontend (Rust) and Goose backend (Rust) share language
+  → cleaner dependency surface; can share common crates
+- Smallest binary footprint matters for flash-drive packaging (Phase 4)
+- Tauri's macOS system-integration plugins (USB-mount detection,
+  menubar, accessibility, screen capture) are mature
+- AJ likes Rust ("I love Rust!") — substrate pivot is also a deliberate
+  Rust-skill investment
+- Tauri web-tech UI layer (HTML/CSS/JS, or Yew/Leptos in Rust) keeps UI
+  customization fast vs immediate-mode GUI
+
+**Trade-offs accepted:**
+- Steeper Tauri-specific learning curve than Python + PyQt
+- Phase 1 Python scripts continue to live as separate processes
+  (called via subprocess or future MCP servers), not directly invokable
+  from frontend
+- Calendar: ~3-6 weeks to v1 frontend vs ~2-4 weeks for Python
+
+**Implications:**
+- New `frontend/` directory at repo root (Cargo project)
+- New Cargo workspace `Cargo.toml` at repo root
+- MCP servers also Rust → unified Rust crate ecosystem
+
+---
+
+## Q-33 | ANSWERED — Kernel architectural redistribution
+
+Asked: 2026-05-12  Status: ANSWERED  Decided by: AJ Strauman-Scott
+
+**Context:** Phase 1 produced a ~40K-token monolithic kernel
+(`.roo/rules-hypatia/01-11.md`) that's always-loaded as the LLM system
+prompt. Empirical testing showed:
+- Prefill on 40K tokens via local 14B model: 1-3+ minutes per first
+  message
+- Most 14B-class models are trained at 32K context — Hypatia's kernel
+  doesn't fit cleanly
+- Goose's design assumes compact system prompts ("50-150 words")
+- The 11-file structure mixes identity/voice (essential always-loaded)
+  with anti-pattern detail, decision-route mechanics, intelligence
+  layer specifics, cluster protocols (loadable on-demand)
+
+**Options considered:**
+1. Aggressive prose trimming of existing 11 files (keep monolithic
+   structure, shrink to ~25K)
+2. Architectural redistribution: compact kernel (~3-5K) + protocols-as-
+   MCP-resources (~35K served on demand)
+3. Status quo + brute-force solution (bigger models with native
+   large context)
+
+**Decision:** Option 2 — architectural redistribution.
+
+**Why this beats Option 1:**
+- Even 25K kernel is large for fast local inference on 14B models
+- Compact kernel runs faster on cold first message (the worst UX moment)
+- MCP-served protocols match Goose's design model exactly
+- Re-aligns with original Build Plan's "Protocol-as-MCP" framing
+  (which was vestigial in the Roo Code Phase 1)
+- Smaller kernels open the door to smaller / faster local models
+  (Q-17 reconsideration)
+
+**Compact kernel scope (~3-5K tokens, always-loaded):**
+- Identity (Hypatia, Alexandrian register, Scholar address)
+- Voice + non-negotiables (no em-dashes, brevity, cite sources)
+- Critical never-violate gates: security boundaries, inbox boundary,
+  CRITICAL-FILE-PROTECTION summary, destructive-action gate
+- Pointer to MCP resources for the rest
+
+**MCP-served resources (~35K tokens, lazy-loaded):**
+- Full anti-patterns enumeration (currently in 03-anti-patterns.md)
+- Decision routes A-F detail (currently 11-decision-routes.md, 425 L)
+- Intelligence layer specifics (currently 07-intelligence-layer.md)
+- Cluster protocols (already at `hypatia-kb/protocols/`, become MCP
+  resources via the new `protocols-mcp-server`)
+- Session gates detail (currently 04-session-gates.md)
+- Cognitive layer (currently 06-cognitive.md)
+
+**Implementation work (Phase 1.5 Week 1):**
+- Build `mcp-servers/protocols/` in Rust — serves `hypatia-kb/protocols/`
+  + relevant kernel-file content as MCP resources
+- Refactor `.roo/rules-hypatia/` content: extract compact-kernel
+  essentials into `kernel/` directory (new); migrate the rest to be
+  served by MCP server
+- Update `scripts/check-keyword-drift.py` to verify
+  compact-kernel ↔ MCP-resource alignment
+- Pytest coverage for the MCP server
+
+**Supersedes:** Build Plan § "Kernel decomposition" (Phase 1 Week 1
+Day 3-4 target). The Phase 1 decomposition produced 11 always-loaded
+files; Phase 1.5 redistributes that content across compact-kernel +
+MCP-resources.
+
+---
+
 ## Change log
 
 - **2026-04-22** — initial log with Q-01 through Q-12 answered + Q-13
@@ -895,8 +1094,13 @@ context.
   replacing YOLO as the vault's in-Obsidian LLM substrate. Q-24
   formalizes the Hypatia persona directives (Scholar address, she/her
   pronouns, Alexandrian register).
-- **2026-05-12** — Phase 1 close-out session. Q-25 through Q-30 added
+- **2026-05-12 (Phase 1 close-out)** — Q-25 through Q-30 added
   (protocol relocation, git identity wiring, Benchmarks rewrite,
   scaffold disposition, test/CI strategy, .example skip). Q-13, Q-14,
-  Q-17 moved from OPEN to ANSWERED. Q-15, Q-16, Q-18, Q-19, Q-20
-  remain open (empirical / post-ship decisions).
+  Q-17 moved from OPEN to ANSWERED.
+- **2026-05-12 (Phase 1.5 substrate pivot)** — Q-31 supersedes Q-21
+  (Goose backend + custom frontend over Roo Code). Q-32 picks Rust +
+  Tauri for frontend. Q-33 mandates kernel architectural
+  redistribution (compact kernel + protocols-as-MCP-resources). Q-17
+  REOPENED — final Ollama model choice deferred until Phase 1.5 Week 2
+  testing with compact kernel.
