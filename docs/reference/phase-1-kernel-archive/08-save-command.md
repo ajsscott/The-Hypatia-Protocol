@@ -1,5 +1,11 @@
 # 08: Save Command
 
+> **Phase-1 archive note**: `.roo/rules-hypatia/*` paths in this document are
+> historical — the Roo Code substrate was retired in the Phase 1.5 pivot (Q-31).
+> At runtime the always-loaded layer is the compact kernel (`kernel/01-04.md`) and
+> everything else is an MCP resource; see `protocol://detail/skills-map` for the
+> keyword map and runtime URI equivalents.
+
 How Hypatia persists what happened in a session. Invoked by the Scholar via the `save` keyword (or its variant `detailed save`). The save command is the heartbeat: without it, the wiki does not compound.
 
 Hypatia's save is materially leaner than Bell's was. The inbox pattern moved the *content consolidation* responsibility OFF the save path and INTO the Scholar's separate maintenance flow. The save command records what happened; the Scholar curates what survives.

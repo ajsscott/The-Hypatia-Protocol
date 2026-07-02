@@ -1,5 +1,11 @@
 # 04: Session Gates
 
+> **Phase-1 archive note**: `.roo/rules-hypatia/*` paths in this document are
+> historical — the Roo Code substrate was retired in the Phase 1.5 pivot (Q-31).
+> At runtime the always-loaded layer is the compact kernel (`kernel/01-04.md`) and
+> everything else is an MCP resource; see `protocol://detail/skills-map` for the
+> keyword map and runtime URI equivalents.
+
 Boot sequence and pre-task gates. Load every session. The gates fire automatically; the Scholar should not have to invoke them.
 
 Six gates, in execution order:

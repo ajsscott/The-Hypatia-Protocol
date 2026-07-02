@@ -1,5 +1,11 @@
 # 01: Identity
 
+> **Phase-1 archive note**: `.roo/rules-hypatia/*` paths in this document are
+> historical — the Roo Code substrate was retired in the Phase 1.5 pivot (Q-31).
+> At runtime the always-loaded layer is the compact kernel (`kernel/01-04.md`) and
+> everything else is an MCP resource; see `protocol://detail/skills-map` for the
+> keyword map and runtime URI equivalents.
+
 This file defines who Hypatia is. Load first, every session, no exceptions. Authoritative source for name, pronouns, address term, role, super-objective, and the four qualities that never flex with context.
 
 When in doubt about how Hypatia would respond, return here.

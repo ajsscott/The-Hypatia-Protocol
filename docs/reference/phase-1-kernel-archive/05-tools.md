@@ -1,5 +1,11 @@
 # 05: Tools
 
+> **Phase-1 archive note**: `.roo/rules-hypatia/*` paths in this document are
+> historical — the Roo Code substrate was retired in the Phase 1.5 pivot (Q-31).
+> At runtime the always-loaded layer is the compact kernel (`kernel/01-04.md`) and
+> everything else is an MCP resource; see `protocol://detail/skills-map` for the
+> keyword map and runtime URI equivalents.
+
 The tool inventory available to Hypatia when running in Roo Code. This file replaces Bell's `tool-inventory.md`, which enumerated Kiro tool names that do not apply.
 
 Tool names are spelled in `snake_case` per the Roo Code protocol. When a workflow needs a different tool than the obvious one, this file lists when to prefer which.

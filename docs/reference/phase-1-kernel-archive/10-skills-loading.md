@@ -2,30 +2,26 @@
 
 How Hypatia decides which protocol to load given user input. This file is the **single source of truth** for the protocol keyword map. When a protocol's in-file `**Keywords**:` line drifts from this map, this map wins.
 
-A pre-commit gate (`scripts/check-keyword-drift.py`, Phase 1) enforces alignment between this file and each protocol's declared keywords.
+A pre-commit gate (`scripts/check-keyword-drift.py`) enforces alignment between this file, each protocol's declared keywords, and the routing table in `kernel/04-routing.md`.
 
 ---
 
 ## Always loaded
 
-These load every session regardless of input:
+The always-loaded layer is the compact kernel (Q-33 redistribution), concatenated into Goose's system prompt every session:
 
-- `.roo/rules-hypatia/01-identity.md`: who Hypatia is
-- `.roo/rules-hypatia/02-voice.md`: how she speaks
-- `.roo/rules-hypatia/03-anti-patterns.md`: what she avoids
-- `.roo/rules-hypatia/04-session-gates.md`: boot sequence (Phase 1 pending)
-- `.roo/rules-hypatia/05-tools.md`: tool inventory
-- `.roo/rules-hypatia/06-cognitive.md`: reasoning protocols (Phase 1 pending)
-- `.roo/rules-hypatia/07-intelligence-layer.md`: KB routing (Phase 1 pending)
-- `.roo/rules-hypatia/09-security.md`: external content safety (Phase 1 pending)
-- `.roo/rules-hypatia/10-skills-loading.md`: this file
-- `.roo/rules-hypatia/11-decision-routes.md`: decision routing (Phase 1 pending; from `hypatia-kb/Hypatia-Protocol.md`)
+- `kernel/01-identity.md`: who Hypatia is
+- `kernel/02-voice.md`: how she speaks
+- `kernel/03-critical-gates.md`: inbox boundary, destructive-action tiers, security never-violates
+- `kernel/04-routing.md`: request classification, Routes A-F summary, this map's routing table
+
+Everything below loads on demand as MCP resources served by the `hypatia-protocols` extension. This file itself is served as `protocol://detail/skills-map`.
 
 ---
 
 ## Keyword-triggered (lazy-load)
 
-Scan user input for the keywords below. On match, `read_file` the corresponding protocol. Match the longest / most-specific keyword first. Multiple matches load all that apply.
+Scan user input for the keywords below. On match, load the corresponding protocol resource (`read_resource` on the `hypatia-protocols` extension). Match the longest / most-specific keyword first. Multiple matches load all that apply.
 
 ### Librarian protocols (`hypatia-kb/protocols/librarian-*.md`)
 
@@ -78,10 +74,10 @@ Scan user input for the keywords below. On match, `read_file` the corresponding 
 
 1. **Match longest keyword first.** "atomic note" beats "note"; "schema" alone is broader than "frontmatter schema."
 2. **Multiple matches allowed.** A single input can trigger multiple protocols. Load all that apply.
-3. **Always-loaded protocols never re-load.** They are in context from session start; do not `read_file` again unless an explicit refresh is needed.
+3. **The always-loaded kernel never re-loads.** It is in context from session start; do not fetch it again unless an explicit refresh is needed.
 4. **When no keyword matches**, default behavior:
  - For a question, answer from already-loaded context.
- - For a task, check `hypatia-kb/Hypatia-Protocol.md` Decision Routes to see if the task fits Route A-F.
+ - For a task, check the Decision Routes (`protocol://detail/decision-routes`, or the per-route splits `protocol://detail/decision-route-{a..f}`) to see if the task fits Route A-F.
  - If still ambiguous, ask the Scholar.
 5. **When uncertain whether a keyword matches**, err toward loading. False positives are cheap; missed protocol coverage is expensive.
 
@@ -103,6 +99,6 @@ When the gate fails, the diff between this file and the protocol's declaration i
 
 ## Cross-references
 
-- **Decision routing engine (Routes A-F)**: `hypatia-kb/Hypatia-Protocol.md` → `.roo/rules-hypatia/11-decision-routes.md`
-- **Tool inventory**: `.roo/rules-hypatia/05-tools.md`
-- **Anti-patterns governing all protocols**: `.roo/rules-hypatia/03-anti-patterns.md`
+- **Decision routing engine (Routes A-F)**: `protocol://detail/decision-routes` (per-route splits at `protocol://detail/decision-route-{a..f}`)
+- **Tool inventory**: `protocol://detail/tools`
+- **Anti-patterns governing all protocols**: `protocol://detail/anti-patterns`

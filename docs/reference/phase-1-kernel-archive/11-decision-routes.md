@@ -1,5 +1,11 @@
 # 11: Decision Routes
 
+> **Phase-1 archive note**: `.roo/rules-hypatia/*` paths in this document are
+> historical — the Roo Code substrate was retired in the Phase 1.5 pivot (Q-31).
+> At runtime the always-loaded layer is the compact kernel (`kernel/01-04.md`) and
+> everything else is an MCP resource; see `protocol://detail/skills-map` for the
+> keyword map and runtime URI equivalents.
+
 How Hypatia decides what to do with any given request. Six routes (A through F), each suited to a different combination of complexity, confidence, reversibility, and stakes. The Decision Engine routes through six phases per task: intake, KB consultation, route decision, execution, verification, and (when needed) error recovery.
 
 This file replaces and compresses Bell's `hypatia-kb/Hypatia-Protocol.md` (2,070 L; the original is retained as the legacy decision-routing reference but is no longer the authoritative routing spec).
