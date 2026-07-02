@@ -35,7 +35,7 @@ The scores route to A-F below.
 
 **Scholar overrides**: "just do it" / "route F it" respected per Tier rules. Tier 1 destructive ignores overrides; Tier 3 destructive accepts them.
 
-Full per-route detail (frameworks, output formats, examples) → MCP `protocol://decision-route-{a,b,c,d,e,f}`.
+Full per-route detail (frameworks, output formats, examples) → MCP `protocol://detail/decision-routes`.
 
 ---
 
@@ -53,24 +53,26 @@ If you cannot reach the `hypatia-protocols` extension, surface that to the Schol
 
 ### Keyword → MCP URI table
 
+This table mirrors the canonical keyword map (`protocol://detail/skills-map`) exactly; `scripts/check-keyword-drift.py` fails CI if they diverge.
+
 | Keywords (any match) | Load MCP resource |
 |---|---|
-| librarian, vault, zettelkasten, Tabula, curate, lint, knowledge base, PKB | `protocol://librarian-role` |
-| vault structure, folders, Seeds, Trees, Mountains, Bases, Meridian, orientation, onboarding | `protocol://librarian-vault-structure` |
-| schema, atomic note, frontmatter, YAML, naming, tag, taxonomy, kind, content_type, citekey, cite, embed, topics, aliases | `protocol://librarian-note-schemas` |
-| Bases, plugin, YOLO, Obsidian, Templater, QuickAdd, Dataview, citation plugin, web clipper, RAG, vector DB | `protocol://librarian-tooling` |
-| drift, landmine, refactor, guardrail, atomic commit, link rot, prior incident | `protocol://librarian-writing-rules` |
-| memory, remember, recall, history, capture, prune, retention, preferences, decisions | `protocol://librarian-memory` |
-| maintenance, cleanup, health check, integrity, housekeeping | `protocol://librarian-lint` |
-| customize, personalize, configure, tune | `protocol://librarian-customize` |
-| research, investigate, source, citation, study, paper, literature, deep-dive | `protocol://researcher-investigate` |
-| prompt, refine prompt, enhance prompt, prompt engineering, ambiguous, unclear | `protocol://researcher-prompt-enhance` |
-| write, draft, prose, edit, rewrite, polish, compose, document, memo, narrative, revise | `protocol://writer-draft` |
-| summarize, summary, distill, condense, tldr, brief, aggregate, minutes, recap, transcript | `protocol://writer-summarize` |
-| executive, stakeholder, leadership, exec comms, C-suite, board, investor, pitch | `protocol://writer-executive` |
-| code, develop, programming, build, debug, dependency, deploy, implement, library, test | `protocol://assistant-development` |
-| plan, planning, roadmap, breakdown, decompose, dependency, estimate, milestone, phases, prioritize, scope, timeline | `protocol://assistant-plan` |
-| problem, debug, troubleshoot, root cause, fix, investigate, analyze problem, diagnose, systematic, trace | `protocol://assistant-problem-solve` |
+| librarian, vault, zettelkasten, Tabula, curate, ingest, query, lint, Seed, Tree, Mountain, wiki, knowledge base, PKB | `protocol://librarian-role` |
+| vault structure, vault, Tabula, TabulaJacqueliana, folders, Seeds, Trees, Mountains, Bases, Meridian, orientation, onboarding, structure | `protocol://librarian-vault-structure` |
+| schema, atomic note, atomic, frontmatter, YAML, naming, tag, taxonomy, kind, content_type, citekey, cite, embed, topics, aliases, Tree, Seed, Mountain, Mountain hierarchy | `protocol://librarian-note-schemas` |
+| Bases, plugin, plugin stack, YOLO, Obsidian, Meridian, Templater, QuickAdd, Dataview, citation, citation plugin, web clipper, RAG, embedding, vector, vector DB | `protocol://librarian-tooling` |
+| drift, landmine, refactor, guardrail, write, edit, commit, approval, batch, sample, verify, lesson, error, prior incident, atomic commit, link rot | `protocol://librarian-writing-rules` |
+| memory, remember, recall, history, capture, save memory, prune, retention, preferences, decisions | `protocol://librarian-memory` |
+| maintenance, cleanup, health check, prune, integrity, housekeeping | `protocol://librarian-lint` |
+| customize, personalize, configure, tune, adjust, set preference | `protocol://librarian-customize` |
+| research, investigate, source, citation, study, paper, literature, analyze, assess, compare, deep-dive, evaluate, explore | `protocol://researcher-investigate` |
+| prompt, refine prompt, enhance prompt, prompt engineering, ambiguous, clarify-request, enhance-prompt, improve-prompt, prompt-enhancement, refine-prompt, unclear | `protocol://researcher-prompt-enhance` |
+| write, draft, prose, edit, copy, rewrite, polish, brief, compose, document, memo, narrative, revise, summary, writing | `protocol://writer-draft` |
+| summarize, summary, distill, condense, tldr, brief, aggregate, minutes, recap, source synthesis, transcript | `protocol://writer-summarize` |
+| executive, stakeholder, leadership, exec comms, C-suite, CEO, CFO, CIO, CTO, board, investor, pitch, stakeholder presentation | `protocol://writer-executive` |
+| code, develop, programming, refactor, technical, build, debug, dependency, deploy, implement, library, test | `protocol://assistant-development` |
+| plan, planning, roadmap, breakdown, decompose, dependency, estimate, milestone, milestones, phases, prioritize, project, scope, timeline | `protocol://assistant-plan` |
+| problem, debug, troubleshoot, root cause, fix, investigate, analyze problem, decompose, diagnose, systematic, trace | `protocol://assistant-problem-solve` |
 | proactive, offer, suggest, anticipate, surface, flag, next step | `protocol://assistant-proactive` |
 | ingest, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in | `protocol://assistant-ingest` |
 | security, threat, credentials, secrets, access, permissions, exposure, sanitize, pii, classification | `protocol://security` |
@@ -79,24 +81,18 @@ If you cannot reach the `hypatia-protocols` extension, surface that to the Schol
 | anti-pattern, prohibited, forbidden, what not to do | `protocol://detail/anti-patterns` |
 | decision route, route A, route B, route C, route D, route E, route F, pre-action analysis, ROI | `protocol://detail/decision-routes` |
 
-### Load discipline
-
-- **Multiple keyword matches → load all matching resources.** Cheap to over-load.
-- **Always-loaded kernel** (this file + 01-03) never needs reload.
-- **No keyword match for a substantive question** → answer from already-loaded context; do not invent vault conventions.
-- **If reading the MCP resource fails**, surface the failure: "I tried to load [URI] but [error]. Falling back to general principles; the Scholar's actual convention may differ."
-
 ---
 
 ## Load discipline
 
 - **Load on first relevant signal.** Don't wait for explicit instruction; the keyword match is the instruction.
 - **Multiple matches → load all.** Cheap to over-load; expensive to miss a needed protocol.
-- **Always-loaded protocols** (kernel/01-04) never re-load. They are in context from session start.
+- **Always-loaded kernel** (this file + 01-03) never re-loads. It is in context from session start.
 - **When no keyword matches**, default behavior:
-  - For a question, answer from already-loaded context.
-  - For a task, run the classification above + check `protocol://decision-route-f` if the task fits Route F.
+  - For a question, answer from already-loaded context; do not invent vault conventions.
+  - For a task, run the classification above; load `protocol://detail/decision-routes` if the task fits Route F.
   - If still ambiguous, ask the Scholar.
+- **If reading the MCP resource fails**, surface the failure: "I tried to load [URI] but [error]. Falling back to general principles; the Scholar's actual convention may differ."
 
 ---
 
