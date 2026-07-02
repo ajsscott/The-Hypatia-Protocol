@@ -130,12 +130,27 @@ goose recipe validate goose-config/hypatia-recipe.yaml
 goose run --recipe goose-config/hypatia-recipe.yaml --interactive
 ```
 
-**Thinking check, first message:** if Hypatia takes 60+ seconds before
-her first visible word, Goose is not passing `think: false` and Gemma 4
-is thinking (Q-17 measured ~900 hidden tokens). Fallback: create a
-derived no-think model (`ollama show <model> --modelfile`, add the
-think-off parameter, `ollama create hypatia-gemma4 -f Modelfile`) and
-point the recipe's `goose_model` at it.
+**Thinking (verified live 2026-07-02):** Goose does NOT pass
+`think: false` (block/goose#7617) — first live session ran 36–73s per
+reply on Gemma 4's default thinking. `PARAMETER think` is also not
+valid Ollama-0.31 Modelfile grammar, and `/no_think` only shortens
+thinking. The working fix is the shim:
+
+```bash
+# Terminal A — the shim (keep running; forwards 11435 → 11434,
+# injecting think:false on Gemma-4-family chat calls only):
+python3 scripts/ollama-think-shim.py
+
+# Once: build the derived model (32K ctx cap + Google samplers) and
+# point Goose at the shim:
+ollama create hypatia-gemma4 -f goose-config/hypatia-gemma4.Modelfile
+sed -i '' 's|OLLAMA_HOST: http://127.0.0.1:11434|OLLAMA_HOST: http://127.0.0.1:11435|' ~/.config/goose/config.yaml
+```
+
+Delete the shim (and revert OLLAMA_HOST) when goose#7617 ships a
+provider-level thinking toggle. Expected timings through the shim:
+first message ~20–25s (model load), later messages single-digit
+seconds (harness baseline: 0.6s TTFT, 14.4 tok/s).
 
 Validation checklist (from the Phase 1.5 plan + kernel):
 
