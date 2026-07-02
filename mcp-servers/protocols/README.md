@@ -26,6 +26,20 @@ MCP server that serves Hypatia's protocol library + kernel-archive detail files 
 - `protocol://detail/voice` — full voice register, examples, pattern of shifting
 - `protocol://detail/decision-route-a` … `decision-route-f` — one resource per route, generated from 11-decision-routes.md by `scripts/split-decision-routes.py` (edit the monolith, re-run the generator)
 
+## Tools (the live loading path)
+
+Goose's MCP host exposes only **tools** to the model — resources are
+invisible (verified live 2026-07-02: the whole protocol library was
+unreachable until these existed). The server therefore mirrors the resource
+library as tools:
+
+- `read_protocol {uri}` — returns a protocol's full markdown. Accepts
+  `protocol://x` or bare `x`. This is what the kernel's routing table
+  instructs Hypatia to call.
+- `list_protocols {}` — the full URI inventory with descriptions.
+
+Resources remain served for resource-aware MCP hosts.
+
 ## Building
 
 ```bash

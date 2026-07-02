@@ -1,3 +1,11 @@
+> **PARKED (2026-07-02).** Obsidian is Hypatia's UI: the community Agent
+> Client plugin speaks ACP to `goose acp` — see `docs/obsidian-setup.md`.
+> This app's `goose_client.rs` targets a REST API (`POST /chat`) that Goose
+> 1.40's CLI does not ship (the CLI serves ACP; the 103-endpoint goosed REST
+> spec is desktop-app-only — archived at `docs/reference/goosed-openapi-1.40.json`).
+> If revived, rebuild the client as an ACP stdio client. Until then, nothing
+> below is load-bearing.
+
 # Hypatia Frontend (Rust + Tauri)
 
 Custom Tauri-based frontend for Hypatia. Talks to Goose backend daemon over HTTP. Built for macOS (Phase 1.5 target); cross-platform deferred.

@@ -1,6 +1,6 @@
 # File Structure
 
-Snapshot of the repo's directory layout. Verified against the working tree as of Phase 1.5 substrate pivot (2026-05-12).
+Snapshot of the repo's directory layout. Verified against the working tree as of the Phase 1.5 launch (2026-07-02).
 
 ```
 The-Hypatia-Protocol/
@@ -24,7 +24,7 @@ The-Hypatia-Protocol/
 │       ├── README.md
 │       └── src/main.rs
 │
-├── frontend/                         Custom Tauri 2.0 desktop UI (Rust)
+├── frontend/                         Tauri 2.0 desktop UI (PARKED — Obsidian is the UI; see docs/obsidian-setup.md)
 │   ├── README.md
 │   ├── src-tauri/                    Tauri Rust backend
 │   │   ├── Cargo.toml
@@ -40,12 +40,14 @@ The-Hypatia-Protocol/
 │       ├── styles.css                Alexandrian palette
 │       └── main.js
 │
-├── goose-config/                     Goose custom-distro config
+├── goose-config/                     Goose custom-distro layer
 │   ├── README.md
-│   ├── config.yaml                   Provider (Ollama) + extensions (MCP servers) + system prompt source
-│   ├── extensions.yaml               MCP server registrations (deferred — content in config.yaml)
-│   ├── regen-system-prompt.sh        Build script: kernel/01-04.md → system-prompt.md
-│   └── goosehints.md                 Per-session reminders Goose surfaces
+│   ├── regen-system-prompt.sh        Generator: kernel → system-prompt.md + BOTH recipes + global goosehints
+│   ├── hypatia-gemma4.Modelfile      Q-17 model (Gemma-4 12B QAT, 32K ctx, Google samplers)
+│   ├── hypatia-gemma4-lite.Modelfile E4B light-burst tier (16K ctx)
+│   ├── com.hypatia.think-shim.plist  launchd agent: think-shim alive at login
+│   ├── config.yaml + extensions.yaml REFERENCE ONLY (pre-1.40 schema; superseded by recipes + global config)
+│   └── goosehints.md                 Legacy hints (superseded by generated ~/.config/goose/.goosehints)
 │
 ├── hypatia-kb/                       Knowledge base
 │   ├── README.md
@@ -70,7 +72,10 @@ The-Hypatia-Protocol/
 │   ├── Memory/                       memory.json + session-index + cache
 │   ├── Benchmarks/                   24-test harness (Phase 3 re-baseline)
 │   ├── exports/                      Dataview markdown (gitignored)
-│   └── vectorstore/                  Python + fastembed (Phase 3 → vectorstore-mcp)
+│   └── vectorstore/                  fastembed + RRF hybrid search; kb_server.py = MCP server
+│       ├── kb_{vectorize,sync,query}.py   KB-store index (patterns/knowledge/reasoning/memory)
+│       ├── vault_index.py            Vault-note index: chunking, hash-incremental sync, vault_search
+│       └── kb_server.py              FastMCP stdio server: vault_search/sync/rebuild + kb_search/sync/rebuild
 │
 ├── inbox/                            Curation staging (Q-22)
 │   ├── SCHEMA.md                     Capture frontmatter spec
@@ -101,7 +106,11 @@ The-Hypatia-Protocol/
 │   ├── run-python.sh                 Python runner (venv-aware)
 │   ├── save-session.py               Atomic save: JSON + index + inbox + export + commit-stage
 │   ├── hypatia-git-commit.py         Wraps git commit with Hypatia identity from config
-│   ├── check-keyword-drift.py        Kernel keyword-map vs protocol-declaration linter
+│   ├── check-keyword-drift.py        Three-way gate: canonical map ↔ protocols ↔ kernel table + URI liveness
+│   ├── launch-hypatia.sh             THE launcher: `hypatia` / `hypatia lite` / `hypatia ask "..."`
+│   ├── ollama-think-shim.py          Proxy :11435→:11434 injecting thinking-off for Gemma-4 (goose#7617 workaround)
+│   ├── eval-model-q17.py             Model eval harness (latency, persona, routing, destructive gate)
+│   ├── split-decision-routes.py      Generates archive decision-routes/route-{a..f}.md from the monolith
 │   ├── export-intelligence-to-markdown.py   Dataview-queryable markdown exports
 │   ├── session-cache.py              Session-local SQLite cache (FTS5)
 │   ├── cascade-correction.py
@@ -117,12 +126,15 @@ The-Hypatia-Protocol/
 │   ├── validate-schemas.py
 │   └── pre-commit-kb-validate.sh
 │
-└── tests/                            Pytest suites (175 passing as of Phase 1 close)
+└── tests/                            Pytest suites (225+ passing as of 2026-07-02)
     ├── test_save_session.py          Inbox + markdown-export coverage
     ├── test_save_oob.py              End-to-end + out-of-bounds
     ├── test_schema_validation.py     Schema gate (Q-05)
     ├── test_keyword_drift.py         Kernel-map linter gate (Q-05)
-    ├── test_protocols_mcp.py         MCP server tests (Phase 1.5; needs `cargo build` first)
+    ├── test_protocols_mcp.py         MCP server tests incl. read_protocol tool (needs `cargo build` first)
+    ├── test_think_shim.py             Think-shim injection logic
+    ├── test_q17_eval.py               Eval-harness heuristics
+    ├── test_vault_index.py            Vault chunking / sync classification / keyword ranking
     ├── test_session_cache.py
     ├── test_cascade_correction.py
     ├── test_removal_cascade.py
@@ -151,15 +163,15 @@ Workspace root:
 | Domain | Path | Purpose |
 |---|---|---|
 | Compact kernel (always-loaded) | `kernel/` | Identity + voice + critical gates + routing instinct |
-| MCP server (Rust) | `mcp-servers/protocols/` | Serves 32 protocol resources to Goose |
-| Frontend (Rust + Tauri) | `frontend/` | Hypatia's desktop app |
-| Goose distro | `goose-config/` | Provider + extensions + system prompt source |
+| MCP server (Rust) | `mcp-servers/protocols/` | 36 resources + read_protocol/list_protocols tools (tools are the live path — Goose exposes only tools to the model) |
+| Frontend | Obsidian (Agent Client plugin, ACP) + `scripts/launch-hypatia.sh`; `frontend/` Tauri app parked |
+| Goose distro | `goose-config/` | Kernel→recipe/goosehints generator + Modelfiles + think-shim plist |
 | Per-machine config | `hypatia.config.yaml` | Vault path, git identity, paths, preferences |
 | Knowledge base | `hypatia-kb/` | All protocols, intelligence, memory, vectorstore |
 | Protocols | `hypatia-kb/protocols/` | 20 lazy-load cluster + cross-cutting protocols |
 | Intelligence | `hypatia-kb/Intelligence/` | patterns / knowledge / reasoning / cross-refs / synonym-map |
 | Memory | `hypatia-kb/Memory/` | memory.json + session logs + cache |
-| Vectorstore | `hypatia-kb/vectorstore/` | fastembed + RRF semantic search |
+| Vectorstore | `hypatia-kb/vectorstore/` | Hybrid search MCP server: vault notes (vault_search) + KB stores |
 | Inbox | `inbox/preferences/` | Free-form captures awaiting Scholar consolidation |
 | Workspace | `workspace/` | Per-machine scratch (gitignored except README) |
 | Build docs | `docs/Hypatia Build Plan.md` + `docs/*-addendum.md` | Planning spine + corrections |
@@ -176,7 +188,7 @@ Workspace root:
 - **`docs/reference/phase-1-kernel-archive/`** holds the Phase 1 11-file kernel (~20K tokens). Now serves as MCP-resource source via `mcp-servers/protocols/` (Q-33 redistribution).
 - **`hypatia-kb/protocols/`** consolidates the entire protocol layer; cluster-prefixed naming.
 - **`mcp-servers/protocols/`** is the Rust MCP server that serves `protocols/` + `phase-1-kernel-archive/` as resources to Goose.
-- **`frontend/`** is the custom Tauri 2.0 desktop UI (Phase 1.5 v1 scaffold; Phase 2 adds menubar/USB/screen).
-- **`goose-config/`** is the Goose custom-distro config; tells Goose how to load Hypatia + which MCP servers to register.
+- **`frontend/`** is PARKED (2026-07-02): Obsidian is Hypatia's UI via ACP + the Agent Client plugin (`docs/obsidian-setup.md`); its goose_client.rs targets an API Goose 1.40's CLI doesn't ship.
+- **`goose-config/`** is the custom-distro layer: Goose 1.40 has no system_prompt_file, so the kernel travels as recipe `instructions` (terminal) and global goosehints (ACP/Obsidian), both generated by `regen-system-prompt.sh` on every launch.
 - **`hypatia-kb/Hypatia-Protocol.md`** is frozen historical reference. Live decision routing is `kernel/04-routing.md` + `docs/reference/phase-1-kernel-archive/11-decision-routes.md` (via MCP).
 - **Roo Code substrate (Phase 1)** was abandoned during the 2026-05-12 pivot. `.roomodes` deleted. `.roo/rules-hypatia/` content moved to `docs/reference/phase-1-kernel-archive/`.

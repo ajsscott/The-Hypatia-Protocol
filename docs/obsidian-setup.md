@@ -58,11 +58,11 @@ ext["kb-vectorstore"] = {
     "args": ["run", "--project", repo, "python", f"{repo}/hypatia-kb/vectorstore/kb_server.py"],
     "envs": {}, "timeout": 300,
 }
-# Obsidian sessions default to the lite tier: sidebar work is chat/Q&A;
-# grows belong in the terminal on the full model.
-cfg.setdefault("providers", {}).setdefault("ollama", {})["model"] = "hypatia-gemma4-lite"
+# AJ's choice: the sidebar runs the full 12B (swap to hypatia-gemma4-lite
+# here if GPU bursts bite; the terminal launcher offers both tiers).
+cfg.setdefault("providers", {}).setdefault("ollama", {})["model"] = "hypatia-gemma4"
 p.write_text(yaml.safe_dump(cfg, sort_keys=False))
-print("global config: extensions registered, model = hypatia-gemma4-lite")
+print("global config: extensions registered, model = hypatia-gemma4")
 EOF
 ```
 
@@ -106,7 +106,8 @@ Open the Agent Client sidebar, select the goose agent, say hello.
 - The plugin likely spawns sessions with the vault as cwd, so filesystem
   access may be vault-only (repo unreachable). Fine for curation; use the
   terminal `hypatia` for anything repo-side (saves, protocol work).
-- Sidebar sessions run the lite (E4B) model. For a heavy grow, use the
-  terminal: `hypatia` (full 12B).
+- Sidebar sessions run whatever the global config's model is (currently
+  the full 12B, AJ's choice). If GPU bursts bite, point it at
+  `hypatia-gemma4-lite`; the terminal launcher offers both tiers either way.
 - New session per task applies in Obsidian too — start a fresh sidebar
   session rather than growing one all day.

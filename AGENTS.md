@@ -6,9 +6,9 @@ Workspace-root agent spec for The Hypatia Protocol. Read by AI coding agents tha
 
 ## What this project is
 
-A Rust + Python + markdown framework for **Hypatia**, an AI partner-scholar that curates the **TabulaJacqueliana** Obsidian zettelkasten vault for AJ Strauman-Scott. Forked from Warner Bell's [Nathaniel Protocol](https://github.com/Warner-Bell/The-Nathaniel-Protocol) (MIT), rebuilt for the librarian/curator use case with a Greco-Roman Alexandrian voice register.
+A Rust + Python + markdown framework for **Hypatia**, an AI partner-scholar that curates the **TabulaJacqueliana** Obsidian zettelkasten vault. Forked from Warner Bell's [Nathaniel Protocol](https://github.com/Warner-Bell/The-Nathaniel-Protocol) (MIT), rebuilt for the librarian/curator use case with a Greco-Roman Alexandrian voice register.
 
-**Substrate** (Phase 1.5, 2026-05-12): Goose backend (Apache 2.0, MCP-first) + custom Rust/Tauri frontend. The previous Roo Code substrate was abandoned during Phase 1 empirical testing.
+**Substrate** (launched 2026-07-02): Goose 1.40 backend (Apache 2.0, MCP-first), running `hypatia-gemma4` (Gemma-4 12B QAT via Ollama, thinking disabled by `scripts/ollama-think-shim.py`). Surfaces: terminal (`scripts/launch-hypatia.sh` → `hypatia` / `hypatia lite` / `hypatia ask`) and Obsidian (ACP + Agent Client plugin, `docs/obsidian-setup.md`). The Tauri frontend is parked; the previous Roo Code substrate was abandoned during Phase 1 testing.
 
 ---
 
@@ -33,9 +33,10 @@ kernel/                     Compact always-loaded kernel (~4K tokens)
   03-critical-gates.md      Inbox boundary + destructive tier rules + security never-violates
   04-routing.md             Request classification + Decision Routes A-F summary
 
-mcp-servers/protocols/      Rust MCP server (serves protocols + kernel-archive as resources)
-frontend/                   Rust + Tauri 2.0 custom desktop UI
-goose-config/               Goose custom-distro config
+mcp-servers/protocols/      Rust MCP server: 36 resources + read_protocol/list_protocols
+                            tools (tools are the live path — Goose exposes only tools)
+frontend/                   Tauri UI (PARKED — Obsidian is the UI)
+goose-config/               Kernel→recipe/goosehints generator, Modelfiles, think-shim plist
 
 hypatia-kb/                 Knowledge base
   Memory/                   memory.json + indexes + session logs

@@ -1,7 +1,7 @@
 # The Hypatia Protocol
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
-![Substrate: Goose + Tauri](https://img.shields.io/badge/substrate-Goose%20%2B%20Tauri-blue)
+![Substrate: Goose + Obsidian](https://img.shields.io/badge/substrate-Goose%20%2B%20Obsidian-blue)
 ![Platform: Mac](https://img.shields.io/badge/platform-Mac-lightgrey)
 
 **A persistent AI partner-scholar for the TabulaJacqueliana zettelkasten vault.**
@@ -19,11 +19,11 @@ This is a personal project (AJ Strauman-Scott's). It's open source under MIT in 
 A Rust + Python + markdown framework that ships:
 
 - **A compact kernel** (`kernel/`, 4 files, ~4K tokens) — Hypatia's always-loaded identity / voice / critical gates / routing instinct. Loaded as Goose's system prompt.
-- **A protocols MCP server** (`mcp-servers/protocols/`, Rust) — serves the 20 cluster protocols + 10 kernel-archive detail expansions as MCP resources, lazy-loaded by Goose on keyword match.
-- **A knowledge base** (`hypatia-kb/`) with empty-at-launch JSON stores for memory, patterns, knowledge, reasoning; a vectorstore for semantic search; the 20 cluster protocols.
+- **A protocols MCP server** (`mcp-servers/protocols/`, Rust) — serves the 20 cluster protocols + 16 kernel-archive detail expansions (36 resources) and, critically, the `read_protocol` / `list_protocols` **tools** — Goose exposes only tools to the model, so the tools are the live loading path.
+- **A knowledge base** (`hypatia-kb/`) with empty-at-launch JSON stores for memory, patterns, knowledge, reasoning; a hybrid vectorstore (`vault_search` — RRF-fused semantic + keyword search over the vault's notes, plus the KB stores); the 20 cluster protocols.
 - **A capture pipeline** (`inbox/preferences/`) where Hypatia files free-form markdown observations during sessions. AJ consolidates manually during maintenance; no auto-promotion to canonical stores (Q-22 inbox boundary).
-- **A custom Tauri frontend** (`frontend/`, Rust + Tauri 2.0) — Hypatia's desktop UI, talks to Goose daemon over HTTP.
-- **A Goose custom-distro config** (`goose-config/`) — preconfigured providers, extensions, system prompt, hints.
+- **An Obsidian surface** — Hypatia lives in the vault via ACP (`goose acp` + the community Agent Client plugin; `docs/obsidian-setup.md`). The Tauri frontend (`frontend/`) is PARKED — Obsidian is the natural UI.
+- **A Goose custom-distro layer** (`goose-config/`) — a generator that turns the kernel into Goose recipes + global goosehints, derived Ollama models (`hypatia-gemma4` 12B / `hypatia-gemma4-lite` E4B), and the think-shim that disables Gemma-4's latency-killing hidden thinking.
 - **Operational scripts** (`scripts/`, Python) for setup, validation, save-time persistence, vectorstore sync, git filter chain.
 
 ---
@@ -48,9 +48,9 @@ Bell's original is preserved under `docs/reference/` as historical reference. Th
 | Layer | Choice |
 |---|---|
 | Agent backend | [Goose](https://block.github.io/goose/) (Block, Apache 2.0) |
-| Frontend | Custom Tauri 2.0 app (Rust) |
+| Frontend | Obsidian (Agent Client plugin over ACP) + terminal launcher; Tauri app parked |
 | LLM provider | Ollama (local), with Anthropic / OpenAI fallback via Goose |
-| Local model target | TBD per Q-17 re-evaluation; candidates: `gemma4`, `qwen2.5-coder:14b`, `qwen3-coder:30b`, `devstral:24b` |
+| Local model target | `hypatia-gemma4` (Gemma-4 12B QAT, thinking disabled — Q-17 answered 2026-07-02, evidence in `docs/q17-eval/`); `hypatia-gemma4-lite` (E4B) for light bursts |
 | Python | 3.11+ (for scripts and tests) |
 | Rust | 1.75+ |
 | Package managers | `uv` (Python) + `cargo` (Rust) |
@@ -71,27 +71,29 @@ uv sync
 # Rust build (compiles MCP servers + Tauri frontend)
 cargo build --release
 
-# Install Goose
-brew install block-goose
+# Install Goose + configure the Ollama provider once
+brew install block-goose-cli && goose configure
 
-# Pull a model (start with gemma4 for native large context)
-ollama pull gemma4
+# Build the derived models (thinking-disabled, right ctx/samplers)
+ollama create hypatia-gemma4 -f goose-config/hypatia-gemma4.Modelfile
+ollama create hypatia-gemma4-lite -f goose-config/hypatia-gemma4-lite.Modelfile
 
-# Configure Goose with Hypatia distro
-export HYPATIA_REPO_ROOT="$PWD"
-export GOOSE_CONFIG_PATH="$PWD/goose-config/config.yaml"
-./goose-config/regen-system-prompt.sh     # builds system-prompt.md from kernel/
+# Keep the model resident between turns
+launchctl setenv OLLAMA_KEEP_ALIVE 1h
 
-# Launch Goose daemon (terminal 1)
-goose serve --port 8765
-
-# Launch Hypatia frontend (terminal 2)
-cd frontend && cargo tauri dev
+# Alias the launcher, then launch her
+echo "alias hypatia='\$HOME/GitHub/other/The-Hypatia-Protocol/scripts/launch-hypatia.sh'" >> ~/.zshrc
+source ~/.zshrc
+hypatia            # full model, interactive
+hypatia lite       # light-burst tier
+hypatia ask "..."  # one-shot, throwaway session
 ```
+
+For Hypatia inside Obsidian (ACP + Agent Client plugin): [`docs/obsidian-setup.md`](docs/obsidian-setup.md).
 
 Hypatia introduces herself with `"Hello, Scholar."` on session start. (More accurately: she greets with whatever the compact kernel + her register produce; the greeting is hers, not scripted.)
 
-Full setup walk-through: [`goose-config/README.md`](goose-config/README.md) + [`frontend/README.md`](frontend/README.md).
+Full setup walk-through: [`goose-config/README.md`](goose-config/README.md) + [`docs/phase-1.5-launch-runbook.md`](docs/phase-1.5-launch-runbook.md).
 
 ---
 
@@ -103,7 +105,9 @@ Full setup walk-through: [`goose-config/README.md`](goose-config/README.md) + [`
 | `save` | Runs the 6-step save flow: session log + index update + memory snapshot + inbox flush + vectorstore sync + git commit (loads `protocol://detail/save`) |
 | `health check` | Non-destructive ecosystem audit |
 | `inbox triage` | Surface inbox captures for Scholar consolidation decisions |
-| `process this seed` | Invokes `protocol://assistant-ingest`; runs the six-step ingest flow |
+| `grow this Seed` / `process this seed` | Invokes `protocol://assistant-ingest`; runs the six-step ingest flow (**growing**, in the vault's lexicon) |
+| `how's the climb?` | PM progress through Mountains — bottom-up: Steps ascend Trails ascend Slopes summit Mountains (**climbing**) |
+| `what do we have about X?` | `vault_search` — hybrid semantic search over the vault's 2,000+ notes |
 
 Decision routing: **A** (direct) / **B** (with context) / **C** (clarify) / **D** (options) / **E** (confirm destructive) / **F** (pre-action analysis). Default for non-trivial tasks: Route F.
 
@@ -123,25 +127,24 @@ kernel/                     Compact always-loaded kernel (~4K tokens)
 mcp-servers/                Custom Rust MCP servers
 ├── protocols/              Serves protocols + kernel-archive as MCP resources
 
-frontend/                   Custom Tauri desktop UI
-├── src-tauri/              Rust backend (window, commands, Goose client)
-└── src/                    HTML/CSS/JS frontend
+frontend/                   Tauri desktop UI (PARKED — Obsidian is the UI)
 
-goose-config/               Goose custom-distro config
-├── config.yaml             Provider + extensions + system prompt source
-├── extensions.yaml         MCP server registrations
-└── regen-system-prompt.sh  Concatenates kernel/ for Goose
+goose-config/               Goose custom-distro layer
+├── regen-system-prompt.sh  Generator: kernel → recipes + goosehints
+├── hypatia-gemma4.Modelfile        Q-17 model (12B QAT, 32K ctx)
+├── hypatia-gemma4-lite.Modelfile   E4B light tier (16K ctx)
+└── com.hypatia.think-shim.plist    launchd agent for the think-shim
 
 hypatia-kb/                 Knowledge base
 ├── protocols/              20 lazy-loaded protocols (librarian/researcher/writer/assistant + cross-cutting)
 ├── Intelligence/           patterns / knowledge / reasoning + indexes
 ├── Memory/                 memory.json + session logs
-└── vectorstore/            fastembed + RRF semantic search (Phase 3)
+└── vectorstore/            fastembed + RRF hybrid search: KB stores + vault notes (vault_search MCP tool)
 
 inbox/                      Curation staging (Q-22 inbox boundary)
 └── preferences/            Free-form markdown captures
 
-scripts/                    Python tooling (save-session, validation, maintenance)
+scripts/                    Python tooling (save-session, validation, launcher, think-shim, Q-17 eval)
 tests/                      Pytest suites
 docs/                       Build Plan, decisions log, reference archive
 hypatia.config.yaml         Per-machine config (vault path, git identity)

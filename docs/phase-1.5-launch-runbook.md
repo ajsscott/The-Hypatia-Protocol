@@ -1,5 +1,13 @@
 # Phase 1.5 launch runbook — first Goose boot on AJ's Mac
 
+> **STATUS: LAUNCHED 2026-07-02.** Hypatia runs live (persona, tool-calls,
+> vault_search all validated). This runbook is the historical record of the
+> launch path; current operations are `scripts/launch-hypatia.sh` (`hypatia` /
+> `hypatia lite` / `hypatia ask`), `docs/obsidian-setup.md` for the Obsidian
+> surface, and `goose-config/README.md` for the delivery architecture.
+> Remaining Phase 1.5 items: first fully protocol-conformant grow review +
+> first end-to-end save-session.
+
 Written 2026-07-02. Everything in this file needs AJ's Mac (Goose, Ollama,
 macOS Tauri); the Linux sandbox used for port engineering can't execute any
 of it. Steps are ordered — each verifies the previous. Bring failures back
