@@ -918,6 +918,49 @@ state pending Phase 1.5 testing.
 
 ---
 
+## Q-17 | ANSWERED — Gemma 4 12B QAT, thinking disabled
+
+Answered: 2026-07-02  Status: ANSWERED
+Decided by: AJ Strauman-Scott (model preference) + empirical eval
+
+**Answer:** `hf.co/unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL` (6.9 GB,
+Unsloth dynamic-4bit QAT, 256K-trained context) with hybrid-thinking
+**disabled** (`think: false` on the Ollama chat API).
+
+**Evidence** (`docs/q17-eval/`, runs of 2026-07-02, real compact-kernel
+system prompt, `scripts/eval-model-q17.py`):
+
+- Thinking OFF: 7/8 heuristic checks, TTFT 0.58–0.65 s, 14.4 tok/s on
+  AJ's 32 GB Mac Mini. Ingest prompt produced the exact Q-33 target
+  behavior — announced `read_resource(protocol://assistant-ingest)` +
+  `protocol://librarian-vault-structure`, asked for the source instead
+  of fabricating one. Destructive gate cited "Tier 2 — CONFIRM
+  REQUIRED" unprompted.
+- Thinking ON (default): same model scored 6/8 but spent ~900 hidden
+  thinking tokens per reply — 60–90 s to first visible word.
+  Disqualifying; hence the think-off requirement.
+- Baseline `qwen2.5-coder:14b`: 6/8, 0.5 s TTFT, but on routing misses
+  it fabricated vault conventions (CamelCase filenames, invented
+  frontmatter, nonexistent snapshot path) — the librarian failure mode.
+  Retained as fallback model only.
+
+**Sole gemma4 miss:** on "save the session" it invoked an imagined
+`save_session` tool instead of reading `protocol://detail/save` —
+wrong mechanism, right instinct; revisit when the Phase 2 save-session
+MCP server exists.
+
+**Open verification (Phase 1.5 launch):** Goose must call Ollama with
+thinking disabled. Verify whether Goose's Ollama provider exposes a
+`think` toggle; if not, create a derived model via `ollama create`
+with thinking off, or override the chat template. Final confirmation
+of tool-calling happens in the first live Goose session with real MCP
+tools attached — the harness could only measure stated intent.
+
+**Supersedes:** the REOPENED state above. `goose-config/config.yaml`
+and `hypatia.config.yaml` aligned to this answer same day.
+
+---
+
 ## Q-31 | ANSWERED — Substrate pivot: Goose over Roo Code
 
 Asked: 2026-05-12  Status: ANSWERED  Decided by: AJ Strauman-Scott

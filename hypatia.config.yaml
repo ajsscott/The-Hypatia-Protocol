@@ -28,10 +28,11 @@ instance:
   name: Hypatia
   created: 2026-04-22
 
-  # Canonical local-model design target (Q-17, 2026-05-12). Kernel prose and
-  # protocol structure are calibrated against this model's tool-use behavior.
-  # Other supported models: mistral-nemo:12b, deepseek-r1:14b (with caveats).
-  design_target_model: qwen3:14b
+  # Canonical local-model design target (Q-17 ANSWERED 2026-07-02).
+  # Kernel prose and protocol structure are calibrated against this model's
+  # tool-use behavior; hybrid-thinking must be disabled (see Q-17).
+  # Fallback: qwen2.5-coder:14b. Evidence: docs/q17-eval/.
+  design_target_model: hf.co/unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL
 
 git:
   # Git identity for commits Hypatia herself authors (Q-08, 2026-04-22).

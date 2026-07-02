@@ -20,17 +20,27 @@ providers:
     # Force IPv4 explicitly to avoid the ::1 / 127.0.0.1 binding mismatch
     # we hit during Phase 1 Roo Code testing.
     base_url: "http://127.0.0.1:11434"
-    # Model TBD per Q-17 re-evaluation. Phase 1.5 Week 2 task.
-    # Candidates: gemma4 (8B, native 128K context, function-calling),
-    # qwen2.5-coder:14b (proven tool-use, no thinking mode),
-    # qwen3-coder:30b (agentic flagship, 256K context),
-    # devstral:24b (Mistral agentic-tuned).
-    model: "gemma4"
-    # qwen2.5-coder:14b has trained 32K. gemma4 has native 128K. Set
-    # this generously; compact kernel + tools + history typically ~15K.
+    # Q-17 ANSWERED 2026-07-02: Gemma 4 12B QAT (Unsloth dynamic-4bit,
+    # 6.9 GB, 256K-trained). Evidence: docs/q17-eval/. Fallback:
+    # qwen2.5-coder:14b (kept pulled).
+    model: "hf.co/unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL"
+    # Compact kernel + tools + history typically ~15K; model trained to
+    # 256K, so this is headroom-limited (KV cache RAM), not model-limited.
     context_length: 65536
     # Goose's Ollama integration historically used a low default; force
     # explicit higher value to avoid issue #1253.
+    #
+    # CRITICAL (Q-17): Gemma 4 hybrid-thinking MUST be disabled —
+    # default thinking measured 60-90s to first visible token. The eval
+    # harness sends think:false on /api/chat; verify Goose does the
+    # same (provider option, or `ollama create` a derived no-think
+    # model). See docs/open-questions.md Q-17 + launch runbook.
+    #
+    # Google-recommended samplers for Gemma 4 (verify field names
+    # against the installed Goose's provider schema):
+    temperature: 1.0
+    top_p: 0.95
+    top_k: 64
 
   # Optional cloud fallback. Comment out if not used.
   # anthropic:
