@@ -33,11 +33,14 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 SHIM_PORT = int(os.environ.get("SHIM_PORT", "11435"))
 UPSTREAM = os.environ.get("OLLAMA_UPSTREAM", "http://127.0.0.1:11434").rstrip("/")
 
-# Endpoints whose JSON bodies accept the top-level `think` option.
+# Native endpoints take `think: false`; the OpenAI-compat endpoint (which
+# Goose actually calls — verified in shim logs 2026-07-02) ignores `think`
+# and wants `reasoning_effort: "none"` instead (ollama/ollama#15288).
 THINK_PATHS = ("/api/chat", "/api/generate")
+OPENAI_PATHS = ("/v1/chat/completions",)
 
-# Only these models get think:false injected — non-thinking models may
-# reject the parameter, and the shim must stay transparent for them.
+# Only these models get the injection — non-thinking models may reject
+# the parameter, and the shim must stay transparent for them.
 THINK_MODEL_MARKERS = ("hypatia-gemma4", "gemma-4", "gemma4")
 
 # Hop-by-hop headers that must not be forwarded verbatim.
@@ -51,24 +54,29 @@ SKIP_HEADERS = {
 
 
 def inject_think(body: bytes, path: str) -> bytes:
-    """Set think:false on Gemma-4-family chat/generate bodies; leave
-    everything else alone.
+    """Disable thinking on Gemma-4-family requests; leave everything else
+    alone. Native endpoints get `think: false`; the OpenAI-compat endpoint
+    gets `reasoning_effort: "none"`.
 
-    A client that explicitly set `think` keeps its value — the shim only
-    supplies the default Goose can't.
+    A client that explicitly set a thinking control keeps its value — the
+    shim only supplies the default Goose can't.
     """
-    if not any(path.startswith(p) for p in THINK_PATHS):
+    if any(path.startswith(p) for p in THINK_PATHS):
+        key, value, conflicts = "think", False, ("think",)
+    elif any(path.startswith(p) for p in OPENAI_PATHS):
+        key, value, conflicts = "reasoning_effort", "none", ("reasoning_effort", "reasoning")
+    else:
         return body
     try:
         payload = json.loads(body)
     except (json.JSONDecodeError, UnicodeDecodeError):
         return body
-    if not isinstance(payload, dict) or "think" in payload:
+    if not isinstance(payload, dict) or any(c in payload for c in conflicts):
         return body
     model = str(payload.get("model", "")).lower()
     if not any(marker in model for marker in THINK_MODEL_MARKERS):
         return body
-    payload["think"] = False
+    payload[key] = value
     return json.dumps(payload).encode()
 
 

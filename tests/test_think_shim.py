@@ -39,6 +39,21 @@ class TestInjectThink(unittest.TestCase):
         body = json.dumps({"model": "qwen2.5-coder:14b", "messages": []}).encode()
         self.assertEqual(shim.inject_think(body, "/api/chat"), body)
 
+    def test_openai_endpoint_gets_reasoning_effort_none(self):
+        # Goose calls /v1/chat/completions, where `think` is ignored and
+        # reasoning_effort:"none" is the working control (ollama#15288).
+        body = json.dumps({"model": "hypatia-gemma4", "messages": []}).encode()
+        out = json.loads(shim.inject_think(body, "/v1/chat/completions"))
+        self.assertEqual(out["reasoning_effort"], "none")
+        self.assertNotIn("think", out)
+
+    def test_openai_endpoint_respects_client_reasoning(self):
+        body = json.dumps(
+            {"model": "hypatia-gemma4", "messages": [], "reasoning_effort": "low"}
+        ).encode()
+        out = json.loads(shim.inject_think(body, "/v1/chat/completions"))
+        self.assertEqual(out["reasoning_effort"], "low")
+
     def test_respects_explicit_client_value(self):
         body = json.dumps({"model": "m", "messages": [], "think": True}).encode()
         out = json.loads(shim.inject_think(body, "/api/chat"))
