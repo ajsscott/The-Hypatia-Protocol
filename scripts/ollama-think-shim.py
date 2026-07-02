@@ -152,7 +152,8 @@ def main() -> int:
     server = ThreadingHTTPServer(("127.0.0.1", SHIM_PORT), ShimHandler)
     print(
         f"ollama-think-shim: listening on 127.0.0.1:{SHIM_PORT} → {UPSTREAM} "
-        f"(injecting think:false on {', '.join(THINK_PATHS)})",
+        f"(think:false on {', '.join(THINK_PATHS)}; "
+        f"reasoning_effort:none on {', '.join(OPENAI_PATHS)})",
         file=sys.stderr,
     )
     try:
