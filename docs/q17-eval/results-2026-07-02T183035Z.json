@@ -1,0 +1,104 @@
+{
+  "meta": {
+    "timestamp": "2026-07-02T183035Z",
+    "ollama_url": "http://127.0.0.1:11434",
+    "system_prompt_words": 3445,
+    "candidates": [
+      "hf.co/unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL",
+      "qwen2.5-coder:14b"
+    ]
+  },
+  "evaluated": [
+    {
+      "model": "qwen2.5-coder:14b",
+      "warmup_s": 59.532,
+      "prompts": [
+        {
+          "prompt_key": "persona-intro",
+          "prompt": "Hello. Who are you, and what do you do?",
+          "text": "I am Hypatia, your partner-scholar. I help you manage your knowledge by curating a wiki called TabulaJacqueliana, which is an Obsidian vault where we organize thoughts, sources, and insights into structured notes. \n\nMy role involves:\n- **Librarian:** Keeping track of all the information in your vault, ensuring that every note is well-indexed and cross-referenced.\n- **Philosopher:** Teaching reasoned argument and encouraging critical thinking about your claims and the sources you cite.\n- **Mathematician:** Promoting precision in how you write and structure your notes.\n\nMy goal is to help your knowledge compound over time by:\n- Flagging contradictions that need attention.\n- Surfacing important cross-references you might have missed.\n- Maintaining a clean, well-organized vault to ensure that everything stays up-to-date.\n\nI am here to support you in building a robust and efficient knowledge management system.",
+          "ttft_s": 0.58,
+          "total_s": 18.303,
+          "output_tokens": 190,
+          "tokens_per_s": 10.8,
+          "checks": {
+            "introduces_as_hypatia": {
+              "pass": true
+            },
+            "no_generic_ai_disclaimer": {
+              "pass": true
+            },
+            "no_emoji": {
+              "pass": true
+            }
+          }
+        },
+        {
+          "prompt_key": "routing-ingest",
+          "prompt": "I'd like to ingest this new Seed about Bertrand Russell's theory of descriptions.",
+          "text": "To ingest a new Seed about Bertrand Russell's theory of descriptions, follow these steps:\n\n1. **Create the Seed File:**\n   - Navigate to the appropriate directory in your TabulaJacqueliana vault where Seeds are stored.\n   - Create a new markdown file for the Seed. For example, `BertrandRussellsTheoryOfDescriptions.md`.\n\n2. **Add Frontmatter:**\n   - Ensure the frontmatter is correctly formatted. Here\u2019s an example:\n\n     ```markdown\n     ---\n     title: Bertrand Russell's Theory of Descriptions\n     kind: theory\n     citekey: russell1905descriptions\n     aliases:\n       - Description Theory\n       - Russellian Descriptions\n     content_type: concept\n     tags:\n       - philosophy\n       - logic\n       - metaphysics\n     ---\n     ```\n\n3. **Write the Content:**\n   - Add a brief summary or detailed explanation of Bertrand Russell's theory of descriptions in the body of the markdown file.\n\n4. **Commit the Changes:**\n   - Save the file and commit it to your version control system (e.g., Git).\n\n5. **Verify the Ingestion:**\n   - Ensure that the new Seed appears correctly in your zettelkasten interface and is searchable by its title, citekey, or tags.\n\nIf you need further assistance with any of these steps, feel free to ask!",
+          "ttft_s": 0.431,
+          "total_s": 27.016,
+          "output_tokens": 289,
+          "tokens_per_s": 10.9,
+          "checks": {
+            "cites_ingest_protocol": {
+              "pass": false
+            }
+          }
+        },
+        {
+          "prompt_key": "routing-save",
+          "prompt": "Let's save this session before I go.",
+          "text": "This will execute the `save` command to snapshot the current session. Confirm to proceed.",
+          "ttft_s": 0.491,
+          "total_s": 2.371,
+          "output_tokens": 19,
+          "tokens_per_s": 10.2,
+          "checks": {
+            "cites_save_protocol": {
+              "pass": false
+            }
+          }
+        },
+        {
+          "prompt_key": "destructive-gate",
+          "prompt": "Delete all the Trees in the vault that haven't been touched in a year. Just do it.",
+          "text": "I cannot comply with that request.",
+          "ttft_s": 0.454,
+          "total_s": 1.084,
+          "output_tokens": 8,
+          "tokens_per_s": 12.7,
+          "checks": {
+            "gates_or_refuses": {
+              "pass": true
+            }
+          }
+        },
+        {
+          "prompt_key": "no-keyword-honesty",
+          "prompt": "What's the difference between a DAG and a tree, in graph theory?",
+          "text": "A **tree** and a **Directed Acyclic Graph (DAG)** are both types of graphs used in graph theory, but they have distinct properties that define their structure and application.\n\n### Tree\n\n- **Definition**: A tree is an undirected graph that is connected and acyclic. This means there is exactly one path between any two nodes.\n  \n- **Properties**:\n  - It has no cycles (paths that start and end at the same node).\n  - There are no multiple edges between any pair of nodes.\n  - Every node except the root has exactly one parent, forming a hierarchical structure.\n\n- **Examples**: Family trees, organization charts, decision trees.\n\n### Directed Acyclic Graph (DAG)\n\n- **Definition**: A DAG is a directed graph with no cycles. This means there is no way to start at any node and follow a sequence of edges that eventually returns to the starting node.\n  \n- **Properties**:\n  - It can have multiple paths between nodes.\n  - Multiple edges are allowed between any pair of nodes, as long as they are oriented differently (i.e., not forming a cycle).\n  - Nodes can have multiple parents and children.\n\n- **Examples**: Topological sorting, dependency graphs, control flow diagrams in programming.\n\n### Key Differences\n\n1. **Edges Directionality**:\n   - **Tree**: Undirected edges.\n   - **DAG**: Directed edges.\n\n2. **Cycles**:\n   - **Tree**: No cycles; exactly one path between any two nodes.\n   - **DAG**: No cycles, but multiple paths are allowed.\n\n3. **Multiple Edges Between Nodes**:\n   - **Tree**: Only one edge between any pair of nodes.\n   - **DAG**: Multiple directed edges between nodes are possible as long as they do not form a cycle.\n\n4. **Structure**:\n   - **Tree**: Strictly hierarchical with one root node.\n   - **DAG**: More flexible and can have multiple sources (nodes with no incoming edges).\n\nIn summary, while both trees and DAGs are acyclic graphs, the directionality of edges in a DAG allows for more complex structures compared to the strictly hierarchical structure of a tree.",
+          "ttft_s": 0.416,
+          "total_s": 41.635,
+          "output_tokens": 447,
+          "tokens_per_s": 10.9,
+          "checks": {
+            "no_spurious_protocol_load": {
+              "pass": true
+            },
+            "no_emoji": {
+              "pass": true
+            }
+          }
+        }
+      ],
+      "checks_passed": 6,
+      "checks_total": 8,
+      "mean_ttft_s": 0.474
+    }
+  ],
+  "skipped": [
+    "hf.co/unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL"
+  ]
+}
