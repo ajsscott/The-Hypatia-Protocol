@@ -204,7 +204,15 @@ impl ServerHandler for ProtocolsServer {
     fn get_info(&self) -> ServerInfo {
         ServerInfo {
             protocol_version: ProtocolVersion::V_2024_11_05,
-            capabilities: ServerCapabilities::builder().enable_resources().build(),
+            // Tools AND resources: Goose's MCP host exposes only tools to the
+            // model (verified live 2026-07-02 — read_resource was uncallable
+            // and protocols were unreachable), so the resource library is
+            // mirrored as a read_protocol tool. Resources stay for hosts
+            // that support them.
+            capabilities: ServerCapabilities::builder()
+                .enable_resources()
+                .enable_tools()
+                .build(),
             server_info: Implementation {
                 name: SERVER_NAME.into(),
                 version: env!("CARGO_PKG_VERSION").into(),
@@ -268,6 +276,112 @@ impl ServerHandler for ProtocolsServer {
                 text: content,
             }],
         })
+    }
+
+    async fn list_tools(
+        &self,
+        _request: Option<PaginatedRequestParam>,
+        _context: RequestContext<RoleServer>,
+    ) -> Result<ListToolsResult, McpError> {
+        let read_schema = serde_json::json!({
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "Protocol URI, e.g. protocol://assistant-ingest or protocol://detail/save"
+                }
+            },
+            "required": ["uri"]
+        });
+        let list_schema = serde_json::json!({"type": "object", "properties": {}});
+        Ok(ListToolsResult {
+            tools: vec![
+                Tool {
+                    name: "read_protocol".into(),
+                    description: Some(
+                        "Load one of Hypatia's protocols by URI. Call this BEFORE answering \
+                         when a request matches a keyword in the kernel routing table. The \
+                         protocol content is authoritative over training data."
+                            .into(),
+                    ),
+                    input_schema: std::sync::Arc::new(
+                        read_schema.as_object().cloned().unwrap_or_default(),
+                    ),
+                    annotations: None,
+                },
+                Tool {
+                    name: "list_protocols".into(),
+                    description: Some(
+                        "List every protocol URI this server can load, with descriptions."
+                            .into(),
+                    ),
+                    input_schema: std::sync::Arc::new(
+                        list_schema.as_object().cloned().unwrap_or_default(),
+                    ),
+                    annotations: None,
+                },
+            ],
+            next_cursor: None,
+        })
+    }
+
+    async fn call_tool(
+        &self,
+        request: CallToolRequestParam,
+        _context: RequestContext<RoleServer>,
+    ) -> Result<CallToolResult, McpError> {
+        match request.name.as_ref() {
+            "read_protocol" => {
+                let uri = request
+                    .arguments
+                    .as_ref()
+                    .and_then(|a| a.get("uri"))
+                    .and_then(|v| v.as_str())
+                    .ok_or_else(|| {
+                        McpError::invalid_params("read_protocol requires a 'uri' argument", None)
+                    })?;
+                // Accept both `protocol://x` and bare `x`.
+                let uri = if uri.starts_with("protocol://") {
+                    uri.to_string()
+                } else {
+                    format!("protocol://{uri}")
+                };
+                let entry = self.resources.get(&uri).ok_or_else(|| {
+                    McpError::invalid_params(
+                        format!(
+                            "no protocol at {uri}; call list_protocols for the inventory"
+                        ),
+                        None,
+                    )
+                })?;
+                let content = std::fs::read_to_string(&entry.path).map_err(|e| {
+                    McpError::internal_error(
+                        format!("failed to read {:?}: {}", entry.path, e),
+                        None,
+                    )
+                })?;
+                Ok(CallToolResult {
+                    content: vec![Content::text(content)],
+                    is_error: Some(false),
+                })
+            }
+            "list_protocols" => {
+                let mut lines: Vec<String> = self
+                    .resources
+                    .iter()
+                    .map(|(uri, entry)| format!("{} — {}", uri, entry.description))
+                    .collect();
+                lines.sort();
+                Ok(CallToolResult {
+                    content: vec![Content::text(lines.join("\n"))],
+                    is_error: Some(false),
+                })
+            }
+            other => Err(McpError::invalid_params(
+                format!("unknown tool: {other}"),
+                None,
+            )),
+        }
     }
 }
 

@@ -191,6 +191,35 @@ class TestProtocolsMCPServer(unittest.TestCase):
         )
         self.assertIn("error", resp, f"expected error, got: {resp}")
 
+    def test_tools_listed(self):
+        # Goose exposes only MCP TOOLS to the model (live finding 2026-07-02),
+        # so the resource library must be callable as read_protocol.
+        resp = _mcp_request(self.proc, "tools/list", {}, 6)
+        self.assertIn("result", resp, f"tools/list failed: {resp}")
+        names = {t["name"] for t in resp["result"]["tools"]}
+        self.assertEqual(names, {"read_protocol", "list_protocols"})
+
+    def test_read_protocol_tool_returns_content(self):
+        resp = _mcp_request(
+            self.proc,
+            "tools/call",
+            {"name": "read_protocol", "arguments": {"uri": "protocol://librarian-role"}},
+            7,
+        )
+        self.assertIn("result", resp, f"tools/call failed: {resp}")
+        text = resp["result"]["content"][0]["text"]
+        self.assertIn("Trigger Keywords", text)
+
+    def test_read_protocol_tool_accepts_bare_name(self):
+        resp = _mcp_request(
+            self.proc,
+            "tools/call",
+            {"name": "read_protocol", "arguments": {"uri": "detail/save"}},
+            8,
+        )
+        self.assertIn("result", resp, f"tools/call failed: {resp}")
+        self.assertTrue(resp["result"]["content"][0]["text"])
+
 
 class TestServedFilesExist(unittest.TestCase):
     """File-system invariants — verifiable without spawning the binary."""

@@ -45,7 +45,7 @@ Hypatia operates with a compact always-loaded kernel (this file plus 01-03). All
 
 **HOW to load a protocol — explicit tool invocation:**
 
-When a request matches a keyword below, call the `read_resource` tool on the `hypatia-protocols` extension with the matching URI **before** answering. The protocol content becomes context; THEN you respond.
+When a request matches a keyword below, call the **`read_protocol` tool** (from the `hypatia-protocols` extension; it may appear as `hypatia-protocols__read_protocol`) with the matching URI as the `uri` argument, **before** answering. The protocol content becomes context; THEN you respond. If unsure what exists, the `list_protocols` tool returns the full inventory.
 
 **DO NOT answer from training data when a protocol exists for the topic.** Your training data contains generic zettelkasten and AI-assistant patterns that are not TabulaJacqueliana's actual conventions. The MCP resources are authoritative; your training is not.
 
