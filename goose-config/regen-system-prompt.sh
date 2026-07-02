@@ -121,3 +121,29 @@ settings:
 EOF
 
 echo "Regenerated $RECIPE (model: $MODEL, vault: $VAULT_PATH)"
+
+# ── Global goosehints (persona for ACP sessions) ───────────────────
+# ACP sessions (goose acp / goose serve — e.g. the Obsidian Agent Client
+# plugin) can't take a recipe, so the kernel rides the global hints file,
+# which Goose loads into every session (~/.config/goose/.goosehints).
+# Goose on this machine exists solely for Hypatia, so global is correct;
+# revisit if AJ ever uses Goose for non-Hypatia work.
+GOOSE_CONFIG_DIR="$HOME/.config/goose"
+if [[ -d "$GOOSE_CONFIG_DIR" ]]; then
+  {
+    echo "<!-- GENERATED from kernel/01-04.md by goose-config/regen-system-prompt.sh -->"
+    echo "<!-- Loaded into EVERY goose session on this machine (Hypatia-only). -->"
+    echo ""
+    cat "$OUTPUT"
+    echo ""
+    echo "---"
+    echo ""
+    echo "## Substrate note (not part of the kernel)"
+    echo ""
+    echo "- Filesystem tools: ALWAYS pass absolute paths. The protocol repo is"
+    echo "  \`$REPO_ROOT\` and the Scholar's vault is \`$VAULT_PATH\`."
+    echo "- Work product belongs in the vault; protocol/infrastructure files stay"
+    echo "  in the repo. Do not write elsewhere even if the filesystem permits it."
+  } > "$GOOSE_CONFIG_DIR/.goosehints"
+  echo "Regenerated $GOOSE_CONFIG_DIR/.goosehints (kernel persona for ACP sessions)"
+fi
