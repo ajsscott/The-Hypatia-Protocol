@@ -22,7 +22,13 @@ Stdlib only; no third-party deps.
 Invocation:
     python3 scripts/eval-model-q17.py                       # default candidates
     python3 scripts/eval-model-q17.py qwen3:14b gemma4      # explicit list
+    python3 scripts/eval-model-q17.py --think gemma4        # re-enable thinking
     OLLAMA_URL=http://127.0.0.1:11434 python3 scripts/eval-model-q17.py
+
+Thinking is disabled by default (`think: false` in the Ollama chat call):
+Gemma 4's default hybrid-thinking measured ~900 hidden tokens / 60-90s
+before the first visible word — unusable for Hypatia's first-response
+latency target. Models that reject the parameter are retried without it.
 
 Exit codes:
     0 — at least one candidate fully evaluated
@@ -188,30 +194,46 @@ def list_available_models() -> set[str]:
     return names
 
 
-def chat_streaming(model: str, system: str, user: str) -> dict:
-    """One-shot chat; returns text + timing/throughput measurements."""
+def chat_streaming(model: str, system: str, user: str, think: bool | None = False) -> dict:
+    """One-shot chat; returns text + timing/throughput measurements.
+
+    think=False disables hybrid-thinking (Gemma 4 thinks by default under
+    Ollama — first run measured ~900 hidden tokens / 60-90s before the first
+    visible word). Models that don't support the parameter get a retry with
+    it omitted. Thinking output, when present, is captured separately so TTFT
+    stays user-perceived (first VISIBLE token).
+    """
+    payload: dict = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
+        "stream": True,
+        "options": {"num_ctx": NUM_CTX},
+    }
+    if think is not None:
+        payload["think"] = think
     start = time.monotonic()
     first_token_at: float | None = None
     chunks: list[str] = []
+    thinking_chunks: list[str] = []
     final: dict = {}
-    resp = _post_json(
-        "/api/chat",
-        {
-            "model": model,
-            "messages": [
-                {"role": "system", "content": system},
-                {"role": "user", "content": user},
-            ],
-            "stream": True,
-            "options": {"num_ctx": NUM_CTX},
-        },
-    )
+    try:
+        resp = _post_json("/api/chat", payload)
+    except urllib.error.HTTPError as e:
+        if think is not None and e.code == 400:
+            # e.g. qwen2.5 rejects the think parameter entirely
+            return chat_streaming(model, system, user, think=None)
+        raise
     with resp:
         for line in resp:
             if not line.strip():
                 continue
             event = json.loads(line)
-            content = event.get("message", {}).get("content", "")
+            message = event.get("message", {})
+            content = message.get("content", "")
+            thinking_chunks.append(message.get("thinking", "") or "")
             if content and first_token_at is None:
                 first_token_at = time.monotonic()
             chunks.append(content)
@@ -222,6 +244,8 @@ def chat_streaming(model: str, system: str, user: str) -> dict:
     eval_duration_s = (final.get("eval_duration") or 0) / 1e9
     return {
         "text": "".join(chunks),
+        "thinking_chars": len("".join(thinking_chunks)),
+        "think_param": think,
         "ttft_s": round((first_token_at or time.monotonic()) - start, 3),
         "total_s": round(total_s, 3),
         "output_tokens": eval_count,
@@ -231,22 +255,27 @@ def chat_streaming(model: str, system: str, user: str) -> dict:
 
 # ─── Harness ───
 
-def evaluate_model(model: str, system: str, prompts: list[EvalPrompt]) -> dict:
+def evaluate_model(
+    model: str, system: str, prompts: list[EvalPrompt], think: bool | None = False
+) -> dict:
     results = []
     # Warmup loads the model so TTFT measures prefill, not disk load.
     print("  warmup (model load) ...", flush=True)
-    warmup = chat_streaming(model, system, "Ready?")
+    warmup = chat_streaming(model, system, "Ready?", think=think)
     print(f"  warmup done in {warmup['total_s']}s")
     for ep in prompts:
         print(f"  [{ep.key}] ...", flush=True)
-        run = chat_streaming(model, system, ep.prompt)
+        run = chat_streaming(model, system, ep.prompt, think=think)
         checks = {}
         for name, fn, expected in ep.checks:
             checks[name] = {"pass": fn(run["text"]) == expected}
         passed = sum(1 for c in checks.values() if c["pass"])
+        thinking_note = (
+            f" thinking_chars={run['thinking_chars']}" if run["thinking_chars"] else ""
+        )
         print(
             f"  [{ep.key}] ttft={run['ttft_s']}s total={run['total_s']}s "
-            f"tok/s={run['tokens_per_s']} checks={passed}/{len(checks)}"
+            f"tok/s={run['tokens_per_s']} checks={passed}/{len(checks)}{thinking_note}"
         )
         results.append({"prompt_key": ep.key, "prompt": ep.prompt, **run, "checks": checks})
     return {
@@ -294,7 +323,12 @@ def render_markdown(
 
 
 def main() -> int:
-    candidates = sys.argv[1:] or DEFAULT_CANDIDATES
+    args = sys.argv[1:]
+    # Thinking is off by default: Hypatia's kernel is engineered for fast
+    # first response, and Gemma 4's default thinking costs 60-90s TTFT.
+    # --think re-enables it for comparison runs.
+    think: bool | None = "--think" in args
+    candidates = [a for a in args if not a.startswith("--")] or DEFAULT_CANDIDATES
     if not SYSTEM_PROMPT_PATH.exists():
         print(
             f"ERROR: {SYSTEM_PROMPT_PATH} missing — run "
@@ -319,9 +353,9 @@ def main() -> int:
             print(f"SKIP {model}: not pulled (ollama pull {model})")
             skipped.append((model, f"not pulled — `ollama pull {model}`"))
             continue
-        print(f"evaluating {model}")
+        print(f"evaluating {model} (think={think})")
         try:
-            evaluated.append(evaluate_model(model, system, prompts))
+            evaluated.append(evaluate_model(model, system, prompts, think=think))
         except urllib.error.HTTPError as e:
             hint = ""
             if e.code == 500:
@@ -344,6 +378,7 @@ def main() -> int:
         "ollama_url": OLLAMA_URL,
         "system_prompt_words": len(system.split()),
         "candidates": candidates,
+        "think": think,
     }
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     json_path = OUT_DIR / f"results-{timestamp}.json"
