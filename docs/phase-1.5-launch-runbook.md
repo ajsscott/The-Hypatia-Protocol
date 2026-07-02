@@ -82,26 +82,60 @@ model fields to the winner:
 
 These two disagree today; Q-17's close should end that.
 
-## 3. Goose configure + schema verification
+## 3. Goose configure + global-config patch
 
-`goose-config/config.yaml` was written blind against Goose's documented
-schema (its own header says so). Verify before first launch:
+Done 2026-07-02: `goose configure` ran against Goose 1.40.0 (provider
+ollama, model = the Q-17 gemma4 tag). Findings recorded that day:
+
+- 1.40 schema is `providers.ollama.model` + flat `OLLAMA_HOST`, and
+  extensions use `cmd`/`args`/`envs` — the old repo config.yaml's
+  `command`/`env` spelling was unreadable; it is now reference-only.
+- `~/.config/goose/config.yaml` contained a STALE `hypatia-protocols`
+  entry from a May attempt pointing at the pre-move repo path
+  (`~/GitHub/The-Hypatia-Protocol`, missing `other/`). Patch it:
 
 ```bash
-goose configure          # inspect what schema the installed version writes
-diff <(cat ~/.config/goose/config.yaml) goose-config/config.yaml   # eyeball field names
+cd "$HYPATIA_REPO_ROOT"
+uv run python - <<'EOF'
+from pathlib import Path
+import yaml
+
+cfg_path = Path.home() / ".config/goose/config.yaml"
+cfg = yaml.safe_load(cfg_path.read_text())
+repo = "/Users/ajsscott/GitHub/other/The-Hypatia-Protocol"
+ext = cfg["extensions"]["hypatia-protocols"]
+ext["cmd"] = f"{repo}/target/release/hypatia-protocols-mcp"
+ext["envs"] = {"HYPATIA_REPO_ROOT": repo}
+cfg_path.write_text(yaml.safe_dump(cfg, sort_keys=False))
+print("patched", cfg_path)
+EOF
 ```
 
-Adjust `goose-config/config.yaml` field names to match the installed
-version's schema, keeping the content (provider, extensions, system prompt
-path). Note discrepancies for the port log.
+Hypatia-specific extensions (bounded filesystem, time) deliberately do
+NOT go in the global config — they live in the recipe (below), so other
+Goose usage keeps its own defaults.
 
 ## 4. First Goose session — persona validation
 
+Goose 1.40 has no `system_prompt_file`; the custom-distro vehicle is a
+**recipe**. `regen-system-prompt.sh` now generates
+`goose-config/hypatia-recipe.yaml` (kernel as `instructions` +
+Hypatia's extension set + provider settings). Note the recipe does NOT
+enable Goose's built-in `developer` extension — unrestricted shell would
+bypass Hypatia's Tier gates with a hard capability.
+
 ```bash
-./goose-config/regen-system-prompt.sh    # ensure system-prompt.md is current
-GOOSE_CONFIG_PATH="$HYPATIA_REPO_ROOT/goose-config/config.yaml" goose session start
+./goose-config/regen-system-prompt.sh          # regenerates prompt + recipe
+goose recipe validate goose-config/hypatia-recipe.yaml
+goose run --recipe goose-config/hypatia-recipe.yaml --interactive
 ```
+
+**Thinking check, first message:** if Hypatia takes 60+ seconds before
+her first visible word, Goose is not passing `think: false` and Gemma 4
+is thinking (Q-17 measured ~900 hidden tokens). Fallback: create a
+derived no-think model (`ollama show <model> --modelfile`, add the
+think-off parameter, `ollama create hypatia-gemma4 -f Modelfile`) and
+point the recipe's `goose_model` at it.
 
 Validation checklist (from the Phase 1.5 plan + kernel):
 
