@@ -34,6 +34,7 @@ fn main() {
             commands::send_message,
             commands::get_config,
             commands::get_identity,
+            commands::check_goose_health,
         ])
         .setup(|_app| {
             info!("Tauri app initialized");

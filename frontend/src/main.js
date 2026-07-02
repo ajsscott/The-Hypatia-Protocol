@@ -35,6 +35,31 @@ async function loadConfig() {
   }
 }
 
+// ── Goose health ──────────────────────────────
+
+let gooseReachable = false;
+
+async function checkGooseHealth({ announce } = { announce: false }) {
+  try {
+    const status = await invoke("check_goose_health");
+    document.getElementById("goose-url").textContent = status.base_url;
+    if (status.reachable && !gooseReachable) {
+      if (announce) appendMessage("system", "Goose daemon reachable. Hypatia is ready.");
+    } else if (!status.reachable) {
+      appendMessage(
+        "system",
+        `Goose daemon not reachable at ${status.base_url}. ` +
+          "Start it with: goose serve --port 8765 (see goose-config/README.md), then send again."
+      );
+    }
+    gooseReachable = status.reachable;
+  } catch (e) {
+    console.error("check_goose_health failed:", e);
+    gooseReachable = false;
+  }
+  return gooseReachable;
+}
+
 // ── Chat ──────────────────────────────────────
 
 function appendMessage(role, text) {
@@ -48,6 +73,12 @@ function appendMessage(role, text) {
 }
 
 async function sendMessage(message) {
+  // Fail fast with instructions if the daemon is down, instead of letting
+  // the POST error surface as an opaque connection failure.
+  if (!gooseReachable && !(await checkGooseHealth())) {
+    return;
+  }
+
   appendMessage("user", message);
   sendBtn.disabled = true;
   inputEl.disabled = true;
@@ -98,6 +129,6 @@ inputEl.addEventListener("keydown", (e) => {
 // ── Boot ──────────────────────────────────────
 
 (async function init() {
-  await Promise.all([loadIdentity(), loadConfig()]);
+  await Promise.all([loadIdentity(), loadConfig(), checkGooseHealth({ announce: true })]);
   inputEl.focus();
 })();

@@ -29,6 +29,12 @@ pub struct Identity {
     pub super_objective: String,
 }
 
+#[derive(Debug, Serialize)]
+pub struct GooseStatus {
+    pub reachable: bool,
+    pub base_url: String,
+}
+
 /// Send a message to Hypatia (via Goose) and return her response.
 #[tauri::command]
 pub async fn send_message(message: String, session_id: Option<String>) -> Result<ChatResponse, String> {
@@ -37,6 +43,17 @@ pub async fn send_message(message: String, session_id: Option<String>) -> Result
         error!(?e, "send_message failed");
         e.to_string()
     })
+}
+
+/// Probe the Goose daemon's /health endpoint so the UI can tell the Scholar
+/// the daemon is down before a message silently fails.
+#[tauri::command]
+pub async fn check_goose_health() -> GooseStatus {
+    let c = client();
+    GooseStatus {
+        reachable: c.health_check().await,
+        base_url: c.base_url().to_string(),
+    }
 }
 
 /// Read hypatia.config.yaml and return curated fields.

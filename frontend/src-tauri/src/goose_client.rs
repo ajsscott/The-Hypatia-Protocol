@@ -97,6 +97,10 @@ impl GooseClient {
             Err(_) => false,
         }
     }
+
+    pub fn base_url(&self) -> &str {
+        &self.base_url
+    }
 }
 
 impl Default for GooseClient {
