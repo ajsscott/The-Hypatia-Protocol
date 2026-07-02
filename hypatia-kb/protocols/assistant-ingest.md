@@ -82,6 +82,11 @@ For every newly-drafted Tree:
 - Update `Trees/index.md` (content catalog) with the new entry.
 - Append an `ingest` operation row to `Trees/log.md` with timestamp, source, list of new Tree paths.
 
+**Seed-side closure** (after all Trees are drafted — a grow is not complete without this):
+
+- Toggle the Seed's `processed:` frontmatter to `true` (the grown flag; Bases key on it).
+- Update the Seed's `topics:` to carry a wikilink for **every Tree grown from it** — union with whatever `topics:` already holds; never drop existing entries.
+
 If the new content **contradicts or supersedes** an existing Tree, flag the conflict to the Scholar at save time. Do not silently overwrite.
 
 ### 6. Surface output to the Scholar

@@ -127,6 +127,8 @@ For a Research Seed, both are set: `kind: [Research]` (structural) + `content_ty
 
 **Seeds/Sources/\***: universal + `icon`, `content_type` (`Article|Research|Book|Quote|BotChat|Slide Deck|Textbook|Conversation`), `reference_link`, `author: ["[[Firstname Lastname]]"]`, `title`, `subtitle`, `year`, `publisher_platform`, `processed: bool`, `read: bool`, `annotated: bool`.
 
+**`processed:` semantics**: `false` until the Seed has been grown; the grow flow (`assistant-ingest.md` step 5, Seed-side closure) toggles it to `true` and updates the Seed's `topics:` with wikilinks to every Tree grown from it.
+
 **Research seeds add:** `journal`, `doi`, `zotero_link`, `in_zotero: bool`, `complete: bool`, `due`, `pdf: "![[Author - Year - Title.pdf]]"`, `annotation-target`.
 
 **Articles add:** `cover_image`, `published`, `description`, `web_clipping: bool`, `word_count`, `kind`.
