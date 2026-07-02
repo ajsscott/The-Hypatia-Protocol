@@ -13,7 +13,7 @@
 - **Current phase**: converting to atomic-zettelkasten style, heavily leaning on Obsidian properties, tags, and Bases.
 - **Branches**: `main` has everything. `work-safe` excludes personal writing (daily journal `Seedlings/` and creative writing `Forests/`). Work on `work-safe` unless the user is on `main`.
 - **Vault metaphor**: plants growing — Seeds germinate Seedlings into Trees which aggregate into Forests; Mountains are the climb (projects).
-- **The vault's verbs**: processing a Seed into Trees is **growing**; progress through the PM hierarchy is **climbing**, bottom-up — Steps ascend Trails, Trails ascend Slopes, Slopes summit Mountains. Working vocabulary, not decoration.
+- **The vault's verbs**: the Scholar reading + annotating a Seed is **planting** (hers alone); processing a planted Seed into Trees is **growing**; progress through the PM hierarchy is **climbing**, bottom-up — Steps ascend Trails, Trails ascend Slopes, Slopes summit Mountains. Working vocabulary, not decoration.
 
 ---
 

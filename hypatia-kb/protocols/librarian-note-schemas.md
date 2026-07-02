@@ -125,9 +125,12 @@ For a Research Seed, both are set: `kind: [Research]` (structural) + `content_ty
 
 **Trees (concept notes):** universal + `reference_link` (often empty).
 
-**Seeds/Sources/\***: universal + `icon`, `content_type` (`Article|Research|Book|Quote|BotChat|Slide Deck|Textbook|Conversation`), `reference_link`, `author: ["[[Firstname Lastname]]"]`, `title`, `subtitle`, `year`, `publisher_platform`, `processed: bool`, `read: bool`, `annotated: bool`.
+**Seeds/Sources/\***: universal + `icon`, `content_type` (`Article|Research|Book|Quote|BotChat|Slide Deck|Textbook|Conversation`), `reference_link`, `author: ["[[Firstname Lastname]]"]`, `title`, `subtitle`, `year`, `publisher_platform`, `grown: bool`, `read: bool`, `planted: bool`.
 
-**`processed:` semantics**: `false` until the Seed has been grown; the grow flow (`assistant-ingest.md` step 5, Seed-side closure) toggles it to `true` and updates the Seed's `topics:` with wikilinks to every Tree grown from it.
+**Seed lifecycle flags** (renamed 2026-07-02 from `annotated`/`processed`):
+
+- **`planted:`** — the Scholar has read and annotated the Seed. Planting is the Scholar's act alone (her brain must meet the original material); Hypatia NEVER sets it.
+- **`grown:`** — the Seed has been grown into Trees. The grow flow (`assistant-ingest.md` step 5, Seed-side closure) toggles it to `true` and updates the Seed's `topics:` with wikilinks to every Tree grown from it. Growing normally follows planting.
 
 **Research seeds add:** `journal`, `doi`, `zotero_link`, `in_zotero: bool`, `complete: bool`, `due`, `pdf: "![[Author - Year - Title.pdf]]"`, `annotation-target`.
 
