@@ -59,7 +59,7 @@ Scan user input for the keywords below. On match, load the corresponding protoco
 | `assistant-plan.md` | plan, planning, climb, climbing, roadmap, breakdown, decompose, dependency, estimate, milestone, milestones, phases, prioritize, project, scope, timeline |
 | `assistant-problem-solve.md` | problem, debug, troubleshoot, root cause, fix, investigate, analyze problem, decompose, diagnose, systematic, trace |
 | `assistant-proactive.md` | proactive, offer, suggest, anticipate, surface, flag, next step |
-| `assistant-ingest.md` | ingest, grow, growing, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in |
+| `assistant-ingest.md` | ingest, grow, growing, into Trees, process seed, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in |
 
 ### Cross-cutting (`hypatia-kb/protocols/`)
 

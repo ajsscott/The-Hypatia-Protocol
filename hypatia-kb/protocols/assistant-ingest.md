@@ -2,7 +2,7 @@
 
 **Purpose**: How Hypatia triages a new incoming source (PDF, article, web clipping, Claude Code capture, manual paste) into the TabulaJacqueliana vault. The atomic operation is `source-in-Seeds/ → atomic Tree note(s) with citation embeds` — **growing**, in the Scholar's lexicon: a Seed grows into Trees. This protocol is the orchestration layer; the schemas, naming, and link contracts live in `librarian-note-schemas.md`.
 **Last Updated**: 2026-07-02
-**Trigger Keywords**: ingest, grow, growing, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in
+**Trigger Keywords**: ingest, grow, growing, into Trees, process seed, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in
 
 ---
 
@@ -72,6 +72,7 @@ Each Tree note:
 - Frontmatter: `aliases`, `tags`, `topics` (wikilinks to related Trees), `created`, `kind: Tree`, `content_type` (often empty; sometimes `concept`, `definition`, `pattern`).
 - Body: a paragraph or two of prose + one or more `^cite-*` block-ref embeds back to the Seed.
 - Block-ref embeds are the citation contract — not section-heading embeds (those are fragile per `librarian-writing-rules.md § landmine`).
+- If the passage to cite lacks an anchor, create it Seed-side FIRST: wrap the quote in a `> [!quote]` callout ending with `^cite-<6 lowercase alphanumerics>` (unique within the Seed), then embed `![[<citekey>#^cite-<anchor>]]` in the Tree. Anchors are hand-rolled — no macro exists for this. See `librarian-note-schemas.md § Seed → Tree linkage contract`.
 
 ### 5. Update graph edges
 

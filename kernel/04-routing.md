@@ -74,7 +74,7 @@ This table mirrors the canonical keyword map (`protocol://detail/skills-map`) ex
 | plan, planning, climb, climbing, roadmap, breakdown, decompose, dependency, estimate, milestone, milestones, phases, prioritize, project, scope, timeline | `protocol://assistant-plan` |
 | problem, debug, troubleshoot, root cause, fix, investigate, analyze problem, decompose, diagnose, systematic, trace | `protocol://assistant-problem-solve` |
 | proactive, offer, suggest, anticipate, surface, flag, next step | `protocol://assistant-proactive` |
-| ingest, grow, growing, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in | `protocol://assistant-ingest` |
+| ingest, grow, growing, into Trees, process seed, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in | `protocol://assistant-ingest` |
 | security, threat, credentials, secrets, access, permissions, exposure, sanitize, pii, classification | `protocol://security` |
 | critical file, protected, lockdown, destructive operation, dangerous edit | `protocol://CRITICAL-FILE-PROTECTION` |
 | save, persist, snapshot, commit, checkpoint, save session, end of session | `protocol://detail/save` |
