@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Keeps the Ollama think-shim alive at login so ANY Hypatia session
+  (terminal launcher, Obsidian Agent Client, goose serve) gets
+  thinking-disabled Gemma 4 without a manually-run terminal.
+
+  Install:
+    cp goose-config/com.hypatia.think-shim.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.hypatia.think-shim.plist
+
+  Remove (when goose#7617 ships a thinking toggle):
+    launchctl unload ~/Library/LaunchAgents/com.hypatia.think-shim.plist
+    rm ~/Library/LaunchAgents/com.hypatia.think-shim.plist
+
+  Logs: ~/.hypatia/think-shim.log
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.hypatia.think-shim</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/Users/ajsscott/GitHub/other/The-Hypatia-Protocol/scripts/ollama-think-shim.py</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Users/ajsscott/.hypatia/think-shim.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/ajsscott/.hypatia/think-shim.log</string>
+</dict>
+</plist>
