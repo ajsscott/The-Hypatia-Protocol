@@ -60,6 +60,44 @@ def kb_search(query: str = "", top_k: int = 5, store: str | None = None,
 
 
 @mcp.tool()
+def vault_search(query: str, top_k: int = 5, folder: str | None = None,
+                 kind: str | None = None) -> str:
+    """Semantic + keyword search over the TabulaJacqueliana vault's notes.
+
+    Use this to find related Trees/Seeds before drafting, to surface
+    cross-references, or to locate where a concept already lives. Returns
+    note paths with scored snippets — read the full note with filesystem
+    tools if the snippet isn't enough.
+
+    Args:
+        query: What to look for (concept, phrase, title, tag).
+        top_k: Max results (default 5).
+        folder: Optional path prefix filter, e.g. "Trees/" or "Seeds/Sources/".
+        kind: Optional frontmatter kind filter, e.g. "Tree" or "Seed".
+    """
+    from vault_index import search
+    return json.dumps(search(query, top_k=top_k, folder=folder, kind=kind), indent=2)
+
+
+@mcp.tool()
+def vault_sync() -> str:
+    """Incrementally re-index the vault (only changed notes re-embed).
+
+    Run after ingest sessions or when search results look stale.
+    """
+    from vault_index import sync
+    return json.dumps(sync(), indent=2)
+
+
+@mcp.tool()
+def vault_rebuild() -> str:
+    """Full vault re-index from scratch. Use for first-time setup or when
+    vault_sync reports problems."""
+    from vault_index import build
+    return json.dumps(build(), indent=2)
+
+
+@mcp.tool()
 def kb_sync() -> str:
     """Incrementally sync vectorstore after intelligence updates.
 

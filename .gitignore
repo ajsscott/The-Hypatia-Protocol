@@ -52,6 +52,9 @@ desktop.ini
 hypatia-kb/vectorstore/vectors.npy
 hypatia-kb/vectorstore/metadata.json
 hypatia-kb/vectorstore/config.json
+# Vault index embeds AJ's private vault content — never committed
+hypatia-kb/vectorstore/vault-vectors.npy
+hypatia-kb/vectorstore/vault-metadata.json
 
 # Hypothesis test cache
 hypatia-kb/vectorstore/.hypothesis/

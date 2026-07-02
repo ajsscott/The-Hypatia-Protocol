@@ -130,6 +130,17 @@ extensions:
     args: ["mcp-server-time"]
     timeout: 60
     description: Timestamps for session logging
+  - type: stdio
+    name: kb-vectorstore
+    cmd: uv
+    args:
+      - run
+      - --project
+      - "$REPO_ROOT"
+      - python
+      - "$REPO_ROOT/hypatia-kb/vectorstore/kb_server.py"
+    timeout: 300
+    description: Hybrid semantic search — vault notes (vault_search) + KB stores (kb_search)
 settings:
   goose_provider: ollama
   goose_model: $MODEL
