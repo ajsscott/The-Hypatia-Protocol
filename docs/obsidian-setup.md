@@ -81,13 +81,21 @@ runs this on every start, so it is normally already current.
 Obsidian → Settings → Community Plugins → Browse → **Agent Client**
 (RAIT-09) → Install → Enable.
 
-In the plugin's settings, add a custom agent:
+In the plugin's settings, add a custom agent (exact fields):
 
-- **Command**: `goose`
+- **Name**: `Hypatia`
+- **Command**: the ABSOLUTE path from `which goose` (typically
+  `/opt/homebrew/bin/goose`) — GUI apps don't inherit the shell PATH,
+  so a bare `goose` may not resolve.
 - **Args**: `acp`
+- **Environment variables**:
+  - `HYPATIA_REPO_ROOT` = `/Users/ajsscott/GitHub/other/The-Hypatia-Protocol`
+  - `PATH` = `/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin` — REQUIRED:
+    Goose spawns `npx` (filesystem), `uvx` (time), and `uv` (vault_search)
+    for the extensions; without PATH those fail silently inside Obsidian
+    and Hypatia loses her tools.
 
-(If the plugin has an env field, add `HYPATIA_REPO_ROOT` →
-`/Users/ajsscott/GitHub/other/The-Hypatia-Protocol`.)
+The built-in agent entries (Claude Code, Gemini CLI, Codex) can be ignored.
 
 ## 5. First session checks
 
