@@ -52,7 +52,7 @@ If a Seed already exists (Scholar dropped a duplicate or update), update frontma
 
 ### 3. Read the source
 
-Read the Seed body. If the Seed references a PDF / video / external resource, read or fetch that too (subject to `.roo/rules-hypatia/09-security.md` external-content rules).
+Read the Seed body. If the Seed references a PDF / video / external resource, read or fetch that too (subject to `protocol://detail/security-gates` external-content rules).
 
 Form a working understanding sufficient to draft atomic notes. If the source is long (book, paper > 30 pages), surface that to the Scholar — *"This is a 60-page paper; should I distill the whole thing or focus on a specific section?"* — before drafting.
 
@@ -111,7 +111,7 @@ Watcher captures often arrive without explicit `content_type`; infer from path +
 ## What ingest does NOT do
 
 - **Does not** promote anything to `hypatia-kb/Memory/memory.json` or `hypatia-kb/Intelligence/*.json`. Those stores grow only through deliberate consolidation; see `librarian-memory.md § What does NOT get saved`.
-- **Does not** auto-commit. Save is a separate step (`.roo/rules-hypatia/08-save-command.md`).
+- **Does not** auto-commit. Save is a separate step (`protocol://detail/save`).
 - **Does not** delete or move the original source file from where the Scholar dropped it (only adds Seed metadata + new Tree files).
 - **Does not** synthesize across multiple Seeds in one ingest. Cross-Seed synthesis is a separate `query` operation.
 
@@ -123,5 +123,5 @@ Watcher captures often arrive without explicit `content_type`; infer from path +
 - **Frontmatter schemas + naming + tag taxonomy**: `librarian-note-schemas.md`
 - **Block-ref embed contract + linkage rules**: `librarian-note-schemas.md § Seed → Tree linkage`
 - **Atomic-note principle + split heuristics**: `librarian-writing-rules.md`
-- **Save flow (what happens after ingest)**: `.roo/rules-hypatia/08-save-command.md`
-- **External content security (fetching, vault Seeds, web clippings)**: `.roo/rules-hypatia/09-security.md`
+- **Save flow (what happens after ingest)**: `protocol://detail/save`
+- **External content security (fetching, vault Seeds, web clippings)**: `protocol://detail/security-gates`

@@ -10,7 +10,7 @@
 
 Hypatia internally enhances ambiguous or incomplete Scholar prompts BEFORE processing. The goal: improved task accuracy without excessive clarification requests that slow workflow.
 
-**Key principle**: enhance internally when confident; clarify with the Scholar when uncertain. The distinction maps to confidence dimension in Phase 1 Intake (`.roo/rules-hypatia/11-decision-routes.md`).
+**Key principle**: enhance internally when confident; clarify with the Scholar when uncertain. The distinction maps to confidence dimension in Phase 1 Intake (`protocol://detail/decision-routes`).
 
 ---
 
@@ -53,7 +53,7 @@ Enhancement occurs during Phase 1 (Intake and Assessment) when:
 
 - **High confidence**: proceed without enhancement.
 - **Medium confidence**: apply enhancement, state interpretation briefly.
-- **Low confidence**: check if intent is inferable. If yes, enhance and state interpretation. If no, use Route C (Clarify) per `.roo/rules-hypatia/11-decision-routes.md`.
+- **Low confidence**: check if intent is inferable. If yes, enhance and state interpretation. If no, use Route C (Clarify) per `protocol://detail/decision-routes`.
 
 ### Output after enhancement
 
@@ -320,7 +320,7 @@ Before proceeding with an enhanced prompt, verify:
 
 ### With KB documents
 
-- If enhancement triggers a protocol keyword, retrieve that protocol per `.roo/rules-hypatia/10-skills-loading.md`.
+- If enhancement triggers a protocol keyword, retrieve that protocol per `protocol://detail/skills-map`.
 - Protocol directives inform enhancement choices.
 - Task-type determination happens AFTER enhancement.
 
@@ -332,17 +332,17 @@ Before proceeding with an enhanced prompt, verify:
 
 ### With voice kernel
 
-- All enhanced outputs filtered through `.roo/rules-hypatia/02-voice.md`.
+- All enhanced outputs filtered through `protocol://detail/voice`.
 - Enhancement preserves the Scholar's intent; voice adds Hypatia's register.
 
 ---
 
 ## Cross-references
 
-- **Decision Engine + Phase 1 Intake + Route C (Clarify)**: `.roo/rules-hypatia/11-decision-routes.md`
-- **Voice register**: `.roo/rules-hypatia/02-voice.md`
-- **Anti-patterns governing all enhancements**: `.roo/rules-hypatia/03-anti-patterns.md`
-- **CSR routing for `patterns.json` and session logs**: `.roo/rules-hypatia/07-intelligence-layer.md`
+- **Decision Engine + Phase 1 Intake + Route C (Clarify)**: `protocol://detail/decision-routes`
+- **Voice register**: `protocol://detail/voice`
+- **Anti-patterns governing all enhancements**: `protocol://detail/anti-patterns`
+- **CSR routing for `patterns.json` and session logs**: `protocol://detail/intelligence`
 - **Memory schema (anti_preferences, domain_expertise)**: `memory-protocol.md`
 - **Tree schemas referenced in vault-task enhancement**: `hypatia-kb/protocols/librarian-note-schemas.md`
 - **Research protocol referenced in research-task enhancement**: `research-protocol.md`
