@@ -24,6 +24,7 @@ MCP server that serves Hypatia's protocol library + kernel-archive detail files 
 - `protocol://detail/skills-map` — canonical keyword map
 - `protocol://detail/decision-routes` — full Decision Routes A-F spec
 - `protocol://detail/voice` — full voice register, examples, pattern of shifting
+- `protocol://detail/decision-route-a` … `decision-route-f` — one resource per route, generated from 11-decision-routes.md by `scripts/split-decision-routes.py` (edit the monolith, re-run the generator)
 
 ## Building
 
@@ -69,7 +70,6 @@ extensions:
 ## Phase 1.5 caveats
 
 - `rmcp` API specifics may shift between versions. The current code targets rmcp 0.3+. If compilation fails on API mismatches, check [the rmcp changelog](https://github.com/modelcontextprotocol/rust-sdk) and adjust.
-- Per-route decision-route URIs (`protocol://detail/decision-route-a` … `f`) are aspirational — current implementation serves the whole 11-decision-routes.md as one resource. Split into per-route resources in Phase 2 if helpful.
 
 ## Tests
 

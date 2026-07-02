@@ -137,6 +137,39 @@ impl ProtocolsServer {
                     "detail/voice",
                     "Full voice register: cadence, signature phrasings, examples, pattern of shifting",
                 ),
+                // Per-route splits generated from 11-decision-routes.md by
+                // scripts/split-decision-routes.py — regenerate after editing
+                // the monolith; never edit the route-*.md files directly.
+                (
+                    "decision-routes/route-a.md",
+                    "detail/decision-route-a",
+                    "Route A: Direct Execute — full spec",
+                ),
+                (
+                    "decision-routes/route-b.md",
+                    "detail/decision-route-b",
+                    "Route B: Execute with Context — full spec",
+                ),
+                (
+                    "decision-routes/route-c.md",
+                    "detail/decision-route-c",
+                    "Route C: Clarify First — full spec",
+                ),
+                (
+                    "decision-routes/route-d.md",
+                    "detail/decision-route-d",
+                    "Route D: Present Options — full spec",
+                ),
+                (
+                    "decision-routes/route-e.md",
+                    "detail/decision-route-e",
+                    "Route E: Confirm Before Destructive Action — full spec, escalation tiers",
+                ),
+                (
+                    "decision-routes/route-f.md",
+                    "detail/decision-route-f",
+                    "Route F: Pre-Action Analysis — full spec, ROI framework, Recommendation Gate",
+                ),
             ];
 
             for (filename, topic, desc) in archive_map.iter() {

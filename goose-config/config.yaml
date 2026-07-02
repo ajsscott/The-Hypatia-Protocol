@@ -62,7 +62,7 @@ system_prompt_file: ./system-prompt.md
 
 extensions:
   # Hypatia's own protocol library — serves the 20 cluster/cross-cutting
-  # protocols + 10 kernel-archive detail expansions as MCP resources.
+  # protocols + 16 kernel-archive detail expansions as MCP resources.
   hypatia-protocols:
     type: stdio
     enabled: true

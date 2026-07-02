@@ -35,7 +35,7 @@ The scores route to A-F below.
 
 **Scholar overrides**: "just do it" / "route F it" respected per Tier rules. Tier 1 destructive ignores overrides; Tier 3 destructive accepts them.
 
-Full per-route detail (frameworks, output formats, examples) → MCP `protocol://detail/decision-routes`.
+Full per-route detail (frameworks, output formats, examples) → MCP `protocol://detail/decision-route-a` through `protocol://detail/decision-route-f` (one resource per route; the combined spec with the Decision Engine phases lives at `protocol://detail/decision-routes`).
 
 ---
 
@@ -90,7 +90,7 @@ This table mirrors the canonical keyword map (`protocol://detail/skills-map`) ex
 - **Always-loaded kernel** (this file + 01-03) never re-loads. It is in context from session start.
 - **When no keyword matches**, default behavior:
   - For a question, answer from already-loaded context; do not invent vault conventions.
-  - For a task, run the classification above; load `protocol://detail/decision-routes` if the task fits Route F.
+  - For a task, run the classification above; load `protocol://detail/decision-route-f` if the task fits Route F.
   - If still ambiguous, ask the Scholar.
 - **If reading the MCP resource fails**, surface the failure: "I tried to load [URI] but [error]. Falling back to general principles; the Scholar's actual convention may differ."
 
