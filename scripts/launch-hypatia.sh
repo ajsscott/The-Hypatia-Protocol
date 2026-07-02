@@ -12,8 +12,14 @@
 # Suggested alias (add to ~/.zshrc):
 #   alias hypatia='"$HOME"/GitHub/other/The-Hypatia-Protocol/scripts/launch-hypatia.sh'
 #
-# `hypatia`      — full model (grows, heavy curation)
-# `hypatia lite` — E4B light-burst tier (chat, PM, vault Q&A)
+# `hypatia`            — full model, interactive (grows, heavy curation)
+# `hypatia lite`       — E4B light-burst tier, interactive (chat, PM, Q&A)
+# `hypatia ask "..."`  — one-shot question on the lite tier; answers and
+#                        exits. Every ask is its own throwaway session.
+#
+# Session hygiene: every launch IS a fresh session — one task, one session;
+# Ctrl+C when the task ends. Her memory lives in the vault and the stores,
+# not the chat scrollback.
 
 set -euo pipefail
 
@@ -27,13 +33,27 @@ STATE_DIR="${HOME}/.hypatia"
 SHIM_LOG="$STATE_DIR/think-shim.log"
 
 MODE="${1:-full}"
-if [[ "$MODE" == "lite" ]]; then
-  MODEL="$(sed -n 's/^  lite_model: //p' "$REPO_ROOT/hypatia.config.yaml" | head -1)"
-  RECIPE_FILE="$REPO_ROOT/goose-config/hypatia-lite-recipe.yaml"
-else
-  MODEL="$(sed -n 's/^  design_target_model: //p' "$REPO_ROOT/hypatia.config.yaml" | head -1)"
-  RECIPE_FILE="$REPO_ROOT/goose-config/hypatia-recipe.yaml"
-fi
+ASK_TEXT=""
+case "$MODE" in
+  lite)
+    MODEL="$(sed -n 's/^  lite_model: //p' "$REPO_ROOT/hypatia.config.yaml" | head -1)"
+    RECIPE_FILE="$REPO_ROOT/goose-config/hypatia-lite-recipe.yaml"
+    ;;
+  ask)
+    shift
+    ASK_TEXT="$*"
+    if [[ -z "$ASK_TEXT" ]]; then
+      echo "usage: hypatia ask \"your question\"" >&2
+      exit 1
+    fi
+    MODEL="$(sed -n 's/^  lite_model: //p' "$REPO_ROOT/hypatia.config.yaml" | head -1)"
+    RECIPE_FILE="$REPO_ROOT/goose-config/hypatia-lite-recipe.yaml"
+    ;;
+  *)
+    MODEL="$(sed -n 's/^  design_target_model: //p' "$REPO_ROOT/hypatia.config.yaml" | head -1)"
+    RECIPE_FILE="$REPO_ROOT/goose-config/hypatia-recipe.yaml"
+    ;;
+esac
 
 # 1. Ollama up?
 if ! curl -sf --max-time 3 "$OLLAMA_URL/api/version" >/dev/null; then
@@ -83,4 +103,8 @@ echo "recipe current (model: $MODEL)"
 #    Boundary is wider than repo+vault until the Phase 2 vault-rw server
 #    restores the tight bound.
 cd "$(dirname "$REPO_ROOT")"
-goose run --recipe "$RECIPE_FILE" --interactive
+if [[ -n "$ASK_TEXT" ]]; then
+  goose run --recipe "$RECIPE_FILE" --text "$ASK_TEXT"
+else
+  goose run --recipe "$RECIPE_FILE" --interactive
+fi
