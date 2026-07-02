@@ -99,7 +99,7 @@ This section is the candidate consolidated form.>
  Those belong in the protocol markdown files, not in memory stores.
  Direct AJ to edit `hypatia-kb/<topic>-protocol.md`.
 - **Project-specific notes.** Use the project's `CLAUDE.md` instead.
-- **Tabula-vault material.** Use `~/GitHub/TabulaJacqueliana/Seeds/from-claude/`.
+- **Tabula-vault material.** Use `~/GitHub/other/TabulaJacqueliana/Seeds/from-claude/`.
 - **Speculation about what AJ *might* prefer.** Confidence-low captures
  about hypotheticals waste consolidation time. Wait until you've
  observed the actual signal.

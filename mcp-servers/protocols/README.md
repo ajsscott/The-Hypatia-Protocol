@@ -10,7 +10,7 @@ MCP server that serves Hypatia's protocol library + kernel-archive detail files 
 - `protocol://researcher-investigate`, `researcher-prompt-enhance`
 - `protocol://writer-draft`, `writer-summarize`, `writer-executive`
 - `protocol://assistant-development`, `assistant-plan`, `assistant-problem-solve`, `assistant-proactive`, `assistant-ingest`
-- `protocol://security`, `protocol://critical-file-protection`
+- `protocol://security`, `protocol://CRITICAL-FILE-PROTECTION`
 
 **Kernel-archive detail** (from `docs/reference/phase-1-kernel-archive/`):
 
@@ -40,7 +40,7 @@ The binary lands at `target/release/hypatia-protocols-mcp`.
 ## Running
 
 ```bash
-HYPATIA_REPO_ROOT=/Users/ajsscott/GitHub/The-Hypatia-Protocol \
+HYPATIA_REPO_ROOT=/Users/ajsscott/GitHub/other/The-Hypatia-Protocol \
   ./target/release/hypatia-protocols-mcp
 ```
 
@@ -56,7 +56,7 @@ extensions:
     type: stdio
     command: /path/to/target/release/hypatia-protocols-mcp
     env:
-      HYPATIA_REPO_ROOT: /Users/ajsscott/GitHub/The-Hypatia-Protocol
+      HYPATIA_REPO_ROOT: /Users/ajsscott/GitHub/other/The-Hypatia-Protocol
 ```
 
 ## Architecture decisions

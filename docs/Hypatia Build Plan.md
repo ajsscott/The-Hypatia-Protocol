@@ -45,7 +45,7 @@ The original 8 decisions (2026-04-22) plus all subsequent revisions through Q-33
 | 9 | Stores | JSON authoritative + markdown export layer (Dataview-queryable). Direct vault R/W via MCP. | Q-original-6 |
 | 10 | Memory flow | Inbox boundary: free-form markdown captures during sessions; Scholar consolidates into JSON stores during scheduled maintenance. | Q-22 (2026-05-11) |
 | 11 | Phasing | Phase 0 (DONE) → Phase 1 (DONE) → Phase 1.5 (substrate) → Phase 2 (persistent behaviors) → Phase 3 (retrieval) → Phase 4 (distribution). | Q-31 reframe |
-| 12 | Repo location | `/Users/ajsscott/GitHub/The-Hypatia-Protocol/` (rename-in-place from Bell's fork). | Q-01 |
+| 12 | Repo location | `/Users/ajsscott/GitHub/other/The-Hypatia-Protocol/` (rename-in-place from Bell's fork; moved under `GitHub/other/` since). | Q-01 |
 | 13 | Repo scope boundary | Hypatia's stores independent of TabulaJacqueliana's `_src/_meta/` for portability. | Q-original-8 |
 | 14 | Vault-convention authority | `hypatia-kb/protocols/librarian-*.md` is authoritative. Vault CLAUDE.md becomes a derived stub once Phase 1.5 ships. | Q-07 (2026-04-22) |
 | 15 | Substrate replaces vault YOLO | Hypatia replaces the Obsidian YOLO plugin as the vault's in-Obsidian LLM substrate. | Q-23 (2026-05-11) |

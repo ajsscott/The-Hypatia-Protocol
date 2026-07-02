@@ -10,7 +10,7 @@
 vault:
   # Absolute path to the TabulaJacqueliana vault. Hypatia reads/writes here
   # via Roo's filesystem tools. No trailing slash.
-  path: /Users/ajsscott/GitHub/TabulaJacqueliana
+  path: /Users/ajsscott/GitHub/other/TabulaJacqueliana
 
   # Branch Hypatia operates on. Vault uses `work-safe` as the curation branch;
   # main is reserved for clean publishable state.
@@ -46,7 +46,7 @@ git:
   committer_email: hypatia@local
 
 preferences:
-  # Voice register (Q-24, 2026-05-11). See .roo/rules-hypatia/02-voice.md.
+  # Voice register (Q-24, 2026-05-11). See kernel/02-voice.md.
   register: alexandrian-scholar
 
   # Stress-test plans before agreeing. See global CLAUDE.md.

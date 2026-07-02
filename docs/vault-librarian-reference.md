@@ -17,7 +17,7 @@
 > the `hypatia-kb/protocols/librarian-*.md` files are the live spec for librarian
 > behavior.
 >
-> The upstream live version lives at `/Users/ajsscott/GitHub/TabulaJacqueliana/CLAUDE.md`
+> The upstream live version lives at `/Users/ajsscott/GitHub/other/TabulaJacqueliana/CLAUDE.md`
 > and continues to evolve with the vault. Do not sync back to this file — this is a
 > frozen point-in-time copy retained for migration-archaeology purposes only.
 

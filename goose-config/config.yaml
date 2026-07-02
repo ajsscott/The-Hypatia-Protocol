@@ -66,7 +66,7 @@ extensions:
   hypatia-protocols:
     type: stdio
     enabled: true
-    command: ./target/release/hypatia-protocols-mcp
+    command: ${HYPATIA_REPO_ROOT}/target/release/hypatia-protocols-mcp
     env:
       HYPATIA_REPO_ROOT: ${HYPATIA_REPO_ROOT}
     description: "Hypatia's protocol library + kernel-archive resources"
@@ -77,7 +77,11 @@ extensions:
     type: stdio
     enabled: true
     command: npx
-    args: ["-y", "@modelcontextprotocol/server-filesystem", "${HYPATIA_REPO_ROOT}", "${VAULT_PATH:/Users/ajsscott/GitHub/TabulaJacqueliana}"]
+    # Vault path: keep in sync with hypatia.config.yaml vault.path.
+    # Hardcoded for Phase 1.5 (Mac-only): Goose's ${VAR:default} expansion
+    # syntax is unverified, and the old fallback pointed at a path that
+    # does not exist (vault lives under GitHub/other/).
+    args: ["-y", "@modelcontextprotocol/server-filesystem", "${HYPATIA_REPO_ROOT}", "/Users/ajsscott/GitHub/other/TabulaJacqueliana"]
     description: "Bounded filesystem access for vault + repo"
 
   # Time / date utility (vanilla MCP utility; Hypatia uses for timestamps).

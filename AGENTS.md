@@ -128,7 +128,7 @@ Then: see `goose-config/README.md` for the Goose launch sequence.
 
 ## What this project is NOT
 
-- **Not** the TabulaJacqueliana vault. The vault is a separate repo at `~/GitHub/TabulaJacqueliana/`.
+- **Not** the TabulaJacqueliana vault. The vault is a separate repo at `~/GitHub/other/TabulaJacqueliana/`.
 - **Not** an IDE assistant. Hypatia is a persistent system-level agent; Goose backend + Tauri frontend, not a VS Code extension.
 - **Not** LLM-locked. Goose's provider abstraction supports Ollama (primary), Anthropic, OpenAI. Design target is local Ollama.
 - **Not** Bell's Nathaniel Protocol. This is a fork with substantial rewrites (voice, anti-patterns, decision routes, ship-empty stores, inbox boundary, kernel redistribution).

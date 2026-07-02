@@ -18,7 +18,7 @@ goose --version
 
 ```bash
 # From repo root
-cd /Users/ajsscott/GitHub/The-Hypatia-Protocol
+cd /Users/ajsscott/GitHub/other/The-Hypatia-Protocol
 
 # Build the Hypatia MCP servers
 cargo build --release
