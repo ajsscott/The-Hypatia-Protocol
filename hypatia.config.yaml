@@ -29,10 +29,12 @@ instance:
   created: 2026-04-22
 
   # Canonical local-model design target (Q-17 ANSWERED 2026-07-02).
-  # Kernel prose and protocol structure are calibrated against this model's
-  # tool-use behavior; hybrid-thinking must be disabled (see Q-17).
+  # Derived model: gemma-4-12B QAT with think off + num_ctx 32K + Google
+  # samplers baked in (goose-config/hypatia-gemma4.Modelfile — Goose
+  # can't pass think:false itself, block/goose#7617). Rebuild with
+  # `ollama create hypatia-gemma4 -f goose-config/hypatia-gemma4.Modelfile`.
   # Fallback: qwen2.5-coder:14b. Evidence: docs/q17-eval/.
-  design_target_model: hf.co/unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL
+  design_target_model: hypatia-gemma4
 
 git:
   # Git identity for commits Hypatia herself authors (Q-08, 2026-04-22).

@@ -1,0 +1,23 @@
+# hypatia-gemma4 — Q-17 model with Hypatia's runtime defaults baked in.
+#
+# Goose has no thinking toggle for Ollama providers (block/goose#7617),
+# so thinking is disabled at the model layer where every client inherits
+# it. Live Goose sessions with default thinking measured 36-73s per
+# reply; the harness with think:false measured 0.6s TTFT (docs/q17-eval/).
+#
+# num_ctx caps the KV cache: Goose sessions otherwise open the model's
+# full 128K window, which costs GPU memory Hypatia never uses — kernel
+# (~4.6K) + Goose overhead (~5K) + a long session fits comfortably in 32K.
+#
+# Samplers are Google's recommended Gemma 4 defaults.
+#
+# Build:   ollama create hypatia-gemma4 -f goose-config/hypatia-gemma4.Modelfile
+# Verify:  ollama run hypatia-gemma4 "Reply with one short sentence."  (should be fast, no think pause)
+
+FROM hf.co/unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL
+
+PARAMETER think false
+PARAMETER num_ctx 32768
+PARAMETER temperature 1.0
+PARAMETER top_p 0.95
+PARAMETER top_k 64
