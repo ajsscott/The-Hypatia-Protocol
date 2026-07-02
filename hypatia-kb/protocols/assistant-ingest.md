@@ -1,8 +1,8 @@
 # Assistant — Ingest
 
-**Purpose**: How Hypatia triages a new incoming source (PDF, article, web clipping, Claude Code capture, manual paste) into the TabulaJacqueliana vault. The atomic operation is `source-in-Seeds/ → atomic Tree note(s) with citation embeds`. This protocol is the orchestration layer; the schemas, naming, and link contracts live in `librarian-note-schemas.md`.
+**Purpose**: How Hypatia triages a new incoming source (PDF, article, web clipping, Claude Code capture, manual paste) into the TabulaJacqueliana vault. The atomic operation is `source-in-Seeds/ → atomic Tree note(s) with citation embeds` — **growing**, in the Scholar's lexicon: a Seed grows into Trees. This protocol is the orchestration layer; the schemas, naming, and link contracts live in `librarian-note-schemas.md`.
 **Last Updated**: 2026-07-02
-**Trigger Keywords**: ingest, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in
+**Trigger Keywords**: ingest, grow, growing, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in
 
 ---
 
@@ -10,6 +10,7 @@
 
 The Scholar drops a new source into the vault (or, in Phase 2, a watcher detects one) and signals "process this." Typical openers:
 
+- "Grow this Seed." / "Let's grow this."
 - "Ingest this paper."
 - "File this article."
 - "Process this Seed."

@@ -100,6 +100,7 @@ Bug     (1 instance as of 2026-04-21)
 ```
 
 - Folder placement is cosmetic. **`kind:` is truth** for `Meridian.base`.
+- Progress through this hierarchy is **climbing** in the Scholar's lexicon, and it runs bottom-up: completed Steps ascend a Trail, completed Trails ascend a Slope, completed Slopes summit the Mountain. Status talk uses it ("two Steps left on this Trail").
 - `parent:` and `project:` hold wikilink arrays — `parent` walks up one level, `project` pins to the top-level Mountain.
 - Inheritance of `parent`/`project` is done by QuickAdd macros at `_src/_QuickAdd/qa_inherit_slope.js`, `qa_store_parent.js`, etc.
 - **Status enum**: `Unprocessed, Backlog, Unstarted, In-Progress, Researching, Outlining, Drafting, Editing`. Ad-hoc `Completed` appears in the wild but isn't in the template dropdown.

@@ -1,8 +1,8 @@
 # Planning Protocol
 
-**Purpose**: Systematic methodology for project planning, scoping, estimation, and roadmap creation.
+**Purpose**: Systematic methodology for project planning, scoping, estimation, and roadmap creation. In the Scholar's vault this is **climbing**: progress runs bottom-up through the Mountains hierarchy (completed Steps ascend a Trail, Trails ascend a Slope, Slopes summit the Mountain — see `librarian-note-schemas.md § Mountains PM hierarchy`).
 **Last Updated**: 2026-05-11 (Hypatia adaptation)
-**Trigger Keywords**: plan, planning, roadmap, breakdown, decompose, dependency, estimate, milestone, milestones, phases, prioritize, project, scope, timeline
+**Trigger Keywords**: plan, planning, climb, climbing, roadmap, breakdown, decompose, dependency, estimate, milestone, milestones, phases, prioritize, project, scope, timeline
 
 ---
 

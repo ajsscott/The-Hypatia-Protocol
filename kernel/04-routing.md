@@ -58,7 +58,7 @@ This table mirrors the canonical keyword map (`protocol://detail/skills-map`) ex
 | Keywords (any match) | Load MCP resource |
 |---|---|
 | librarian, vault, zettelkasten, Tabula, curate, ingest, query, lint, Seed, Tree, Mountain, wiki, knowledge base, PKB | `protocol://librarian-role` |
-| vault structure, vault, Tabula, TabulaJacqueliana, folders, Seeds, Trees, Mountains, Bases, Meridian, orientation, onboarding, structure | `protocol://librarian-vault-structure` |
+| vault structure, vault, Tabula, TabulaJacqueliana, folders, Seeds, Trees, Mountains, Slope, Trail, Bases, Meridian, orientation, onboarding, structure | `protocol://librarian-vault-structure` |
 | schema, atomic note, atomic, frontmatter, YAML, naming, tag, taxonomy, kind, content_type, citekey, cite, embed, topics, aliases, Tree, Seed, Mountain, Mountain hierarchy | `protocol://librarian-note-schemas` |
 | Bases, plugin, plugin stack, YOLO, Obsidian, Meridian, Templater, QuickAdd, Dataview, citation, citation plugin, web clipper, RAG, embedding, vector, vector DB | `protocol://librarian-tooling` |
 | drift, landmine, refactor, guardrail, write, edit, commit, approval, batch, sample, verify, lesson, error, prior incident, atomic commit, link rot | `protocol://librarian-writing-rules` |
@@ -71,10 +71,10 @@ This table mirrors the canonical keyword map (`protocol://detail/skills-map`) ex
 | summarize, summary, distill, condense, tldr, brief, aggregate, minutes, recap, source synthesis, transcript | `protocol://writer-summarize` |
 | executive, stakeholder, leadership, exec comms, C-suite, CEO, CFO, CIO, CTO, board, investor, pitch, stakeholder presentation | `protocol://writer-executive` |
 | code, develop, programming, refactor, technical, build, debug, dependency, deploy, implement, library, test | `protocol://assistant-development` |
-| plan, planning, roadmap, breakdown, decompose, dependency, estimate, milestone, milestones, phases, prioritize, project, scope, timeline | `protocol://assistant-plan` |
+| plan, planning, climb, climbing, roadmap, breakdown, decompose, dependency, estimate, milestone, milestones, phases, prioritize, project, scope, timeline | `protocol://assistant-plan` |
 | problem, debug, troubleshoot, root cause, fix, investigate, analyze problem, decompose, diagnose, systematic, trace | `protocol://assistant-problem-solve` |
 | proactive, offer, suggest, anticipate, surface, flag, next step | `protocol://assistant-proactive` |
-| ingest, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in | `protocol://assistant-ingest` |
+| ingest, grow, growing, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in | `protocol://assistant-ingest` |
 | security, threat, credentials, secrets, access, permissions, exposure, sanitize, pii, classification | `protocol://security` |
 | critical file, protected, lockdown, destructive operation, dangerous edit | `protocol://CRITICAL-FILE-PROTECTION` |
 | save, persist, snapshot, commit, checkpoint, save session, end of session | `protocol://detail/save` |

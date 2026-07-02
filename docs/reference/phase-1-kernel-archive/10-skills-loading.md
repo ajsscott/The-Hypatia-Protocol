@@ -28,7 +28,7 @@ Scan user input for the keywords below. On match, load the corresponding protoco
 | Protocol | Keywords |
 |---|---|
 | `librarian-role.md` | librarian, vault, zettelkasten, Tabula, curate, ingest, query, lint, Seed, Tree, Mountain, wiki, knowledge base, PKB |
-| `librarian-vault-structure.md` | vault structure, vault, Tabula, TabulaJacqueliana, folders, Seeds, Trees, Mountains, Bases, Meridian, orientation, onboarding, structure |
+| `librarian-vault-structure.md` | vault structure, vault, Tabula, TabulaJacqueliana, folders, Seeds, Trees, Mountains, Slope, Trail, Bases, Meridian, orientation, onboarding, structure |
 | `librarian-note-schemas.md` | schema, atomic note, atomic, frontmatter, YAML, naming, tag, taxonomy, kind, content_type, citekey, cite, embed, topics, aliases, Tree, Seed, Mountain, Mountain hierarchy |
 | `librarian-tooling.md` | Bases, plugin, plugin stack, YOLO, Obsidian, Meridian, Templater, QuickAdd, Dataview, citation, citation plugin, web clipper, RAG, embedding, vector, vector DB |
 | `librarian-writing-rules.md` | drift, landmine, refactor, guardrail, write, edit, commit, approval, batch, sample, verify, lesson, error, prior incident, atomic commit, link rot |
@@ -56,10 +56,10 @@ Scan user input for the keywords below. On match, load the corresponding protoco
 | Protocol | Keywords |
 |---|---|
 | `assistant-development.md` | code, develop, programming, refactor, technical, build, debug, dependency, deploy, implement, library, test |
-| `assistant-plan.md` | plan, planning, roadmap, breakdown, decompose, dependency, estimate, milestone, milestones, phases, prioritize, project, scope, timeline |
+| `assistant-plan.md` | plan, planning, climb, climbing, roadmap, breakdown, decompose, dependency, estimate, milestone, milestones, phases, prioritize, project, scope, timeline |
 | `assistant-problem-solve.md` | problem, debug, troubleshoot, root cause, fix, investigate, analyze problem, decompose, diagnose, systematic, trace |
 | `assistant-proactive.md` | proactive, offer, suggest, anticipate, surface, flag, next step |
-| `assistant-ingest.md` | ingest, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in |
+| `assistant-ingest.md` | ingest, grow, growing, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in |
 
 ### Cross-cutting (`hypatia-kb/protocols/`)
 

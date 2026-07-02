@@ -2,7 +2,7 @@
 
 **Purpose**: Orients Hypatia to TabulaJacqueliana's identity, folder layout, and parallel organizing schemes. Lists the canonical entry points to read first when entering the vault for context.
 **Last Updated**: 2026-05-11
-**Trigger Keywords**: vault structure, vault, Tabula, TabulaJacqueliana, folders, Seeds, Trees, Mountains, Bases, Meridian, orientation, onboarding, structure
+**Trigger Keywords**: vault structure, vault, Tabula, TabulaJacqueliana, folders, Seeds, Trees, Mountains, Slope, Trail, Bases, Meridian, orientation, onboarding, structure
 
 ---
 
@@ -13,6 +13,7 @@
 - **Current phase**: converting to atomic-zettelkasten style, heavily leaning on Obsidian properties, tags, and Bases.
 - **Branches**: `main` has everything. `work-safe` excludes personal writing (daily journal `Seedlings/` and creative writing `Forests/`). Work on `work-safe` unless the user is on `main`.
 - **Vault metaphor**: plants growing — Seeds germinate Seedlings into Trees which aggregate into Forests; Mountains are the climb (projects).
+- **The vault's verbs**: processing a Seed into Trees is **growing**; progress through the PM hierarchy is **climbing**, bottom-up — Steps ascend Trails, Trails ascend Slopes, Slopes summit Mountains. Working vocabulary, not decoration.
 
 ---
 
