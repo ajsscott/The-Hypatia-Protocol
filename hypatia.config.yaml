@@ -36,6 +36,11 @@ instance:
   # Fallback: qwen2.5-coder:14b. Evidence: docs/q17-eval/.
   design_target_model: hypatia-gemma4
 
+  # Light-burst tier (chat / PM / vault Q&A; also the Phase 4 flash-drive
+  # candidate). Gemma-4 E4B QAT derived via goose-config/hypatia-gemma4-lite
+  # .Modelfile. Launch with `hypatia lite`.
+  lite_model: hypatia-gemma4-lite
+
 git:
   # Git identity for commits Hypatia herself authors (Q-08, 2026-04-22).
   # save-session.py exports these as GIT_AUTHOR_* and GIT_COMMITTER_* env vars

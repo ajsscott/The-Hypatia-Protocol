@@ -11,6 +11,9 @@
 #
 # Suggested alias (add to ~/.zshrc):
 #   alias hypatia='"$HOME"/GitHub/other/The-Hypatia-Protocol/scripts/launch-hypatia.sh'
+#
+# `hypatia`      — full model (grows, heavy curation)
+# `hypatia lite` — E4B light-burst tier (chat, PM, vault Q&A)
 
 set -euo pipefail
 
@@ -20,9 +23,17 @@ export HYPATIA_REPO_ROOT="$REPO_ROOT"
 OLLAMA_URL="${OLLAMA_UPSTREAM:-http://127.0.0.1:11434}"
 SHIM_PORT="${SHIM_PORT:-11435}"
 SHIM_URL="http://127.0.0.1:${SHIM_PORT}"
-MODEL="$(sed -n 's/^  design_target_model: //p' "$REPO_ROOT/hypatia.config.yaml" | head -1)"
 STATE_DIR="${HOME}/.hypatia"
 SHIM_LOG="$STATE_DIR/think-shim.log"
+
+MODE="${1:-full}"
+if [[ "$MODE" == "lite" ]]; then
+  MODEL="$(sed -n 's/^  lite_model: //p' "$REPO_ROOT/hypatia.config.yaml" | head -1)"
+  RECIPE_FILE="$REPO_ROOT/goose-config/hypatia-lite-recipe.yaml"
+else
+  MODEL="$(sed -n 's/^  design_target_model: //p' "$REPO_ROOT/hypatia.config.yaml" | head -1)"
+  RECIPE_FILE="$REPO_ROOT/goose-config/hypatia-recipe.yaml"
+fi
 
 # 1. Ollama up?
 if ! curl -sf --max-time 3 "$OLLAMA_URL/api/version" >/dev/null; then
@@ -57,7 +68,7 @@ trap cleanup EXIT
 # 3. Model present?
 if ! curl -sf --max-time 3 "$OLLAMA_URL/api/tags" | grep -q "$MODEL"; then
   echo "ERROR: model '$MODEL' not found in Ollama. Build it with:" >&2
-  echo "  ollama create hypatia-gemma4 -f $REPO_ROOT/goose-config/hypatia-gemma4.Modelfile" >&2
+  echo "  ollama create $MODEL -f $REPO_ROOT/goose-config/$MODEL.Modelfile" >&2
   exit 1
 fi
 
@@ -72,4 +83,4 @@ echo "recipe current (model: $MODEL)"
 #    Boundary is wider than repo+vault until the Phase 2 vault-rw server
 #    restores the tight bound.
 cd "$(dirname "$REPO_ROOT")"
-goose run --recipe "$REPO_ROOT/goose-config/hypatia-recipe.yaml" --interactive
+goose run --recipe "$RECIPE_FILE" --interactive

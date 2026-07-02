@@ -1,0 +1,20 @@
+# hypatia-gemma4-lite — the light-burst Hypatia for chat, PM, and vault Q&A.
+#
+# Gemma-4 E4B QAT (~5 GB, ~4B effective params): decodes ~3x faster than the
+# 12B dense model, so GPU bursts are proportionally shorter — the "background
+# presence" tier. Grows and heavy curation stay on hypatia-gemma4 (12B);
+# this is also the flash-drive candidate for Phase 4.
+#
+# num_ctx 16K: lite sessions are one-task-one-session by design; half the
+# 12B's window, half the KV-cache memory. Thinking is disabled by the shim
+# (its matcher covers all gemma-4 models); samplers are Google's defaults.
+#
+# Build:   ollama create hypatia-gemma4-lite -f goose-config/hypatia-gemma4-lite.Modelfile
+# Verify:  ollama run hypatia-gemma4-lite "Reply with one short sentence."
+
+FROM hf.co/unsloth/gemma-4-E4B-it-qat-GGUF:UD-Q4_K_XL
+
+PARAMETER num_ctx 16384
+PARAMETER temperature 1.0
+PARAMETER top_p 0.95
+PARAMETER top_k 64
