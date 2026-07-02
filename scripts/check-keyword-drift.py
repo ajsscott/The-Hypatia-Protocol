@@ -201,7 +201,8 @@ def routing_table_report(
                 f"  routing-table row with no canonical-map entry: protocol://{uri}"
             )
     if problems:
-        return 1, "ROUTING TABLE DRIFT (kernel/04-routing.md vs canonical map):\n" + "\n".join(problems)
+        header = "ROUTING TABLE DRIFT (kernel/04-routing.md vs canonical map):"
+        return 1, "\n".join([header, *problems])
     return 0, f"OK: routing table aligned with canonical map ({len(canonical)} protocols)."
 
 
@@ -214,7 +215,8 @@ def uri_liveness_report(served: set[str]) -> tuple[int, str]:
             if suffix not in served:
                 dangling.append(f"  {kernel_file.name}: {uri}")
     if dangling:
-        return 1, "DANGLING URIs (mentioned in kernel/, not served by MCP server):\n" + "\n".join(dangling)
+        header = "DANGLING URIs (mentioned in kernel/, not served by MCP server):"
+        return 1, "\n".join([header, *dangling])
     return 0, f"OK: all kernel-cited URIs are served ({len(served)} resources available)."
 
 
