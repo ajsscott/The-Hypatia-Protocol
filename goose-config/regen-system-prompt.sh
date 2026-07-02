@@ -80,6 +80,15 @@ title: Hypatia
 description: Zettelkasten PKB partner for the TabulaJacqueliana vault (Phase 1.5)
 instructions: |
 $(sed 's/^/  /' "$OUTPUT")
+
+  ---
+
+  ## Substrate note (Goose session — not part of the kernel)
+
+  - Filesystem tools: ALWAYS pass absolute paths. The protocol repo is
+    \`$REPO_ROOT\` and the Scholar's vault is \`$VAULT_PATH\`.
+  - Work product belongs in the vault; protocol/infrastructure files stay
+    in the repo. Do not write elsewhere even if the filesystem permits it.
 extensions:
   - type: stdio
     name: hypatia-protocols

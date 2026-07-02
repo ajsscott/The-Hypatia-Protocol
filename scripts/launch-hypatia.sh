@@ -66,6 +66,10 @@ fi
 "$REPO_ROOT/goose-config/regen-system-prompt.sh" >/dev/null
 echo "recipe current (model: $MODEL)"
 
-# 5. Session.
-cd "$REPO_ROOT"
-goose run --recipe goose-config/hypatia-recipe.yaml --interactive
+# 5. Session. cwd is the PARENT of repo + vault: Goose hands the session
+#    cwd to MCP servers as the filesystem root, overriding the recipe's
+#    two-directory args (live finding 2026-07-02 — vault was unreachable).
+#    Boundary is wider than repo+vault until the Phase 2 vault-rw server
+#    restores the tight bound.
+cd "$(dirname "$REPO_ROOT")"
+goose run --recipe "$REPO_ROOT/goose-config/hypatia-recipe.yaml" --interactive
