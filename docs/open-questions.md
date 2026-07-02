@@ -949,12 +949,19 @@ system prompt, `scripts/eval-model-q17.py`):
 wrong mechanism, right instinct; revisit when the Phase 2 save-session
 MCP server exists.
 
-**Open verification (Phase 1.5 launch):** Goose must call Ollama with
-thinking disabled. Verify whether Goose's Ollama provider exposes a
-`think` toggle; if not, create a derived model via `ollama create`
-with thinking off, or override the chat template. Final confirmation
-of tool-calling happens in the first live Goose session with real MCP
-tools attached — the harness could only measure stated intent.
+**Verification closed (2026-07-02 evening, live sessions):** Goose has
+no thinking toggle (block/goose#7617), `PARAMETER think` is invalid
+Modelfile grammar in Ollama 0.31, and `/no_think` only shortens
+thinking. Working fix: `scripts/ollama-think-shim.py` on :11435 —
+Goose's `OLLAMA_HOST` points at it; it forwards to Ollama and injects
+the thinking-off control on Gemma-4-family requests. Shim logs revealed
+Goose calls the OpenAI-compat `/v1/chat/completions`, where the native
+`think` field is ignored (ollama/ollama#15288) and
+`reasoning_effort: "none"` is the control that works. Live result:
+replies dropped from 36–73s to generation-bound (~12s for ~120 words);
+persona register and bounded filesystem tool-calls validated in the
+same sessions. Delete the shim and revert `OLLAMA_HOST` when
+goose#7617 ships.
 
 **Supersedes:** the REOPENED state above. `goose-config/config.yaml`
 and `hypatia.config.yaml` aligned to this answer same day.

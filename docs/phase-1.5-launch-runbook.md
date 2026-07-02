@@ -148,9 +148,15 @@ sed -i '' 's|OLLAMA_HOST: http://127.0.0.1:11434|OLLAMA_HOST: http://127.0.0.1:1
 ```
 
 Delete the shim (and revert OLLAMA_HOST) when goose#7617 ships a
-provider-level thinking toggle. Expected timings through the shim:
-first message ~20–25s (model load), later messages single-digit
-seconds (harness baseline: 0.6s TTFT, 14.4 tok/s).
+provider-level thinking toggle. Note the shim's real work happens on
+`/v1/chat/completions` (the endpoint Goose actually calls) via
+`reasoning_effort: "none"` — the native `think` field is ignored there
+(ollama/ollama#15288).
+
+**Verified live 2026-07-02:** replies dropped 36–73s → ~12s
+(generation-bound at 14 tok/s). First message still pays model load
+(~20–40s); to keep the model resident between sessions, run Ollama
+with `OLLAMA_KEEP_ALIVE=1h` (env on `ollama serve`).
 
 Validation checklist (from the Phase 1.5 plan + kernel):
 
