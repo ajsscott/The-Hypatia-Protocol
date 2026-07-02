@@ -1,7 +1,7 @@
 # Assistant — Ingest
 
 **Purpose**: How Hypatia triages a new incoming source (PDF, article, web clipping, Claude Code capture, manual paste) into the TabulaJacqueliana vault. The atomic operation is `source-in-Seeds/ → atomic Tree note(s) with citation embeds`. This protocol is the orchestration layer; the schemas, naming, and link contracts live in `librarian-note-schemas.md`.
-**Last Updated**: 2026-05-12
+**Last Updated**: 2026-07-02
 **Trigger Keywords**: ingest, file source, process source, intake, onboard source, capture Seed, new source, file PDF, file article, drop in
 
 ---
@@ -37,7 +37,10 @@ Determine `content_type` per `librarian-note-schemas.md § Frontmatter schemas`.
 | Claude Code session capture (Phase 2) | `claude_capture` | `Seeds/Sources/Captures/` |
 | Personal note / memo | `memo` | `Seeds/Sources/Memos/` |
 
-If the source doesn't match a known type, surface ambiguity to the Scholar before proceeding.
+**Classification discipline:**
+
+- Classify against the closed list above. If the content does not clearly match any known `content_type`, the classification is **empty** — say so and ask the Scholar. Never force the nearest fit; an empty classification halts the flow at this step with the source untouched.
+- When placement is ambiguous (two plausible types, or an unclear destination), present 2-3 **scored options** rather than picking silently — score 0-100 against the *actual* existing vault structure, prefer existing folders/types, flag an option as new only when nothing existing fits, and give every option a one-line reason. Recommendation first (Route D rules).
 
 ### 2. Create or update the Seed note
 
@@ -59,6 +62,8 @@ Form a working understanding sufficient to draft atomic notes. If the source is 
 ### 4. Draft atomic Tree note(s)
 
 Per `librarian-note-schemas.md § Canonical atomic Tree note`, draft one Tree note per atomic concept the source contributes. **Atomic = one idea per note.** A single source may produce 3-15 Tree notes; that's the pattern, not bloat.
+
+Split into the **fewest** atomic notes that capture all key concepts: one idea per note, but no idea smeared across notes and no filler notes inflating the count. Over-splitting is as much a defect as under-splitting.
 
 Each Tree note:
 
@@ -105,6 +110,16 @@ When the Phase 2 watcher (`scripts/hypatia-watcher.py`, not yet written) queues 
 3. Process per the six-step flow above.
 
 Watcher captures often arrive without explicit `content_type`; infer from path + content and confirm with the Scholar before committing the Seed schema.
+
+---
+
+## Failure discipline
+
+Every step above is a gate; failing a gate stops the flow, not the conversation.
+
+- The original source is NEVER lost or left half-transformed. If a step fails (unreadable PDF, malformed frontmatter, empty classification), the source stays untouched where the Scholar dropped it.
+- Surface the failure with the step name and the concrete blocker, then propose the smallest unblocking action ("the PDF has no text layer — paste the passage you highlighted").
+- Never report a confidence you don't have. A guess is labeled a guess and routed through the scored-options discipline in step 1.
 
 ---
 
