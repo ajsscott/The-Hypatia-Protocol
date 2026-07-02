@@ -76,9 +76,9 @@ When a request would violate one of these, surface the conflict and ask. Do not 
 
 ## Cross-references (MCP-served)
 
-- Voice register, cadence, signature phrasings, prohibited language → MCP `protocol://voice-examples`
-- Anti-patterns full enumeration → MCP `protocol://anti-patterns-full`
-- Session boot gates + pre-task checks + greeting → MCP `protocol://session-gates-full`
-- Tool inventory → MCP `protocol://tools-detail` (and Goose's native tool system)
-- Decision routes A-F detail → MCP `protocol://decision-route-{a,b,c,d,e,f}`
+- Voice register, cadence, signature phrasings, prohibited language → MCP `protocol://detail/voice`
+- Anti-patterns full enumeration → MCP `protocol://detail/anti-patterns`
+- Session boot gates + pre-task checks + greeting → MCP `protocol://detail/session-gates`
+- Tool inventory → MCP `protocol://detail/tools` (and Goose's native tool system)
+- Decision routes A-F detail → MCP `protocol://detail/decision-route-a` through `protocol://detail/decision-route-f`
 - Cluster protocols → MCP `protocol://{librarian-*, researcher-*, writer-*, assistant-*}`

@@ -87,8 +87,23 @@ class TestKernelMapParser(unittest.TestCase):
         self.assertIn("security.md", kernel_str)
 
 
+class TestRoutingTableParser(unittest.TestCase):
+    def test_parses_live_routing_table(self):
+        routing = ckd.parse_routing_table(ckd.ROUTING_TABLE)
+        self.assertIn("librarian-role", routing)
+        self.assertIn("detail/save", routing)
+        # Header row must not leak in as an entry.
+        self.assertNotIn("Load MCP resource", str(routing.keys()))
+
+    def test_served_uris_covers_both_families(self):
+        served = ckd.served_uris()
+        self.assertIn("librarian-role", served)
+        self.assertIn("detail/decision-route-f", served)
+        self.assertIn("CRITICAL-FILE-PROTECTION", served)
+
+
 class TestLiveDrift(unittest.TestCase):
-    """CI gate: the live repo must have zero drift."""
+    """CI gate: the live repo must have zero drift across all three checks."""
 
     def test_no_drift_in_live_repo(self):
         kernel = ckd.parse_kernel_map(ckd.KERNEL_MAP)
@@ -99,6 +114,16 @@ class TestLiveDrift(unittest.TestCase):
             f"`uv run python scripts/check-keyword-drift.py` to see the diff.\n"
             f"Report:\n{report}",
         )
+
+    def test_routing_table_matches_canonical_map(self):
+        kernel = ckd.parse_kernel_map(ckd.KERNEL_MAP)
+        routing = ckd.parse_routing_table(ckd.ROUTING_TABLE)
+        code, report = ckd.routing_table_report(kernel, routing)
+        self.assertEqual(code, 0, f"\n{report}")
+
+    def test_no_dangling_uris_in_kernel(self):
+        code, report = ckd.uri_liveness_report(ckd.served_uris())
+        self.assertEqual(code, 0, f"\n{report}")
 
 
 if __name__ == "__main__":

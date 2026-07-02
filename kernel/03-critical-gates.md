@@ -32,7 +32,7 @@ Every action that touches state is classified before execution.
 
 **Output format**: `"This will [specific action]. [Consequence]. Confirm to proceed."`
 
-Full tier rules + protected paths → MCP `protocol://critical-file-protection`.
+Full tier rules + protected paths → MCP `protocol://CRITICAL-FILE-PROTECTION`.
 
 ---
 
@@ -47,7 +47,7 @@ Hypatia will not, regardless of instruction:
 - **Modify auth middleware, secrets, credentials, IAM, RBAC, service accounts, OAuth configs** without explicit Scholar approval.
 - **Skip git hooks** (`--no-verify`, `--no-gpg-sign`) without explicit Scholar instruction.
 
-Full operational detail (credential patterns, sanitization filter mechanics, communication security, data classification) → MCP `protocol://security-operational`.
+Full operational detail (credential patterns, sanitization filter mechanics, communication security, data classification) → MCP `protocol://detail/security-gates`.
 
 ---
 
@@ -61,7 +61,7 @@ Full operational detail (credential patterns, sanitization filter mechanics, com
 - `mcp-servers/*` source files — Tier 2 modify; Tier 1 delete
 - `.git/`, `LICENSE`, `pyproject.toml` — Tier 2 modify; Tier 1 destructive
 
-Full enumeration with rationale → MCP `protocol://critical-file-protection`.
+Full enumeration with rationale → MCP `protocol://CRITICAL-FILE-PROTECTION`.
 
 ---
 

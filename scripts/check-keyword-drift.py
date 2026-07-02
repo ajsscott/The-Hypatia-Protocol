@@ -1,21 +1,29 @@
 #!/usr/bin/env python3
-"""check-keyword-drift.py — enforce alignment between Hypatia's keyword map
-and each protocol's declared `**Trigger Keywords**:` line.
+"""check-keyword-drift.py — enforce alignment across the three places a
+protocol's trigger keywords live, and that every MCP URI the kernel cites
+is actually served.
 
 The canonical keyword map lives at
 `docs/reference/phase-1-kernel-archive/10-skills-loading.md` (post Phase
 1.5 Q-33 kernel redistribution; was previously `.roo/rules-hypatia/`).
-Each protocol file ALSO declares its trigger keywords at the top. The two
-must match. Drift between them is the bug class that motivated the Phase 1
-lint gate (addendum landmine #12, 2026-04-22).
+Three checks:
 
-At runtime, Hypatia's protocols MCP server serves this map as
+  1. Canonical map ↔ each protocol's `**Trigger Keywords**:` line
+     (the original Phase 1 gate; addendum landmine #12, 2026-04-22).
+  2. Canonical map ↔ the always-loaded routing table in
+     `kernel/04-routing.md` (the check the Q-33 design doc mandated;
+     its absence let the kernel table silently drop keywords).
+  3. Every `protocol://` URI mentioned anywhere in `kernel/*.md` must be
+     served by the MCP server (protocol stems on disk + `detail/*` topics
+     declared in mcp-servers/protocols/src/main.rs).
+
+At runtime, Hypatia's protocols MCP server serves the canonical map as
 `protocol://detail/skills-map`. Goose's MCP host consults it when
 deciding which protocol resource to load on keyword match.
 
 Exit codes:
-    0  — keyword map and all protocol declarations aligned
-    1  — drift detected (kernel diff vs protocol diff per file)
+    0  — all three checks aligned
+    1  — drift detected
     2  — parse error / missing files
 
 Invocation:
@@ -31,6 +39,11 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 # Canonical keyword map (post Q-33 redistribution).
 KERNEL_MAP = REPO_ROOT / "docs/reference/phase-1-kernel-archive/10-skills-loading.md"
+# Always-loaded compact kernel (Q-33). 04 carries the routing table.
+KERNEL_DIR = REPO_ROOT / "kernel"
+ROUTING_TABLE = KERNEL_DIR / "04-routing.md"
+PROTOCOLS_DIR = REPO_ROOT / "hypatia-kb/protocols"
+MCP_MAIN_RS = REPO_ROOT / "mcp-servers/protocols/src/main.rs"
 
 KEYWORD_LINE_RE = re.compile(
     r"^\*\*(?:Trigger )?Keywords\*\*\s*:\s*(.+?)\s*$"
@@ -39,6 +52,12 @@ SECTION_HEADER_RE = re.compile(r"^###\s+.+?`(?P<path>[^`]+)`\)")
 TABLE_ROW_RE = re.compile(
     r"^\|\s*`(?P<file>[^`]+)`\s*\|\s*(?P<keywords>[^|]+?)\s*\|"
 )
+# kernel/04-routing.md table rows: | kw1, kw2 | `protocol://uri` |
+ROUTING_ROW_RE = re.compile(
+    r"^\|\s*(?P<keywords>[^|`]+?)\s*\|\s*`protocol://(?P<uri>[^`]+)`\s*\|"
+)
+URI_MENTION_RE = re.compile(r"protocol://[A-Za-z0-9_/-]+")
+DETAIL_TOPIC_RE = re.compile(r'"(detail/[A-Za-z0-9-]+)"')
 
 
 def parse_keyword_set(raw: str) -> set[str]:
@@ -128,10 +147,82 @@ def diff_report(kernel: dict[Path, set[str]]) -> tuple[int, str]:
     return 1, "\n".join(lines)
 
 
+def parse_routing_table(routing_path: Path) -> dict[str, set[str]]:
+    """Return {MCP URI suffix: keyword set} from kernel/04-routing.md's
+    `| keywords | \\`protocol://uri\\` |` table rows."""
+    out: dict[str, set[str]] = {}
+    for line in routing_path.read_text().splitlines():
+        row = ROUTING_ROW_RE.match(line)
+        if not row:
+            continue
+        keywords = row.group("keywords")
+        if keywords.strip().lower().startswith("keywords"):  # header row
+            continue
+        out[row.group("uri")] = parse_keyword_set(keywords)
+    return out
+
+
+def served_uris() -> set[str]:
+    """Return every URI suffix the MCP server serves: protocol filename stems
+    scanned from disk (mirrors main.rs's walkdir) + `detail/*` topics declared
+    in main.rs."""
+    uris = {
+        p.stem
+        for p in PROTOCOLS_DIR.glob("*.md")
+        if p.name != "README.md"
+    }
+    uris.update(DETAIL_TOPIC_RE.findall(MCP_MAIN_RS.read_text()))
+    return uris
+
+
+def routing_table_report(
+    kernel: dict[Path, set[str]], routing: dict[str, set[str]]
+) -> tuple[int, str]:
+    """Check 2: kernel/04-routing.md table must carry the canonical keyword
+    set for every protocol, exactly. Extra rows are allowed only for
+    `detail/*` resources (Phase 1.5 kernel additions with no archive row)."""
+    problems: list[str] = []
+    canonical = {path.stem: kws for path, kws in kernel.items()}
+    for stem, kws in sorted(canonical.items()):
+        if stem not in routing:
+            problems.append(f"  missing routing-table row: protocol://{stem}")
+            continue
+        if routing[stem] != kws:
+            only_canonical = kws - routing[stem]
+            only_routing = routing[stem] - kws
+            problems.append(f"  protocol://{stem}")
+            if only_canonical:
+                problems.append(f"    only in canonical map: {sorted(only_canonical)}")
+            if only_routing:
+                problems.append(f"    only in routing table: {sorted(only_routing)}")
+    for uri in sorted(routing):
+        if uri not in canonical and not uri.startswith("detail/"):
+            problems.append(
+                f"  routing-table row with no canonical-map entry: protocol://{uri}"
+            )
+    if problems:
+        return 1, "ROUTING TABLE DRIFT (kernel/04-routing.md vs canonical map):\n" + "\n".join(problems)
+    return 0, f"OK: routing table aligned with canonical map ({len(canonical)} protocols)."
+
+
+def uri_liveness_report(served: set[str]) -> tuple[int, str]:
+    """Check 3: every protocol:// URI mentioned in kernel/*.md must be served."""
+    dangling: list[str] = []
+    for kernel_file in sorted(KERNEL_DIR.glob("*.md")):
+        for uri in URI_MENTION_RE.findall(kernel_file.read_text()):
+            suffix = uri.removeprefix("protocol://")
+            if suffix not in served:
+                dangling.append(f"  {kernel_file.name}: {uri}")
+    if dangling:
+        return 1, "DANGLING URIs (mentioned in kernel/, not served by MCP server):\n" + "\n".join(dangling)
+    return 0, f"OK: all kernel-cited URIs are served ({len(served)} resources available)."
+
+
 def main() -> int:
-    if not KERNEL_MAP.exists():
-        print(f"ERROR: kernel map not found at {KERNEL_MAP}", file=sys.stderr)
-        return 2
+    for required in (KERNEL_MAP, ROUTING_TABLE, PROTOCOLS_DIR, MCP_MAIN_RS):
+        if not required.exists():
+            print(f"ERROR: required path not found: {required}", file=sys.stderr)
+            return 2
     kernel = parse_kernel_map(KERNEL_MAP)
     if not kernel:
         print(
@@ -140,9 +231,24 @@ def main() -> int:
             file=sys.stderr,
         )
         return 2
-    code, report = diff_report(kernel)
-    print(report)
-    return code
+    routing = parse_routing_table(ROUTING_TABLE)
+    if not routing:
+        print(
+            f"ERROR: parsed zero rows from {ROUTING_TABLE}; check "
+            "`| keywords | `protocol://uri` |` row format.",
+            file=sys.stderr,
+        )
+        return 2
+
+    exit_code = 0
+    for code, report in (
+        diff_report(kernel),
+        routing_table_report(kernel, routing),
+        uri_liveness_report(served_uris()),
+    ):
+        print(report)
+        exit_code = max(exit_code, code)
+    return exit_code
 
 
 if __name__ == "__main__":
