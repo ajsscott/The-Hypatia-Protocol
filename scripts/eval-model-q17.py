@@ -261,7 +261,9 @@ def evaluate_model(model: str, system: str, prompts: list[EvalPrompt]) -> dict:
     }
 
 
-def render_markdown(run_meta: dict, evaluated: list[dict], skipped: list[str]) -> str:
+def render_markdown(
+    run_meta: dict, evaluated: list[dict], skipped: list[tuple[str, str]]
+) -> str:
     lines = [
         "# Q-17 model eval — run " + run_meta["timestamp"],
         "",
@@ -279,8 +281,8 @@ def render_markdown(run_meta: dict, evaluated: list[dict], skipped: list[str]) -
             f"| {ev['mean_ttft_s']} | {rate_range} | {ev['warmup_s']} |"
         )
     if skipped:
-        lines += ["", "Skipped (not pulled): " + ", ".join(skipped)]
-        lines += ["", "Pull with: " + " && ".join(f"`ollama pull {m}`" for m in skipped)]
+        lines += ["", "Not evaluated:"]
+        lines += [f"- {model} — {reason}" for model, reason in skipped]
     lines += [
         "",
         "Heuristic checks are a floor — read the transcripts in the JSON before",
@@ -311,18 +313,26 @@ def main() -> int:
 
     prompts = build_prompts()
     evaluated: list[dict] = []
-    skipped: list[str] = []
+    skipped: list[tuple[str, str]] = []
     for model in candidates:
         if model not in available:
             print(f"SKIP {model}: not pulled (ollama pull {model})")
-            skipped.append(model)
+            skipped.append((model, f"not pulled — `ollama pull {model}`"))
             continue
         print(f"evaluating {model}")
         try:
             evaluated.append(evaluate_model(model, system, prompts))
+        except urllib.error.HTTPError as e:
+            hint = ""
+            if e.code == 500:
+                # Known failure loading newer GGUF architectures (e.g. Gemma 4
+                # per Unsloth's guide): the installed Ollama predates the model.
+                hint = " — a 500 on load usually means Ollama is outdated; update and retry"
+            print(f"ERROR evaluating {model}: {e}{hint}", file=sys.stderr)
+            skipped.append((model, f"server error {e.code}{hint}"))
         except (urllib.error.URLError, OSError, json.JSONDecodeError) as e:
             print(f"ERROR evaluating {model}: {e}", file=sys.stderr)
-            skipped.append(model)
+            skipped.append((model, f"error: {e}"))
 
     if not evaluated:
         print("ERROR: no candidate could be evaluated.", file=sys.stderr)

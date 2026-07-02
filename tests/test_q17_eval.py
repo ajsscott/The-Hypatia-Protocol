@@ -93,7 +93,11 @@ class TestReportRenderer(unittest.TestCase):
                 ],
             }
         ]
-        md = q17.render_markdown(meta, evaluated, skipped=["devstral:24b"])
+        md = q17.render_markdown(
+            meta,
+            evaluated,
+            skipped=[("devstral:24b", "not pulled — `ollama pull devstral:24b`")],
+        )
         self.assertIn("qwen3:14b", md)
         self.assertIn("7/8", md)
         self.assertIn("21.5–24.0", md)
