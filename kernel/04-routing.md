@@ -59,7 +59,7 @@ This table mirrors the canonical keyword map (`protocol://detail/skills-map`) ex
 |---|---|
 | librarian, vault, zettelkasten, Tabula, curate, ingest, query, lint, Seed, Tree, Mountain, wiki, knowledge base, PKB | `protocol://librarian-role` |
 | vault structure, vault, Tabula, TabulaJacqueliana, folders, Seeds, Trees, Mountains, Slope, Trail, Bases, Meridian, orientation, onboarding, structure | `protocol://librarian-vault-structure` |
-| schema, atomic note, atomic, frontmatter, YAML, naming, tag, taxonomy, kind, content_type, citekey, cite, embed, topics, aliases, Tree, Seed, Mountain, Mountain hierarchy | `protocol://librarian-note-schemas` |
+| schema, atomic note, atomic, frontmatter, YAML, naming, tag, taxonomy, kind, content_type, citekey, cite, embed, topics, aliases, Tree, Seed, Mountain, Mountain hierarchy, reading queue, reading_priority, triage, read next, lifecycle, planted, grown, Daily Reading | `protocol://librarian-note-schemas` |
 | Bases, plugin, plugin stack, YOLO, Obsidian, Meridian, Templater, QuickAdd, Dataview, citation, citation plugin, web clipper, RAG, embedding, vector, vector DB | `protocol://librarian-tooling` |
 | drift, landmine, refactor, guardrail, write, edit, commit, approval, batch, sample, verify, lesson, error, prior incident, atomic commit, link rot | `protocol://librarian-writing-rules` |
 | memory, remember, recall, history, capture, save memory, prune, retention, preferences, decisions | `protocol://librarian-memory` |

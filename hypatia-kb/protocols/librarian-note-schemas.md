@@ -1,8 +1,8 @@
 # Librarian — Note Schemas
 
 **Purpose**: Canonical schemas for every note type in TabulaJacqueliana: atomic Tree notes, Seed→Tree linkage contracts, naming conventions, tag taxonomy, the Mountains PM hierarchy, and per-note-type frontmatter fields. Hypatia uses this as the source of truth when drafting, refactoring, or validating any note.
-**Last Updated**: 2026-05-11
-**Trigger Keywords**: schema, atomic note, atomic, frontmatter, YAML, naming, tag, taxonomy, kind, content_type, citekey, cite, embed, topics, aliases, Tree, Seed, Mountain, Mountain hierarchy
+**Last Updated**: 2026-08-28
+**Trigger Keywords**: schema, atomic note, atomic, frontmatter, YAML, naming, tag, taxonomy, kind, content_type, citekey, cite, embed, topics, aliases, Tree, Seed, Mountain, Mountain hierarchy, reading queue, reading_priority, triage, read next, lifecycle, planted, grown
 
 ---
 
@@ -51,7 +51,7 @@ Two patterns coexist. The first is the direction of travel.
 Seed side: `> [!quote] <callout>` + quote text + `^cite-<6chars>`. Example source: `Seeds/Sources/Research/singh_agenticRAGSurvey_2026.md` (54 anchors).
 Tree side: `![[singh_agenticRAGSurvey_2026#^cite-9rynu4]]`.
 
-Older variant (same pattern, pre-April): Annotator plugin's `> %%HIGHLIGHT%% <text>` + `^<random11>` block anchors, produced by `_src/_QuickAdd/wrapSelectionAsAnnotation.js`. ~20+ Research seeds use this. **No QuickAdd macro yet exists for the new `^cite-` callout style — it's hand-rolled.**
+Older variant (same pattern, pre-April): Annotator plugin's `> %%HIGHLIGHT%% <text>` + `^<random11>` block anchors, produced by `_src/_QuickAdd/wrapSelectionAsAnnotation.js`. ~20+ Research seeds use this. New-style `^cite-` callouts are produced by `_src/_QuickAdd/wrapSelectionAsCitation.js` (added 2026-08-28) — select text, run the macro, get the `> [!quote]` callout + `^cite-<6chars>` anchor in place.
 
 ### Pattern B — section-heading embeds (older, fragile)
 
@@ -110,14 +110,14 @@ Bug     (1 instance as of 2026-04-21)
 
 ## Frontmatter schemas (quick reference)
 
-### `kind:` vs `content_type:` — two fields, two roles (intentional)
+### `kind:` vs `content_type:` — two fields, two roles
 
-Both are type-of-note fields that coexist on Seeds by design, not drift. Decision recorded 2026-04-22:
+**Rule clarified 2026-07-07 (supersedes the 2026-04-22 "both coexist on Seeds" decision):**
 
-- **`kind:`** is the **project-management field**. Drives `Meridian.base` and every structural Base. Values span the full vocabulary: `Research`, `Article`, `Book`, `Quote`, `BotChat`, `Slide Deck`, `Textbook`, `Conversation`, `Mountain`, `Slope`, `Trail`, `Step`, `Idea`, `Bug`, `Document`, `Webpage`. **Always list form** (`kind:\n  - Research`) per the 2026-04-22 schema decision. List form supports both `== ["X"]` and `.contains("X")` Base queries.
-- **`content_type:`** is a **general source-medium refinement** on Seeds. Narrower enum: `Article`, `Research`, `Book`, `Quote`, `BotChat`, `Slide Deck`, `Textbook`, `Conversation`. Scalar form (plain string). Used by content-specific Bases like `TBR Research.base`. Not PM-bearing.
+- **`kind:`** is the **project-management field, and PM-only**. Present ONLY on Mountain, Slope, Trail, Step, Idea, Bug, Document notes. Never on source Seeds, Tree notes, or People notes. **Always list form** (`kind:\n  - Slope`) — supports both `== ["X"]` and `.contains("X")` Base queries.
+- **`content_type:`** is the **source-medium field on Seeds**. Scalar string. Enum: `Article`, `Research`, `Book`, `Quote`, `BotNote`, `Slide Deck`, `Textbook`, `Conversation`, `Guide`, `Reference`. Used by content-specific Bases like `TBR Research.base`.
 
-For a Research Seed, both are set: `kind: [Research]` (structural) + `content_type: "Research"` (source medium). The duplication is intentional — the two fields serve different Bases and different queries.
+The two fields never coexist on one note. A source Seed carrying `kind:` is drift — strip it (511 seeds cleaned 2026-07-07; another 52 on 2026-08-28 after the emitters were patched). A PM note carrying `content_type:` is the same drift in reverse.
 
 ### Fields per note type
 
@@ -125,16 +125,33 @@ For a Research Seed, both are set: `kind: [Research]` (structural) + `content_ty
 
 **Trees (concept notes):** universal + `reference_link` (often empty).
 
-**Seeds/Sources/\***: universal + `icon`, `content_type` (`Article|Research|Book|Quote|BotChat|Slide Deck|Textbook|Conversation`), `reference_link`, `author: ["[[Firstname Lastname]]"]`, `title`, `subtitle`, `year`, `publisher_platform`, `grown: bool`, `read: bool`, `planted: bool`.
+**Seeds/Sources/\***: universal + `icon`, `content_type` (`Article|Research|Book|Quote|BotNote|Slide Deck|Textbook|Conversation|Guide|Reference`), `reference_link`, `author: ["[[Firstname Lastname]]"]`, `title`, `subtitle`, `year`, `publisher_platform`, `read: bool`, `planted: bool`, `grown: bool`.
 
 **Seed lifecycle flags** (renamed 2026-07-02 from `annotated`/`processed`):
 
+- **`read:`** — the Scholar has read/watched/consumed the source.
 - **`planted:`** — the Scholar has read and annotated the Seed. Planting is the Scholar's act alone (her brain must meet the original material); Hypatia NEVER sets it.
 - **`grown:`** — the Seed has been grown into Trees. The grow flow (`assistant-ingest.md` step 5, Seed-side closure) toggles it to `true` and updates the Seed's `topics:` with wikilinks to every Tree grown from it. Growing normally follows planting.
 
+Monotonic: grown ⇒ planted ⇒ read.
+
+### Reading queue: `reading_priority` (Articles + Research Seeds)
+
+Codified 2026-08-28 (vault-side: `[[Reading Queue System]]` Document, `[[Reading Backlog]]` Slope, and the Read Next / On Deck / Someday / Untriaged views in `Bases/Daily Reading.base`). Scalar string enum ranking unread Seeds by alignment with active Mountains/Slopes:
+
+| Value | Meaning |
+|---|---|
+| `now` | Aligned with active work, or has a `due:` — read next |
+| `soon` | Aligned but not urgent — on deck |
+| `someday` | No current alignment — ambient backlog |
+
+- Absent field = untriaged; new clips surface in the Untriaged view for weekly triage.
+- `reference_only: true` is the opt-out — reference material never enters the reading queue.
+- Bases can't compute topic overlap, so alignment is computed at triage time by the assistant and this field carries the result. Hypatia MAY propose `reading_priority` values (triage is bookkeeping, not planting) but batches proposals for the Scholar's veto; she also re-scores `soon`/`someday` when a Mountain/Slope activates or completes.
+
 **Research seeds add:** `journal`, `doi`, `zotero_link`, `in_zotero: bool`, `complete: bool`, `due`, `pdf: "![[Author - Year - Title.pdf]]"`, `annotation-target`.
 
-**Articles add:** `cover_image`, `published`, `description`, `web_clipping: bool`, `word_count`, `kind`.
+**Articles add:** `cover_image`, `published`, `description`, `web_clipping: bool`, `word_count`.
 
 **Books (Literature) add:** `cover_image`, `genre-mood`, `description`, `isbn`, `page_count`, `publisher`, `source` (Kindle/Hardcover/Paperback), `woman_or_nb_author`, `disabled_author`, `lgbtqia_author`, `global_majority_author`, `own_physical_copy` (DEI metadata as booleans).
 
