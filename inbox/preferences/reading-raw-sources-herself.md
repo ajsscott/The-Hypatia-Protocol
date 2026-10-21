@@ -24,3 +24,12 @@ Trails, Steps. Offering to summarize an unread source for AJ violates this.
 Explicit statement with her reasoning attached ("so that my brain can
 interact with the original material"). Mirrors the code-authorship rule in
 her global CLAUDE.md — same principle, different domain.
+
+## Reinforcement (2026-09-17, host Claude Code — AI-Coach transcripts)
+
+Same principle stated for engineering data, 2026-08-21 to a colleague:
+"Step one is always look at the raw data yourself. Do not trust the LLM to
+look at the raw data. Go and look at the raw data. All of your answers will
+be solved." She hand-transcribed six golden sessions herself before
+benchmarking any model and cites that as what made the task legible.
+Third occurrence of the pattern across domains (sources, code, data).
