@@ -1,6 +1,8 @@
 ---
 title: Python authorship — write the code myself, not through Claude
-status: active
+status: archived
+archived_on: 2026-11-20
+archived_because: Learning moved to engineer-school (Rust); Claude writes code in work repos.
 created: 2026-07-31
 check_in: weekly, Fridays
 ---

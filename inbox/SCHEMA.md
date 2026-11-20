@@ -30,7 +30,7 @@ inbox/preferences/<topic-slug>.md
 ```yaml
 ---
 observed: 2026-05-11 # ISO date, capture time
-source-session: sandboxed_claude — Hypatia Phase 0 # repo + brief context
+source-session: claude-config — Hypatia Phase 0 # repo + brief context
 candidate-type: preference # see types below
 confidence: high # high | medium | low
 status: new # new | consolidated | rejected
@@ -42,8 +42,8 @@ status: new # new | consolidated | rejected
 - **`observed`** — date the observation was made, ISO 8601 (`YYYY-MM-DD`).
  Time-of-day not required.
 - **`source-session`** — what kind of session this came from. Examples:
- `sandboxed_claude — Hypatia Phase 0 port`,
- `sandboxed_claude — TabulaJacqueliana note triage`,
+ `claude-config — Hypatia Phase 0 port`,
+ `claude-config — TabulaJacqueliana note triage`,
  `host Claude Code — exploratory query`. Enough that AJ can reconstruct
  context at consolidation time.
 - **`candidate-type`** — which Hypatia store this *would* target if accepted:
@@ -124,7 +124,7 @@ recognition for "Claude over-infers in X situation" is valuable.
 ```markdown
 ---
 observed: 2026-05-11
-source-session: sandboxed_claude — Hypatia Phase 0 setup
+source-session: claude-config — Hypatia Phase 0 setup
 candidate-type: preference
 confidence: high
 status: new

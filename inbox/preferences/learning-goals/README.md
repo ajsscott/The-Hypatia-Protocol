@@ -28,9 +28,8 @@ Flip status by editing the frontmatter. No deletes — history stays.
 
 ## How the picker works
 
-The hook at `~/GitHub/other/sandboxed_claude/hooks/pick-learning-goal.sh`
-runs at every session start, lists cards with `status: active` (default
-when absent), and injects them into the session context. Claude then asks
-which one to focus on today.
+Retired 2026-11-20. The session-start picker hook was removed in the
+claude-config redesign, and learning now runs through engineer-school. The
+cards stay here as a record.
 
 `README.md` (this file) is skipped by the picker.
