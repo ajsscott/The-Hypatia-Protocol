@@ -1,6 +1,8 @@
 ---
 title: Research paper writing
-status: active
+status: archived
+archived_on: 2026-11-20
+archived_because: Learning goals retired; learning now runs through engineer-school.
 ---
 
 ## My Learning Goal
