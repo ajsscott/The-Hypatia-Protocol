@@ -3,6 +3,7 @@ title: Python authorship — write the code myself, not through Claude
 status: archived
 archived_on: 2026-11-20
 archived_because: Learning moved to engineer-school (Rust); Claude writes code in work repos.
+superseded_by: authorship.md (2026-11-24, language-neutral)
 created: 2026-07-31
 check_in: weekly, Fridays
 ---
